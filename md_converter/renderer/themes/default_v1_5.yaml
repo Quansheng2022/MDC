@@ -1,0 +1,326 @@
+# QS-Word-Default-V1.5 - 已冻结默认主题
+#
+# Source of truth: Doc/Default_theme_设计文档.md (第二十章 V1.5 完整 YAML 配置)
+# 遵循原则：YAML 定义 WHAT，Python 决定 HOW。
+# 对冻结参数的修改必须通过正式 RFC 流程。
+
+theme:
+  name: QS-Word-Default-V1.5
+  version: 1.5
+  status: frozen
+
+# ============================================================
+# 页面
+# ============================================================
+page:
+  size: A4
+  margins:
+    top: 1in
+    bottom: 1in
+    left: 1in
+    right: 1in
+
+# ============================================================
+# 字体体系
+# ============================================================
+font_mapping:
+  ascii:
+    body: Calibri
+    heading: Arial
+  eastAsia:
+    body: DengXian
+    heading: Microsoft YaHei
+  hAnsi:
+    body: Calibri
+    heading: Arial
+  cs:
+    body: Arial
+    heading: Arial
+
+number_font: Calibri
+symbol_font: inherit_or_symbol_fallback
+
+# ============================================================
+# 字号
+# ============================================================
+typography:
+  body:
+    size: 10.5pt
+  heading:
+    H1:
+      size: 20pt
+      bold: true
+      before: 12pt
+      after: 6pt
+    H2:
+      size: 16pt
+      bold: true
+      before: 12pt
+      after: 6pt
+    H3:
+      size: 14pt
+      bold: true
+      before: 12pt
+      after: 6pt
+    H4:
+      size: 14pt
+      bold: true
+      italic: true
+      before: 12pt
+      after: 6pt
+  code:
+    font: Consolas
+    size: 10pt
+  ascii:
+    font: Consolas
+    size: 8.5pt
+
+# ============================================================
+# 段落
+# ============================================================
+paragraph:
+  line_spacing:
+    type: multiple
+    value: 1.15
+  spacing:
+    before: 0pt
+    after: 6pt
+  alignment:
+    mode: adaptive
+    cjk_dominant: justified
+    latin_dominant: left
+    mixed: justified
+    code_heavy: left
+    url_heavy: left
+    table_cell: left
+  cjk_latin_spacing:
+    auto: true
+    preserve_markdown_spaces: true
+
+# ============================================================
+# Run 分割
+# ============================================================
+run_segmentation:
+  split_on:
+    formatting:
+      - bold
+      - italic
+      - underline
+      - strike
+      - color
+      - highlight
+    semantic:
+      - hyperlink
+      - inline_code
+      - footnote
+      - citation
+    typography:
+      - east_asia_font
+      - latin_font
+      - complex_script_font
+  atomic_sequences:
+    - word
+    - number
+    - decimal
+    - percentage
+    - currency
+    - unit
+    - identifier
+    - url
+    - email
+  preserve_markdown_spaces: true
+
+# ============================================================
+# 语言检测
+# ============================================================
+language_detection:
+  weights:
+    cjk: 1.0
+    latin_word: 1.0
+    number: 0.25
+    punctuation: 0
+    whitespace: 0
+    symbol: 0
+  thresholds:
+    cjk_dominant: 0.55
+    latin_dominant: 0.60
+
+# ============================================================
+# 标题
+# ============================================================
+heading:
+  keep_with_next: true
+  keep_together: true
+  preserve_source_numbering: true
+
+# ============================================================
+# 表格
+# ============================================================
+table:
+  style: Table Grid
+  font_size: 9.5pt
+  vertical_alignment: top
+  header:
+    bold: true
+    repeat: true
+  width:
+    mode: fit_content_width
+  constraints:
+    min_width: 1.2cm
+    max_width: content_width
+  overflow:
+    long_text: wrap
+    url: break
+    code: shrink_or_break
+  split_rows_across_pages: true
+  preserve_column_structure: true
+  landscape_candidate: true
+
+# ============================================================
+# 图形
+# ============================================================
+figure:
+  alignment: center
+  max_width: content_width
+  max_height: available_page_height
+  preserve_aspect_ratio: true
+  min_width: 8cm
+  min_height: auto
+  keep_together: true
+  overflow_handling:
+    - move_to_next_page
+    - scale_down
+    - warn
+  format: svg_to_drawingml
+
+# ============================================================
+# 代码块
+# ============================================================
+code:
+  font: Consolas
+  size: 10pt
+  line_spacing: 1.0
+  alignment: left
+  no_auto_hyphenation: true
+  keep_together_if_lines: 25
+  allow_split_if_lines: 25
+  max_lines_per_page: 45
+
+# ============================================================
+# ASCII 图
+# ============================================================
+ascii:
+  font: Consolas
+  size: 8.5pt
+  alignment: left
+  no_wrap: true
+  keep_lines_together: true
+  keep_with_next: false
+  integrity_check: true
+
+# ============================================================
+# URL / 长英文
+# ============================================================
+url_and_long_words:
+  url:
+    allow_break: true
+    break_points: ["/", ".", "-", "_", "?", "&", "="]
+  technical_identifier:
+    allow_break: false
+  normal_english:
+    allow_break: false
+  long_word_threshold: 20
+
+# ============================================================
+# Section / 分页
+# ============================================================
+section:
+  default_orientation: portrait
+  landscape_trigger:
+    table_width_exceeds_content_width: true
+    width_margin_buffer: 1cm
+  landscape_scope: local
+  restore_previous_orientation: true
+
+pagination_policies:
+  heading:
+    keep_with_next: true
+    keep_together: true
+  paragraph:
+    keep_together: false
+    widow_orphan_control: true
+  table:
+    split_rows_across_pages: true
+    repeat_header: true
+  figure:
+    keep_together: true
+  code:
+    keep_together_if_lines: 25
+    allow_split_if_lines: 25
+  ascii:
+    keep_together: true
+    no_wrap: true
+
+# ============================================================
+# 可读性保护
+# ============================================================
+readability:
+  minimum:
+    body_font: 10pt
+    table_font: 8.5pt
+    figure_text: 8pt
+    ascii_font: 8pt
+    code_font: 8pt
+    margin: 0.5in
+  overflow_response:
+    - reflow
+    - split
+    - landscape
+    - new_page
+    - warn_if_all_fail
+
+# ============================================================
+# Layout QA
+# ============================================================
+layout_qa:
+  static:
+    enabled: true
+  rendered:
+    enabled: true
+  quality_gate:
+    fatal:
+      - semantic_loss
+      - content_loss
+    error:
+      - overflow
+      - clipping
+      - broken_table
+      - broken_figure
+    warning:
+      - unusual_page_break
+      - excessive_whitespace
+  fail_on_error: true
+  fail_on_warning: false
+  output: conversion_report.json
+
+# ============================================================
+# 文档结构
+# ============================================================
+document_structure:
+  sections:
+    - cover
+    - toc
+    - body
+    - appendix
+  cover:
+    font: Microsoft YaHei
+    title_size: 28pt
+    date_size: 16pt
+    author_size: 14pt
+  toc:
+    font: Microsoft YaHei
+    levels: 3
+    title_size: 18pt
+    level_1_size: 14pt
+    level_2_size: 12pt
+    level_3_size: 11pt

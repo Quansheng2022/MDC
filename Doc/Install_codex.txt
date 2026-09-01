@@ -1,0 +1,98 @@
+1. download ChatGPT Installer.
+2. install codex.
+		配置和数据存储目录： C:\Users\Quansheng\.codex
+		安装路径：
+		powershell> Get-AppxPackage *OpenAI*
+
+
+Name              : OpenAI.Codex
+Publisher         : CN=50BDFD77-8903-4850-9FFE-6E8522F64D5B
+Architecture      : X64
+ResourceId        :
+Version           : 26.730.7989.0
+PackageFullName   : OpenAI.Codex_26.730.7989.0_x64__2p2nqsd0c76g0
+InstallLocation   : C:\Program Files\WindowsApps\OpenAI.Codex_26.730.7989.0_x64__2p2nqsd0c76g0
+IsFramework       : False
+PackageFamilyName : OpenAI.Codex_2p2nqsd0c76g0
+PublisherId       : 2p2nqsd0c76g0
+IsResourcePackage : False
+IsBundle          : False
+IsDevelopmentMode : False
+NonRemovable      : False
+IsPartiallyStaged : False
+SignatureKind     : Store
+Status            : Ok
+Capabilities      : internetClient,
+                    appLicensing,
+                    runFullTrust,
+                    cellularData,
+                    wifiData,
+                    uniqueAppPackageCapability
+		
+		C:\Program Files\WindowsApps\OpenAI.Codex_26.730.7989.0_x64__2p2nqsd0c76g0
+		
+3. configure deepseek-v4-flash.
+run powershell as administrator.
+execute command:
+irm https://cdn.deepseek.com/api-docs/codex-deepseek-setup-en.ps1 | iex
+
+配置和数据存储目录： C:\Users\Quansheng\.codex
+key updates on C:\Users\Quansheng\.code\config.toml
+
+(.venv) (base) PS C:\Users\Quansheng\Documents\projects> irm https://cdn.deepseek.com/api-docs/codex-deepseek-setup-en.ps1 | iex
+
+Codex DeepSeek Setup  v1.0.0
+Codex directory: C:\Users\Quansheng\.codex
+
+Choose an action:
+  1. Configure Codex to use the deepseek-v4-flash model
+  2. Configure Codex to use the deepseek-v4-pro model (not available yet; expected early August 2026)
+  3. Restore the default Codex configuration (remove deepseek settings)
+
+Enter 1 / 2 / 3: 1
+
+First-time install (target model: deepseek-v4-flash)
+
+Don't have an API key yet? Create one at https://platform.deepseek.com/api_keys
+Enter your DeepSeek API key (starts with sk-): <YOUR_DEEPSEEK_API_KEY>
+[OK] Backed up config.toml -> C:\Users\Quansheng\.codex\backup-deepseek\config.toml
+[OK] Wrote C:\Users\Quansheng\.codex\models.json (contains deepseek-v4-flash and deepseek-v4-pro)
+[OK] Updated C:\Users\Quansheng\.codex\config.toml
+
+Changes made to your existing configuration (2 total)
+  - Rewrote model: "gpt-5.6-sol" -> "deepseek-v4-flash"
+  - Rewrote model_reasoning_effort: "low" -> "high"
+
+Configuration written
+  model                  = "deepseek-v4-flash"
+  model_provider         = "deepseek"
+  preferred_auth_method  = "apikey"
+  forced_login_method    = "api"
+  model_reasoning_effort = "high"
+  model_catalog_json     = "C:/Users/Quansheng/.codex/models.json"
+
+  [model_providers.deepseek]
+  base_url  = "https://api.deepseek.com/"
+  wire_api  = "responses"
+
+Validation
+[OK] models.json is valid JSON
+[OK] config.toml has no duplicate top-level keys
+
+[OK] Installation complete.
+
+How to verify it took effect:
+  - ChatGPT desktop app: after launch, the bottom-right corner showing the DeepSeek model name means success
+    (that is deepseek-v4-flash; if it still shows "Custom", models.json was not loaded)
+  - Codex CLI: the startup banner shows model: deepseek-v4-flash
+
+If the logs show "fallback model metadata" or "Unknown model",
+models.json was not loaded -- please reinstall.
+
+How to switch / restore
+Your original configuration was backed up to C:\Users\Quansheng\.codex\backup-deepseek
+Just run this script again:
+
+  irm https://cdn.deepseek.com/api-docs/codex-deepseek-setup-en.ps1 | iex
+
+  Pick 1/2 to switch between flash / pro, or 3 to restore the pre-install configuration.

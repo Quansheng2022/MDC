@@ -1,0 +1,246 @@
+{
+  "spec_baseline": "AC001-AC015",
+  "spec_ids": ["SPEC-AC-001", "SPEC-AC-002", "SPEC-AC-003", "SPEC-AC-004"],
+  "cases": [
+    {
+      "id": "AC001",
+      "file": "AC001_simple.md",
+      "spec_ids": ["SPEC-FUNC-002", "SPEC-FUNC-003", "SPEC-INV-001"],
+      "semantics": {
+        "headings": ["Introduction"],
+        "contains": ["simple document", "first item", "third item"]
+      },
+      "signature": {
+        "min_headings": 1,
+        "min_paragraphs": 4,
+        "min_tables": 0,
+        "min_inline_shapes": 0,
+        "deterministic": true
+      }
+    },
+    {
+      "id": "AC002",
+      "file": "AC002_headings.md",
+      "spec_ids": ["SPEC-FUNC-001", "SPEC-INV-001"],
+      "semantics": {
+        "headings": ["Level 1 Heading", "Level 6 Heading"],
+        "contains": ["All six heading levels"]
+      },
+      "signature": {
+        "min_headings": 6,
+        "min_paragraphs": 12,
+        "min_tables": 0,
+        "min_inline_shapes": 0,
+        "deterministic": false
+      }
+    },
+    {
+      "id": "AC003",
+      "file": "AC003_nested_lists.md",
+      "spec_ids": ["SPEC-FUNC-003", "SPEC-INV-001"],
+      "semantics": {
+        "headings": ["Nested Lists", "Ordered List"],
+        "contains": ["Level three item", "Nested second item", "Sub item 2"]
+      },
+      "signature": {
+        "min_headings": 4,
+        "min_paragraphs": 12,
+        "min_tables": 0,
+        "min_inline_shapes": 0,
+        "deterministic": false
+      }
+    },
+    {
+      "id": "AC004",
+      "file": "AC004_tables.md",
+      "spec_ids": ["SPEC-FUNC-004", "SPEC-INV-001"],
+      "semantics": {
+        "headings": ["Tables", "Financial Table"],
+        "contains": ["Gamma", "99.90", "+2.1%"]
+      },
+      "signature": {
+        "min_headings": 4,
+        "min_paragraphs": 8,
+        "min_tables": 3,
+        "min_inline_shapes": 0,
+        "deterministic": false
+      }
+    },
+    {
+      "id": "AC005",
+      "file": "AC005_cn_en_mix.md",
+      "spec_ids": ["SPEC-FUNC-002", "SPEC-FUNC-012", "SPEC-INV-001"],
+      "semantics": {
+        "headings": ["中英混排测试", "数字与百分比"],
+        "contains": ["23.5%", "$1,250.50", "Calibri"]
+      },
+      "signature": {
+        "min_headings": 4,
+        "min_paragraphs": 8,
+        "min_tables": 0,
+        "min_inline_shapes": 0,
+        "deterministic": true
+      }
+    },
+    {
+      "id": "AC006",
+      "file": "AC006_code.md",
+      "spec_ids": ["SPEC-FUNC-005", "SPEC-FUNC-008", "SPEC-INV-001"],
+      "semantics": {
+        "headings": ["Code Blocks", "Inline Code"],
+        "contains": ["def hello", "pip install md_converter", "max_repair_iterations"]
+      },
+      "signature": {
+        "min_headings": 5,
+        "min_paragraphs": 8,
+        "min_tables": 0,
+        "min_inline_shapes": 0,
+        "deterministic": false
+      }
+    },
+    {
+      "id": "AC007",
+      "file": "AC007_ascii.md",
+      "spec_ids": ["SPEC-FUNC-013", "SPEC-FUNC-014", "SPEC-INV-001"],
+      "semantics": {
+        "headings": ["ASCII Diagram"],
+        "contains": ["must be converted"]
+      },
+      "signature": {
+        "min_headings": 1,
+        "min_paragraphs": 4,
+        "min_tables": 0,
+        "min_inline_shapes": 0,
+        "deterministic": false
+      }
+    },
+    {
+      "id": "AC008",
+      "file": "AC008_mermaid.md",
+      "spec_ids": ["SPEC-FUNC-013", "SPEC-INV-001"],
+      "semantics": {
+        "headings": ["Mermaid Diagram", "Sequence Diagram"],
+        "contains": ["Mermaid diagrams must be rendered"]
+      },
+      "signature": {
+        "min_headings": 2,
+        "min_paragraphs": 5,
+        "min_tables": 0,
+        "min_inline_shapes": 0,
+        "deterministic": false
+      }
+    },
+    {
+      "id": "AC009",
+      "file": "AC009_images.md",
+      "spec_ids": ["SPEC-FUNC-008", "SPEC-INV-001"],
+      "semantics": {
+        "headings": ["Images", "Embedded Image"],
+        "contains": ["Images must be embedded"]
+      },
+      "signature": {
+        "min_headings": 2,
+        "min_paragraphs": 4,
+        "min_tables": 0,
+        "min_inline_shapes": 1,
+        "deterministic": false
+      }
+    },
+    {
+      "id": "AC010",
+      "file": "AC010_links.md",
+      "spec_ids": ["SPEC-FUNC-008", "SPEC-INV-001"],
+      "semantics": {
+        "headings": ["Hyperlinks", "External Link"],
+        "contains": ["OpenAI", "support", "Architecture Document"]
+      },
+      "signature": {
+        "min_headings": 4,
+        "min_paragraphs": 6,
+        "min_tables": 0,
+        "min_inline_shapes": 0,
+        "deterministic": false
+      }
+    },
+    {
+      "id": "AC011",
+      "file": "AC011_long_document.md",
+      "spec_ids": ["SPEC-FUNC-001", "SPEC-FUNC-004", "SPEC-INV-001", "SPEC-INV-003"],
+      "semantics": {
+        "headings": ["Long Document", "Section 10"],
+        "contains": ["Final paragraph of the long document", "sum(i * i for i in range(100))"]
+      },
+      "signature": {
+        "min_headings": 13,
+        "min_paragraphs": 22,
+        "min_tables": 1,
+        "min_inline_shapes": 0,
+        "deterministic": false
+      }
+    },
+    {
+      "id": "AC012",
+      "file": "AC012_wide_table.md",
+      "spec_ids": ["SPEC-FUNC-004", "SPEC-INV-001"],
+      "semantics": {
+        "headings": ["Wide Table"],
+        "contains": ["6,101.50", "9,650.00", "LATAM"]
+      },
+      "signature": {
+        "min_headings": 1,
+        "min_paragraphs": 3,
+        "min_tables": 1,
+        "min_inline_shapes": 0,
+        "deterministic": false
+      }
+    },
+    {
+      "id": "AC013",
+      "file": "AC013_page_break.md",
+      "spec_ids": ["SPEC-FUNC-007", "SPEC-INV-001"],
+      "semantics": {
+        "headings": ["Page Structure", "Third Region"],
+        "contains": ["Horizontal rules must render"]
+      },
+      "signature": {
+        "min_headings": 3,
+        "min_paragraphs": 6,
+        "min_tables": 0,
+        "min_inline_shapes": 0,
+        "deterministic": false
+      }
+    },
+    {
+      "id": "AC014",
+      "file": "AC014_frontmatter.md",
+      "spec_ids": ["SPEC-FUNC-009", "SPEC-FUNC-010", "SPEC-INV-001"],
+      "semantics": {
+        "headings": ["Frontmatter", "Metadata Semantics"],
+        "contains": ["Frontmatter metadata must drive the cover page"]
+      },
+      "signature": {
+        "min_headings": 2,
+        "min_paragraphs": 6,
+        "min_tables": 0,
+        "min_inline_shapes": 0,
+        "deterministic": true
+      }
+    },
+    {
+      "id": "AC015",
+      "file": "AC015_real_world.md",
+      "spec_ids": ["SPEC-FUNC-001", "SPEC-FUNC-004", "SPEC-FUNC-005", "SPEC-INV-001"],
+      "semantics": {
+        "headings": ["Quarterly Business Review", "Risks and Mitigations", "Outlook"],
+        "contains": ["18.2%", "1,520", "SELECT region", "example.com"]
+      },
+      "signature": {
+        "min_headings": 8,
+        "min_paragraphs": 15,
+        "min_tables": 1,
+        "min_inline_shapes": 0,
+        "deterministic": false
+      }
+    }
+  ]
+}

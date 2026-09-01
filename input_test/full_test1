@@ -1,0 +1,247 @@
+---
+title: MD Converter Full Test
+author: Test User
+date: 2024-01-15
+tags: [test, full, markdown]
+---
+
+# Heading 1
+
+## Heading 2
+
+### Heading 3
+
+#### Heading 4
+
+##### Heading 5
+
+###### Heading 6
+
+---
+
+## Text Formatting
+
+**Bold text** and *italic text* and ***bold italic***.
+
+`Inline code` with **bold** and *italic*.
+
+---
+
+## Lists
+
+### Unordered List
+
+- Item 1
+- Item 2
+  - Sub-item 2.1
+  - Sub-item 2.2
+- Item 3
+
+### Ordered List
+
+1. First item
+2. Second item
+3. Third item
+
+### Task List
+
+- [x] Completed task
+- [ ] Pending task
+
+---
+
+## Tables
+
+| Header 1 | Header 2 | Header 3 |
+|----------|----------|----------|
+| Cell 1.1 | Cell 1.2 | Cell 1.3 |
+| Cell 2.1 | Cell 2.2 | Cell 2.3 |
+
+---
+# Mermaid Diagram Test
+
+```mermaid
+graph TD
+    A[Start] --> B{Decision}
+    B -->|Yes| C[Process 1]
+    B -->|No| D[Process 2]
+    C --> E[End]
+    D --> E
+```	
+----
+
+## Code Blocks
+
+```python
+def fibonacci(n):
+    a, b = 0, 1
+    for _ in range(n):
+        yield a
+        a, b = b, a + b
+```		
+### 目录结构与模块职责
+
+```text
+md_converter/                     # 主包
+├── __init__.py
+├── cli.py                        # Click CLI 入口
+├── compiler.py                   # CompilerContext 统一上下文
+├── config.py                     # 配置加载 (YAML)
+├── constants/
+│   └── node_type.py              # NodeType Enum
+├── ast/
+│   ├── nodes.py                  # 所有 AST 节点 (含 SourceSpan)
+│   └── node_visitor.py           # NodeVisitor 基类
+├── parser/
+│   ├── markdown_parser.py        # 使用 markdown-it-py + SyntaxTree
+│   ├── builder_registry.py       # 类型安全注册 (NodeType → Builder)
+│   ├── parser_context.py         # ParserContext 数据类
+│   └── builders/
+│       ├── base.py               # BlockBuilder 抽象
+│       ├── heading.py
+│       ├── paragraph.py
+│       ├── list.py
+│       ├── table.py
+│       ├── code.py
+│       ├── blockquote.py
+│       └── inline.py             # 迭代式构建行内节点
+├── renderer/
+│   ├── word_renderer.py          # NodeVisitor 实现
+│   ├── word_writer.py            # 原子文档操作 (无生命周期)
+│   ├── render_context.py         # 渲染状态
+│   ├── inline_state.py           # 样式栈
+│   ├── style_resolver.py         # 样式决策器
+│   └── themes/
+│       └── default.py            # 默认主题
+├── pipeline/
+│   ├── pipeline.py               # Pipeline 执行器
+│   ├── pass_registry.py          # Pass 注册
+│   ├── plugin_discovery.py       # entry_points 加载
+│   └── passes/
+│       ├── base.py               # TransformPass 基类
+│       ├── normalize_pass.py     # 合并相邻 Text
+│       └── diagram_pass.py       # Diagram → Image
+├── services/
+│   └── diagram_service.py        # ASCII→SVG 渲染 (移植自原脚本)
+├── diagnostics/
+│   ├── diagnostic.py             # Diagnostic 类 (含 code)
+│   └── collector.py              # DiagnosticCollector
+├── utils/
+│   └── helpers.py                # 文件操作、frontmatter 解析
+└── tests/
+    ├── conftest.py
+    ├── test_golden.py            # OOXML Snapshot 测试
+    └── golden/                   # 期望的 XML 快照
+        ├── sample.md
+        └── sample.docx.xml
+```
+
+### 整体架构
+
+```text
+用户输入 (Markdown 文件)
+    │
+    ▼
+┌──────────────────────────────────────┐
+│  CLI (Click)                        │
+│  - 解析命令行参数，读取配置文件       │
+│  - 初始化 CompilerContext            │
+└──────────────────────────────────────┘
+    │
+    ▼
+┌──────────────────────────────────────┐
+│  Parser Layer                       │
+│  ┌─────────────────────────────┐   │
+│  │ markdown-it-py + SyntaxTree │   │
+│  └─────────────┬───────────────┘   │
+│                ▼                     │
+│  ┌─────────────────────────────┐   │
+│  │ BuilderRegistry (按 NodeType)│   │
+│  │ - HeadingBuilder            │   │
+│  │ - ParagraphBuilder          │   │
+│  │ - ListBuilder               │   │
+│  │ - TableBuilder              │   │
+│  │ - CodeBuilder               │   │
+│  │ - BlockQuoteBuilder         │   │
+│  │ - Inline (迭代式构建)        │   │
+│  └─────────────┬───────────────┘   │
+│                ▼                     │
+│  ┌─────────────────────────────┐   │
+│  │ Immutable AST (带 SourceSpan)│   │
+│  └─────────────────────────────┘   │
+└──────────────────────────────────────┘
+    │
+    ▼
+┌──────────────────────────────────────┐
+│  Pipeline (插件化)                  │
+│  PassRegistry + entry_points        │
+│  ┌─────────────────────────────┐   │
+│  │ NormalizePass (合并文本)     │   │
+│  │ DiagramPass (ASCII→SVG)     │   │
+│  │ (用户插件可注册)             │   │
+│  └─────────────────────────────┘   │
+└──────────────────────────────────────┘
+    │
+    ▼
+┌──────────────────────────────────────┐
+│  Renderer Layer                     │
+│  ┌─────────────────────────────┐   │
+│  │ WordRenderer (NodeVisitor)  │   │
+│  │ - 遍历 AST                  │   │
+│  │ - 调用 StyleResolver 获取样式│   │
+│  │ - 使用 InlineState 管理嵌套  │   │
+│  └─────────────┬───────────────┘   │
+│                ▼                     │
+│  ┌─────────────────────────────┐   │
+│  │ WordWriter (原子操作)        │   │
+│  │ - add_paragraph, add_run    │   │
+│  │ - start_table, add_cell     │   │
+│  │ - add_image, add_hrule      │   │
+│  └─────────────────────────────┘   │
+└──────────────────────────────────────┘
+    │
+    ▼
+Word 文档 (.docx)
+```
+
+---
+
+
+# Mermaid Diagram Test
+
+```mermaid
+flowchart TD
+    input["用户输入（Markdown 文件）"] --> cli_parse
+
+    subgraph cli["CLI（Click）"]
+        direction TB
+        cli_parse["解析命令行参数，读取配置文件"] --> cli_context["初始化 CompilerContext"]
+    end
+
+    cli_context --> parser_markdown
+
+    subgraph parser["Parser Layer"]
+        direction TB
+        parser_markdown["markdown-it-py + SyntaxTree"] --> parser_builders["BuilderRegistry（按 NodeType）<br/>Heading, Paragraph, List, Table,<br/>Code, BlockQuote, Inline（迭代式构建）"]
+        parser_builders --> ast["Immutable AST（带 SourceSpan）"]
+    end
+
+    ast --> pipeline_registry
+
+    subgraph pipeline["Pipeline（插件化）"]
+        direction TB
+        pipeline_registry["PassRegistry + entry_points"] --> pipeline_passes["NormalizePass（合并文本）<br/>DiagramPass（ASCII → SVG）<br/>用户插件可注册"]
+    end
+
+    pipeline_passes --> renderer_visitor
+
+    subgraph renderer["Renderer Layer"]
+        direction TB
+        renderer_visitor["WordRenderer（NodeVisitor）<br/>遍历 AST，调用 StyleResolver 获取样式，<br/>使用 InlineState 管理嵌套"] --> renderer_writer["WordWriter（原子操作）<br/>add_paragraph, add_run, start_table,<br/>add_cell, add_image, add_hrule"]
+    end
+
+    renderer_writer --> output["Word 文档（.docx）"]
+```
+
+---
+	

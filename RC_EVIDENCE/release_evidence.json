@@ -1,0 +1,50 @@
+{
+  "software_version": "1.0.0",
+  "spec_version": "1.0",
+  "spec_status": "FROZEN",
+  "architecture_version": "2.0",
+  "theme_version": "QS-Word-Default-V1.5",
+  "acceptance_baseline": "AC001-AC015",
+  "governance_baseline": "P0-01..P0-08, P1-09, P1-10",
+  "commit": "n/a",
+  "build_id": "09f5c92c15d5",
+  "generated_at": "2026-08-31T14:19:15.860118+00:00",
+  "checked_at": "2026-08-31T22:16:54+08:00",
+  "checked_by": "Release governance review (P9 closure)",
+  "mechanism": "hybrid-review",
+  "architecture_frozen": true,
+  "unauthorized_spec_changes": 0,
+  "tests": {
+    "unit": "PASS",
+    "integration": "PASS",
+    "golden": "PASS",
+    "acceptance": "PASS",
+    "ascii_service": "PASS"
+  },
+  "qa": {
+    "static_qa": "PASS",
+    "rendered_qa": "PASS",
+    "post_processor": "PASS",
+    "final_artifact_qa": "PASS"
+  },
+  "repair": {
+    "iterations": 0,
+    "remaining_errors": 0,
+    "max_repair_iterations": 2,
+    "records": []
+  },
+  "regression": {
+    "status": "CHECKED",
+    "checked_at": "2026-08-31T22:16:54+08:00",
+    "baseline": "v1.0.0-baseline",
+    "current": "RC-20260831-04",
+    "new_failures": 0,
+    "baseline_failures": 0,
+    "current_failures": 0
+  },
+  "known_warnings": 0,
+  "spec_deviations": 0,
+  "artifact_sha256": "f75c1dd42c5d604223cd2155947ffac65c273bbbdc8ab487a400cd9ddd783182",
+  "output_path": "output\\AC015_real_world.docx",
+  "result": "RELEASE_ELIGIBLE"
+}

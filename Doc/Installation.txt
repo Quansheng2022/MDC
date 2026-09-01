@@ -1,0 +1,113 @@
+
+# 项目根目录
+C:\Users\Quansheng\Documents\projects\MD_Converter\
+├── md_converter/                # ✅ 包目录
+│   ├── __init__.py             # ✅ 必须
+│   ├── cli.py                  # ✅ 
+│   ├── compiler.py             # ✅
+│   ├── config.py               # ✅
+│   ├── ast/                    # ✅
+│   ├── parser/                 # ✅
+│   ├── renderer/               # ✅
+│   ├── pipeline/               # ✅
+│   ├── services/               # ✅
+│   ├── diagnostics/            # ✅
+│   ├── utils/                  # ✅
+│   └── constants/              # ✅
+├── setup.py                    # ✅
+├── pyproject.toml              # ✅ (可选)
+├── MANIFEST.in                 # ✅ (可选)
+└── chk_dependency_packages.py  # ✅ (可选)
+
+(.venv) PS C:\Users\Quansheng\Documents\projects\MD_Converter> python -m pip install -e .
+Obtaining file:///C:/Users/Quansheng/Documents/projects/MD_Converter
+  Installing build dependencies ... done
+  Checking if build backend supports build_editable ... done
+  Getting requirements to build editable ... done
+  Preparing editable metadata (pyproject.toml) ... done
+Building wheels for collected packages: md_converter
+  Building editable for md_converter (pyproject.toml) ... done
+  Created wheel for md_converter: filename=md_converter-1.0.0-0.editable-py3-none-any.whl size=3600 sha256=31dfc46ca153c0cd1a1bd5017446bbebc5d069ef31ab28d8dfd09a4ef2a6be3e
+  Stored in directory: C:\Users\Quansheng\AppData\Local\Temp\pip-ephem-wheel-cache-x3mnro8u\wheels\83\df\ca\23507e1dfa88b542b0c6c5183a8479333352ceb81bd71b7ebb
+Successfully built md_converter
+Installing collected packages: md_converter
+Successfully installed md_converter-1.0.0
+
+
+
+ python -m pip install mdit-py-plugins
+ 
+ pip install cairosvg + Cairo 库
+ conda install cairo -c conda-forge
+ 
+ https://github.com/tschoonj/GTK-for-Windows-Runtime-Environment-Installer/releases
+ gtk3-runtime-3.24.31-2022-01-04-ts-win64.exe
+	verify：python -c "import cairosvg; print('cairosvg imported successfully')"
+ 
+ pip install wand + ImageMagick
+ conda install imagemagick -c conda-forge
+ go to website https://imagemagick.org/download/#gsc.tab=0
+ download: ImageMagick-7.1.2-29-Q16-HDRI-x64-dll.exe
+ install
+ verify: python -c "from wand.image import Image; print('wand OK')"
+
+ 
+# 安装开发模式
+python -m pip install -e .
+
+# 验证
+python -c "import md_converter; print('✅ OK')"
+python -c "from md_converter.cli import main; print('CLI OK')"
+md-converter --help
+
+
+# 1. 重新安装
+python -m pip install -e . --force-reinstall
+
+# 2. 测试导入
+python -c "import md_converter; print('✅ OK')"
+
+# 3. 测试 CLI
+md-converter --help
+
+
+# 1. 清除缓存
+Get-ChildItem -Path . -Recurse -Directory -Filter "__pycache__" | Remove-Item -Recurse -Force
+
+# 2. 测试导入
+python -c "import md_converter; print('✅ OK')"
+
+# 3. 测试行内构建器
+python -c "from md_converter.parser.builders.inline import build_inline_children; print('Inline builder OK')"
+
+# 1. 重新安装
+python -m pip install -e . --force-reinstall
+
+# 2. 测试 CLI
+md-converter --help
+
+# 3. 测试转换
+md-converter full_test.md --open
+
+python -m pip install click
+
+
+## 使用实例
+
+# 基本转换
+md-converter sample.md
+md-converter converter1.md --open --verbose
+
+# 指定输出路径并打开
+md-converter sample.md --output ./result.docx --open
+
+# 使用配置文件
+md-converter sample.md --config config.yaml
+
+# 详细输出
+md-converter sample.md --verbose
+
+
+md-converter input.md --ascii-mode auto          # 默认：自动优选
+md-converter input.md --ascii-mode interactive    # 复杂图：交互式选择
+md-converter input.md --ascii-mode preview        # 多方案预览（.mmd + 报告）

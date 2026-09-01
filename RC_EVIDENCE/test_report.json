@@ -1,0 +1,7 @@
+{
+  "unit": "PASS",
+  "integration": "PASS",
+  "golden": "PASS",
+  "acceptance": "PASS",
+  "ascii_service": "PASS"
+}

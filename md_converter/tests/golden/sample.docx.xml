@@ -1,0 +1,1699 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+    <!-- 
+    ============================================================
+    SAMPLE DOCX STRUCTURE - GOLDEN TEST EXPECTATION
+    ============================================================
+    This XML represents the expected structure of the generated
+    DOCX file for the sample.md Golden Test.
+    
+    It contains the structure of paragraphs, runs, tables,
+    and formatting that should be present in the output.
+    -->
+    
+    <metadata>
+        <title>MD Converter Sample Document</title>
+        <author>MD Converter Team</author>
+        <date>2024-01-15</date>
+        <tags>sample, test, markdown, converter, documentation</tags>
+        <version>1.0.0</version>
+    </metadata>
+
+    <!-- ============================================================
+    DOCUMENT STRUCTURE
+    ============================================================ -->
+
+    <!-- Title Section -->
+    <section type="cover">
+        <paragraph>
+            <style>Title</style>
+            <runs>
+                <run><text>MD Converter Sample Document</text><bold>true</bold><size>28</size><font>Arial</font></run>
+            </runs>
+            <alignment>center</alignment>
+        </paragraph>
+        <paragraph>
+            <style>Subtitle</style>
+            <runs>
+                <run><text>Version: 1.0.0</text><italic>true</italic><size>16</size><font>Arial</font></run>
+            </runs>
+            <alignment>center</alignment>
+        </paragraph>
+        <paragraph>
+            <style>Subtitle</style>
+            <runs>
+                <run><text>Date: 2024-01-15</text><italic>true</italic><size>16</size><font>Arial</font></run>
+            </runs>
+            <alignment>center</alignment>
+        </paragraph>
+        <paragraph>
+            <style>Subtitle</style>
+            <runs>
+                <run><text>Author: MD Converter Team</text><italic>true</italic><size>14</size><font>Arial</font></run>
+            </runs>
+            <alignment>center</alignment>
+        </paragraph>
+        <paragraph>
+            <runs>
+                <run><break>page</break></run>
+            </runs>
+        </paragraph>
+    </section>
+
+    <!-- Table of Contents -->
+    <section type="toc">
+        <paragraph>
+            <style>Heading 1</style>
+            <runs>
+                <run><text>Table of Contents</text><bold>true</bold><size>18</size><font>Arial</font></run>
+            </runs>
+            <alignment>center</alignment>
+        </paragraph>
+        <paragraph>
+            <runs>
+                <run><text>Document Metadata</text><underline>true</underline></run>
+                <run><text>..........................................</text></run>
+                <run><text>2</text></run>
+            </runs>
+        </paragraph>
+        <paragraph>
+            <runs>
+                <run><text>Headings</text><underline>true</underline></run>
+                <run><text>......................................................</text></run>
+                <run><text>2</text></run>
+            </runs>
+        </paragraph>
+        <paragraph>
+            <runs>
+                <run><text>Text Formatting</text><underline>true</underline></run>
+                <run><text>............................................</text></run>
+                <run><text>3</text></run>
+            </runs>
+        </paragraph>
+        <paragraph>
+            <runs>
+                <run><text>Lists</text><underline>true</underline></run>
+                <run><text>............................................................</text></run>
+                <run><text>4</text></run>
+            </runs>
+        </paragraph>
+        <paragraph>
+            <runs>
+                <run><text>Tables</text><underline>true</underline></run>
+                <run><text>..........................................................</text></run>
+                <run><text>6</text></run>
+            </runs>
+        </paragraph>
+        <paragraph>
+            <runs>
+                <run><text>Code Blocks</text><underline>true</underline></run>
+                <run><text>....................................................</text></run>
+                <run><text>7</text></run>
+            </runs>
+        </paragraph>
+        <paragraph>
+            <runs>
+                <run><text>Blockquotes</text><underline>true</underline></run>
+                <run><text>....................................................</text></run>
+                <run><text>8</text></run>
+            </runs>
+        </paragraph>
+        <paragraph>
+            <runs>
+                <run><text>Links</text><underline>true</underline></run>
+                <run><text>............................................................</text></run>
+                <run><text>9</text></run>
+            </runs>
+        </paragraph>
+        <paragraph>
+            <runs>
+                <run><text>Images</text><underline>true</underline></run>
+                <run><text>...........................................................</text></run>
+                <run><text>10</text></run>
+            </runs>
+        </paragraph>
+        <paragraph>
+            <runs>
+                <run><text>Horizontal Rules</text><underline>true</underline></run>
+                <run><text>.............................................</text></run>
+                <run><text>10</text></run>
+            </runs>
+        </paragraph>
+        <paragraph>
+            <runs>
+                <run><text>ASCII Diagrams</text><underline>true</underline></run>
+                <run><text>................................................</text></run>
+                <run><text>11</text></run>
+            </runs>
+        </paragraph>
+        <paragraph>
+            <runs>
+                <run><text>Complex Nested Structures</text><underline>true</underline></run>
+                <run><text>...................................</text></run>
+                <run><text>13</text></run>
+            </runs>
+        </paragraph>
+        <paragraph>
+            <runs>
+                <run><text>Edge Cases</text><underline>true</underline></run>
+                <run><text>........................................................</text></run>
+                <run><text>15</text></run>
+            </runs>
+        </paragraph>
+        <paragraph>
+            <runs>
+                <run><break>page</break></run>
+            </runs>
+        </paragraph>
+    </section>
+
+    <!-- ============================================================
+    DOCUMENT BODY
+    ============================================================ -->
+
+    <section type="body">
+
+        <!-- Document Metadata -->
+        <heading level="2">
+            <runs>
+                <run><text>Document Metadata</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <codeblock language="yaml">
+            <text>---
+title: MD Converter Sample Document
+author: MD Converter Team
+date: 2024-01-15
+tags: [sample, test, markdown, converter, documentation]
+version: 1.0.0
+status: draft
+---</text>
+        </codeblock>
+
+        <!-- ============================================================
+        HEADINGS
+        ============================================================ -->
+
+        <heading level="2">
+            <runs>
+                <run><text>Headings</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <heading level="1">
+            <runs>
+                <run><text>Heading Level 1</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <paragraph>
+            <runs>
+                <run><text>The main document title.</text></run>
+            </runs>
+        </paragraph>
+
+        <heading level="2">
+            <runs>
+                <run><text>Heading Level 2</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <paragraph>
+            <runs>
+                <run><text>Major section heading.</text></run>
+            </runs>
+        </paragraph>
+
+        <heading level="3">
+            <runs>
+                <run><text>Heading Level 3</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <paragraph>
+            <runs>
+                <run><text>Subsection heading.</text></run>
+            </runs>
+        </paragraph>
+
+        <heading level="4">
+            <runs>
+                <run><text>Heading Level 4</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <paragraph>
+            <runs>
+                <run><text>Detailed subsection heading.</text></run>
+            </runs>
+        </paragraph>
+
+        <heading level="5">
+            <runs>
+                <run><text>Heading Level 5</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <paragraph>
+            <runs>
+                <run><text>Minor heading.</text></run>
+            </runs>
+        </paragraph>
+
+        <heading level="6">
+            <runs>
+                <run><text>Heading Level 6</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <paragraph>
+            <runs>
+                <run><text>Smallest heading.</text></run>
+            </runs>
+        </paragraph>
+
+        <!-- ============================================================
+        TEXT FORMATTING
+        ============================================================ -->
+
+        <heading level="2">
+            <runs>
+                <run><text>Text Formatting</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <heading level="3">
+            <runs>
+                <run><text>Basic Formatting</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <paragraph>
+            <runs>
+                <run><text>This is </text></run>
+                <run><text>bold text</text><bold>true</bold></run>
+                <run><text> and this is </text></run>
+                <run><text>italic text</text><italic>true</italic></run>
+                <run><text>.</text></run>
+            </runs>
+        </paragraph>
+
+        <paragraph>
+            <runs>
+                <run><text>This is </text></run>
+                <run><text>bold and italic text</text><bold>true</bold><italic>true</italic></run>
+                <run><text>.</text></run>
+            </runs>
+        </paragraph>
+
+        <paragraph>
+            <runs>
+                <run><text>This is </text></run>
+                <run><text>inline code</text><font>Consolas</font><size>10</size></run>
+                <run><text> text.</text></run>
+            </runs>
+        </paragraph>
+
+        <heading level="3">
+            <runs>
+                <run><text>Combined Formatting</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <list unordered="true">
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>• </text></run>
+                        <run><text>Bold with </text><bold>true</bold></run>
+                        <run><text>italic</text><bold>true</bold><italic>true</italic></run>
+                        <run><text> inside</text><bold>true</bold></run>
+                    </runs>
+                </paragraph>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>• </text></run>
+                        <run><text>Italic with </text><italic>true</italic></run>
+                        <run><text>bold</text><bold>true</bold><italic>true</italic></run>
+                        <run><text> inside</text><italic>true</italic></run>
+                    </runs>
+                </paragraph>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>• </text></run>
+                        <run><text>Bold with </text><bold>true</bold></run>
+                        <run><text>code</text><bold>true</bold><font>Consolas</font><size>10</size></run>
+                        <run><text> inside</text><bold>true</bold></run>
+                    </runs>
+                </paragraph>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>• </text></run>
+                        <run><text>Italic with </text><italic>true</italic></run>
+                        <run><text>code</text><italic>true</italic><font>Consolas</font><size>10</size></run>
+                        <run><text> inside</text><italic>true</italic></run>
+                    </runs>
+                </paragraph>
+            </item>
+        </list>
+
+        <!-- ============================================================
+        LISTS
+        ============================================================ -->
+
+        <heading level="2">
+            <runs>
+                <run><text>Lists</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <heading level="3">
+            <runs>
+                <run><text>Unordered Lists</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <heading level="4">
+            <runs>
+                <run><text>Basic Unordered List</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <list unordered="true">
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>• First item</text></run>
+                    </runs>
+                </paragraph>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>• Second item</text></run>
+                    </runs>
+                </paragraph>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>• Third item</text></run>
+                    </runs>
+                </paragraph>
+            </item>
+        </list>
+
+        <heading level="4">
+            <runs>
+                <run><text>Nested Unordered List</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <list unordered="true">
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>• Level 1 item</text></run>
+                    </runs>
+                </paragraph>
+                <list unordered="true">
+                    <item>
+                        <paragraph>
+                            <runs>
+                                <run><text>○ Level 2 item</text></run>
+                            </runs>
+                        </paragraph>
+                        <list unordered="true">
+                            <item>
+                                <paragraph>
+                                    <runs>
+                                        <run><text>▪ Level 3 item</text></run>
+                                    </runs>
+                                </paragraph>
+                                <list unordered="true">
+                                    <item>
+                                        <paragraph>
+                                            <runs>
+                                                <run><text>▫ Level 4 item</text></run>
+                                            </runs>
+                                        </paragraph>
+                                    </item>
+                                </list>
+                            </item>
+                        </list>
+                    </item>
+                    <item>
+                        <paragraph>
+                            <runs>
+                                <run><text>○ Another level 2 item</text></run>
+                            </runs>
+                        </paragraph>
+                    </item>
+                </list>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>• Back to level 1</text></run>
+                    </runs>
+                </paragraph>
+            </item>
+        </list>
+
+        <heading level="4">
+            <runs>
+                <run><text>Unordered List with Formatting</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <list unordered="true">
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>• </text></run>
+                        <run><text>Bold list item</text><bold>true</bold></run>
+                    </runs>
+                </paragraph>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>• </text></run>
+                        <run><text>Italic list item</text><italic>true</italic></run>
+                    </runs>
+                </paragraph>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>• </text></run>
+                        <run><text>Code list item</text><font>Consolas</font><size>10</size></run>
+                    </runs>
+                </paragraph>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>• </text></run>
+                        <run><text>Bold and italic list item</text><bold>true</bold><italic>true</italic></run>
+                    </runs>
+                </paragraph>
+            </item>
+        </list>
+
+        <heading level="3">
+            <runs>
+                <run><text>Ordered Lists</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <heading level="4">
+            <runs>
+                <run><text>Basic Ordered List</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <list ordered="true">
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>1. First item</text></run>
+                    </runs>
+                </paragraph>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>2. Second item</text></run>
+                    </runs>
+                </paragraph>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>3. Third item</text></run>
+                    </runs>
+                </paragraph>
+            </item>
+        </list>
+
+        <heading level="4">
+            <runs>
+                <run><text>Nested Ordered List</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <list ordered="true">
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>1. Level 1 item</text></run>
+                    </runs>
+                </paragraph>
+                <list ordered="true">
+                    <item>
+                        <paragraph>
+                            <runs>
+                                <run><text>1. Level 2 item</text></run>
+                            </runs>
+                        </paragraph>
+                        <list ordered="true">
+                            <item>
+                                <paragraph>
+                                    <runs>
+                                        <run><text>1. Level 3 item</text></run>
+                                    </runs>
+                                </paragraph>
+                                <list ordered="true">
+                                    <item>
+                                        <paragraph>
+                                            <runs>
+                                                <run><text>1. Level 4 item</text></run>
+                                            </runs>
+                                        </paragraph>
+                                    </item>
+                                </list>
+                            </item>
+                        </list>
+                    </item>
+                    <item>
+                        <paragraph>
+                            <runs>
+                                <run><text>2. Another level 2 item</text></run>
+                            </runs>
+                        </paragraph>
+                    </item>
+                </list>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>2. Back to level 1</text></run>
+                    </runs>
+                </paragraph>
+            </item>
+        </list>
+
+        <heading level="3">
+            <runs>
+                <run><text>Mixed Lists</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <list ordered="true">
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>1. First level 1 item</text></run>
+                    </runs>
+                </paragraph>
+                <list unordered="true">
+                    <item>
+                        <paragraph>
+                            <runs>
+                                <run><text>• Sub-item 1.1</text></run>
+                            </runs>
+                        </paragraph>
+                    </item>
+                    <item>
+                        <paragraph>
+                            <runs>
+                                <run><text>• Sub-item 1.2</text></run>
+                            </runs>
+                        </paragraph>
+                    </item>
+                </list>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>2. Second level 1 item</text></run>
+                    </runs>
+                </paragraph>
+                <list ordered="true">
+                    <item>
+                        <paragraph>
+                            <runs>
+                                <run><text>1. Sub-item 2.1</text></run>
+                            </runs>
+                        </paragraph>
+                    </item>
+                    <item>
+                        <paragraph>
+                            <runs>
+                                <run><text>2. Sub-item 2.2</text></run>
+                            </runs>
+                        </paragraph>
+                    </item>
+                </list>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>3. Third level 1 item</text></run>
+                    </runs>
+                </paragraph>
+            </item>
+        </list>
+
+        <heading level="3">
+            <runs>
+                <run><text>Task Lists</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <list unordered="true">
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>☑ Completed task</text></run>
+                    </runs>
+                </paragraph>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>☑ Another completed task</text></run>
+                    </runs>
+                </paragraph>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>☐ Pending task</text></run>
+                    </runs>
+                </paragraph>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>☐ Task with </text></run>
+                        <run><text>bold</text><bold>true</bold></run>
+                        <run><text> text</text></run>
+                    </runs>
+                </paragraph>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>☑ Task with </text></run>
+                        <run><text>italic</text><italic>true</italic></run>
+                        <run><text> text</text></run>
+                    </runs>
+                </paragraph>
+            </item>
+        </list>
+
+        <!-- ============================================================
+        TABLES
+        ============================================================ -->
+
+        <heading level="2">
+            <runs>
+                <run><text>Tables</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <heading level="3">
+            <runs>
+                <run><text>Simple Table</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <table style="Table Grid">
+            <header>
+                <row>
+                    <cell><text>Header 1</text><bold>true</bold></cell>
+                    <cell><text>Header 2</text><bold>true</bold></cell>
+                    <cell><text>Header 3</text><bold>true</bold></cell>
+                </row>
+            </header>
+            <body>
+                <row>
+                    <cell><text>Cell 1.1</text></cell>
+                    <cell><text>Cell 1.2</text></cell>
+                    <cell><text>Cell 1.3</text></cell>
+                </row>
+                <row>
+                    <cell><text>Cell 2.1</text></cell>
+                    <cell><text>Cell 2.2</text></cell>
+                    <cell><text>Cell 2.3</text></cell>
+                </row>
+                <row>
+                    <cell><text>Cell 3.1</text></cell>
+                    <cell><text>Cell 3.2</text></cell>
+                    <cell><text>Cell 3.3</text></cell>
+                </row>
+            </body>
+        </table>
+
+        <heading level="3">
+            <runs>
+                <run><text>Table with Alignment</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <table style="Table Grid">
+            <header>
+                <row>
+                    <cell align="left"><text>Left Align</text><bold>true</bold></cell>
+                    <cell align="center"><text>Center Align</text><bold>true</bold></cell>
+                    <cell align="right"><text>Right Align</text><bold>true</bold></cell>
+                </row>
+            </header>
+            <body>
+                <row>
+                    <cell align="left"><text>Left 1</text></cell>
+                    <cell align="center"><text>Center 1</text></cell>
+                    <cell align="right"><text>Right 1</text></cell>
+                </row>
+                <row>
+                    <cell align="left"><text>Left 2</text></cell>
+                    <cell align="center"><text>Center 2</text></cell>
+                    <cell align="right"><text>Right 2</text></cell>
+                </row>
+                <row>
+                    <cell align="left"><text>Left 3</text></cell>
+                    <cell align="center"><text>Center 3</text></cell>
+                    <cell align="right"><text>Right 3</text></cell>
+                </row>
+            </body>
+        </table>
+
+        <heading level="3">
+            <runs>
+                <run><text>Table with Formatting</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <table style="Table Grid">
+            <header>
+                <row>
+                    <cell><text>Bold Header</text><bold>true</bold></cell>
+                    <cell><text>Italic Header</text><italic>true</italic></cell>
+                    <cell><text>Code Header</text><font>Consolas</font></cell>
+                </row>
+            </header>
+            <body>
+                <row>
+                    <cell><text>Bold Cell</text><bold>true</bold></cell>
+                    <cell><text>Italic Cell</text><italic>true</italic></cell>
+                    <cell><text>Code Cell</text><font>Consolas</font></cell>
+                </row>
+                <row>
+                    <cell><text>Italic Cell</text><italic>true</italic></cell>
+                    <cell><text>Bold Cell</text><bold>true</bold></cell>
+                    <cell><text>Code Cell</text><font>Consolas</font></cell>
+                </row>
+                <row>
+                    <cell><text>Code Cell</text><font>Consolas</font></cell>
+                    <cell><text>Code Cell</text><font>Consolas</font></cell>
+                    <cell><text>Bold Cell</text><bold>true</bold></cell>
+                </row>
+            </body>
+        </table>
+
+        <heading level="3">
+            <runs>
+                <run><text>Table with Mixed Content</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <table style="Table Grid">
+            <header>
+                <row>
+                    <cell><text>Feature</text><bold>true</bold></cell>
+                    <cell><text>Description</text><bold>true</bold></cell>
+                    <cell><text>Example</text><bold>true</bold></cell>
+                    <cell><text>Status</text><bold>true</bold></cell>
+                </row>
+            </header>
+            <body>
+                <row>
+                    <cell><text>Bold</text></cell>
+                    <cell><text>Makes text </text><bold>true</bold><text>bold</text><bold>true</bold></cell>
+                    <cell><text>**text**</text></cell>
+                    <cell><text>✅</text></cell>
+                </row>
+                <row>
+                    <cell><text>Italic</text></cell>
+                    <cell><text>Makes text </text><italic>true</italic><text>italic</text><italic>true</italic></cell>
+                    <cell><text>*text*</text></cell>
+                    <cell><text>✅</text></cell>
+                </row>
+                <row>
+                    <cell><text>Code</text></cell>
+                    <cell><text>Inline code</text></cell>
+                    <cell><text>`code`</text></cell>
+                    <cell><text>✅</text></cell>
+                </row>
+                <row>
+                    <cell><text>Link</text></cell>
+                    <cell><text>Creates a </text><text>link</text><underline>true</underline><text> (https://example.com)</text></cell>
+                    <cell><text>[text](url)</text></cell>
+                    <cell><text>✅</text></cell>
+                </row>
+                <row>
+                    <cell><text>Image</text></cell>
+                    <cell><text>Inserts an image</text></cell>
+                    <cell><text>![alt](url)</text></cell>
+                    <cell><text>✅</text></cell>
+                </row>
+            </body>
+        </table>
+
+        <!-- ============================================================
+        CODE BLOCKS
+        ============================================================ -->
+
+        <heading level="2">
+            <runs>
+                <run><text>Code Blocks</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <heading level="3">
+            <runs>
+                <run><text>Python Code</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <codeblock language="python">
+            <text>#!/usr/bin/env python3
+"""
+Fibonacci sequence generator with caching.
+"""
+
+from functools import lru_cache
+
+@lru_cache(maxsize=128)
+def fibonacci(n: int) -> int:
+    """
+    Calculate the nth Fibonacci number.
+    
+    Args:
+        n: The position in the Fibonacci sequence.
+        
+    Returns:
+        The nth Fibonacci number.
+    """
+    if n &lt; 2:
+        return n
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+def generate_sequence(n: int) -> list:
+    """Generate Fibonacci sequence up to n."""
+    return [fibonacci(i) for i in range(n)]
+
+if __name__ == "__main__":
+    print(generate_sequence(10))</text>
+        </codeblock>
+
+        <heading level="3">
+            <runs>
+                <run><text>JavaScript Code</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <codeblock language="javascript">
+            <text>/**
+ * Fibonacci sequence generator
+ * @param {number} n - The position in the sequence
+ * @returns {number} The nth Fibonacci number
+ */
+function fibonacci(n) {
+    if (n &lt; 2) return n;
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+/**
+ * Generate Fibonacci sequence
+ * @param {number} n - Number of terms
+ * @returns {number[]} Fibonacci sequence
+ */
+function generateSequence(n) {
+    const result = [];
+    for (let i = 0; i &lt; n; i++) {
+        result.push(fibonacci(i));
+    }
+    return result;
+}
+
+console.log(generateSequence(10));</text>
+        </codeblock>
+
+        <heading level="3">
+            <runs>
+                <run><text>HTML Code</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <codeblock language="html">
+            <text>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Fibonacci Calculator&lt;/title&gt;
+    &lt;style&gt;
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .container { max-width: 600px; margin: 0 auto; }
+        .result { font-weight: bold; color: #2F5496; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="container"&gt;
+        &lt;h1&gt;Fibonacci Calculator&lt;/h1&gt;
+        &lt;p&gt;Enter a number to calculate the Fibonacci sequence:&lt;/p&gt;
+        &lt;input type="number" id="input" min="0" max="20"&gt;
+        &lt;button onclick="calculate()"&gt;Calculate&lt;/button&gt;
+        &lt;div id="result" class="result"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;script&gt;
+        function calculate() {
+            const n = parseInt(document.getElementById('input').value);
+            // ... calculation logic
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</text>
+        </codeblock>
+
+        <heading level="3">
+            <runs>
+                <run><text>SQL Code</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <codeblock language="sql">
+            <text>-- ============================================================
+-- Fibonacci Sequence Generator (PostgreSQL)
+-- ============================================================
+
+CREATE OR REPLACE FUNCTION fibonacci(n INTEGER)
+RETURNS INTEGER AS $$
+DECLARE
+    a INTEGER := 0;
+    b INTEGER := 1;
+    c INTEGER := 0;
+    i INTEGER := 1;
+BEGIN
+    IF n &lt; 2 THEN
+        RETURN n;
+    END IF;
+    
+    WHILE i &lt; n LOOP
+        c := a + b;
+        a := b;
+        b := c;
+        i := i + 1;
+    END LOOP;
+    
+    RETURN c;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Generate sequence
+SELECT 
+    generate_series(0, 10) AS n,
+    fibonacci(generate_series(0, 10)) AS fib;</text>
+        </codeblock>
+
+        <!-- ============================================================
+        BLOCKQUOTES
+        ============================================================ -->
+
+        <heading level="2">
+            <runs>
+                <run><text>Blockquotes</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <heading level="3">
+            <runs>
+                <run><text>Simple Blockquote</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <blockquote>
+            <paragraph>
+                <runs>
+                    <run><text>This is a simple blockquote.</text></run>
+                </runs>
+            </paragraph>
+            <paragraph>
+                <runs>
+                    <run><text>It can span multiple lines.</text></run>
+                </runs>
+            </paragraph>
+            <paragraph>
+                <runs>
+                    <run><text>And include multiple paragraphs.</text></run>
+                </runs>
+            </paragraph>
+        </blockquote>
+
+        <heading level="3">
+            <runs>
+                <run><text>Nested Blockquotes</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <blockquote>
+            <paragraph>
+                <runs>
+                    <run><text>Level 1 quote</text></run>
+                </runs>
+            </paragraph>
+            <blockquote>
+                <paragraph>
+                    <runs>
+                        <run><text>Level 2 quote</text></run>
+                    </runs>
+                </paragraph>
+                <blockquote>
+                    <paragraph>
+                        <runs>
+                            <run><text>Level 3 quote</text></run>
+                        </runs>
+                    </paragraph>
+                    <blockquote>
+                        <paragraph>
+                            <runs>
+                                <run><text>Level 4 quote</text></run>
+                            </runs>
+                        </paragraph>
+                    </blockquote>
+                </blockquote>
+            </blockquote>
+        </blockquote>
+
+        <!-- ============================================================
+        LINKS
+        ============================================================ -->
+
+        <heading level="2">
+            <runs>
+                <run><text>Links</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <heading level="3">
+            <runs>
+                <run><text>External Links</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <list unordered="true">
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>• </text></run>
+                        <run><text>GitHub</text><underline>true</underline><link>https://github.com</link></run>
+                    </runs>
+                </paragraph>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>• </text></run>
+                        <run><text>Python Documentation</text><underline>true</underline><link>https://docs.python.org/3/</link></run>
+                    </runs>
+                </paragraph>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>• </text></run>
+                        <run><text>Markdown Guide</text><underline>true</underline><link>https://www.markdownguide.org</link></run>
+                    </runs>
+                </paragraph>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>• </text></run>
+                        <run><text>Stack Overflow</text><underline>true</underline><link>https://stackoverflow.com</link></run>
+                    </runs>
+                </paragraph>
+            </item>
+        </list>
+
+        <heading level="3">
+            <runs>
+                <run><text>Internal Links (Anchor Links)</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <list unordered="true">
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>• </text></run>
+                        <run><text>Back to Top</text><underline>true</underline></run>
+                    </runs>
+                </paragraph>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>• </text></run>
+                        <run><text>Headings</text><underline>true</underline></run>
+                    </runs>
+                </paragraph>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>• </text></run>
+                        <run><text>Lists</text><underline>true</underline></run>
+                    </runs>
+                </paragraph>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>• </text></run>
+                        <run><text>Tables</text><underline>true</underline></run>
+                    </runs>
+                </paragraph>
+            </item>
+        </list>
+
+        <heading level="3">
+            <runs>
+                <run><text>Links with Formatting</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <list unordered="true">
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>• </text></run>
+                        <run><text>Bold Link</text><bold>true</bold><underline>true</underline><link>https://example.com</link></run>
+                    </runs>
+                </paragraph>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>• </text></run>
+                        <run><text>Italic Link</text><italic>true</italic><underline>true</underline><link>https://example.com</link></run>
+                    </runs>
+                </paragraph>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>• </text></run>
+                        <run><text>Bold and Italic Link</text><bold>true</bold><italic>true</italic><underline>true</underline><link>https://example.com</link></run>
+                    </runs>
+                </paragraph>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>• </text></run>
+                        <run><text>Code Link</text><font>Consolas</font><size>10</size><underline>true</underline><link>https://example.com</link></run>
+                    </runs>
+                </paragraph>
+            </item>
+        </list>
+
+        <heading level="3">
+            <runs>
+                <run><text>Reference Links</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <paragraph>
+            <runs>
+                <run><text>This is a </text></run>
+                <run><text>reference link</text><underline>true</underline><link>https://example.com</link></run>
+                <run><text>.</text></run>
+            </runs>
+        </paragraph>
+
+        <!-- ============================================================
+        IMAGES
+        ============================================================ -->
+
+        <heading level="2">
+            <runs>
+                <run><text>Images</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <heading level="3">
+            <runs>
+                <run><text>Simple Image</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <paragraph alignment="center">
+            <run>
+                <image src="https://via.placeholder.com/150x150/2F5496/FFFFFF?text=MD" width="150" height="150" />
+            </run>
+        </paragraph>
+
+        <heading level="3">
+            <runs>
+                <run><text>Image with Caption</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <paragraph alignment="center">
+            <run>
+                <image src="https://via.placeholder.com/300x100/2F5496/FFFFFF?text=MD+Converter" width="300" height="100" />
+            </run>
+        </paragraph>
+
+        <paragraph alignment="center">
+            <runs>
+                <run><italic>true</italic><text>Figure 1: MD Converter Logo</text></run>
+            </runs>
+        </paragraph>
+
+        <heading level="3">
+            <runs>
+                <run><text>Image with Link</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <paragraph alignment="center">
+            <run>
+                <link href="https://example.com">
+                    <image src="https://via.placeholder.com/200x80/2F5496/FFFFFF?text=MD+Converter" width="200" height="80" />
+                </link>
+            </run>
+        </paragraph>
+
+        <!-- ============================================================
+        HORIZONTAL RULES
+        ============================================================ -->
+
+        <heading level="2">
+            <runs>
+                <run><text>Horizontal Rules</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <hr />
+        <hr />
+        <hr />
+
+        <!-- ============================================================
+        ASCII DIAGRAMS
+        ============================================================ -->
+
+        <heading level="2">
+            <runs>
+                <run><text>ASCII Diagrams</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <heading level="3">
+            <runs>
+                <run><text>Simple Box Diagram</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <paragraph alignment="center">
+            <run>
+                <image src="data:image/svg+xml;base64,..." width="400" height="150" />
+            </run>
+        </paragraph>
+
+        <heading level="3">
+            <runs>
+                <run><text>Flowchart</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <paragraph alignment="center">
+            <run>
+                <image src="data:image/svg+xml;base64,..." width="400" height="500" />
+            </run>
+        </paragraph>
+
+        <heading level="3">
+            <runs>
+                <run><text>Database Schema Diagram</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <paragraph alignment="center">
+            <run>
+                <image src="data:image/svg+xml;base64,..." width="500" height="400" />
+            </run>
+        </paragraph>
+
+        <heading level="3">
+            <runs>
+                <run><text>System Architecture Diagram</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <paragraph alignment="center">
+            <run>
+                <image src="data:image/svg+xml;base64,..." width="600" height="500" />
+            </run>
+        </paragraph>
+
+        <heading level="3">
+            <runs>
+                <run><text>Component Interaction Diagram</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <paragraph alignment="center">
+            <run>
+                <image src="data:image/svg+xml;base64,..." width="400" height="500" />
+            </run>
+        </paragraph>
+
+        <!-- ============================================================
+        COMPLEX NESTED STRUCTURES
+        ============================================================ -->
+
+        <heading level="2">
+            <runs>
+                <run><text>Complex Nested Structures</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <heading level="3">
+            <runs>
+                <run><text>Nested Lists with Formatting</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <list ordered="true">
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>1. </text></run>
+                        <run><text>Level 1 Item 1</text><bold>true</bold></run>
+                    </runs>
+                </paragraph>
+                <list unordered="true">
+                    <item>
+                        <paragraph>
+                            <runs>
+                                <run><text>• </text></run>
+                                <run><text>Level 2 Item 1.1</text><italic>true</italic></run>
+                            </runs>
+                        </paragraph>
+                        <list unordered="true">
+                            <item>
+                                <paragraph>
+                                    <runs>
+                                        <run><text>▪ </text></run>
+                                        <run><text>Level 3 Item 1.1.1</text><font>Consolas</font></run>
+                                    </runs>
+                                </paragraph>
+                                <list unordered="true">
+                                    <item>
+                                        <paragraph>
+                                            <runs>
+                                                <run><text>▫ Level 4 Item 1.1.1.1</text></run>
+                                            </runs>
+                                        </paragraph>
+                                        <list unordered="true">
+                                            <item>
+                                                <paragraph>
+                                                    <runs>
+                                                        <run><text>▪ </text></run>
+                                                        <run><text>Level 5 Item 1.1.1.1.1</text><bold>true</bold><italic>true</italic></run>
+                                                    </runs>
+                                                </paragraph>
+                                            </item>
+                                        </list>
+                                    </item>
+                                </list>
+                            </item>
+                        </list>
+                    </item>
+                    <item>
+                        <paragraph>
+                            <runs>
+                                <run><text>• Level 2 Item 1.2 with </text></run>
+                                <run><text>bold</text><bold>true</bold></run>
+                            </runs>
+                        </paragraph>
+                    </item>
+                </list>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>2. Level 1 Item 2</text></run>
+                    </runs>
+                </paragraph>
+                <list unordered="true">
+                    <item>
+                        <paragraph>
+                            <runs>
+                                <run><text>• Level 2 Item 2.1 with </text></run>
+                                <run><text>italic</text><italic>true</italic></run>
+                            </runs>
+                        </paragraph>
+                        <list unordered="true">
+                            <item>
+                                <paragraph>
+                                    <runs>
+                                        <run><text>▪ Level 3 Item 2.1.1 with </text></run>
+                                        <run><text>code</text><font>Consolas</font></run>
+                                    </runs>
+                                </paragraph>
+                            </item>
+                        </list>
+                    </item>
+                </list>
+            </item>
+            <item>
+                <paragraph>
+                    <runs>
+                        <run><text>3. Level 1 Item 3 with </text></run>
+                        <run><text>bold and italic</text><bold>true</bold><italic>true</italic></run>
+                    </runs>
+                </paragraph>
+            </item>
+        </list>
+
+        <!-- ============================================================
+        EDGE CASES
+        ============================================================ -->
+
+        <heading level="2">
+            <runs>
+                <run><text>Edge Cases</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <heading level="3">
+            <runs>
+                <run><text>Unicode and Special Characters</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <heading level="4">
+            <runs>
+                <run><text>Mathematical Symbols</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <paragraph>
+            <runs>
+                <run><text>α β γ δ ε ζ η θ ι κ λ μ ν ξ ο π ρ σ τ υ φ χ ψ ω</text></run>
+            </runs>
+        </paragraph>
+
+        <paragraph>
+            <runs>
+                <run><text>Σ Π Ω Δ Θ Λ Ξ Ψ Φ Γ</text></run>
+            </runs>
+        </paragraph>
+
+        <heading level="4">
+            <runs>
+                <run><text>Currency Symbols</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <paragraph>
+            <runs>
+                <run><text>$ € £ ¥ ₽ ₹ ₩ ₪ ₫ ₦ ₱ ₴ ₸</text></run>
+            </runs>
+        </paragraph>
+
+        <heading level="4">
+            <runs>
+                <run><text>Punctuation</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <paragraph>
+            <runs>
+                <run><text>— – ― ‐ ‑ ‒ ‐</text></run>
+            </runs>
+        </paragraph>
+
+        <paragraph>
+            <runs>
+                <run><text>‘ ’ “ ” « » ‹ ›</text></run>
+            </runs>
+        </paragraph>
+
+        <paragraph>
+            <runs>
+                <run><text>© ® ™ ° ± × ÷</text></run>
+            </runs>
+        </paragraph>
+
+        <heading level="4">
+            <runs>
+                <run><text>Emoji</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <paragraph>
+            <runs>
+                <run><text>🎉 🚀 💡 ⭐ 🔥 ✅ ❌ ⚠️ 📊 📝 📈 📉 💎 🏆 🎯</text></run>
+            </runs>
+        </paragraph>
+
+        <heading level="4">
+            <runs>
+                <run><text>Language Characters</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <paragraph>
+            <runs>
+                <run><text>中文 日本語 한국어 Español Français Deutsch</text></run>
+            </runs>
+        </paragraph>
+
+        <paragraph>
+            <runs>
+                <run><text>Русский العربية हिन्दी ภาษาไทย</text></run>
+            </runs>
+        </paragraph>
+
+        <!-- ============================================================
+        CONCLUSION
+        ============================================================ -->
+
+        <heading level="2">
+            <runs>
+                <run><text>Conclusion</text><bold>true</bold></run>
+            </runs>
+        </heading>
+
+        <paragraph>
+            <runs>
+                <run><text>This sample document demonstrates all the features supported by the MD Converter MVP:</text></run>
+            </runs>
+        </paragraph>
+
+        <table style="Table Grid">
+            <header>
+                <row>
+                    <cell><text>Feature</text><bold>true</bold></cell>
+                    <cell><text>Status</text><bold>true</bold></cell>
+                    <cell><text>Notes</text><bold>true</bold></cell>
+                </row>
+            </header>
+            <body>
+                <row>
+                    <cell><text>Headings</text></cell>
+                    <cell><text>✅</text></cell>
+                    <cell><text>Level 1-6 supported</text></cell>
+                </row>
+                <row>
+                    <cell><text>Paragraphs</text></cell>
+                    <cell><text>✅</text></cell>
+                    <cell><text>Basic and formatted</text></cell>
+                </row>
+                <row>
+                    <cell><text>Lists</text></cell>
+                    <cell><text>✅</text></cell>
+                    <cell><text>Ordered, unordered, nested, task</text></cell>
+                </row>
+                <row>
+                    <cell><text>Tables</text></cell>
+                    <cell><text>✅</text></cell>
+                    <cell><text>Simple, aligned, formatted</text></cell>
+                </row>
+                <row>
+                    <cell><text>Code Blocks</text></cell>
+                    <cell><text>✅</text></cell>
+                    <cell><text>Multiple languages</text></cell>
+                </row>
+                <row>
+                    <cell><text>Inline Formatting</text></cell>
+                    <cell><text>✅</text></cell>
+                    <cell><text>Bold, italic, code</text></cell>
+                </row>
+                <row>
+                    <cell><text>Links</text></cell>
+                    <cell><text>✅</text></cell>
+                    <cell><text>External, internal, formatted</text></cell>
+                </row>
+                <row>
+                    <cell><text>Images</text></cell>
+                    <cell><text>✅</text></cell>
+                    <cell><text>Basic image support</text></cell>
+                </row>
+                <row>
+                    <cell><text>Blockquotes</text></cell>
+                    <cell><text>✅</text></cell>
+                    <cell><text>Single, nested, with content</text></cell>
+                </row>
+                <row>
+                    <cell><text>Horizontal Rules</text></cell>
+                    <cell><text>✅</text></cell>
+                    <cell><text>Multiple styles</text></cell>
+                </row>
+                <row>
+                    <cell><text>ASCII Diagrams</text></cell>
+                    <cell><text>✅</text></cell>
+                    <cell><text>Converted to SVG</text></cell>
+                </row>
+                <row>
+                    <cell><text>Nested Structures</text></cell>
+                    <cell><text>✅</text></cell>
+                    <cell><text>Complex nesting supported</text></cell>
+                </row>
+                <row>
+                    <cell><text>Unicode</text></cell>
+                    <cell><text>✅</text></cell>
+                    <cell><text>International characters</text></cell>
+                </row>
+                <row>
+                    <cell><text>Special Characters</text></cell>
+                    <cell><text>✅</text></cell>
+                    <cell><text>Proper escaping</text></cell>
+                </row>
+            </body>
+        </table>
+
+        <hr />
+
+        <paragraph alignment="center">
+            <runs>
+                <run><bold>true</bold><text>End of Document</text></run>
+            </runs>
+        </paragraph>
+
+    </section>
+</document>

@@ -1,0 +1,5 @@
+# 忽略 Python 的虚拟环境和缓存文件夹
+.venv/
+.pytest_cache/
+.ruff_cache/
+__pycache__/

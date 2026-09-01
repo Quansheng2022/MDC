@@ -1,0 +1,20 @@
+{
+  "spec_version": "1.0",
+  "spec_status": "FROZEN",
+  "checked_at": "2026-08-31T22:16:54+08:00",
+  "checked_by": "Release governance review (P9 closure)",
+  "mechanism": "hybrid-review",
+  "architecture_frozen": true,
+  "unauthorized_spec_changes": 0,
+  "spec_deviations": 0,
+  "regression": {
+    "status": "CHECKED",
+    "checked_at": "2026-08-31T22:16:54+08:00",
+    "baseline": "v1.0.0-baseline",
+    "current": "RC-20260831-04",
+    "baseline_failures": 0,
+    "current_failures": 0,
+    "new_failures": 0
+  },
+  "mechanism_note": "Manual compliance review per CANONICAL_SPEC.md: Canonical Spec <-> Implementation Plan <-> Current Production Tree"
+}

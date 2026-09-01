@@ -1,0 +1,12 @@
+{
+  "playwright_installed": true,
+  "chromium_launchable": true,
+  "backend": "playwright",
+  "canonical": true,
+  "playwright_version": "1.62.0",
+  "chromium_error": null,
+  "mermaid_source": "jsdelivr",
+  "mermaid_version": "10",
+  "checked_at": "2026-08-31T22:16:54+08:00",
+  "checker": "Release governance review (P9 closure)"
+}

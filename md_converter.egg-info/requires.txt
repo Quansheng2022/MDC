@@ -1,0 +1,4 @@
+click>=8.0.0
+markdown-it-py>=3.0.0
+python-docx>=0.8.10
+pyyaml>=5.0
