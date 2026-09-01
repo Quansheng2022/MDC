@@ -1,0 +1,13 @@
+{
+  "checked_at": "2026-09-01T23:02:21.2951570+08:00",
+  "check": "P10-COM-01 WINWORD orphan verification",
+  "pre_existing_winword_pids": [
+    27000
+  ],
+  "winword_processes_after_test": [
+    27000
+  ],
+  "test_created_orphan_count": 0,
+  "result": "PASS",
+  "note": "User-owned Word PID(s) open before test are excluded; only new WINWORD processes created by the COM test count as orphans."
+}

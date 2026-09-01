@@ -71,16 +71,20 @@ pip install -e .
 
 ### 额外依赖（可选）
 
-```bash
-# 安装所有可选依赖
-pip install -e .[all]
+### Mermaid / Golden Renderer
 
-# 安装特定功能
-pip install -e .[svg]       # SVG 渲染（cairosvg, wand, svglib）
-pip install -e .[mermaid]   # Mermaid 渲染（playwright）
-pip install -e .[win32]     # Windows COM 自动化（pywin32）
-pip install -e .[dev]       # 开发依赖（pytest, black, mypy 等）
+```powershell
+python -m pip install -e ".[mermaid]"
+python -m playwright install chromium
 ```
+
+### Windows Word COM
+
+```powershell
+python -m pip install -e ".[windows]"
+```
+
+> Word COM 用于 Windows 环境下自动刷新 TOC 页码。
 
 ### 生成 Release Evidence
 
@@ -124,7 +128,16 @@ golden_environment_report.json、full_pytest_summary.txt）；
 - `tools/rc_evidence_check.py`：RC Evidence Package 一致性检查
   （`RC_EVIDENCE/` 为唯一正式 Release Evidence 位置）。
 
-`RC_EVIDENCE/` 是唯一正式 RC Evidence Package（RC ID：RC-20260831-04）；
+`RC_EVIDENCE/` 是唯一正式 RC Evidence Package。
+
+Current Release Candidate:
+
+`RC-20260901-05`
+
+Supersedes:
+
+`RC-20260831-04`
+
 根目录不再保留 evidence 副本，防止多套证据漂移。
 
 ---
@@ -383,7 +396,7 @@ entry_points={
 ### 开发环境
 
 ```bash
-pip install -e .[dev]
+pip install -e .
 pre-commit install
 ```
 

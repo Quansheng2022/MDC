@@ -769,3 +769,91 @@ Acceptance Criteria:
   显式自定义样式中的 "justify" 映射仍保留（_normalize_alignment 不变）；
   冻结主题 YAML 不被修改。
 ```
+
+### IMP-020：Word COM Lifecycle Cleanup（P10-COM-01）
+
+```text
+Source:
+  SPEC-GOAL-006
+  SPEC-ARCH-005
+  SPEC-INV-006
+  SPEC-INV-012
+  ADR-007
+
+Classification:
+  DEFECT
+
+Severity:
+  P1 Release Blocker
+
+Problem:
+  Windows Word COM round-trip successfully completed TOC refresh
+  and DOCX Save, but COM teardown emitted Windows RPC fatal
+  diagnostics:
+
+    0x800706BE
+    0x800706BA
+
+  The defect was isolated to Word COM proxy lifecycle cleanup.
+
+Allowed Scope:
+  md_converter/renderer/post_processor.py
+  md_converter/tests/test_word_com_final_artifact.py
+
+Forbidden Scope:
+  Parser
+  AST
+  Pipeline
+  NormalizePass
+  AsciiToMermaidPass
+  DiagramPass semantics
+  DecisionEngine
+  LayoutPlan
+  WordRenderer
+  WordWriter
+  Theme V1.5
+  Golden baseline
+  Acceptance Corpus
+  release_evidence.py predicates
+  CANONICAL_SPEC.md
+
+Implemented Change:
+  - Reset COM proxy state at each retry.
+  - Release TOC proxy immediately after update.
+  - Release Paragraph proxies before Document close.
+  - Release Style proxies after each iteration.
+  - Enforce cleanup order:
+
+        Child COM proxies
+              ↓
+        Document Close
+              ↓
+        Document proxy release
+              ↓
+        Word.Application Quit
+              ↓
+        Word proxy release
+
+Required Evidence:
+  P10_COM01_before.txt
+  P10_COM01_after_1.txt
+  P10_COM01_run_1.txt
+  P10_COM01_run_2.txt
+  P10_COM01_run_3.txt
+  RC_EVIDENCE/full_pytest_summary.txt
+
+Acceptance Criteria:
+  Dedicated Word COM test = PASS.
+  Three consecutive Word COM tests = 3/3 PASS.
+  Windows fatal exception = 0.
+  0x800706BE = 0.
+  0x800706BA = 0.
+  Full Regression = 263/263 PASS.
+  Required skip = 0.
+  New failures = 0.
+  Architecture change = 0.
+  Canonical Specification change = 0.
+
+Status:
+  IMPLEMENTED / VERIFIED
+```
