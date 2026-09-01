@@ -1,0 +1,7 @@
+{
+  "release": "v1.0.0",
+  "rc_id": "RC-20260901-05",
+  "p10_com_01_commit": "ad4317891678ae6114ab65c9ca606aa37fe2d915",
+  "release_evidence_dir": "RC_EVIDENCE",
+  "note": "P10-COM-01 code commit SHA is recorded here (not inside release_evidence.json) to avoid evidence self-reference."
+}

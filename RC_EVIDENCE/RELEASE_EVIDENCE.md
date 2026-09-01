@@ -9,12 +9,12 @@ Theme Version: QS-Word-Default-V1.5
 Acceptance Baseline: AC001-AC015
 Governance Baseline: P0-01..P0-08, P1-09, P1-10
 Commit: n/a
-Build ID: 09f5c92c15d5
-Generated At: 2026-08-31T14:19:15.860118+00:00
+Build ID: 8dfe51eb8df2
+Generated At: 2026-09-01T10:52:20.105243+00:00
 
 Governance:
-  Checked At: 2026-08-31T22:16:54+08:00
-  Checked By: Release governance review (P9 closure)
+  Checked At: 2026-09-01T18:39:30+08:00
+  Checked By: P10-COM-01 release governance review (Word COM lifecycle fix)
   Mechanism: hybrid-review
 
 Architecture:
@@ -41,12 +41,12 @@ Repair:
 Regression:
   Status: CHECKED
   Baseline: v1.0.0-baseline
-  Current: RC-20260831-04
+  Current: RC-20260901-05
   New Failures: 0
 
 Known Warnings: 0
 Spec Deviations: 0
-Artifact SHA256: f75c1dd42c5d604223cd2155947ffac65c273bbbdc8ab487a400cd9ddd783182
+Artifact SHA256: f01067580c6182bfda87de69e528866956af9a6efe4206c3aa9ca111b0f43011
 
 Result:
   RELEASE_ELIGIBLE

@@ -1,4 +1,29 @@
-........................................................................ [ 27%]
-........................................................................ [ 55%]
-........................................................................ [ 83%]
-..........................................                               [100%]
+============================= test session starts =============================
+platform win32 -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\Users\Quansheng\Documents\projects\MD_Converter
+configfile: pyproject.toml
+plugins: cov-7.1.0
+collected 263 items
+
+md_converter\tests\test_acceptance.py .................................  [ 12%]
+md_converter\tests\test_ascii_mermaid_pass.py ............               [ 17%]
+md_converter\tests\test_ascii_mermaid_service.py ....................... [ 25%]
+.....                                                                    [ 27%]
+md_converter\tests\test_compiler_configuration.py .                      [ 28%]
+md_converter\tests\test_config.py ......                                 [ 30%]
+md_converter\tests\test_golden.py .                                      [ 30%]
+md_converter\tests\test_golden_environment.py .                          [ 31%]
+md_converter\tests\test_heading_font_sizes.py ..                         [ 31%]
+md_converter\tests\test_language_detection.py .......                    [ 34%]
+md_converter\tests\test_layout_plan.py ...........                       [ 38%]
+md_converter\tests\test_list_numbering.py ..                             [ 39%]
+md_converter\tests\test_parser.py .....                                  [ 41%]
+md_converter\tests\test_post_processor.py ....                           [ 42%]
+md_converter\tests\test_quality_gate.py .............................    [ 53%]
+md_converter\tests\test_release_evidence.py ............................ [ 64%]
+.......................................................................  [ 91%]
+md_converter\tests\test_renderer_v15.py .............                    [ 96%]
+md_converter\tests\test_theme_v15.py ........                            [ 99%]
+md_converter\tests\test_word_com_final_artifact.py .                     [100%]
+
+======================= 263 passed in 497.94s (0:08:17) =======================
