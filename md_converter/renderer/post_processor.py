@@ -567,9 +567,14 @@ class DocxPostProcessor:
             return
 
         max_retries = 3
-        word = None
-        doc = None
         for attempt in range(max_retries):
+            # WP-COM-02/07: 每次 retry 都从完全干净的 COM object state 开始，
+            # 不允许 attempt #1 的 proxy 泄漏到 attempt #2
+            word = None
+            doc = None
+            toc = None
+            paragraph = None
+            style = None
             try:
                 abs_path = str(docx_path.resolve())
                 print(f"  📄 正在打开: {abs_path} (尝试 {attempt + 1}/{max_retries})")
@@ -586,8 +591,12 @@ class DocxPostProcessor:
                     print("  ⚠️ 未找到 TOC 域，跳过 Word 刷新")
                     return
                 for i in range(1, toc_count + 1):
-                    toc = doc.TablesOfContents(i)
-                    toc.Update()
+                    try:
+                        toc = doc.TablesOfContents(i)
+                        toc.Update()
+                    finally:
+                        # WP-COM-03: TOC proxy 生命周期 = 单次 update 操作
+                        toc = None
                 print(f"  ✓ 刷新了 {toc_count} 个 TOC")
 
                 # 更新所有字段
@@ -597,36 +606,42 @@ class DocxPostProcessor:
                 preferred_fonts = ["Microsoft YaHei", "Aptos Display", "Arial"]
 
                 toc_title_found = False
-                for p in doc.Paragraphs:
-                    style_name = p.Style.NameLocal if p.Style else ""
+                for paragraph in doc.Paragraphs:
+                    style_name = paragraph.Style.NameLocal if paragraph.Style else ""
                     if style_name in ("TOC Heading", "目录标题", "TOC 标题"):
-                        p.Alignment = 1
-                        p.Range.Font.Bold = True
-                        p.Range.Font.Size = 18
+                        paragraph.Alignment = 1
+                        paragraph.Range.Font.Bold = True
+                        paragraph.Range.Font.Size = 18
                         for font_name in preferred_fonts:
                             try:
-                                p.Range.Font.Name = font_name
+                                paragraph.Range.Font.Name = font_name
                                 break
                             except Exception:
                                 continue
                         toc_title_found = True
+                        # WP-COM-04: break 前释放 paragraph proxy
+                        paragraph = None
                         break
+                # WP-COM-04: 循环正常结束路径也释放 paragraph proxy
+                paragraph = None
 
                 if not toc_title_found:
-                    for p in doc.Paragraphs:
-                        text = p.Range.Text.strip()
+                    for paragraph in doc.Paragraphs:
+                        text = paragraph.Range.Text.strip()
                         if text in ("目录", "Table of Contents", "TOC"):
-                            p.Alignment = 1
-                            p.Range.Font.Bold = True
-                            p.Range.Font.Size = 18
+                            paragraph.Alignment = 1
+                            paragraph.Range.Font.Bold = True
+                            paragraph.Range.Font.Size = 18
                             for font_name in preferred_fonts:
                                 try:
-                                    p.Range.Font.Name = font_name
+                                    paragraph.Range.Font.Name = font_name
                                     break
                                 except Exception:
                                     continue
                             toc_title_found = True
+                            paragraph = None
                             break
+                    paragraph = None
 
                 # ✅ 设置 TOC 条目字体（所有级别）
                 for i in range(1, 10):
@@ -642,6 +657,9 @@ class DocxPostProcessor:
                                     continue
                     except Exception:
                         pass
+                    finally:
+                        # WP-COM-05: 每个 style proxy 仅在当前 iteration 有效
+                        style = None
 
                 doc.Save()
                 print("  ✓ TOC 页码已刷新（Word）")
@@ -655,16 +673,27 @@ class DocxPostProcessor:
                 else:
                     print(f"  ✗ 所有重试均失败: {e}")
             finally:
-                # 无论成功失败都释放 Word 实例与文档句柄，避免锁住文件
+                # WP-COM-06: 释放顺序 child proxies -> document -> application
+
+                # 1. Child COM proxies（先于 Document / Application 释放）
+                toc = None
+                paragraph = None
+                style = None
+
+                # 2. Document
                 try:
                     if doc is not None:
                         doc.Close(False)
                 except Exception:
                     pass
+                finally:
+                    doc = None
+
+                # 3. Word Application
                 try:
                     if word is not None:
                         word.Quit()
                 except Exception:
                     pass
-                doc = None
-                word = None
+                finally:
+                    word = None

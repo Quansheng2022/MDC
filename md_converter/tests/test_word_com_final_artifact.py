@@ -26,14 +26,22 @@ def _word_com_reachable() -> bool:
         import win32com.client
     except Exception:
         return False
+    word = None
     try:
         word = win32com.client.DispatchEx("Word.Application")
     except Exception:
         return False
     try:
+        # 与生产路径 _update_toc_with_word 相同的初始化，
+        # 避免 Word 尚未完成启动时立即 Quit 造成 RPC 竞态
+        word.Visible = False
+        word.DisplayAlerts = 0
         word.Quit()
     except Exception:
         pass
+    finally:
+        # 与 P10-COM-01 相同：proxy 显式释放，避免残留 COM proxy
+        word = None
     return True
 
 
