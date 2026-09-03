@@ -951,7 +951,17 @@ Acceptance Criteria:
   `md-converter-check` 可执行且 required 依赖全绿时 exit 0。
 
 Status:
-  IMPLEMENTED / VERIFIED（PKG-META-01..14 PASS；277/277 full regression；
-  wheel/sdist 构建成功且含 py.typed + default_v1_5.yaml）
-  待 WP-PKG-08 Git Gate 收口（含 Git exact-scope commit）后 CLOSE
+  CLOSED / ACCEPTED
+
+Closure Commit:
+  cae92ff99accac94ce7dd2356cc470072efecdba
+
+Human Acceptance:
+  APPROVED
+
+Packaging Authorities:
+  1
+
+Metadata Mismatch:
+  0
 ```

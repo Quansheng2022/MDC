@@ -8,11 +8,11 @@
 | Phase | **P10 — v1.0.0 Production Release** |
 | Spec 版本 | 1.0（本文档为 P10 开发规格，随 P10 进度维护） |
 | 创建日期 | 2026-09-02 |
-| 当前状态 | **IN PROGRESS** |
+| 当前状态 | **IN PROGRESS — PRE-TAG**（P10-19 待人工 tag 授权） |
 | Canonical Authority | `CANONICAL_SPEC.md`（1.0 FROZEN，本阶段不修改） |
 | 架构依据 | `Doc/ARCHITECTURE.md`、ADR-001..009 |
 | 实施追踪 | `IMPLEMENTATION_PLAN.md`（本阶段条目：IMP-021） |
-| 基线 | Git HEAD `e5c4ccb0c9c8dc436ab603d45cf5608bce488264`（Clean） |
+| 基线 | P10 start `e5c4ccb…`；P10-PKG-01 closure `cae92ff…`；P10-18 evidence HEAD `ce766a9…` |
 
 ---
 
@@ -24,15 +24,19 @@ P10-COM-01 缺陷关闭的代码，正式发布为 **v1.0.0 Production Release**
 ```text
 Source Freeze（已完成）
     ↓
-P10-PKG-01  Packaging Single Authority（当前 P1 Release Blocker）
+P10-PKG-01  Packaging Single Authority — ✅ CLOSED / ACCEPTED（cae92ff）
     ↓
-P10-09..10  Build wheel + sdist / Artifact Integrity（SHA256）
+P10-09..10  Build wheel + sdist / Artifact Integrity — ✅ PASS（doc closure 后 Final Rebuild）
     ↓
-P10-11..13  Clean Install / CLI Smoke / Representative DOCX
+P10-11..13  Clean Install / CLI Smoke / Representative DOCX — ✅ PASS
     ↓
-P10-14..17  Release Notes / Install Guide / Limitations / Manifest
+P10-14..17  Release Notes / Install Guide / Limitations / Manifest — ✅ COMPLETE
     ↓
-P10-18..24  Final Regression → Tag v1.0.0 → Archive → Post-release Verify → P10 CLOSED
+P10-18  Final Regression — ✅ PASS / CLOSED（277/277）
+    ↓
+P10-19  Tag v1.0.0 — ⏳ WAITING HUMAN TAG AUTHORIZATION（DO NOT TAG）
+    ↓
+P10-20..24  Archive / Post-release Verify / P10 CLOSED
 ```
 
 ### 1.1 范围冻结（Scope Freeze）
@@ -88,7 +92,7 @@ P10-18..24  Final Regression → Tag v1.0.0 → Archive → Post-release Verify 
 
 ---
 
-## 3. P10-PKG-01 — Packaging Single Authority（当前 P1 Release Blocker）
+## 3. P10-PKG-01 — Packaging Single Authority（✅ CLOSED / ACCEPTED — `cae92ff`）
 
 ### 3.1 目标
 
@@ -107,8 +111,8 @@ wheel / sdist 内容与声明一致。
 | 37 | WP-PKG-05 Script Validation | `md-converter` / `md-converter-check` / `md-converter-release-evidence` metadata 正确 | ✅ IMPLEMENTED（含新增 `cli.check_dependencies`；PKG-META-04/14） |
 | 38 | WP-PKG-06 Package Data | `py.typed`；theme YAML；必要资源进入 wheel/sdist | ✅ VERIFIED（wheel/sdist 均含 `py.typed` + `default_v1_5.yaml`） |
 | 39 | WP-PKG-07 Metadata Tests | Build metadata 可解析；wheel metadata 与 pyproject 一致；无 duplicate authority | ✅ PASS（PKG-META-01..14；wheel METADATA 比对一致） |
-| 40 | WP-PKG-08 Git Gate | exact diff；authorized scope；clean tree；commit SHA | ⏳ |
-| 41 | P10-PKG-01 DoD | Packaging authorities=1；metadata mismatch=0；README mismatch=0 | ⏳ |
+| 40 | WP-PKG-08 Git Gate | exact diff；authorized scope；clean tree；commit SHA | ✅ PASS / CLOSED（closure `cae92ff`） |
+| 41 | P10-PKG-01 DoD | Packaging authorities=1；metadata mismatch=0；README mismatch=0 | ✅ PASS / CLOSED |
 
 > **注意：P10-PKG-01 不得重新打开 P10-COM-01。**
 
@@ -146,17 +150,17 @@ wheel / sdist 内容与声明一致。
 
 | S/N | Phase# | 任务 | WP | 验收清单 | 状态 |
 | --: | --- | --- | --- | --- | --- |
-| 42 | P10-09 | Build Clean Package | WP-REL-09 Build | `python -m build`；wheel + sdist；build exit=0；无 source-tree 污染 | ⏳ BLOCKED BY PKG-01 |
-| 43 | P10-10 | Artifact Integrity | WP-REL-10 SHA256 | wheel/sdist SHA256；manifest 记录 filename/size/hash | ⏳ |
-| 44 | P10-11 | Clean Install | WP-REL-11 Clean Venv | 全新 venv；从 wheel 安装；禁止 editable；依赖解析成功 | ⏳ |
-| 45 | P10-12 | CLI Smoke Test | WP-REL-12 CLI Smoke | `md-converter --help`；`md-converter-check`；基本转换；退出码正确 | ⏳ |
-| 46 | P10-13 | Representative Production Conversion | WP-REL-13 Real DOCX | 真实 Markdown → DOCX；TOC/表格/样式/图片/diagram 检查；FinalArtifactQA PASS | ⏳ |
-| 47 | P10-14 | Release Notes | WP-DOC-14 | v1.0.0 scope；主要能力；release fixes；known limitations；breaking changes=None | ⏳ |
-| 48 | P10-15 | Installation Guide | WP-DOC-15 | Python；base；`.[windows]`；`.[mermaid]`；Chromium；Word requirements | ⏳ |
-| 49 | P10-16 | Known Limitations | WP-DOC-16 | Mermaid 外部依赖；Word COM Windows-only；未支持 footnotes/cross-ref/PDF/HTML | ⏳ |
-| 50 | P10-17 | Release Manifest | WP-REL-17 | software/spec/arch/theme versions；RC05；code/closure SHA；package hashes；build env | 🟡 PARTIAL（`RELEASE_MANIFEST_v1.0.0.json` 待补全） |
-| 51 | P10-18 | Final Release Regression | WP-REL-18 Final Gate | 从最终 source HEAD 全量回归；全部 PASS；required skip=0；fatal=0 | ⏳ |
-| 52 | P10-19 | Git Tag | WP-REL-19 Tag | clean tree；annotated tag `v1.0.0` 指向 approved release commit | ⏳ **DO NOT TAG YET** |
+| 42 | P10-09 | Build Clean Package | WP-REL-09 Build | `python -m build`；wheel + sdist；build exit=0；无 source-tree 污染 | ✅ PASS（doc closure 后 Final Rebuild） |
+| 43 | P10-10 | Artifact Integrity | WP-REL-10 SHA256 | wheel/sdist SHA256；manifest 记录 filename/size/hash | ✅ PASS（旧 hash superseded；final hash 以 Final Rebuild 为准） |
+| 44 | P10-11 | Clean Install | WP-REL-11 Clean Venv | 全新 venv；从 wheel 安装；禁止 editable；依赖解析成功 | ✅ PASS |
+| 45 | P10-12 | CLI Smoke Test | WP-REL-12 CLI Smoke | `md-converter --help`；`md-converter-check`；基本转换；退出码正确 | ✅ PASS |
+| 46 | P10-13 | Representative Production Conversion | WP-REL-13 Real DOCX | 真实 Markdown → DOCX；TOC/表格/样式/图片/diagram 检查；FinalArtifactQA PASS | ✅ TECHNICAL PASS；HUMAN VISUAL ACCEPTANCE：OPEN（不伪造） |
+| 47 | P10-14 | Release Notes | WP-DOC-14 | v1.0.0 scope；主要能力；release fixes；known limitations；breaking changes=None | ✅ COMPLETE；HUMAN APPROVAL OPEN |
+| 48 | P10-15 | Installation Guide | WP-DOC-15 | Python；base；`.[windows]`；`.[mermaid]`；Chromium；Word requirements | ✅ COMPLETE；HUMAN APPROVAL OPEN |
+| 49 | P10-16 | Known Limitations | WP-DOC-16 | Mermaid 外部依赖；Word COM Windows-only；未支持 footnotes/cross-ref/PDF/HTML | ✅ COMPLETE；HUMAN APPROVAL OPEN |
+| 50 | P10-17 | Release Manifest | WP-REL-17 | software/spec/arch/theme versions；RC05；code/closure SHA；package hashes；build env | 🟡 TECHNICALLY COMPLETE；HUMAN METADATA APPROVAL OPEN（Final Rebuild 后更新） |
+| 51 | P10-18 | Final Release Regression | WP-REL-18 Final Gate | 从最终 source HEAD 全量回归；全部 PASS；required skip=0；fatal=0 | ✅ PASS / CLOSED（277/277；evidence `RC_EVIDENCE/P10_FINAL_REGRESSION.txt`） |
+| 52 | P10-19 | Git Tag | WP-REL-19 Tag | clean tree；annotated tag `v1.0.0` 指向 approved release commit | ⏳ **WAITING HUMAN TAG AUTHORIZATION — DO NOT TAG** |
 | 53 | P10-20 | Final Distribution Package | WP-REL-20 | wheel + sdist + Release Notes + Install Guide + limitations + manifest + RC Evidence | ⏳ |
 | 54 | P10-21 | Release Approval | WP-REL-21 | 所有 P10 required gates PASS；known blockers=0；spec deviations=0 | ⏳ |
 | 55 | P10-22 | Publish / Archive | WP-REL-22 | Git tag；release bundle；RC Evidence immutable archive；SHA records | ⏳ |
@@ -221,6 +225,10 @@ Acceptance Criteria:
     md_converter/renderer/themes/default_v1_5.yaml
   Development Status classifier = 5 - Production/Stable（v1.0.0）
   MANIFEST.in 不再引用不存在的文件/目录
+
+Status:
+  CLOSED / ACCEPTED（closure commit `cae92ff99accac94ce7dd2356cc470072efecdba`；
+  详细见 IMPLEMENTATION_PLAN.md IMP-021）
 ```
 
 ---
@@ -262,5 +270,9 @@ Acceptance Criteria:
 | 2026-09-02 | Artifact SHA256 | wheel `7C0B4203…61EAE2`；sdist `D481B554…AADC4E` |
 | 2026-09-02 | Full Regression | ✅ 277/277 PASS；required skip=0（exit 0） |
 | 2026-09-02 | 版本一致性复核（P10-03） | ✅ 1.0.0 × 4 处一致 |
-| — | WP-PKG-08 Git Gate / P10-PKG-01 DoD | ⏳ |
-| — | P10-09..24 Release Chain | ⏳ |
+| 2026-09-03 | P10-PKG-01 Git Closure / DoD | ✅ CLOSED / ACCEPTED（closure `cae92ff`） |
+| 2026-09-03 | P10-09..13（build / integrity / install / smoke / DOCX） | ✅ PASS（P10-13 human visual gate 状态见 §4） |
+| 2026-09-03 | P10-14..16 release docs | ✅ COMPLETE（committed `300c865`；本批 status sync 待人工批准） |
+| 2026-09-03 | P10-17 manifest | 🟡 committed `79fc000`；Final Rebuild 后待人工 metadata 批准 |
+| 2026-09-03 | P10-18 Final Regression | ✅ PASS / CLOSED（277/277；evidence committed `ce766a9`） |
+| — | P10-19 v1.0.0 Tag | ⏳ WAITING HUMAN TAG AUTHORIZATION |

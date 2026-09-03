@@ -93,7 +93,7 @@ DOCX
 | CLI smoke（help / check / basic conversion / evidence help） | PASS |
 | Representative production DOCX（TOC/table/image/Mermaid/ASCII/COM） | PASS |
 | Development full regression（pre-release HEAD） | 277/277 PASS |
-| P10-18 final release regression | 在 tag 前执行，结果记入 P10 evidence |
+| P10-18 Final Release Regression | 277/277 PASS；Failed 0；Required Skip 0；Fatal COM Diagnostics 0 |
 
 ## Breaking Changes
 
