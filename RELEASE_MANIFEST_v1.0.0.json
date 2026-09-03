@@ -1,7 +1,26 @@
 {
   "release": "v1.0.0",
-  "rc_id": "RC-20260901-05",
+  "package_source_commit": "300c865f6d6502760d6de9ba22eec57a2b1e4fa4",
+  "p10_pkg_01_closure_commit": "cae92ff99accac94ce7dd2356cc470072efecdba",
   "p10_com_01_commit": "ad4317891678ae6114ab65c9ca606aa37fe2d915",
-  "release_evidence_dir": "RC_EVIDENCE",
-  "note": "P10-COM-01 code commit SHA is recorded here (not inside release_evidence.json) to avoid evidence self-reference."
+  "rc_id": "RC-20260901-05",
+  "spec_version": "1.0",
+  "architecture_version": "2.0",
+  "theme_version": "QS-Word-Default-V1.5",
+  "wheel": {
+    "filename": "md_converter-1.0.0-py3-none-any.whl",
+    "size": 300076,
+    "sha256": "5896A1D16BBA0213DEF9D7DE368B465CF7771B17340CE5738633579509100BD6"
+  },
+  "sdist": {
+    "filename": "md_converter-1.0.0.tar.gz",
+    "size": 252017,
+    "sha256": "8C9A2AFB1E294ECD2DEACB215BA0F00E2DF111169D70EDEB9B5702EB5465942D"
+  },
+  "validation": {
+    "clean_install": "PASS",
+    "cli_smoke": "PASS",
+    "representative_docx": "PASS"
+  },
+  "note": "package_source_commit is the source HEAD whose tree produced these artifacts; this manifest's own commit SHA is recorded externally by the closure record, not inside the manifest."
 }
