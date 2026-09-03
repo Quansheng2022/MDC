@@ -1,6 +1,6 @@
 {
   "release": "v1.0.0",
-  "package_source_commit": "300c865f6d6502760d6de9ba22eec57a2b1e4fa4",
+  "package_source_commit": "876049542b5023034da732cce73b5ba404176486",
   "p10_pkg_01_closure_commit": "cae92ff99accac94ce7dd2356cc470072efecdba",
   "p10_com_01_commit": "ad4317891678ae6114ab65c9ca606aa37fe2d915",
   "rc_id": "RC-20260901-05",
@@ -9,13 +9,13 @@
   "theme_version": "QS-Word-Default-V1.5",
   "wheel": {
     "filename": "md_converter-1.0.0-py3-none-any.whl",
-    "size": 300076,
-    "sha256": "5896A1D16BBA0213DEF9D7DE368B465CF7771B17340CE5738633579509100BD6"
+    "size": 300086,
+    "sha256": "C97CA23C90E5807ABB0B17E629C0E174F302D7517120AA21679BDFFC97BCE203"
   },
   "sdist": {
     "filename": "md_converter-1.0.0.tar.gz",
-    "size": 252017,
-    "sha256": "8C9A2AFB1E294ECD2DEACB215BA0F00E2DF111169D70EDEB9B5702EB5465942D"
+    "size": 252025,
+    "sha256": "536ABBCA78833ECC6DBA6209E04D39D0F37DE031F4095C15112214E553B19C98"
   },
   "validation": {
     "clean_install": "PASS",
