@@ -6,3 +6,8 @@ __pycache__/
 input/
 output/
 Merged_Code/
+
+# P10-PKG-01: 生成的 packaging 产物不属于源码权威
+build/
+dist/
+*.egg-info/

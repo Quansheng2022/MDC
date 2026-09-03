@@ -1,12 +1,10 @@
 # MANIFEST.in
+# sdist 资源清单：与 pyproject.toml 单一 packaging authority 对齐
 include README.md
-include LICENSE
-include CHANGELOG.md
-include CONTRIBUTING.md
 include pyproject.toml
-include requirements.txt
+include md_converter/py.typed
 recursive-include md_converter *.py
-recursive-include tests *.py
-recursive-include tests/golden *.md
-recursive-include tests/golden *.xml
-include examples/*.md
+recursive-include md_converter *.yaml
+recursive-include md_converter/tests *.md
+recursive-include md_converter/tests *.json
+recursive-include md_converter/tests *.xml

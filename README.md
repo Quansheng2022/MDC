@@ -50,8 +50,7 @@
 ### 依赖
 
 - Python 3.8+
-- [Pandoc](https://pandoc.org/installing.html) (用于部分后处理，可选但推荐)
-- Word COM (Windows) 用于 TOC 自动更新（可选）
+- Word COM (Windows) 用于 TOC 自动更新（可选，`pip install -e ".[windows]"`）
 
 ### 安装步骤
 
@@ -377,14 +376,12 @@ class MyCustomPass(TransformPass):
 
 ### 注册插件
 
-在 `setup.py` 中添加 entry_points：
+在 `pyproject.toml` 的 `[project.entry-points."md_converter.passes"]`
+中注册：
 
-```python
-entry_points={
-    'md_converter.passes': [
-        'my_pass = mypackage.my_plugin:MyCustomPass',
-    ],
-}
+```toml
+[project.entry-points."md_converter.passes"]
+my_pass = "mypackage.my_plugin:MyCustomPass"
 ```
 
 ---
@@ -396,8 +393,7 @@ entry_points={
 ### 开发环境
 
 ```bash
-pip install -e .
-pre-commit install
+pip install -e ".[dev]"
 ```
 
 ### 代码规范

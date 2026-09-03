@@ -336,3 +336,61 @@ def release_evidence(
     if evidence.result != "RELEASE_ELIGIBLE":
         click.echo("❌ Release BLOCKED by evidence rules.", err=True)
         sys.exit(1)
+
+
+@click.command()
+@click.option(
+    "--json-output",
+    is_flag=True,
+    help="Print the dependency report as JSON.",
+)
+def check_dependencies(json_output: bool) -> None:
+    """
+    Check that MD Converter runtime dependencies are installed.
+
+    Required: click / markdown-it-py / python-docx / PyYAML.
+    Optional: pywin32（Windows Word COM）/ playwright（Mermaid renderer）。
+
+    Exit code is 0 when all required dependencies are available, 1 otherwise.
+
+    \b
+    Examples:
+        md-converter-check
+        md-converter-check --json-output
+    """
+    from importlib import metadata
+
+    def _status(dist_name: str) -> dict:
+        """Return installed/version status for one distribution."""
+        try:
+            version = metadata.version(dist_name)
+            return {"distribution": dist_name, "installed": True, "version": version}
+        except metadata.PackageNotFoundError:
+            return {"distribution": dist_name, "installed": False, "version": None}
+
+    required_names = ("click", "markdown-it-py", "python-docx", "pyyaml")
+    optional_names = ("playwright", "pywin32")
+
+    required = [_status(name) for name in required_names]
+    optional = [_status(name) for name in optional_names]
+    all_required_ok = all(item["installed"] for item in required)
+    report = {"required": required, "optional": optional, "ok": all_required_ok}
+
+    if json_output:
+        click.echo(json.dumps(report, indent=2, ensure_ascii=False))
+    else:
+        for item in required:
+            mark = "✅" if item["installed"] else "❌"
+            version = item["version"] or "missing"
+            click.echo(f"  {mark} {item['distribution']} {version}")
+        for item in optional:
+            mark = "✅" if item["installed"] else "⚠️"
+            version = item["version"] or "not installed (optional)"
+            click.echo(f"  {mark} {item['distribution']} {version}")
+        if all_required_ok:
+            click.echo("✅ All required dependencies are available.")
+        else:
+            click.echo("❌ Missing required dependencies.", err=True)
+
+    if not all_required_ok:
+        sys.exit(1)

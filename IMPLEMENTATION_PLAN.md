@@ -857,3 +857,101 @@ Acceptance Criteria:
 Status:
   IMPLEMENTED / VERIFIED
 ```
+
+### IMP-021：Packaging Single Authority（P10-PKG-01）
+
+```text
+Source:
+  SPEC（Software Version authority：pyproject.toml / __version__）
+  SPEC-QA-004
+  SPEC-INV-010
+  ADR-007
+
+Classification:
+  DEFECT
+
+Category:
+  RELEASE_PACKAGING
+
+Severity:
+  P1 Release Blocker
+
+Problem:
+  pyproject.toml 与 setup.py 并存且互相漂移：
+  dependency/extras/scripts/theme entry-points/package-data 双重权威。
+  实际代码不再 import pypandoc / typing-extensions；runtime 默认主题为
+  V15Theme（default_v1_5.yaml），但 legacy setup.py 的 default entry-point
+  指向 DefaultTheme；md-converter-release-evidence script 仅存在于
+  pyproject.toml；md-converter-check script 指向 cli.py 中不存在的
+  check_dependencies（WP-PKG-05 缺陷）；py.typed 声明存在但文件缺失；
+  MANIFEST.in 引用不存在的
+  LICENSE / CHANGELOG / CONTRIBUTING / requirements.txt / examples 与
+  错误路径的 tests；README 仍指导“在 setup.py 中添加 entry_points”并声称
+  Pandoc 可选依赖；AGENTS.md 声明 `pip install -e .[dev]` 但 pyproject
+  无 dev extra（仅 legacy setup.py 有）。
+
+Allowed Scope:
+  pyproject.toml
+  MANIFEST.in
+  setup.py（删除）
+  README.md（packaging/install/plugin 文档对齐）
+  md_converter/cli.py（新增 check_dependencies，修复 md-converter-check
+    缺失目标；纯依赖可用性报告，不改编译逻辑）
+  .gitignore（build/ dist/ *.egg-info/ 忽略）
+  md_converter.egg-info（git rm --cached：生成 metadata 不再入库）
+  md_converter/py.typed（新建 PEP 561 marker）
+  md_converter/tests/test_packaging_metadata.py（新建）
+  IMPLEMENTATION_PLAN.md
+  Phase_10_Development_Specification.md
+
+Forbidden Scope:
+  CANONICAL_SPEC.md（FROZEN）
+  Parser / AST / Pipeline / DiagramPass semantics / DecisionEngine /
+  LayoutPlan / WordRenderer / WordWriter / PostProcessor
+  Theme V1.5（default_v1_5.yaml）
+  Golden baseline / Acceptance Corpus
+  release_evidence.py predicates
+  RC_EVIDENCE/ 既有证据
+  chk_dependency_packages.py（额外发现，只报告不修改）
+
+Implemented Change:
+  - pyproject.toml 为唯一 production packaging authority。
+  - 删除 legacy setup.py（不再维护第二套 dependencies/extras）。
+  - 新增 cli.check_dependencies（md-converter-check 脚本目标，
+    importlib.metadata 探测 required/optional 依赖，exit 0/1）。
+  - package-data 收口：py.typed + renderer/themes/*.yaml。
+  - 新建 md_converter/py.typed（PEP 561 marker）。
+  - MANIFEST.in 对齐实际 sdist 资源，清除不存在文件引用。
+  - extras 收口：windows / mermaid / dev；README 与 AGENTS.md 声称的
+    `.[windows]` `.[mermaid]` `.[dev]` 全部可解析。
+  - scripts 3 个（md-converter / md-converter-check /
+    md-converter-release-evidence）与 entry-points 校验一致。
+  - Development Status classifier -> 5 - Production/Stable。
+  - license 字段改 SPDX（"MIT"），移除 License classifier（PEP 639，
+    build-system setuptools>=77），构建零 deprecation warning。
+  - .gitignore 增加 build/ dist/ *.egg-info/；egg-info 停止入库。
+  - README：插件注册改 pyproject [project.entry-points]；删除 Pandoc
+    声称；dev 安装命令示例补齐。
+  - 新增 metadata 契约测试（PKG-META-01..12）。
+
+Required Evidence:
+  PKG-META-01..14（test_packaging_metadata.py 全绿）
+  wheel / sdist 构建成功且包含 py.typed + default_v1_5.yaml
+  Full pytest 回归（P10-18 最终门执行；本 WP 内 metadata 套件全绿）
+
+Acceptance Criteria:
+  Packaging authorities = 1（仅 pyproject.toml）。
+  pyproject / wheel metadata / README 三方一致（metadata mismatch=0）。
+  `pip install -e ".[dev]"` 可解析（dev extra 存在）。
+  3 个 console scripts 与 entry-points 可导入解析。
+  wheel 与 sdist 内含 md_converter/py.typed 与
+    md_converter/renderer/themes/default_v1_5.yaml。
+  MANIFEST.in 不再引用不存在的文件/目录。
+  README 不再指导 setup.py entry_points，不再声称未声明的 Pandoc 依赖。
+  `md-converter-check` 可执行且 required 依赖全绿时 exit 0。
+
+Status:
+  IMPLEMENTED / VERIFIED（PKG-META-01..14 PASS；277/277 full regression；
+  wheel/sdist 构建成功且含 py.typed + default_v1_5.yaml）
+  待 WP-PKG-08 Git Gate 收口（含 Git exact-scope commit）后 CLOSE
+```
