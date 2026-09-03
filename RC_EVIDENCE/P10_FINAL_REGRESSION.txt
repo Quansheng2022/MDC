@@ -1,0 +1,44 @@
+P10-18 FINAL RELEASE REGRESSION EVIDENCE
+========================================
+
+Release:             v1.0.0
+Date:                2026-09-03
+Source HEAD:         79fc000729a2ca9071ddd12e328d25f5b023bfcc
+RC Baseline:         RC-20260901-05 (historical, immutable)
+
+Environment:
+  OS:                Windows
+  Python:            3.12.13 (project .venv)
+  Playwright:        1.62.0
+  Chromium:          playwright-managed headless shell
+  Word:              Windows Word (COM)
+
+Canonical Golden Environment Preflight: PASS
+Golden Verification:                     PASS (renderer_backend=playwright)
+
+Final Full Regression:
+  Command:    python -m pytest md_converter/tests -rs
+  Collected:  277
+  Passed:     277
+  Failed:     0
+  Required skipped: 0
+  Fatal COM diagnostics: 0
+    - 0x800706BE occurrences: 0
+    - 0x800706BA occurrences: 0
+  Duration:   510.88s
+
+Working Tree After Regression: CLEAN
+
+Artifacts (final rebuild from package_source_commit 300c865f6d6502760d6de9ba22eec57a2b1e4fa4):
+  wheel: md_converter-1.0.0-py3-none-any.whl
+    size: 300076
+    sha256: 5896A1D16BBA0213DEF9D7DE368B465CF7771B17340CE5738633579509100BD6
+  sdist: md_converter-1.0.0.tar.gz
+    size: 252017
+    sha256: 8C9A2AFB1E294ECD2DEACB215BA0F00E2DF111169D70EDEB9B5702EB5465942D
+
+Authority: RELEASE_MANIFEST_v1.0.0.json (validated, all fields PASS)
+
+P10-18 RESULT: PASS / CLOSED
+OPEN P1 BLOCKERS: 0
+NEXT: P10-19 v1.0.0 TAG APPROVAL (human gate - do not tag automatically)
