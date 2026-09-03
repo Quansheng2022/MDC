@@ -3,7 +3,7 @@ P10-18 FINAL RELEASE REGRESSION EVIDENCE
 
 Release:             v1.0.0
 Date:                2026-09-03
-Source HEAD:         79fc000729a2ca9071ddd12e328d25f5b023bfcc
+Regression HEAD:     5d2c92a6af662ec8ee392f5a1a4d66f1f022229e
 RC Baseline:         RC-20260901-05 (historical, immutable)
 
 Environment:
@@ -25,19 +25,19 @@ Final Full Regression:
   Fatal COM diagnostics: 0
     - 0x800706BE occurrences: 0
     - 0x800706BA occurrences: 0
-  Duration:   510.88s
+  Duration:   519.23s
 
-Working Tree After Regression: CLEAN
+Working Tree After Regression: CLEAN (except user WIP MDC_Project_Merger.py)
 
-Artifacts (final rebuild from package_source_commit 300c865f6d6502760d6de9ba22eec57a2b1e4fa4):
+Final Artifacts (FINAL RELEASE CANDIDATE, built from package_source_commit 876049542b5023034da732cce73b5ba404176486):
   wheel: md_converter-1.0.0-py3-none-any.whl
-    size: 300076
-    sha256: 5896A1D16BBA0213DEF9D7DE368B465CF7771B17340CE5738633579509100BD6
+    size: 300086
+    sha256: C97CA23C90E5807ABB0B17E629C0E174F302D7517120AA21679BDFFC97BCE203
   sdist: md_converter-1.0.0.tar.gz
-    size: 252017
-    sha256: 8C9A2AFB1E294ECD2DEACB215BA0F00E2DF111169D70EDEB9B5702EB5465942D
+    size: 252025
+    sha256: 536ABBCA78833ECC6DBA6209E04D39D0F37DE031F4095C15112214E553B19C98
 
-Authority: RELEASE_MANIFEST_v1.0.0.json (validated, all fields PASS)
+Authority: RELEASE_MANIFEST_v1.0.0.json (validated at manifest commit 5d2c92a, all fields PASS)
 
 P10-18 RESULT: PASS / CLOSED
 OPEN P1 BLOCKERS: 0
