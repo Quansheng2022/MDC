@@ -1,0 +1,27 @@
+P10-21 / P10-24 RELEASE CLOSURE EVIDENCE
+========================================
+
+Release:     v1.0.0
+Date:        2026-09-03
+Tag:         v1.0.0 (annotated; target 5d2c92a6af662ec8ee392f5a1a4d66f1f022229e)
+
+All P10 required gates PASS:
+  P10-PKG-01  CLOSED / ACCEPTED (cae92ff)
+  P10-09..12  PASS
+  P10-13      PASS (technical + human visual acceptance)
+  P10-14..16  PASS (release docs approved)
+  P10-17      PASS (final manifest commit 5d2c92a)
+  P10-18      PASS / CLOSED (277/277 final regression)
+  P10-19      PASS (annotated tag v1.0.0)
+  P10-20      PASS (release bundle)
+  P10-21      APPROVED (human gate, 2026-09-03)
+  P10-22      PASS (tag + archive)
+  P10-23      PASS (post-release verification)
+
+Known blockers:      0
+Spec deviations:     0
+Frozen-core changes: 0
+Canonical changes:   0
+
+Release Decision: APPROVED
+P10 Status: CLOSED
