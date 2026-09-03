@@ -55,10 +55,6 @@
 ### 安装步骤
 
 ```bash
-# 克隆仓库
-git clone https://github.com/yourusername/md_converter.git
-cd md_converter
-
 # 创建虚拟环境（推荐）
 python -m venv .venv
 source .venv/bin/activate   # Linux/macOS
@@ -180,7 +176,7 @@ md-converter input.md --ascii-mode preview --ascii-preview-dir ./preview
 ### Python API
 
 ```python
-from md_converter import compile_file
+from md_converter.compiler import compile_file
 
 # 编译 Markdown 文件
 doc = compile_file("input.md", config={"output_dir": "./output"})
@@ -388,7 +384,7 @@ my_pass = "mypackage.my_plugin:MyCustomPass"
 
 ## 🤝 贡献
 
-欢迎贡献！请阅读 [CONTRIBUTING.md](CONTRIBUTING.md) 了解开发流程、代码规范和测试要求。
+欢迎贡献！请遵循本仓库的开发流程、代码规范和测试要求。
 
 ### 开发环境
 
@@ -421,8 +417,6 @@ pip install -e ".[dev]"
 
 ## 📞 联系方式
 
-- 项目主页: [GitHub](https://github.com/yourusername/md_converter)
-- 问题反馈: [Issues](https://github.com/yourusername/md_converter/issues)
 - 邮箱: support@mdconverter.io
 
 ---
