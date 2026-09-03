@@ -1,0 +1,38 @@
+P10-23 POST-RELEASE VERIFICATION EVIDENCE
+=========================================
+
+Release:     v1.0.0
+Date:        2026-09-03
+Tag:         v1.0.0 (annotated tag object e1e5060948f5a3fac04b97e6addd3d3f6be66812)
+Tag target:  5d2c92a6af662ec8ee392f5a1a4d66f1f022229e (Finalize v1.0.0 release manifest)
+
+Package Source Commit (payload):
+  876049542b5023034da732cce73b5ba404176486
+
+Installed from wheel (fresh venv, repo-external):
+  Version:     1.0.0
+  Import path: %TEMP%\md_converter_final_release_venv\Lib\site-packages\md_converter\__init__.py
+  Source tree import: NO
+
+CLI smoke (post-tag, UTF-8):
+  md-converter --help                  exit 0
+  md-converter-check                   exit 0
+  basic Markdown -> DOCX               exit 0 (smoke_post_tag.docx, 37611 bytes)
+
+Artifact / tag / manifest match:
+  wheel size/sha256 match manifest:    YES
+  sdist size/sha256 match manifest:    YES
+  manifest release == v1.0.0:          YES
+  installed __version__ == 1.0.0:      YES
+  git tag v1.0.0 exists:               YES
+
+Release Bundle (dist/release_bundle_v1.0.0, SHA256SUMS.txt included):
+  md_converter-1.0.0-py3-none-any.whl  300086
+  md_converter-1.0.0.tar.gz            252025
+  RELEASE_MANIFEST_v1.0.0.json
+  RELEASE_NOTES_v1.0.0.md
+  INSTALLATION_GUIDE_v1.0.0.md
+  KNOWN_LIMITATIONS_v1.0.0.md
+  P10_FINAL_REGRESSION.txt
+
+P10-23 RESULT: PASS
