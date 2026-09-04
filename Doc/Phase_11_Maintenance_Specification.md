@@ -1,20 +1,20 @@
-﻿# Phase 11 Maintenance Specification
+# Phase 11 Maintenance Specification
 
 ## MD_Converter v1.x Maintenance Program
 
-| é¡¹ç›® | å€¼ |
+| 项目 | 值 |
 | --- | --- |
-| Project | MD_Converterï¼ˆMarkdown â†’ DOCX Compilerï¼‰ |
-| Phase | **P11 â€” Maintenance** |
-| Spec ç‰ˆæœ¬ | **1.0** |
-| åˆ›å»ºæ—¥æœŸ | **2026-09-04** |
-| å½“å‰çŠ¶æ€ | **DRAFT â€” READY FOR HUMAN REVIEW / FREEZE** |
-| Authority Role | **P11 Maintenance Authorityï¼ˆç» Human Freeze åŽç”Ÿæ•ˆï¼‰** |
+| Project | MD_Converter（Markdown → DOCX Compiler） |
+| Phase | **P11 — Maintenance** |
+| Spec 版本 | **1.0** |
+| 创建日期 | **2026-09-04** |
+| 当前状态 | **FROZEN / ACTIVE** |
+| Authority Role | **P11 Maintenance Authority** |
 | Product Canonical Authority | `CANONICAL_SPEC.md` 1.0 FROZEN |
-| P10 Release Baseline | annotated tag `v1.0.0` â†’ `5d2c92a6af662ec8ee392f5a1a4d66f1f022229e` |
+| P10 Release Baseline | annotated tag `v1.0.0` → `5d2c92a6af662ec8ee392f5a1a4d66f1f022229e` |
 | P10 Final Governance Closure | `dab9142f1ece898f7dcd66c2fe53d6106f59230c` |
 | Maintenance Version Line | `v1.0.x` patch releases by default |
-| Evolution Boundary | Feature / semantic / architecture evolution â†’ **P12 Evolution** |
+| Evolution Boundary | Feature / semantic / architecture evolution → **P12 Evolution** |
 
 ---
 
@@ -22,34 +22,34 @@
 
 ## 1.1 Authority Hierarchy
 
-P11 é‡‡ç”¨ä»¥ä¸‹æƒå¨é¡ºåºï¼š
+P11 采用以下权威顺序：
 
 ```text
 CANONICAL_SPEC.md
-    â†“
+    ↓
 ADR / Frozen Architecture Decisions
-    â†“
+    ↓
 Phase_11_Maintenance_Specification.md
-    â†“
+    ↓
 IMPLEMENTATION_PLAN.md
-    â†“
+    ↓
 Approved P11 Maintenance Change Package
-    â†“
+    ↓
 Implementation
-    â†“
+    ↓
 Test / Evidence
 ```
 
-è§£é‡Šï¼š
+解释：
 
-1. `CANONICAL_SPEC.md` ç»§ç»­å®šä¹‰ **äº§å“è¯­ä¹‰ä¸Žä¸å¯è¿åçš„ä¸å˜é‡**ã€‚
-2. ADR / Frozen Architecture Decisions ç»§ç»­å®šä¹‰ **æž¶æž„è¾¹ç•Œä¸Žå·²å†»ç»“è®¾è®¡å†³ç­–**ã€‚
-3. æœ¬æ–‡æ¡£å®šä¹‰ **P11 Maintenance çš„æµç¨‹ã€æƒé™ã€åˆ†ç±»ã€æµ‹è¯•ã€Release Gate ä¸Ž Closure è§„åˆ™**ã€‚
-4. `IMPLEMENTATION_PLAN.md` ç”¨äºŽç™»è®°å·²æ‰¹å‡†çš„å®žé™…å®žæ–½æ¡ç›®ï¼Œä¸å¾—åå‘ä¿®æ”¹æœ¬ Authorityã€‚
-5. å•ä¸ª Maintenance Change Package åªèƒ½åœ¨æœ¬æ–‡æ¡£å…è®¸çš„è¾¹ç•Œå†…æ‰§è¡Œã€‚
-6. Test / Evidence ç”¨äºŽéªŒè¯å®žçŽ°ï¼Œä¸å¾—æ›¿ä»£ Canonical Authority æˆ–äººä¸ºæ”¹å†™äº§å“è¯­ä¹‰ã€‚
+1. `CANONICAL_SPEC.md` 继续定义 **产品语义与不可违反的不变量**。
+2. ADR / Frozen Architecture Decisions 继续定义 **架构边界与已冻结设计决策**。
+3. 本文档定义 **P11 Maintenance 的流程、权限、分类、测试、Release Gate 与 Closure 规则**。
+4. `IMPLEMENTATION_PLAN.md` 用于登记已批准的实际实施条目，不得反向修改本 Authority。
+5. 单个 Maintenance Change Package 只能在本文档允许的边界内执行。
+6. Test / Evidence 用于验证实现，不得替代 Canonical Authority 或人为改写产品语义。
 
-è‹¥å‘ç”Ÿå†²çªï¼š
+若发生冲突：
 
 ```text
 Canonical > ADR > P11 Maintenance Authority > Implementation Plan
@@ -58,11 +58,11 @@ Canonical > ADR > P11 Maintenance Authority > Implementation Plan
 
 ## 1.2 Human Gate
 
-ä»¥ä¸‹äº‹é¡¹å¿…é¡»ç”± Human æ˜Žç¡®æ‰¹å‡†ï¼Œä¸å¾—ç”± AI Agent è‡ªåŠ¨å®Œæˆï¼š
+以下事项必须由 Human 明确批准，不得由 AI Agent 自动完成：
 
 - P11 Maintenance Authority Freeze
-- SPEC_GAP çš„ Canonical clarification
-- ARCH_CHANGE çš„ ADR / Architecture approval
+- SPEC_GAP 的 Canonical clarification
+- ARCH_CHANGE 的 ADR / Architecture approval
 - Patch Release Approval
 - Release Tag Approval / Ratification
 - P11 Final Closure
@@ -71,22 +71,22 @@ Canonical > ADR > P11 Maintenance Authority > Implementation Plan
 
 # 2. Purpose
 
-P11 çš„ç›®æ ‡æ˜¯ï¼š
+P11 的目标是：
 
-> **åœ¨ä¸ç ´å MD_Converter v1.0.0 Canonical è¡Œä¸ºå’Œ Frozen Core çš„å‰æä¸‹ï¼Œå¯¹ç”Ÿäº§ä½¿ç”¨è¿‡ç¨‹ä¸­å‘çŽ°çš„çœŸå®žç¼ºé™·ã€ç¨³å®šæ€§ã€å…¼å®¹æ€§ã€å®‰å…¨æ€§ã€ä¾èµ–å’Œæ–‡æ¡£ä¸€è‡´æ€§é—®é¢˜å®žæ–½å¯å®¡è®¡ã€å¯éªŒè¯ã€æœ€å°åŒ–çš„ç»´æŠ¤ã€‚**
+> **在不破坏 MD_Converter v1.0.0 Canonical 行为和 Frozen Core 的前提下，对生产使用过程中发现的真实缺陷、稳定性、兼容性、安全性、依赖和文档一致性问题实施可审计、可验证、最小化的维护。**
 
-P11 ä¸æ˜¯ç»§ç»­å¼€å‘æ–°åŠŸèƒ½çš„é˜¶æ®µã€‚
+P11 不是继续开发新功能的阶段。
 
-æ ¸å¿ƒç›®æ ‡ï¼š
+核心目标：
 
-1. ä¿æŒ v1.x æ­£ç¡®æ€§å’Œç¨³å®šæ€§ã€‚
-2. å¯¹çœŸå®žé—®é¢˜å®žæ–½æœ€å°èŒƒå›´ä¿®å¤ã€‚
-3. é˜²æ­¢ Maintenance æ¼”å˜ä¸ºæ— è¾¹ç•Œé‡æž„ã€‚
-4. é˜²æ­¢ Optional Improvement è¢«åŒ…è£…æˆ Defectã€‚
-5. é˜²æ­¢ Golden / Acceptance baseline ä¸ºè¿å°±å®žçŽ°è€Œæ¼‚ç§»ã€‚
-6. ä¿æŒæ¯ä¸ªå˜æ›´å¯è¿½æº¯ã€å¯æµ‹è¯•ã€å¯å›žæ»šã€å¯ Git æ”¶å£ã€‚
-7. éœ€è¦æ—¶äº§ç”Ÿå—æŽ§çš„ `v1.0.x` Patch Releaseã€‚
-8. å°† Feature / Semantic / Architecture Evolution æ˜Žç¡®éš”ç¦»åˆ° P12ã€‚
+1. 保持 v1.x 正确性和稳定性。
+2. 对真实问题实施最小范围修复。
+3. 防止 Maintenance 演变为无边界重构。
+4. 防止 Optional Improvement 被包装成 Defect。
+5. 防止 Golden / Acceptance baseline 为迁就实现而漂移。
+6. 保持每个变更可追溯、可测试、可回滚、可 Git 收口。
+7. 需要时产生受控的 `v1.0.x` Patch Release。
+8. 将 Feature / Semantic / Architecture Evolution 明确隔离到 P12。
 
 ---
 
@@ -105,7 +105,7 @@ Tag Target:
 5d2c92a6af662ec8ee392f5a1a4d66f1f022229e
 ```
 
-è¯¥ tag æ˜¯æ­£å¼ production release baselineï¼ŒP11 ä¸å¾—ç§»åŠ¨ã€åˆ é™¤ã€é‡å»ºæˆ–å¼ºåˆ¶è¦†ç›–è¯¥ tagã€‚
+该 tag 是正式 production release baseline，P11 不得移动、删除、重建或强制覆盖该 tag。
 
 ## 3.2 Governance Baseline
 
@@ -114,19 +114,19 @@ P10 Final Governance Closure Commit:
 dab9142f1ece898f7dcd66c2fe53d6106f59230c
 ```
 
-P11 ä»Ž P10 å®Œæ•´æ²»ç†æ”¶å£åŽçš„ repository çŠ¶æ€å¼€å§‹ã€‚
+P11 从 P10 完整治理收口后的 repository 状态开始。
 
 ## 3.3 Baseline Protection
 
-é™¤éžæœ‰ç»è¿‡æ‰¹å‡†çš„ Maintenance Change Packageï¼Œå¦åˆ™ç¦æ­¢ä¿®æ”¹ï¼š
+除非有经过批准的 Maintenance Change Package，否则禁止修改：
 
 - `CANONICAL_SPEC.md`
 - Frozen Core
 - Golden expected structure / semantic meaning
 - Acceptance Corpus meaning
 - Release tag `v1.0.0`
-- å·²å…³é—­çš„ P10 evidence
-- å·²å†»ç»“çš„ P10 release artifacts / hashes / manifest
+- 已关闭的 P10 evidence
+- 已冻结的 P10 release artifacts / hashes / manifest
 
 ---
 
@@ -134,141 +134,141 @@ P11 ä»Ž P10 å®Œæ•´æ²»ç†æ”¶å£åŽçš„ repository �
 
 ## 4.1 Allowed Maintenance Scope
 
-P11 å…è®¸ï¼š
+P11 允许：
 
-| ç±»åž‹ | æ˜¯å¦å…è®¸ | å…¸åž‹ç¤ºä¾‹ |
+| 类型 | 是否允许 | 典型示例 |
 | --- | --- | --- |
-| Product Defect Fix | âœ… | é”™è¯¯ DOCXã€é”™è¯¯å†³ç­–ã€å¼‚å¸¸ crash |
-| Stability Fix | âœ… | èµ„æºæ³„æ¼ã€COM cleanupã€retry defect |
-| Security Fix | âœ… | path traversalã€symlinkã€å¤–éƒ¨å†…å®¹æ³„æ¼ã€fail-open |
-| Compatibility Fix | âœ… | Windows / Word / Python patch compatibility |
-| Dependency Maintenance | âœ… | Playwright / pywin32 / setuptools / build tooling |
-| Test Defect Fix | âœ… | é”™è¯¯ assertionã€fixtureã€mockã€æµ‹è¯•è¾¹ç•Œç¼ºå¤± |
-| Documentation Correction | âœ… | å®‰è£…è¯´æ˜Žã€é™åˆ¶ã€CLI æ–‡æ¡£ä¸Žå®žé™…è¡Œä¸ºä¸ä¸€è‡´ |
-| Performance Regression Fix | âœ… | å·²è¯æ˜Ž regression ä¸”ä¸æ”¹å˜ Canonical è¯­ä¹‰ |
-| Operational / Diagnostic Fix | âœ… | æ˜Žç¡®é”™è¯¯ä¿¡æ¯ã€æ—¥å¿—ã€è¯Šæ–­èƒ½åŠ› |
-| Minimal Refactor Required by Fix | âš ï¸ | ä»…é™ç¼ºé™·ä¿®å¤ä¸å¯é¿å…çš„æœ€å°ç»“æž„è°ƒæ•´ |
+| Product Defect Fix | ✅ | 错误 DOCX、错误决策、异常 crash |
+| Stability Fix | ✅ | 资源泄漏、COM cleanup、retry defect |
+| Security Fix | ✅ | path traversal、symlink、外部内容泄漏、fail-open |
+| Compatibility Fix | ✅ | Windows / Word / Python patch compatibility |
+| Dependency Maintenance | ✅ | Playwright / pywin32 / setuptools / build tooling |
+| Test Defect Fix | ✅ | 错误 assertion、fixture、mock、测试边界缺失 |
+| Documentation Correction | ✅ | 安装说明、限制、CLI 文档与实际行为不一致 |
+| Performance Regression Fix | ✅ | 已证明 regression 且不改变 Canonical 语义 |
+| Operational / Diagnostic Fix | ✅ | 明确错误信息、日志、诊断能力 |
+| Minimal Refactor Required by Fix | ⚠️ | 仅限缺陷修复不可避免的最小结构调整 |
 
 ## 4.2 Forbidden Maintenance Scope
 
-P11 é»˜è®¤ç¦æ­¢ï¼š
+P11 默认禁止：
 
-- æ–° Markdown feature
-- æ–° CLI product feature
-- æ–° renderer
-- æ–° output format
+- 新 Markdown feature
+- 新 CLI product feature
+- 新 renderer
+- 新 output format
 - AST schema evolution
 - DecisionEngine semantic change
 - LayoutPlan schema evolution
 - Theme V2 / Canonical theme semantic change
 - Acceptance Corpus semantic redefinition
-- Golden baseline ä»…ä¸ºè¿å°±æ–°å®žçŽ°è€Œä¿®æ”¹
-- å¤§èŒƒå›´â€œä»£ç æ¸…ç†â€
-- æ— ç¼ºé™·ä¾æ®çš„ architecture refactor
-- Optional Improvement è‡ªåŠ¨è¿›å…¥ implementation
-- é€šè¿‡ä¿®æ”¹æµ‹è¯•æŽ©ç›–äº§å“ç¼ºé™·
+- Golden baseline 仅为迁就新实现而修改
+- 大范围“代码清理”
+- 无缺陷依据的 architecture refactor
+- Optional Improvement 自动进入 implementation
+- 通过修改测试掩盖产品缺陷
 
-ä»¥ä¸Šäº‹é¡¹åŽŸåˆ™ä¸Šè½¬å…¥ï¼š
+以上事项原则上转入：
 
 ```text
-P12 â€” Evolution
+P12 — Evolution
 ```
 
 ---
 
 # 5. Issue Classification
 
-æ‰€æœ‰ P11 Issue å¿…é¡»é¦–å…ˆåˆ†ç±»ã€‚
+所有 P11 Issue 必须首先分类。
 
-| Classification | å®šä¹‰ | P11 å¤„ç† |
+| Classification | 定义 | P11 处理 |
 | --- | --- | --- |
-| **DEFECT** | å®žçŽ°è¿å Canonical / Approved Behavior | Change Plan â†’ Patch â†’ Evidence |
-| **TEST_DEFECT** | æµ‹è¯•é”™è¯¯ï¼Œäº§å“è¡Œä¸ºæœ¬èº«æ— ç¼ºé™· | Test Change Review â†’ Test Patch |
-| **SPEC_GAP** | Canonical å¯¹çœŸå®žåœºæ™¯å®šä¹‰ä¸è¶³æˆ–çŸ›ç›¾ | åœæ­¢äº§å“ä¿®æ”¹ï¼›Human clarification / P12 |
-| **ARCH_CHANGE** | ä¿®å¤éœ€è¦æ”¹å˜å·²å†»ç»“æž¶æž„è¾¹ç•Œ | ADR â†’ Human Approval â†’ é€šå¸¸è¿›å…¥ P12 |
-| **OPTIONAL_IMPROVEMENT** | éžå¿…è¦æ”¹è¿›ã€å¯è¯»æ€§ã€ä¾¿åˆ©æ€§ã€æœªæ¥ä¼˜åŒ– | Backlogï¼›é»˜è®¤ä¸å®žæ–½ |
+| **DEFECT** | 实现违反 Canonical / Approved Behavior | Change Plan → Patch → Evidence |
+| **TEST_DEFECT** | 测试错误，产品行为本身无缺陷 | Test Change Review → Test Patch |
+| **SPEC_GAP** | Canonical 对真实场景定义不足或矛盾 | 停止产品修改；Human clarification / P12 |
+| **ARCH_CHANGE** | 修复需要改变已冻结架构边界 | ADR → Human Approval → 通常进入 P12 |
+| **OPTIONAL_IMPROVEMENT** | 非必要改进、可读性、便利性、未来优化 | Backlog；默认不实施 |
 
 ## 5.1 Classification Guard
 
-ç¦æ­¢ï¼š
+禁止：
 
 ```text
 OPTIONAL_IMPROVEMENT
-    â†“
-é‡æ–°å‘½åä¸º DEFECT
-    â†“
-ç»•è¿‡ P12 / Human Gate
+    ↓
+重新命名为 DEFECT
+    ↓
+绕过 P12 / Human Gate
 ```
 
-Reviewer å¿…é¡»è¦æ±‚ï¼š
+Reviewer 必须要求：
 
-- å¯å¤çŽ°é—®é¢˜ï¼›
-- Expected Behavior æƒå¨æ¥æºï¼›
-- Actual Behaviorï¼›
-- æ˜Žç¡® deviationï¼›
-- å¯éªŒè¯ acceptance criteriaã€‚
+- 可复现问题；
+- Expected Behavior 权威来源；
+- Actual Behavior；
+- 明确 deviation；
+- 可验证 acceptance criteria。
 
-æ²¡æœ‰è¿™äº›è¯æ®ï¼Œä¸å¾—æŒ‰ DEFECT æ‰§è¡Œã€‚
+没有这些证据，不得按 DEFECT 执行。
 
 ---
 
 # 6. Severity and Priority
 
-| Severity | å®šä¹‰ | å¤„ç†è¦æ±‚ |
+| Severity | 定义 | 处理要求 |
 | --- | --- | --- |
-| **P1 â€” Critical / Release Blocker** | æ•°æ®æŸåã€ä¸¥é‡é”™è¯¯è¾“å‡ºã€å®‰å…¨é—®é¢˜ã€æ ¸å¿ƒæµç¨‹ä¸å¯ç”¨ | ç«‹å³å»ºç«‹ Change Packageï¼›ä¸å¾—å‘å¸ƒå­˜åœ¨è¯¥ blocker çš„ patch |
-| **P2 â€” Major** | ä¸»è¦åŠŸèƒ½é”™è¯¯ã€æ˜Žæ˜¾ç¨³å®šæ€§é—®é¢˜ã€å¸¸è§çŽ¯å¢ƒå¤±è´¥ | é«˜ä¼˜å…ˆçº§å¤„ç† |
-| **P3 â€” Normal** | è¾¹ç¼˜ç¼ºé™·ã€ä½Žé¢‘å…¼å®¹é—®é¢˜ã€éžæ ¸å¿ƒé”™è¯¯ | æ­£å¸¸ Maintenance backlog |
-| **P4 â€” Minor** | cosmeticã€è½»å¾®æ–‡æ¡£ã€ä½Žå½±å“è¯Šæ–­é—®é¢˜ | å¯å»¶åŽ |
-| **Enhancement** | éžç¼ºé™·æ–°èƒ½åŠ›æˆ–æ”¹è¿› | è½¬ P12 / Evolution backlog |
+| **P1 — Critical / Release Blocker** | 数据损坏、严重错误输出、安全问题、核心流程不可用 | 立即建立 Change Package；不得发布存在该 blocker 的 patch |
+| **P2 — Major** | 主要功能错误、明显稳定性问题、常见环境失败 | 高优先级处理 |
+| **P3 — Normal** | 边缘缺陷、低频兼容问题、非核心错误 | 正常 Maintenance backlog |
+| **P4 — Minor** | cosmetic、轻微文档、低影响诊断问题 | 可延后 |
+| **Enhancement** | 非缺陷新能力或改进 | 转 P12 / Evolution backlog |
 
-Severity ä¸å¾—ç”±å®žçŽ°éš¾åº¦å†³å®šï¼Œè€Œåº”ç”±ç”¨æˆ·å½±å“ã€é”™è¯¯ä¸¥é‡æ€§ã€æ•°æ®é£Žé™©ã€å®‰å…¨é£Žé™©å’Œå‘ç”Ÿæ¦‚çŽ‡å†³å®šã€‚
+Severity 不得由实现难度决定，而应由用户影响、错误严重性、数据风险、安全风险和发生概率决定。
 
 ---
 
 # 7. Maintenance Workflow
 
-æ ‡å‡†æµç¨‹ï¼š
+标准流程：
 
 ```text
 Issue Intake
-    â†“
+    ↓
 Classification
-    â†“
+    ↓
 Severity
-    â†“
+    ↓
 Reproduction Evidence
-    â†“
+    ↓
 Expected vs Actual
-    â†“
+    ↓
 Root Cause Analysis
-    â†“
+    ↓
 Change Package
-    â†“
+    ↓
 Reviewer Approval
-    â†“
+    ↓
 Bounded Patch
-    â†“
+    ↓
 Targeted Test
-    â†“
+    ↓
 Regression Gate
-    â†“
+    ↓
 Conditional Golden / DOCX / COM / Packaging Gate
-    â†“
+    ↓
 Git Closure
-    â†“
+    ↓
 CLOSED / ACCEPTED
 ```
 
-ä»»ä½•æ­¥éª¤å¤±è´¥ï¼Œä¸å¾—è·³è¿‡åŽç»­ Gate ç›´æŽ¥ CLOSEDã€‚
+任何步骤失败，不得跳过后续 Gate 直接 CLOSED。
 
 ---
 
 # 8. Maintenance Change Package
 
-æ¯ä¸ªå®žé™…ä¿®æ”¹å¿…é¡»æ‹¥æœ‰ç‹¬ç«‹ Change Packageã€‚
+每个实际修改必须拥有独立 Change Package。
 
-æŽ¨è IDï¼š
+推荐 ID：
 
 ```text
 P11-MNT-001
@@ -350,70 +350,70 @@ OPEN / APPROVED / IMPLEMENTED / VERIFIED / CLOSED / REJECTED
 
 ## 8.2 Scope Rule
 
-Allowed Scope å¿…é¡»å°½é‡å°ã€‚
+Allowed Scope 必须尽量小。
 
-AI Agent ä¸å¾—å› ä¸ºï¼š
+AI Agent 不得因为：
 
-- â€œé¡ºä¾¿é‡æž„â€
-- â€œä»£ç æ›´ä¼˜é›…â€
-- â€œç»Ÿä¸€é£Žæ ¼â€
-- â€œæ¶ˆé™¤æŠ€æœ¯å€ºâ€
-- â€œæœªæ¥æ›´æ˜“æ‰©å±•â€
+- “顺便重构”
+- “代码更优雅”
+- “统一风格”
+- “消除技术债”
+- “未来更易扩展”
 
-è€Œæ‰©å¤§èŒƒå›´ã€‚
+而扩大范围。
 
 ---
 
 # 9. Root Cause Gate
 
-Patch å‰å¿…é¡»åŒºåˆ†ï¼š
+Patch 前必须区分：
 
 ```text
 Symptom
-â‰ 
+≠
 Root Cause
 ```
 
-å¦‚æžœ Root Cause æœªéªŒè¯ï¼š
+如果 Root Cause 未验证：
 
 ```text
 Status:
 ROOT CAUSE UNVERIFIED
 ```
 
-æ­¤æ—¶å…è®¸ï¼š
+此时允许：
 
-- å¢žåŠ è¯Šæ–­ï¼›
-- å¢žåŠ  reproduction testï¼›
-- å¢žåŠ  evidenceï¼›
+- 增加诊断；
+- 增加 reproduction test；
+- 增加 evidence；
 
-ä½†ä¸å¾—å®žæ–½æœªç»è¯æ®æ”¯æŒçš„å¤§èŒƒå›´ä¿®å¤ã€‚
+但不得实施未经证据支持的大范围修复。
 
 ---
 
 # 10. Test Matrix
 
-æµ‹è¯•æŒ‰é£Žé™©è§¦å‘ï¼Œä¸è¦æ±‚æ¯æ¬¡ Maintenance éƒ½æœºæ¢°è¿è¡Œå…¨éƒ¨ release testsã€‚
+测试按风险触发，不要求每次 Maintenance 都机械运行全部 release tests。
 
 | Change Type | Unit | Targeted | Full Pytest | Golden | Acceptance | Real DOCX | COM | Fresh Install |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Docs only | â€” | â€” | â€” | â€” | â€” | â€” | â€” | â€” |
-| TEST_DEFECT | âœ… | âœ… | âœ… | æ¡ä»¶ | æ¡ä»¶ | æ¡ä»¶ | æ¡ä»¶ | â€” |
-| Parser / Normalize | âœ… | âœ… | âœ… | âœ… | âœ… | âœ… | â€” | â€” |
-| Diagram | âœ… | âœ… | âœ… | âœ… | âœ… | âœ… | â€” | æ¡ä»¶ |
-| Decision / Layout | âœ… | âœ… | âœ… | âœ… | âœ… | âœ… | æ¡ä»¶ | â€” |
-| Renderer / Writer | âœ… | âœ… | âœ… | âœ… | âœ… | âœ… | âœ… æ¡ä»¶ | â€” |
-| PostProcessor / Final QA | âœ… | âœ… | âœ… | âœ… | âœ… | âœ… | âœ… æ¡ä»¶ | â€” |
-| COM lifecycle | âœ… | âœ… | âœ… | æ¡ä»¶ | æ¡ä»¶ | âœ… | âœ… | â€” |
-| CLI | âœ… | âœ… | âœ… | â€” | æ¡ä»¶ | æ¡ä»¶ | â€” | âœ… æ¡ä»¶ |
-| Packaging metadata | âœ… | âœ… | âœ… | â€” | â€” | â€” | â€” | âœ… |
-| Dependency update | âœ… | âœ… | âœ… | âœ… æ¡ä»¶ | âœ… æ¡ä»¶ | âœ… | âœ… æ¡ä»¶ | âœ… |
-| Security boundary | âœ… | âœ… | âœ… | æŒ‰å½±å“ | æŒ‰å½±å“ | æŒ‰å½±å“ | æŒ‰å½±å“ | æ¡ä»¶ |
-| Performance regression | âœ… | âœ… | âœ… | æ¡ä»¶ | æ¡ä»¶ | âœ… æ¡ä»¶ | æ¡ä»¶ | â€” |
+| Docs only | — | — | — | — | — | — | — | — |
+| TEST_DEFECT | ✅ | ✅ | ✅ | 条件 | 条件 | 条件 | 条件 | — |
+| Parser / Normalize | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — | — |
+| Diagram | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | — | 条件 |
+| Decision / Layout | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 条件 | — |
+| Renderer / Writer | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ 条件 | — |
+| PostProcessor / Final QA | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ 条件 | — |
+| COM lifecycle | ✅ | ✅ | ✅ | 条件 | 条件 | ✅ | ✅ | — |
+| CLI | ✅ | ✅ | ✅ | — | 条件 | 条件 | — | ✅ 条件 |
+| Packaging metadata | ✅ | ✅ | ✅ | — | — | — | — | ✅ |
+| Dependency update | ✅ | ✅ | ✅ | ✅ 条件 | ✅ 条件 | ✅ | ✅ 条件 | ✅ |
+| Security boundary | ✅ | ✅ | ✅ | 按影响 | 按影响 | 按影响 | 按影响 | 条件 |
+| Performance regression | ✅ | ✅ | ✅ | 条件 | 条件 | ✅ 条件 | 条件 | — |
 
 ## 10.1 Regression Rule
 
-å¯¹ product code çš„ P11 ä¿®å¤ï¼Œé»˜è®¤è¦æ±‚ï¼š
+对 product code 的 P11 修复，默认要求：
 
 ```text
 Targeted Test:
@@ -429,35 +429,35 @@ Required Skip:
 0
 ```
 
-å¦‚æžœ full regression ä¸é€‚ç”¨ï¼ŒChange Package å¿…é¡»æ˜Žç¡®è¯´æ˜ŽåŽŸå› å¹¶ç”± Reviewer æ‰¹å‡†ã€‚
+如果 full regression 不适用，Change Package 必须明确说明原因并由 Reviewer 批准。
 
 ## 10.2 Golden / Acceptance Protection
 
-ç¦æ­¢ï¼š
+禁止：
 
 ```text
 Implementation fails Golden
-    â†“
+    ↓
 Modify Golden expected output
-    â†“
+    ↓
 Test becomes green
 ```
 
-Golden / Acceptance baseline åªæœ‰åœ¨ï¼š
+Golden / Acceptance baseline 只有在：
 
-1. Canonical Authority æ˜Žç¡®å…è®¸è¡Œä¸ºå˜åŒ–ï¼›
-2. å¯¹åº” Spec / ADR å·²æ‰¹å‡†ï¼›
-3. ä¸å±žäºŽç®€å• P11 defect patchï¼›
+1. Canonical Authority 明确允许行为变化；
+2. 对应 Spec / ADR 已批准；
+3. 不属于简单 P11 defect patch；
 
-æ—¶æ‰å…è®¸ä¿®æ”¹ã€‚
+时才允许修改。
 
-é€šå¸¸åº”è¿›å…¥ P12ã€‚
+通常应进入 P12。
 
 ---
 
 # 11. Runtime / Word COM Gate
 
-å¦‚æžœå˜æ›´æ¶‰åŠï¼š
+如果变更涉及：
 
 - `WordRenderer`
 - `WordWriter`
@@ -466,7 +466,7 @@ Golden / Acceptance baseline åªæœ‰åœ¨ï¼š
 - TOC / Paragraph / Style proxy
 - retry / Word process cleanup
 
-åˆ™è‡³å°‘è¦æ±‚ï¼š
+则至少要求：
 
 ```text
 Dedicated COM Tests:
@@ -482,18 +482,18 @@ Fatal COM Error:
 0
 ```
 
-ä¸å¾—å›  COM çŽ¯å¢ƒå¶å‘æ€§è€ŒæŠŠ required test æ”¹ä¸º silent skipã€‚
+不得因 COM 环境偶发性而把 required test 改为 silent skip。
 
 ---
 
 # 12. Security Maintenance
 
-P11 Security Review è‡³å°‘è¦†ç›–ï¼š
+P11 Security Review 至少覆盖：
 
 - path traversal
 - symlink / reparse boundary
-- å¤–éƒ¨æ–‡ä»¶è¯»å–
-- ä¸´æ—¶ç›®å½•
+- 外部文件读取
+- 临时目录
 - shell / subprocess boundary
 - Mermaid / external renderer
 - untrusted Markdown input
@@ -502,7 +502,7 @@ P11 Security Review è‡³å°‘è¦†ç›–ï¼š
 - package integrity
 - unsafe cleanup / delete behavior
 
-Security DEFECT é»˜è®¤è‡³å°‘ P2ï¼›å­˜åœ¨æ•°æ®æ³„æ¼ã€ä»»æ„æ–‡ä»¶è®¿é—®ã€ä»£ç æ‰§è¡Œæˆ–ä¸¥é‡ integrity é£Žé™©æ—¶æŒ‰ P1 å¤„ç†ã€‚
+Security DEFECT 默认至少 P2；存在数据泄漏、任意文件访问、代码执行或严重 integrity 风险时按 P1 处理。
 
 ---
 
@@ -510,7 +510,7 @@ Security DEFECT é»˜è®¤è‡³å°‘ P2ï¼›å­˜åœ¨æ•°æ®æ�
 
 ## 13.1 Permitted
 
-å¯ç»´æŠ¤ï¼š
+可维护：
 
 - Python patch-level compatibility
 - Playwright / Chromium compatibility
@@ -521,7 +521,7 @@ Security DEFECT é»˜è®¤è‡³å°‘ P2ï¼›å­˜åœ¨æ•°æ®æ�
 
 ## 13.2 Upgrade Rule
 
-Dependency upgrade å¿…é¡»è¯´æ˜Žï¼š
+Dependency upgrade 必须说明：
 
 ```text
 Why Upgrade
@@ -531,24 +531,24 @@ Rollback Version
 Required Tests
 ```
 
-ä¸å¾—ä¸ºäº†â€œè¿½æœ€æ–°ç‰ˆæœ¬â€è‡ªåŠ¨å‡çº§ã€‚
+不得为了“追最新版本”自动升级。
 
-å¦‚æžœå‡çº§å¯¼è‡´ï¼š
+如果升级导致：
 
 - Canonical output change
 - Architecture change
 - Acceptance drift
 - major renderer behavior change
 
-åˆ™åœæ­¢ P11 patchï¼Œè½¬ P12 evaluationã€‚
+则停止 P11 patch，转 P12 evaluation。
 
 ---
 
 # 14. Documentation Maintenance
 
-å…è®¸ä¿®æ­£æ–‡æ¡£ä¸Žå®žé™…è¡Œä¸ºçš„ä¸ä¸€è‡´ã€‚
+允许修正文档与实际行为的不一致。
 
-æ–‡æ¡£ä¿®å¤å¿…é¡»åˆ¤æ–­ï¼š
+文档修复必须判断：
 
 ```text
 Documentation is wrong
@@ -556,9 +556,9 @@ or
 Implementation is wrong
 ```
 
-ä¸å¾—é»˜è®¤ä»¥ä¿®æ”¹æ–‡æ¡£æ¥æŽ©ç›–å®žçŽ°ç¼ºé™·ã€‚
+不得默认以修改文档来掩盖实现缺陷。
 
-æ–‡æ¡£-only Change Package å¯ä¸è¿è¡Œ full regressionï¼Œä½†ä»è¦æ±‚ï¼š
+文档-only Change Package 可不运行 full regression，但仍要求：
 
 - exact diff
 - factual consistency review
@@ -570,21 +570,21 @@ Implementation is wrong
 
 # 15. AI Agent Governance
 
-P11 ç»§ç»­é‡‡ç”¨ï¼š
+P11 继续采用：
 
 ```text
               Specification
-                   â–²
-                   â”‚
+                   ▲
+                   │
             ChatGPT Reviewer
-              â–²          â–²
-              â”‚          â”‚
-         AI Agent â”€â”€â”€ Test System
+              ▲          ▲
+              │          │
+         AI Agent ─── Test System
 ```
 
 ## 15.1 Reviewer
 
-Reviewer å¯ï¼š
+Reviewer 可：
 
 - Classification
 - Severity Review
@@ -595,34 +595,34 @@ Reviewer å¯ï¼š
 - Evidence Review
 - Closure Review
 
-Reviewer ä¸å¾—æ›¿ä»£ Human Gateã€‚
+Reviewer 不得替代 Human Gate。
 
 ## 15.2 AI Agent
 
-AI Agent åªèƒ½ï¼š
+AI Agent 只能：
 
-- æ‰§è¡Œå·²æ‰¹å‡† Change Packageï¼›
-- ä¿®æ”¹ Allowed Scope å†…æ–‡ä»¶ï¼›
-- è¿è¡Œæ‰¹å‡†çš„æµ‹è¯•ï¼›
-- è¾“å‡º evidenceã€‚
+- 执行已批准 Change Package；
+- 修改 Allowed Scope 内文件；
+- 运行批准的测试；
+- 输出 evidence。
 
-AI Agent ç¦æ­¢ï¼š
+AI Agent 禁止：
 
-- ä¿®æ”¹ Canonical Authorityï¼›
-- æ‰©å¤§ Allowed Scopeï¼›
-- è‡ªåŠ¨æ”¹å˜ Goldenï¼›
-- è‡ªåŠ¨æ”¹å˜ Acceptance Criteriaï¼›
-- æŠŠ Optional Improvement æ”¹æˆ DEFECTï¼›
-- è‡ªåŠ¨æ‰¹å‡† Patch Releaseï¼›
-- è‡ªåŠ¨å®Œæˆ Human Closureã€‚
+- 修改 Canonical Authority；
+- 扩大 Allowed Scope；
+- 自动改变 Golden；
+- 自动改变 Acceptance Criteria；
+- 把 Optional Improvement 改成 DEFECT；
+- 自动批准 Patch Release；
+- 自动完成 Human Closure。
 
 ---
 
 # 16. Git Closure Gate
 
-æ¯ä¸ªå·²å®žæ–½çš„ Maintenance Change Package å¿…é¡» Git æ”¶å£ã€‚
+每个已实施的 Maintenance Change Package 必须 Git 收口。
 
-æœ€ä½Žè¦æ±‚ï¼š
+最低要求：
 
 ```powershell
 git status --short
@@ -636,7 +636,7 @@ git rev-parse HEAD
 git status --short
 ```
 
-éªŒæ”¶ï¼š
+验收：
 
 ```text
 Changed Files:
@@ -655,13 +655,13 @@ Closure SHA:
 RECORDED
 ```
 
-ç¦æ­¢ï¼š
+禁止：
 
-- unrelated files æ··å…¥ï¼›
-- `git add .` åœ¨ scope æœªå®¡æŸ¥æ—¶ç›´æŽ¥ä½¿ç”¨ï¼›
-- amend å·²å†»ç»“ release commitsï¼›
-- é‡å†™ `v1.0.0` tagï¼›
-- ä¸ºç»´æŠ¤æäº¤æ‰§è¡Œæ— å¿…è¦çš„ rebase / history rewriteã€‚
+- unrelated files 混入；
+- `git add .` 在 scope 未审查时直接使用；
+- amend 已冻结 release commits；
+- 重写 `v1.0.0` tag；
+- 为维护提交执行无必要的 rebase / history rewrite。
 
 ---
 
@@ -669,38 +669,38 @@ RECORDED
 
 ## 17.1 Version Policy
 
-é»˜è®¤ï¼š
+默认：
 
 | Change | Version Policy |
 | --- | --- |
 | Bug / Security / Compatibility fix | `1.0.1`, `1.0.2`, ... |
-| Backward-compatible feature | P12 â†’ candidate `1.1.0` |
+| Backward-compatible feature | P12 → candidate `1.1.0` |
 | Canonical semantic change | P12 |
-| Breaking change | P12 â†’ candidate `2.0.0` |
+| Breaking change | P12 → candidate `2.0.0` |
 
-P11 é»˜è®¤åªç”Ÿäº§ **Patch Release**ã€‚
+P11 默认只生产 **Patch Release**。
 
 ## 17.2 Patch Release Trigger
 
-ä»¥ä¸‹ä»»ä¸€æƒ…å†µå¯è€ƒè™‘ patch releaseï¼š
+以下任一情况可考虑 patch release：
 
-- å·²å…³é—­ P1 / P2 production defectï¼›
-- security fixï¼›
-- major compatibility fixï¼›
-- å¤šä¸ªå·²éªŒè¯ P3 ä¿®å¤ç´¯ç§¯åˆ°å‘å¸ƒé˜ˆå€¼ï¼›
-- Human æ˜Žç¡®è¦æ±‚ patch releaseã€‚
+- 已关闭 P1 / P2 production defect；
+- security fix；
+- major compatibility fix；
+- 多个已验证 P3 修复累积到发布阈值；
+- Human 明确要求 patch release。
 
-ä¸æ˜¯æ¯ä¸ª Maintenance Commit éƒ½å¿…é¡»å‘å¸ƒã€‚
+不是每个 Maintenance Commit 都必须发布。
 
 ---
 
 # 18. Patch Release Gate
 
-Patch Release å¿…é¡»é€šè¿‡ï¼š
+Patch Release 必须通过：
 
 | Gate | Acceptance |
 | --- | --- |
-| Maintenance Packages | Release èŒƒå›´å†…å…¨éƒ¨ CLOSED / ACCEPTED |
+| Maintenance Packages | Release 范围内全部 CLOSED / ACCEPTED |
 | Open P1 Blockers | **0** |
 | Release-Critical P2 | **0** |
 | Targeted Tests | PASS |
@@ -727,32 +727,32 @@ Default decision:
 
 ```text
 Any Required Gate FAIL
-    â†“
+    ↓
 PATCH RELEASE DENIED
 ```
 
-ç¦æ­¢ fail-openã€‚
+禁止 fail-open。
 
 ---
 
 # 19. Patch Release Evidence
 
-Patch release å»ºè®®äº§ç”Ÿç‹¬ç«‹è¯æ®ï¼Œä¾‹å¦‚ï¼š
+Patch release 建议产生独立证据，例如：
 
 ```text
 RC_EVIDENCE/P11_v1.0.1/
 ```
 
-æˆ–é¡¹ç›®æ—¢æœ‰ Release Evidence Authority è§„å®šçš„ç­‰æ•ˆç»“æž„ã€‚
+或项目既有 Release Evidence Authority 规定的等效结构。
 
-è‡³å°‘è®°å½•ï¼š
+至少记录：
 
 - source commit SHA
 - maintenance package IDs
 - Python / dependency environment
 - regression result
-- Golden / Acceptance resultï¼ˆå¦‚é€‚ç”¨ï¼‰
-- representative DOCX evidenceï¼ˆå¦‚é€‚ç”¨ï¼‰
+- Golden / Acceptance result（如适用）
+- representative DOCX evidence（如适用）
 - package filenames
 - SHA256
 - fresh install result
@@ -766,62 +766,62 @@ RC_EVIDENCE/P11_v1.0.1/
 
 | S/N | Phase# | Task | Work Package | Deliverable / Acceptance | Status |
 | ---: | --- | --- | --- | --- | --- |
-| 1 | P11-01 | Maintenance Scope Freeze | WP-MNT-01 Scope | Allowed / Forbidden Scopeï¼›NO FEATURE DEVELOPMENTï¼›P12 boundary | â³ PLANNED |
-| 2 | P11-02 | Maintenance Baseline | WP-MNT-02 Baseline | `v1.0.0` tag targetï¼›P10 closure SHAï¼›test/environment baseline | â³ PLANNED |
-| 3 | P11-03 | Issue Classification | WP-MNT-03 Triage | 5-class classification frozen | â³ PLANNED |
-| 4 | P11-04 | Severity Gate | WP-MNT-04 Priority | P1/P2/P3/P4/Enhancement rules | â³ PLANNED |
-| 5 | P11-05 | Reproduction Evidence | WP-MNT-05 Repro | deterministic reproductionï¼›Expected vs Actual | â³ PLANNED |
-| 6 | P11-06 | Change Package Authority | WP-MNT-06 Change Control | Mandatory Change Package schema | â³ PLANNED |
-| 7 | P11-07 | Bounded Patch | WP-MNT-07 Patch | minimal authorized modification | â³ CONTINUOUS |
-| 8 | P11-08 | Target Verification | WP-MNT-08 Target Test | failing reproduction â†’ PASS | â³ CONTINUOUS |
-| 9 | P11-09 | Regression Gate | WP-MNT-09 Regression | full regression PASSï¼›new failure=0 | â³ CONTINUOUS |
-| 10 | P11-10 | Golden / Acceptance Gate | WP-MNT-10 Golden | affected behavior remains canonical | â³ CONDITIONAL |
-| 11 | P11-11 | Runtime / COM Gate | WP-MNT-11 Runtime | COM / DOCX / FinalArtifactQA | â³ CONDITIONAL |
-| 12 | P11-12 | Dependency Maintenance | WP-MNT-12 Dependency | compatibility + rollback + test evidence | â³ CONTINUOUS |
-| 13 | P11-13 | Security Maintenance | WP-MNT-13 Security | boundary / dependency / fail-open review | â³ CONTINUOUS |
-| 14 | P11-14 | Documentation Maintenance | WP-MNT-14 Docs | docs == actual approved behavior | â³ CONTINUOUS |
-| 15 | P11-15 | Git Closure | WP-MNT-15 Git Gate | exact diffï¼›forbidden=0ï¼›clean treeï¼›SHA | â³ CONTINUOUS |
-| 16 | P11-16 | Patch Release Decision | WP-MNT-16 Release Gate | release threshold + blockers + Human decision | â³ CONDITIONAL |
-| 17 | P11-17 | Patch Build / Verify | WP-MNT-17 Patch Release | wheel/sdist/hash/install/smoke/evidence | â³ CONDITIONAL |
-| 18 | P11-18 | Governance Review | WP-MNT-18 Governance | no unauthorized driftï¼›all packages classified | â³ PLANNED |
-| 19 | P11-19 | Final Human Closure | WP-MNT-19 Closure | Human approvalï¼›P11 CLOSED / transition decision | â³ PLANNED |
+| 1 | P11-01 | Maintenance Scope Freeze | WP-MNT-01 Scope | Allowed / Forbidden Scope；NO FEATURE DEVELOPMENT；P12 boundary | ⏳ PLANNED |
+| 2 | P11-02 | Maintenance Baseline | WP-MNT-02 Baseline | `v1.0.0` tag target；P10 closure SHA；test/environment baseline | ⏳ PLANNED |
+| 3 | P11-03 | Issue Classification | WP-MNT-03 Triage | 5-class classification frozen | ⏳ PLANNED |
+| 4 | P11-04 | Severity Gate | WP-MNT-04 Priority | P1/P2/P3/P4/Enhancement rules | ⏳ PLANNED |
+| 5 | P11-05 | Reproduction Evidence | WP-MNT-05 Repro | deterministic reproduction；Expected vs Actual | ⏳ PLANNED |
+| 6 | P11-06 | Change Package Authority | WP-MNT-06 Change Control | Mandatory Change Package schema | ⏳ PLANNED |
+| 7 | P11-07 | Bounded Patch | WP-MNT-07 Patch | minimal authorized modification | ⏳ CONTINUOUS |
+| 8 | P11-08 | Target Verification | WP-MNT-08 Target Test | failing reproduction → PASS | ⏳ CONTINUOUS |
+| 9 | P11-09 | Regression Gate | WP-MNT-09 Regression | full regression PASS；new failure=0 | ⏳ CONTINUOUS |
+| 10 | P11-10 | Golden / Acceptance Gate | WP-MNT-10 Golden | affected behavior remains canonical | ⏳ CONDITIONAL |
+| 11 | P11-11 | Runtime / COM Gate | WP-MNT-11 Runtime | COM / DOCX / FinalArtifactQA | ⏳ CONDITIONAL |
+| 12 | P11-12 | Dependency Maintenance | WP-MNT-12 Dependency | compatibility + rollback + test evidence | ⏳ CONTINUOUS |
+| 13 | P11-13 | Security Maintenance | WP-MNT-13 Security | boundary / dependency / fail-open review | ⏳ CONTINUOUS |
+| 14 | P11-14 | Documentation Maintenance | WP-MNT-14 Docs | docs == actual approved behavior | ⏳ CONTINUOUS |
+| 15 | P11-15 | Git Closure | WP-MNT-15 Git Gate | exact diff；forbidden=0；clean tree；SHA | ⏳ CONTINUOUS |
+| 16 | P11-16 | Patch Release Decision | WP-MNT-16 Release Gate | release threshold + blockers + Human decision | ⏳ CONDITIONAL |
+| 17 | P11-17 | Patch Build / Verify | WP-MNT-17 Patch Release | wheel/sdist/hash/install/smoke/evidence | ⏳ CONDITIONAL |
+| 18 | P11-18 | Governance Review | WP-MNT-18 Governance | no unauthorized drift；all packages classified | ⏳ PLANNED |
+| 19 | P11-19 | Final Human Closure | WP-MNT-19 Closure | Human approval；P11 CLOSED / transition decision | ⏳ PLANNED |
 
 ---
 
 # 21. Continuous Maintenance Model
 
-P11 ä¸Ž Development Phase ä¸åŒã€‚
+P11 与 Development Phase 不同。
 
-P11-07..15 ä¸ºé•¿æœŸå¾ªçŽ¯ï¼š
+P11-07..15 为长期循环：
 
 ```text
 P11 Foundation
-    â†“
+    ↓
 P11-MNT-001
-    â†“
+    ↓
 Closure
-    â†“
+    ↓
 P11-MNT-002
-    â†“
+    ↓
 Closure
-    â†“
+    ↓
 ...
-    â†“
+    ↓
 Patch Release when justified
 ```
 
-å› æ­¤ï¼š
+因此：
 
-- å•ä¸ª Maintenance Package å¯ä»¥ CLOSEDï¼›
-- P11 Program å¯ä»¥ä¿æŒ ACTIVEï¼›
-- ä¸è¦æ±‚æ¯ä¸ª defect åŽç«‹å³å…³é—­æ•´ä¸ª P11ï¼›
-- P11 Final Closure ä»…åœ¨ Human å†³å®šç»“æŸè¯¥ maintenance line æˆ–è¿›å…¥ä¸‹ä¸€æ²»ç†é˜¶æ®µæ—¶æ‰§è¡Œã€‚
+- 单个 Maintenance Package 可以 CLOSED；
+- P11 Program 可以保持 ACTIVE；
+- 不要求每个 defect 后立即关闭整个 P11；
+- P11 Final Closure 仅在 Human 决定结束该 maintenance line 或进入下一治理阶段时执行。
 
 ---
 
 # 22. P11 Definition of Done
 
-P11 Foundation DoDï¼š
+P11 Foundation DoD：
 
 ```text
 [ ] P11 Maintenance Authority Human-Frozen
@@ -837,7 +837,7 @@ P11 Foundation DoDï¼š
 [ ] P12 Evolution boundary frozen
 ```
 
-P11 Program Final Closure DoDï¼š
+P11 Program Final Closure DoD：
 
 ```text
 [ ] All accepted P11 P1 issues CLOSED
@@ -860,7 +860,7 @@ P11 Program Final Closure DoDï¼š
 
 # 23. Initial P11 State
 
-åœ¨æœ¬æ–‡æ¡£ Freeze ä¹‹å‰ï¼š
+在本文档 Freeze 之前：
 
 ```text
 P11 Status:
@@ -879,7 +879,7 @@ Patch Release:
 NONE AUTHORIZED
 ```
 
-æœ¬æ–‡æ¡£ Human Freeze åŽï¼š
+本文档 Human Freeze 后：
 
 ```text
 P11 Status:
@@ -900,46 +900,46 @@ NONE until an approved Change Package exists
 
 # 24. Maintenance Governance Principles
 
-P11 æœ€ç»ˆå›ºå®šä»¥ä¸‹åŽŸåˆ™ï¼š
+P11 最终固定以下原则：
 
 1. **Canonical Authority**
-   Maintenance ä¸å¾—è¶Šè¿‡ Canonicalã€‚
+   Maintenance 不得越过 Canonical。
 
 2. **Minimal Change**
-   åªä¿®å¤å·²éªŒè¯é—®é¢˜ï¼Œä¸è¿›è¡Œé¡ºå¸¦é‡æž„ã€‚
+   只修复已验证问题，不进行顺带重构。
 
 3. **Evidence Before Patch**
-   æ²¡æœ‰ reproduction / deviation evidenceï¼Œä¸å®žæ–½äº§å“ä¿®å¤ã€‚
+   没有 reproduction / deviation evidence，不实施产品修复。
 
 4. **Classification Before Implementation**
-   å…ˆåˆ¤æ–­ DEFECT / TEST_DEFECT / SPEC_GAP / ARCH_CHANGE / OPTIONAL_IMPROVEMENTã€‚
+   先判断 DEFECT / TEST_DEFECT / SPEC_GAP / ARCH_CHANGE / OPTIONAL_IMPROVEMENT。
 
 5. **Default Deny Scope**
-   æœªåˆ—å…¥ Allowed Scope çš„æ–‡ä»¶é»˜è®¤ç¦æ­¢ä¿®æ”¹ã€‚
+   未列入 Allowed Scope 的文件默认禁止修改。
 
 6. **No Silent Baseline Drift**
-   Goldenã€Acceptanceã€Canonicalã€Release Evidence ä¸å¾—ä¸ºè¿å°±å®žçŽ°è€Œé™é»˜å˜åŒ–ã€‚
+   Golden、Acceptance、Canonical、Release Evidence 不得为迁就实现而静默变化。
 
 7. **Risk-Based Testing**
-   æµ‹è¯• Gate ç”±å—å½±å“è¾¹ç•Œå†³å®šï¼Œä½† required gate ä¸å¾—é™é»˜ skipã€‚
+   测试 Gate 由受影响边界决定，但 required gate 不得静默 skip。
 
 8. **Git Closure Is Mandatory**
-   æ¯ä¸ªå·²å®žæ–½ Maintenance Package å¿…é¡»å½¢æˆ exactã€cleanã€å¯è¿½æº¯ closureã€‚
+   每个已实施 Maintenance Package 必须形成 exact、clean、可追溯 closure。
 
 9. **Patch Release Is Conditional**
-   Maintenance commit ä¸ç­‰äºŽå¿…é¡» releaseã€‚
+   Maintenance commit 不等于必须 release。
 
 10. **Human Release Authority**
-    Patch Production Approvalã€Tagã€P11 Final Closure ä¿ç•™ Human Gateã€‚
+    Patch Production Approval、Tag、P11 Final Closure 保留 Human Gate。
 
 11. **Evolution Separation**
-    Feature / Semantic / Architecture evolution å±žäºŽ P12ï¼Œä¸å¾—å€Ÿ P11 è¶Šæƒå®žçŽ°ã€‚
+    Feature / Semantic / Architecture evolution 属于 P12，不得借 P11 越权实现。
 
 ---
 
 # 25. Freeze Gate
 
-æœ¬æ–‡æ¡£æˆä¸ºæ­£å¼ **P11 Maintenance Authority** å‰ï¼Œåº”ç”± Human æ˜Žç¡®æ‰¹å‡†ï¼š
+本文档成为正式 **P11 Maintenance Authority** 前，应由 Human 明确批准：
 
 ```text
 APPROVE AND FREEZE
@@ -948,7 +948,7 @@ VERSION: 1.0
 AS P11 MAINTENANCE AUTHORITY
 ```
 
-æ‰¹å‡†åŽè®°å½•ï¼š
+批准后记录：
 
 ```text
 Spec Version:
@@ -970,16 +970,16 @@ Freeze Commit:
 <git SHA>
 ```
 
-ä¹‹åŽå¯¹æœ¬æ–‡æ¡£æœ¬èº«çš„å®žè´¨æ€§è§„åˆ™ä¿®æ”¹å¿…é¡»èµ°ï¼š
+之后对本文档本身的实质性规则修改必须走：
 
 ```text
 SPEC_GAP / GOVERNANCE CHANGE
-    â†“
+    ↓
 Review
-    â†“
+    ↓
 Human Approval
-    â†“
+    ↓
 Version Update
-    â†“
+    ↓
 Re-Freeze
 ```
