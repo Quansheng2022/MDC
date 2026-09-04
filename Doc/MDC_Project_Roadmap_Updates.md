@@ -1,79 +1,110 @@
-可以。下面给出一版适合作为 **MD_Converter 项目级 Project Roadmap** 的表格。
-
-先说明口径：现有 P10 文档明确给出了 P0–P12 的阶段状态，其中 P0–P3 已关闭、P4–P6 已 100% 完成、P7–P9 已关闭/验收，P11–P12 为规划阶段。
-下表的 **S/N 是项目路线图汇总序号**，不冒充历史 `IMPLEMENTATION_PLAN.md` 中可能已有的原始工作项编号；P10 的具体 WP 则沿用实际编号。
+下面按**截至当前实际状态**整理项目 Roadmap。需要说明一点：早期 `MPC_Roadmap.md` 中仍把 P10 标为 “CURRENT TARGET”，这是历史快照；后续 P10 evidence 已证明 P10 已完成，因此下表按**最新证据状态**归一化，不沿用该陈旧标记。早期阶段顺序与状态见项目 Roadmap。
 
 ## MD_Converter Project Roadmap
 
-| S/N | Phase#  | 阶段 / 任务                      | Work Package                                       | 主要交付 / 验收清单                                                                                                                                   | 完成状态                                    |
-| --: | ------- | ---------------------------- | -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------- |
-|   1 | **P0**  | Project Definition           | Project Definition / Scope                         | 明确 Markdown→DOCX 产品目标；使用场景；输入/输出边界；V1 范围；非目标；成功标准                                                                                             | ✅ **CLOSED**                            |
-|   2 | **P1**  | Canonical Specification      | Specification Freeze                               | 建立 `CANONICAL_SPEC.md`；定义功能、质量、不变量、Release Evidence、版本权威；Canonical Authority 冻结                                                               | ✅ **CLOSED / FROZEN**                   |
-|   3 | **P2**  | Architecture Design          | Architecture / ADR                                 | Parser → Immutable AST → Passes → DecisionEngine → LayoutPlan → QA → Renderer → PostProcessor 架构；组件边界；ADR 决策                                  | ✅ **CLOSED**                            |
-|   4 | **P3**  | Implementation Specification | Implementation Planning                            | 将 Canonical Spec/Architecture 转换成模块、接口、依赖、实施顺序、测试要求和禁止修改范围                                                                                    | ✅ **CLOSED**                            |
-|   5 | **P4**  | Foundation Engineering       | Parser / AST / Core Pipeline Foundation            | Parser；Immutable AST；Pipeline；基础模型与接口；核心数据流可运行；单元测试通过                                                                                         | ✅ **100% COMPLETE**                     |
-|   6 | **P5**  | Rendering Engineering        | Normalize / Diagram / Decision / Layout / Renderer | NormalizePass；ASCII→Mermaid；DiagramPass；DecisionEngine；LayoutPlan；WordRenderer / WordWriter；V1.5 Theme                                        | ✅ **100% COMPLETE**                     |
-|   7 | **P6**  | Quality Engineering          | StaticQA / RenderedQA / Repair / FinalArtifactQA   | StaticQA；RenderedQA；Bounded RepairStrategy；PostProcessor；FinalArtifactQA；失败不得静默放行                                                             | ✅ **100% COMPLETE**                     |
-|   8 | **P7**  | Governance Engineering       | Governance / Evidence / Change Control             | Canonical Authority；Change Control；Evidence Gate；IMP/DEFECT 分类；Allowed/Forbidden Scope；可审计决策链                                                 | ✅ **CLOSED / ACCEPTED**                 |
-|   9 | **P8**  | Verification & Acceptance    | Verification / Golden / Acceptance Corpus          | Unit / Integration / Golden / Acceptance；Golden renderer 验证；Acceptance Corpus；质量门验证                                                           | ✅ **PASS / CLOSED**                     |
-|  10 | **P9**  | Release Candidate Closure    | RC Closure — `RC-20260901-05`                      | RC Evidence；缺陷收口；Release Candidate 稳定性；代码/测试/证据一致；RC 冻结                                                                                       | ✅ **CLOSED / ACCEPTED**                 |
-|  11 | **P10** | Production Release           | Production Release Program                         | Packaging 单一权威；clean build/install；CLI smoke；实际 DOCX；release docs；manifest；final regression；tag；archive；post-release verification；human gates | ✅ **100% COMPLETE / CLOSED / ACCEPTED** |
-|  12 | **P11** | Maintenance                  | Maintenance Program                                | 缺陷维护；兼容性；依赖更新；安全/稳定性修复；回归；patch release；不破坏 Canonical V1 行为                                                                                   | ⏳ **PLANNED**                           |
-|  13 | **P12** | Evolution                    | Evolution Program                                  | 新功能/能力演进；Spec Gap / Architecture Change；ADR；Canonical 新版本；v1.x / v2 规划                                                                        | ⏳ **PLANNED**                           |
+| S/N | Phase#                          | 任务                                                                 | Work Package / Plan                   | 交付 / 验收清单                                                                                            | 完成状态                          | 当前说明 / 下一步                           |
+| --: | ------------------------------- | ------------------------------------------------------------------ | ------------------------------------- | ---------------------------------------------------------------------------------------------------- | ----------------------------- | ------------------------------------ |
+|   1 | **P0**                          | Product Definition                                                 | Product Definition Baseline           | 产品目标、范围、核心能力、约束边界明确                                                                                  | ✅ **COMPLETE**                | 已完成，后续不重新打开                          |
+|   2 | **P1**                          | Canonical Specification                                            | `CANONICAL_SPEC.md` v1.0              | Canonical Authority；SPEC-ID；功能、架构、QA、Acceptance 不变量                                                  | ✅ **FROZEN**                  | Canonical 1.0 已冻结，普通维护不得修改           |
+|   3 | **P2**                          | Architecture Design                                                | `Doc/ARCHITECTURE.md` + ADR-001..009  | Compiler architecture；职责边界；ADR；dependency direction                                                  | ✅ **FROZEN**                  | 架构已冻结；Architecture Evolution → P12   |
+|   4 | **P3**                          | Implementation Specification                                       | Implementation Specification / Plan   | Spec → Implementation mapping；模块职责；实施约束                                                              | ✅ **COMPLETE**                | 实现规范已完成                              |
+|   5 | **P4**                          | Foundation Development                                             | Foundation Development WP             | Parser / AST / Pipeline / Config 等基础能力实现与测试                                                          | ✅ **COMPLETE**                | Foundation 已完成                       |
+|   6 | **P5**                          | Rendering Development                                              | Rendering Development WP              | Renderer、WordWriter、PostProcessor、Theme、DOCX 渲染能力                                                    | ✅ **COMPLETE**                | Rendering 已完成                        |
+|   7 | **P6**                          | Quality Engineering                                                | QA / Golden / Acceptance WP           | StaticQA、RenderedQA、FinalArtifactQA、Golden、Acceptance                                                | ✅ **COMPLETE**                | QA 强制门已建立                            |
+|   8 | **P7**                          | Governance Engineering                                             | Governance Closure                    | Canonical governance、Release Evidence、Default-Deny、审计链                                               | ✅ **CLOSED / ACCEPTED**       | 冻结，不再反复优化                            |
+|   9 | **P8**                          | Verification & Acceptance                                          | Verification / Acceptance             | Full regression、Golden、Acceptance、representative DOCX                                                | ✅ **PASS / CLOSED**           | 验证验收通过                               |
+|  10 | **P9**                          | Release Candidate Closure                                          | RC Closure                            | RC evidence、regression、artifact consistency、Governance closure                                       | ✅ **CLOSED / ACCEPTED**       | RC 已正式收口                             |
+|  11 | **P10**                         | v1.0.0 Production Release                                          | `WP-REL-*` / P10 Release Plan         | wheel/sdist、SHA256、fresh install、CLI smoke、DOCX、277/277、release docs、tag、archive                     | ✅ **CLOSED / ACCEPTED**       | `v1.0.0` 已正式发布                       |
+|  12 | **P10-18**                      | Final Release Regression                                           | WP-REL-18                             | Full regression；Failed=0；Required Skip=0；Fatal COM=0                                                 | ✅ **277/277 PASS**            | Release regression 已通过               |
+|  13 | **P10-19**                      | Production Tag                                                     | WP-REL-19                             | annotated `v1.0.0`；target SHA 固定                                                                     | ✅ **CLOSED / ACCEPTED**       | tag → `5d2c92a...`，不可移动              |
+|  14 | **P10-20..23**                  | Distribution / Production Approval / Archive / Post-release Verify | WP-REL-20..23                         | 分发、Human Approval、归档、正式包重装、CLI/DOCX 验证                                                               | ✅ **PASS / CLOSED**           | 全部完成                                 |
+|  15 | **P10-24**                      | Final Phase Closure                                                | WP-REL-24                             | blockers=0；Governance review；Final Human Closure                                                     | ✅ **CLOSED / ACCEPTED**       | P10 完全关闭                             |
+|  16 | **P10-GIT-FINAL**               | Final Git Closure                                                  | Governance Closure                    | exact diff；clean tree；tag 不移动；closure SHA                                                            | ✅ **CLOSED / ACCEPTED**       | P10 closure SHA `dab9142...`         |
+|  17 | **P11**                         | Maintenance Program                                                | P11 Maintenance Authority             | v1.0.x maintenance；defect/stability/security/compatibility；P12 boundary                              | 🟢 **FROZEN / ACTIVE**        | 当前阶段；P11 Program 不因单包关闭而关闭           |
+|  18 | **P11 / PLAN_A**                | Maintenance Governance Foundation                                  | `P11_AGENT_PLAN_A` / `P11-MNT-GOV-01` | Scope、Baseline、Classification、Severity、Change Package、Test Matrix、Git Gate、Release Gate、P12 Boundary | ✅ **CLOSED / ACCEPTED**       | PLAN_A 已完成；Authority FROZEN / ACTIVE |
+|  19 | **P11 / PLAN_B**                | Maintenance Change Package Lifecycle                               | `P11_AGENT_PLAN_B`                    | Issue → Repro → RCA → Change Package → Patch → Verify → Regression → Git Closure                     | 🟡 **ACTIVE / FINAL CLOSURE** | 当前处理首个真实 maintenance package         |
+|  20 | **P11-MNT-001**                 | Word COM collection-time probe defect                              | `P11-MNT-001` / TEST_DEFECT P2        | COM probe 移出 collection；subprocess isolation；fail-closed；真实 COM 路径保留                                 | ✅ **TECHNICAL PASS**          | 技术修改已验收                              |
+|  21 | **P11-MNT-001 / B-10**          | Target Verification                                                | WP-MNT-08 / COM Gate                  | Dedicated COM 连续 3 次；Fatal=0；Unexpected Skip=0                                                       | ✅ **3/3 PASS**                | 已完成                                  |
+|  22 | **P11-MNT-001 / B-11**          | Full Regression                                                    | WP-MNT-09                             | 277/277；Failed=0；Required Skip=0；Fatal COM=0                                                         | ✅ **PASS**                    | 已完成                                  |
+|  23 | **P11-MNT-001 / B-12**          | Maintenance Review Gate                                            | Maintenance merger 1.2.0              | `--mode maintenance --run-pytest --strict`；目标测试、Registry、证据全部进入 snapshot                             | ✅ **PASS on closure state**   | 已有 `277/277 + RESULT: PASS` 证据       |
+|  24 | **P11-MNT-001 / Final**         | Governance-State Reconciliation                                    | PLAN_B Final Reconciliation           | Registry / Change Package / Closure 状态一致；Reviewer Acceptance                                         | 🟡 **IN PROGRESS**            | **当前正在做**                            |
+|  25 | **P11-MNT-001 / Final Gate**    | Final HEAD Strict Validation                                       | PLAN_B Final Gate                     | CLEAN tree；最新 HEAD；277/277；fatal=0；strict `RESULT: PASS`                                             | ⏳ **NEXT**                    | reconciliation commit 后执行            |
+|  26 | **P11-MNT-001 / Reviewer Gate** | Final Reviewer / Human Acceptance                                  | PLAN_B Final Acceptance               | Reviewer approve；Human Gate；记录 CLOSED / ACCEPTED                                                     | ⏳ **NEXT**                    | AI Agent 不得自批准                       |
+|  27 | **P11-MNT-002**                 | Merger generated-snapshot nesting defect                           | Future Maintenance Package            | `Merged_Code` 不应嵌套旧 review snapshot；独立 Repro/RCA/Change Package                                      | ⚪ **CANDIDATE / NOT STARTED** | 已发现，但**不得混入 P11-MNT-001**            |
+|  28 | **P11 / PLAN_C**                | Conditional Patch Release                                          | `P11_AGENT_PLAN_C`                    | package threshold、build、wheel/sdist、SHA、fresh install、CLI、release evidence、Human approval            | ⏳ **CONDITIONAL**             | 只有决定发布 v1.0.x patch 时启动              |
+|  29 | **P11 / PLAN_D**                | Governance Audit / Final P11 Closure                               | `P11_AGENT_PLAN_D`                    | 全包审计；open blocker=0；authority consistency；Final Human Closure                                        | ⏳ **FUTURE**                  | 只有结束 maintenance line 时执行            |
+|  30 | **P12**                         | Product Evolution                                                  | P12 Evolution Program                 | 新 feature、新 Markdown 语义、新 renderer/output、AST/LayoutPlan/Architecture evolution                      | ⏳ **PLANNED**                 | 与 P11 Maintenance 严格隔离               |
 
----
+P10 的正式发布链已经覆盖 build、fresh install、CLI/DOCX、277/277 final regression、annotated tag、distribution/archive 和 Final Closure。 P11 Authority 当前明确为 **FROZEN / ACTIVE**，默认维护 `v1.0.x`，任何 feature、semantic 或 architecture evolution 都转 P12。
 
-## P10 Production Release — 已完成工作包明细
+### 当前项目位置
 
-P10 是目前证据最完整的阶段，建议在 Project Roadmap 中保留二级明细。其 release chain 明确覆盖 build、hash、clean install、CLI、production DOCX、release docs、manifest、regression、tag、distribution、approval、archive 和 post-release verification。
+```text id="fqw7rm"
+P0   Product Definition             ✅
+ ↓
+P1   Canonical Specification        ✅ FROZEN
+ ↓
+P2   Architecture Design            ✅ FROZEN
+ ↓
+P3   Implementation Specification   ✅
+ ↓
+P4   Foundation Development         ✅
+ ↓
+P5   Rendering Development          ✅
+ ↓
+P6   Quality Engineering            ✅
+ ↓
+P7   Governance Engineering         ✅ CLOSED / ACCEPTED
+ ↓
+P8   Verification & Acceptance      ✅ PASS
+ ↓
+P9   RC Closure                     ✅ CLOSED / ACCEPTED
+ ↓
+P10  v1.0.0 Production Release      ✅ CLOSED / ACCEPTED
+ ↓
+P11  Maintenance                    🟢 ACTIVE
+      │
+      ├─ PLAN_A                     ✅ CLOSED / ACCEPTED
+      │
+      ├─ P11-MNT-001 / PLAN_B       🟡 FINAL CLOSURE
+      │    ├─ Technical Fix         ✅
+      │    ├─ COM 3/3               ✅
+      │    ├─ Regression 277/277    ✅
+      │    ├─ Maintenance Strict    ✅
+      │    └─ Governance Reconcile  ◀ CURRENT
+      │
+      ├─ P11-MNT-002                ⚪ Candidate
+      │
+      ├─ PLAN_C Patch Release       ⏳ Conditional
+      │
+      └─ PLAN_D Final Audit         ⏳ Future
+ ↓
+P12  Product Evolution              ⏳ PLANNED
+```
 
-| S/N | Phase#           | 任务                                   | Work Package         | 交付 / 验收清单                                                                                                            | 完成状态                    |
-| --: | ---------------- | ------------------------------------ | -------------------- | -------------------------------------------------------------------------------------------------------------------- | ----------------------- |
-|  14 | P10-01           | Release Scope Freeze                 | Release Scope Freeze | v1.0.0 功能范围固定；无新增 feature；Canonical 1.0 不修改                                                                          | ✅ PASS                  |
-|  15 | P10-02           | Source Freeze                        | Source Freeze        | Frozen Core 不再修改；release defect 必须独立 Change Package                                                                  | ✅ PASS                  |
-|  16 | P10-03           | Version Gate                         | Final Version Verify | `pyproject.toml` / `__version__` / Canonical / manifest 均为 1.0.0                                                     | ✅ PASS                  |
-|  17 | P10-04           | Git Baseline                         | Git Baseline         | 根 Git repository；release baseline 可追溯                                                                                | ✅ PASS                  |
-|  18 | P10-05           | Environment Gate                     | Release Environment  | Python 3.12.13；Playwright 1.62.0；Chromium 可启动                                                                        | ✅ PASS                  |
-|  19 | P10-06           | Golden Gate                          | Golden Verification  | Golden PASS；canonical renderer = Playwright                                                                          | ✅ PASS                  |
-|  20 | P10-07           | Regression Gate                      | Regression           | 测试全集 PASS；failed=0；required skip=0                                                                                   | ✅ PASS                  |
-|  21 | P10-08           | RC Evidence Recheck                  | RC05 Evidence Gate   | new failures=0；QA all PASS；`RELEASE_ELIGIBLE`                                                                        | ✅ PASS                  |
-|  22 | P10-COM-01       | Word COM Lifecycle Cleanup           | IMP-020              | COM proxy cleanup；retry reset；cleanup 顺序；fatal COM errors=0                                                          | ✅ **CLOSED / ACCEPTED** |
-|  23 | P10-GIT-CLOSE-01 | COM Git Closure                      | Git Governance       | exact diff；unauthorized files=0；clean tree；closure SHA                                                               | ✅ **CLOSED / ACCEPTED** |
-|  24 | P10-PKG-01       | Packaging Single Authority           | WP-PKG-01..08        | `pyproject.toml` 唯一 production packaging authority；metadata mismatch=0；package-data / scripts / extras / Git closure | ✅ **CLOSED / ACCEPTED** |
-|  25 | P10-09           | Build Clean Package                  | WP-REL-09 Build      | `python -m build`；wheel + sdist；exit=0；无 source-tree 污染                                                              | ✅ PASS                  |
-|  26 | P10-10           | Artifact Integrity                   | WP-REL-10 SHA256     | wheel/sdist filename、size、SHA256 与 manifest 对齐                                                                       | ✅ PASS                  |
-|  27 | P10-11           | Clean Install                        | WP-REL-11 Clean Venv | 全新 venv；从 wheel 安装；非 editable；依赖成功                                                                                   | ✅ PASS                  |
-|  28 | P10-12           | CLI Smoke Test                       | WP-REL-12 CLI Smoke  | `md-converter --help`；`md-converter-check`；基本转换；exit code 正确                                                         | ✅ PASS                  |
-|  29 | P10-13           | Representative Production Conversion | WP-REL-13 Real DOCX  | Markdown→DOCX；TOC/表格/样式/图片/diagram；FinalArtifactQA；Human Visual Acceptance                                           | ✅ **PASS / ACCEPTED**   |
-|  30 | P10-14           | Release Notes                        | WP-DOC-14            | scope；主要能力；release fixes；known limitations；breaking changes                                                          | ✅ **APPROVED**          |
-|  31 | P10-15           | Installation Guide                   | WP-DOC-15            | Python；base install；Windows/Mermaid extras；Chromium；Word requirements                                                | ✅ **APPROVED**          |
-|  32 | P10-16           | Known Limitations                    | WP-DOC-16            | Mermaid / Word COM 限制；未支持能力明确记录                                                                                      | ✅ **APPROVED**          |
-|  33 | P10-17           | Release Manifest                     | WP-REL-17            | software/spec/architecture/theme version；RC；SHA；package hashes；build env                                             | ✅ **APPROVED**          |
-|  34 | P10-18           | Final Release Regression             | WP-REL-18 Final Gate | **277/277 PASS**；required skip=0；fatal=0                                                                             | ✅ **CLOSED**            |
-|  35 | P10-19           | Git Tag                              | WP-REL-19 Tag        | annotated `v1.0.0`；target=`5d2c92a...`；Human Ratification                                                            | ✅ **CLOSED / ACCEPTED** |
-|  36 | P10-20           | Final Distribution Package           | WP-REL-20            | wheel + sdist + release docs + manifest + RC Evidence                                                                | ✅ PASS                  |
-|  37 | P10-21           | Production Release Approval          | WP-REL-21            | required gates PASS；blockers=0；spec deviations=0；Human Production Approval                                           | ✅ **CLOSED / APPROVED** |
-|  38 | P10-22           | Publish / Archive                    | WP-REL-22            | Git tag；release bundle；immutable RC Evidence；SHA records                                                             | ✅ PASS                  |
-|  39 | P10-23           | Post-Release Verification            | WP-REL-23            | 正式 package 重装；CLI smoke；representative conversion；version/tag/hash match                                             | ✅ PASS                  |
-|  40 | P10-24           | Final Phase Closure                  | WP-REL-24            | package/tag/archive verified；P1 blockers=0；Governance Review；Final Human Closure                                     | ✅ **CLOSED / ACCEPTED** |
-|  41 | P10-GIT-FINAL    | Phase 10 Final Git Closure           | Governance Closure   | 仅状态文档修改；exact diff；working tree clean；tag 不移动；closure commit `dab9142...`                                            | ✅ **CLOSED / ACCEPTED** |
+这里最重要的是：**P11 不是传统 development phase。** 它采用连续维护模式，单个 `P11-MNT-xxx` 可以关闭，而 P11 Program 继续 `ACTIVE`；只有 Human 决定结束 maintenance line 时才执行 P11 Final Closure。
 
-P10 的 DoD 已覆盖 package build、fresh install、CLI/DOCX、release documents、277/277 regression、annotated tag、bundle/archive/post-release verification 和最终关闭。
-最终 Git closure 又确认 `HEAD=dab9142f1ece898f7dcd66c2fe53d6106f59230c`，而 `v1.0.0` 仍保持指向 `5d2c92a6af662ec8ee392f5a1a4d66f1f022229e`，因此治理提交没有移动正式 release tag。
+### 当前下一步
 
-## 后续 Roadmap 建议
+目前唯一应该推进的是：
 
-从现在开始，项目的主线应非常清楚：
+```text id="woqi57"
+P11-MNT-001
+Governance-State Reconciliation
+        ↓
+Reconciliation Commit
+        ↓
+Final HEAD maintenance strict + 277/277
+        ↓
+ChatGPT Reviewer / Human Acceptance
+        ↓
+Final Acceptance Record Commit
+        ↓
+Final immutable strict PASS
+        ↓
+P11-MNT-001 CLOSED / ACCEPTED
+        ↓
+P11 Program remains ACTIVE
+```
 
-| Priority | Phase               | 下一阶段重点                            | 原则                                           |
-| -------: | ------------------- | --------------------------------- | -------------------------------------------- |
-|        1 | **P11 Maintenance** | 运行维护、缺陷修复、依赖/兼容性、安全、patch release | **稳定优先，不主动增加复杂度**                            |
-|        2 | **P11.x**           | 根据真实用户反馈建立维护 Change Package       | DEFECT → Plan → Patch → Evidence             |
-|        3 | **P12 Evolution**   | 只有出现明确新需求时启动能力演进                  | 先 Spec/ADR，再开发                               |
-|        4 | **P12.x**           | 新格式、新布局、新规则、新 renderer 等          | 不允许直接穿透 Frozen Core                          |
-|        5 | Future Release      | v1.1 / v2.0                       | 新 Canonical Baseline + 新 Acceptance Baseline |
-
-因此项目目前可以概括为：
-
-**P0–P10：完成；P11：下一执行阶段；P12：规划阶段。**
-P10 已经正式冻结，不应再作为“继续优化阶段”使用；新问题应进入 **P11 Maintenance**，真正涉及能力或架构演进的事项才进入 **P12 Evolution**。
+**不需要再回到 P0–P10，也不应该在此时进入 PLAN_C。** Patch Release 并非每个 maintenance commit 都必须触发；正式 Patch Release 还要求全部 release-scope maintenance packages CLOSED、regression/COM/packaging/fresh install/CLI 等 Gate 通过并取得 Human Production Approval。
