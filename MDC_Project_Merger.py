@@ -21,7 +21,10 @@ Project Merger - 项目级审查快照生成器
    10. 命中 Secret 时 BLOCK 整个文件，只记录 pattern 名，不记录 Secret 值。
    11. 支持 UTF-8 / UTF-8-SIG / GB18030。
    12. 输出 Merge Report。
-   13. 提供 --self-test 自测。
+   13. 显式排除 Merged_Code/ 以及所有符号链接，防止审查快照越界/嵌套。
+   14. 显式纳入 MANIFEST.in 等项目审查关键文件。
+   15. 目录排除大小写不敏感，适配 Windows。
+   16. 提供 --self-test 自测。
 
 设计原则:
     - Fail safe for secrets.
@@ -53,7 +56,7 @@ DEFAULT_PROJECT_ROOT = Path(
 
 DEFAULT_OUTPUT_FILE = Path(
     r"C:\Users\Quansheng\Documents\projects"
-    r"\TA_Workflow\Merged_Code\merged_code_MDC.txt"
+    r"\MD_Converter\Merged_Code\merged_code_MDC.txt"
 )
 
 # 单个文本文件最大允许大小。
@@ -102,6 +105,7 @@ EXCLUDE_DIRS = {
     "build",
     "dist",
     "htmlcov",
+    "merged_code",
 
     # Project runtime / business data
     "input",
@@ -113,14 +117,32 @@ EXCLUDE_DIRS = {
 }
 
 
-def should_exclude_dir(name: str) -> bool:
+def should_exclude_dir(path: Path) -> bool:
     """
     判断目录是否应该排除。
 
-    *.egg-info 属于 setuptools generated metadata，
-    不应该进入代码/治理审查快照。
+    规则:
+        - 目录名匹配大小写不敏感。
+        - *.egg-info 属于 setuptools generated metadata。
+        - 所有符号链接目录默认拒绝，避免越过 project root。
     """
-    if name in EXCLUDE_DIRS:
+
+    path = Path(path)
+
+    try:
+        if path.is_symlink():
+            return True
+    except OSError:
+        # 无法可靠判断目录属性时按 fail-safe 处理。
+        return True
+
+    name = path.name.casefold()
+    excluded_dirs = {
+        item.casefold()
+        for item in EXCLUDE_DIRS
+    }
+
+    if name in excluded_dirs:
         return True
 
     if name.endswith(".egg-info"):
@@ -203,6 +225,7 @@ INCLUDE_FILENAMES = {
     "Makefile",
     "Procfile",
     "Pipfile",
+    "MANIFEST.in",
 
     ".gitignore",
     ".gitattributes",
@@ -439,6 +462,16 @@ def should_exclude_file(
     filename = path.name
 
     # ------------------------------------------------------------------
+    # Symbolic link default deny
+    # ------------------------------------------------------------------
+
+    try:
+        if path.is_symlink():
+            return True, "symlink file excluded"
+    except OSError:
+        return True, "unable to verify symlink status; fail-safe excluded"
+
+    # ------------------------------------------------------------------
     # 当前正在生成的 output snapshot
     # ------------------------------------------------------------------
 
@@ -604,16 +637,18 @@ def build_snapshot(
 
     for dirpath, dirnames, filenames in os.walk(root):
 
+        current_dir = Path(dirpath)
+
         dirnames[:] = sorted(
             [
                 directory
                 for directory in dirnames
-                if not should_exclude_dir(directory)
+                if not should_exclude_dir(
+                    current_dir / directory
+                )
             ],
             key=str.lower,
         )
-
-        current_dir = Path(dirpath)
 
         for filename in sorted(
             filenames,
@@ -967,6 +1002,43 @@ def print_report(
 # Self Test
 # ==============================================================================
 
+def _self_test_symlink_guard(
+    root: Path,
+    output_path: Path,
+) -> bool:
+    """
+    验证 symlink fail-safe 分支。
+
+    使用 mock 避免要求 Windows Developer Mode / 管理员权限
+    才能创建真实 symlink。真实扫描路径仍由 Path.is_symlink()
+    强制拒绝文件和目录符号链接。
+    """
+
+    from unittest.mock import patch
+
+    candidate_file = root / "linked.md"
+    candidate_dir = root / "linked_dir"
+
+    with patch.object(
+        Path,
+        "is_symlink",
+        return_value=True,
+    ):
+        excluded_file, reason = should_exclude_file(
+            candidate_file,
+            output_path,
+        )
+        excluded_dir = should_exclude_dir(
+            candidate_dir
+        )
+
+    return (
+        excluded_file
+        and reason == "symlink file excluded"
+        and excluded_dir
+    )
+
+
 def _self_test() -> int:
     """
     最小自测。
@@ -986,6 +1058,10 @@ def _self_test() -> int:
         CLEAN-03 *.egg-info excluded
         CLEAN-04 historical merged snapshot excluded
         CLEAN-05 current output excluded
+        CLEAN-06 Merged_Code directory excluded
+        CLEAN-07 directory exclusion is case-insensitive
+        COVER-01 MANIFEST.in included
+        SEC-13 symlink file/directory default deny
         IO-01 read failures == 0
     """
 
@@ -1099,6 +1175,31 @@ def _self_test() -> int:
             output_dir / "generated.txt"
         ).write_text(
             "noise\n",
+            encoding="utf-8",
+        )
+
+        merged_code_dir = root / "Merged_Code"
+        merged_code_dir.mkdir()
+
+        (
+            merged_code_dir / "review_notes.txt"
+        ).write_text(
+            "generated review workspace\n",
+            encoding="utf-8",
+        )
+
+        mixed_case_build = root / "Build"
+        mixed_case_build.mkdir()
+
+        (
+            mixed_case_build / "noise.txt"
+        ).write_text(
+            "case-insensitive exclusion check\n",
+            encoding="utf-8",
+        )
+
+        (root / "MANIFEST.in").write_text(
+            "include README.md\n",
             encoding="utf-8",
         )
 
@@ -1240,6 +1341,32 @@ def _self_test() -> int:
                 "merged_code_MDC.txt"
                 not in merged,
                 "CLEAN-05 current snapshot excluded",
+            ),
+
+            # Generated review workspace.
+            (
+                "Merged_Code/review_notes.txt"
+                not in merged,
+                "CLEAN-06 Merged_Code directory excluded",
+            ),
+
+            # Directory matching must be case-insensitive.
+            (
+                "Build/noise.txt"
+                not in merged,
+                "CLEAN-07 directory exclusion is case-insensitive",
+            ),
+
+            # Packaging review authority file.
+            (
+                "MANIFEST.in" in merged,
+                "COVER-01 MANIFEST.in included",
+            ),
+
+            # Symlink guard.
+            (
+                _self_test_symlink_guard(root, out),
+                "SEC-13 symlink file/directory default deny",
             ),
 
             # IO
