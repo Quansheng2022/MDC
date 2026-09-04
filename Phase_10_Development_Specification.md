@@ -8,7 +8,7 @@
 | Phase | **P10 — v1.0.0 Production Release** |
 | Spec 版本 | 1.0（本文档为 P10 开发规格，随 P10 进度维护） |
 | 创建日期 | 2026-09-02 |
-| 当前状态 | **CLOSED**（v1.0.0 已发布并打 tag，2026-09-03） |
+| 当前状态 | ✅ **CLOSED / ACCEPTED**（P10-24 Final Human Closure 已于 2026-09-04 APPROVED；Phase 10 100% COMPLETE） |
 | Canonical Authority | `CANONICAL_SPEC.md`（1.0 FROZEN，本阶段不修改） |
 | 架构依据 | `Doc/ARCHITECTURE.md`、ADR-001..009 |
 | 实施追踪 | `IMPLEMENTATION_PLAN.md`（本阶段条目：IMP-021） |
@@ -28,15 +28,17 @@ P10-PKG-01  Packaging Single Authority — ✅ CLOSED / ACCEPTED（cae92ff）
     ↓
 P10-09..10  Build wheel + sdist / Artifact Integrity — ✅ PASS（doc closure 后 Final Rebuild）
     ↓
-P10-11..13  Clean Install / CLI Smoke / Representative DOCX — ✅ PASS
+P10-11..13  Clean Install / CLI Smoke / Representative DOCX — ✅ PASS / ACCEPTED（P10-13 Human Visual Acceptance：2026-09-04 APPROVED）
     ↓
-P10-14..17  Release Notes / Install Guide / Limitations / Manifest — ✅ COMPLETE
+P10-14..17  Release Notes / Install Guide / Limitations / Manifest — ✅ COMPLETE / APPROVED（Human Approval：2026-09-04）
     ↓
 P10-18  Final Regression — ✅ PASS / CLOSED（277/277）
     ↓
-P10-19  Tag v1.0.0 — ⏳ WAITING HUMAN TAG AUTHORIZATION（DO NOT TAG）
+P10-19  Tag v1.0.0 — ✅ CLOSED / ACCEPTED（existing annotated tag ratified 2026-09-04；target `5d2c92a`）
     ↓
-P10-20..24  Archive / Post-release Verify / P10 CLOSED
+P10-20..23  Distribution / Approval / Archive / Post-release Verify — ✅ PASS / CLOSED
+    ↓
+P10-24  Final Closure — ✅ CLOSED / ACCEPTED（Governance-only Review PASS / APPROVED；Final Human Closure APPROVED，2026-09-04）
 ```
 
 ### 1.1 范围冻结（Scope Freeze）
@@ -63,7 +65,7 @@ P10-20..24  Archive / Post-release Verify / P10 CLOSED
 
 ---
 
-## 2. P10 总体状态快照（截至 2026-09-02）
+## 2. P10 总体状态快照（截至 2026-09-04）
 
 | Phase | 状态 |
 | --- | --- |
@@ -72,7 +74,7 @@ P10-20..24  Archive / Post-release Verify / P10 CLOSED
 | P7 Governance Engineering | ✅ CLOSED / ACCEPTED |
 | P8 Verification & Acceptance | ✅ PASS |
 | P9 RC Closure（RC-20260901-05） | ✅ CLOSED / ACCEPTED |
-| **P10 Production Release** | ✅ **CLOSED**（v1.0.0 tagged） |
+| **P10 Production Release** | ✅ **CLOSED / ACCEPTED**（v1.0.0 tagged；P10-24 Final Human Closure APPROVED；Phase 10 100% COMPLETE） |
 | P11 Maintenance / P12 Evolution | ⏳ PLANNED |
 
 ### 2.1 P10 已关闭工作包（不得重开）
@@ -154,18 +156,18 @@ wheel / sdist 内容与声明一致。
 | 43 | P10-10 | Artifact Integrity | WP-REL-10 SHA256 | wheel/sdist SHA256；manifest 记录 filename/size/hash | ✅ PASS（旧 hash superseded；final hash 以 Final Rebuild 为准） |
 | 44 | P10-11 | Clean Install | WP-REL-11 Clean Venv | 全新 venv；从 wheel 安装；禁止 editable；依赖解析成功 | ✅ PASS |
 | 45 | P10-12 | CLI Smoke Test | WP-REL-12 CLI Smoke | `md-converter --help`；`md-converter-check`；基本转换；退出码正确 | ✅ PASS |
-| 46 | P10-13 | Representative Production Conversion | WP-REL-13 Real DOCX | 真实 Markdown → DOCX；TOC/表格/样式/图片/diagram 检查；FinalArtifactQA PASS | ✅ PASS（TECHNICAL + HUMAN VISUAL ACCEPTANCE：PASS） |
-| 47 | P10-14 | Release Notes | WP-DOC-14 | v1.0.0 scope；主要能力；release fixes；known limitations；breaking changes=None | ✅ PASS / APPROVED |
-| 48 | P10-15 | Installation Guide | WP-DOC-15 | Python；base；`.[windows]`；`.[mermaid]`；Chromium；Word requirements | ✅ PASS / APPROVED |
-| 49 | P10-16 | Known Limitations | WP-DOC-16 | Mermaid 外部依赖；Word COM Windows-only；未支持 footnotes/cross-ref/PDF/HTML | ✅ PASS / APPROVED |
-| 50 | P10-17 | Release Manifest | WP-REL-17 | software/spec/arch/theme versions；RC05；code/closure SHA；package hashes；build env | ✅ PASS / APPROVED（final manifest commit `5d2c92a`） |
+| 46 | P10-13 | Representative Production Conversion | WP-REL-13 Real DOCX | 真实 Markdown → DOCX；TOC/表格/样式/图片/diagram 检查；FinalArtifactQA PASS | ✅ **PASS / ACCEPTED**（Technical PASS；Human Visual Acceptance APPROVED，2026-09-04） |
+| 47 | P10-14 | Release Notes | WP-DOC-14 | v1.0.0 scope；主要能力；release fixes；known limitations；breaking changes=None | ✅ **PASS / APPROVED**（Human Approval：2026-09-04） |
+| 48 | P10-15 | Installation Guide | WP-DOC-15 | Python；base；`.[windows]`；`.[mermaid]`；Chromium；Word requirements | ✅ **PASS / APPROVED**（Human Approval：2026-09-04） |
+| 49 | P10-16 | Known Limitations | WP-DOC-16 | Mermaid 外部依赖；Word COM Windows-only；未支持 footnotes/cross-ref/PDF/HTML | ✅ **PASS / APPROVED**（Human Approval：2026-09-04） |
+| 50 | P10-17 | Release Manifest | WP-REL-17 | software/spec/arch/theme versions；RC05；code/closure SHA；package hashes；build env | ✅ **PASS / APPROVED**（final manifest commit `5d2c92a`；Human Metadata Approval：2026-09-04） |
 | 51 | P10-18 | Final Release Regression | WP-REL-18 Final Gate | 从最终 source HEAD 全量回归；全部 PASS；required skip=0；fatal=0 | ✅ PASS / CLOSED（277/277；evidence `RC_EVIDENCE/P10_FINAL_REGRESSION.txt`） |
-| 52 | P10-19 | Git Tag | WP-REL-19 Tag | clean tree；annotated tag `v1.0.0` 指向 approved release commit | ✅ PASS（tag `v1.0.0` → `5d2c92a`） |
+| 52 | P10-19 | Git Tag | WP-REL-19 Tag | clean tree；annotated tag `v1.0.0` 指向 approved release commit | ✅ **CLOSED / ACCEPTED**（tag `v1.0.0` → `5d2c92a`；Human Ratification：2026-09-04） |
 | 53 | P10-20 | Final Distribution Package | WP-REL-20 | wheel + sdist + Release Notes + Install Guide + limitations + manifest + RC Evidence | ✅ PASS（`dist/release_bundle_v1.0.0/`） |
-| 54 | P10-21 | Release Approval | WP-REL-21 | 所有 P10 required gates PASS；known blockers=0；spec deviations=0 | ✅ PASS / APPROVED（2026-09-03） |
+| 54 | P10-21 | Release Approval | WP-REL-21 | 所有 P10 required gates PASS；known blockers=0；spec deviations=0 | ✅ **CLOSED / APPROVED**（Human Production Release Approval：2026-09-04） |
 | 55 | P10-22 | Publish / Archive | WP-REL-22 | Git tag；release bundle；RC Evidence immutable archive；SHA records | ✅ PASS |
 | 56 | P10-23 | Post-Release Verification | WP-REL-23 | 从正式 package 再安装；CLI smoke；representative conversion；version/tag/hash match | ✅ PASS（evidence `RC_EVIDENCE/P10_POST_RELEASE_VERIFICATION.txt`） |
-| 57 | P10-24 | P10 Closure | WP-REL-24 | Release package verified；tag verified；archive complete；open P1 blockers=0 | ✅ **PASS / CLOSED** |
+| 57 | P10-24 | P10 Closure | WP-REL-24 | Release package verified；tag verified；archive complete；open P1 blockers=0；Governance-only Review；Final Human Closure | ✅ **CLOSED / ACCEPTED**（Governance-only Review PASS / APPROVED；Final Human Closure APPROVED，2026-09-04） |
 
 ---
 
@@ -247,15 +249,15 @@ Status:
 
 ## 7. P10 完成定义（Definition of Done）
 
-- [ ] P10-PKG-01 CLOSED：authorities=1；metadata mismatch=0；README mismatch=0；Git exact scope + closure SHA
-- [ ] wheel + sdist 构建成功；SHA256 记录
-- [ ] 全新 venv 从 wheel 安装成功（非 editable）
-- [ ] CLI smoke（3 个命令）PASS；representative DOCX（TOC/表格/样式/图片/diagram）PASS
-- [ ] Release Notes / Install Guide / Known Limitations / Release Manifest 完成
-- [ ] 最终 source HEAD 全量回归 PASS；required skip=0；fatal=0
-- [ ] annotated tag `v1.0.0` 指向 approved release commit
-- [ ] Release bundle + RC Evidence 归档；post-release verification PASS
-- [ ] P10 CLOSED（open P1 blockers=0）
+- [x] P10-PKG-01 CLOSED：authorities=1；metadata mismatch=0；README mismatch=0；Git exact scope + closure SHA
+- [x] wheel + sdist 构建成功；SHA256 记录
+- [x] 全新 venv 从 wheel 安装成功（非 editable）
+- [x] CLI smoke（3 个命令）PASS；representative DOCX（TOC/表格/样式/图片/diagram）PASS；P10-13 Human Visual Acceptance APPROVED（2026-09-04）
+- [x] Release Notes / Install Guide / Known Limitations / Release Manifest 完成；P10-14..17 Human Approval APPROVED（2026-09-04）
+- [x] 最终 source HEAD 全量回归 PASS；required skip=0；fatal=0
+- [x] annotated tag `v1.0.0` 指向 approved release commit `5d2c92a`；Human Ratification APPROVED（2026-09-04）
+- [x] Release bundle + RC Evidence 归档；post-release verification PASS；P10-21 Human Production Release Approval APPROVED（2026-09-04）
+- [x] P10-24 Final Closure：open P1 blockers=0；Governance-only Review PASS / APPROVED；Final Human Closure APPROVED（2026-09-04）
 
 ---
 
@@ -271,11 +273,11 @@ Status:
 | 2026-09-02 | Full Regression | ✅ 277/277 PASS；required skip=0（exit 0） |
 | 2026-09-02 | 版本一致性复核（P10-03） | ✅ 1.0.0 × 4 处一致 |
 | 2026-09-03 | P10-PKG-01 Git Closure / DoD | ✅ CLOSED / ACCEPTED（closure `cae92ff`） |
-| 2026-09-03 | P10-09..13（build / integrity / install / smoke / DOCX） | ✅ PASS（P10-13 human visual gate 状态见 §4） |
-| 2026-09-03 | P10-14..16 release docs | ✅ COMPLETE（committed `300c865`；本批 status sync 待人工批准） |
-| 2026-09-03 | P10-17 manifest | 🟡 committed `79fc000`；Final Rebuild 后待人工 metadata 批准 |
+| 2026-09-04 | P10-09..13（build / integrity / install / smoke / DOCX） | ✅ PASS / ACCEPTED（P10-13 Human Visual Acceptance APPROVED） |
+| 2026-09-04 | P10-14..16 release docs | ✅ COMPLETE / HUMAN APPROVED（source docs committed `300c865`） |
+| 2026-09-04 | P10-17 manifest | ✅ PASS / HUMAN APPROVED（final manifest commit `5d2c92a`） |
 | 2026-09-03 | P10-18 Final Regression | ✅ PASS / CLOSED（277/277；evidence committed `ce766a9`） |
-| 2026-09-03 | P10-19 v1.0.0 Tag | ✅ annotated tag `v1.0.0` → `5d2c92a` |
-| 2026-09-03 | P10-20/21/22（bundle / approval / archive） | ✅ PASS |
+| 2026-09-04 | P10-19 v1.0.0 Tag | ✅ TECH PASS / HUMAN RATIFIED（annotated tag `v1.0.0` → `5d2c92a`） |
+| 2026-09-04 | P10-20/21/22（bundle / approval / archive） | ✅ PASS；P10-21 Human Production Release Approval APPROVED |
 | 2026-09-03 | P10-23 Post-Release Verification | ✅ PASS（evidence committed `9086bfa`） |
-| 2026-09-03 | **P10 CLOSED（P10-24）** | ✅ 2026-09-03，v1.0.0 released & tagged |
+| 2026-09-04 | **P10-24 Final Closure** | ✅ CLOSED / ACCEPTED（Governance-only Review PASS / APPROVED；Final Human Closure APPROVED；Phase 10 100% COMPLETE） |
