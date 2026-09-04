@@ -8,7 +8,7 @@
 | Work Package | P11-MNT-001 |
 | Authority | `P11_CLOSURE_TEMPLATE.md` / `Doc/Phase_11_Maintenance_Specification.md` v1.0（§16 / §17） |
 | Date | 2026-09-04 |
-| Status | **WAITING REVIEWER ACCEPTANCE**（final decision 见 ratification 更新） |
+| Status | **CLOSED / ACCEPTED** |
 
 ---
 
@@ -114,6 +114,21 @@ RPC instability 无法被数学性消除，但 collection-time lifecycle couplin
 Patch Release:
 NOT REQUESTED
 
+Reviewer Final Acceptance:
+APPROVED
+
+Human Final Acceptance:
+APPROVED
+
+Acceptance Date:
+2026-09-04
+
+Acceptance Basis Validation HEAD:
+a315444d499c76ac60a2da96f0ad177ab7678aec
+
+P11 Program:
+ACTIVE
+
 Closure Decision:
-VERIFIED / WAITING REVIEWER ACCEPTANCE
+CLOSED / ACCEPTED
 ```

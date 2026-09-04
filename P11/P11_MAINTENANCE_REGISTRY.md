@@ -7,7 +7,7 @@
 | Plan | P11_AGENT_PLAN_B — Maintenance Change Package Execution |
 | Work Package | P11-MNT-001 |
 | Authority | `Doc/Phase_11_Maintenance_Specification.md` v1.0（§20 / §21 Continuous Model） |
-| Status | ACTIVE — P11 Program; P11-MNT-001 VERIFIED / WAITING_REVIEWER_ACCEPTANCE |
+| Status | ACTIVE — P11 Program; P11-MNT-001 CLOSED / ACCEPTED |
 
 ---
 
@@ -45,15 +45,15 @@ Release:        关联 patch release（如有）
 
 ```text
 P11-MNT-001 | Word COM collection-time availability probe | TEST_DEFECT | P2 |
-v1.0.0 | test_word_com_final_artifact.py | P11-MNT-001 | VERIFIED |
-<blank> | <blank>
+v1.0.0 | test_word_com_final_artifact.py | P11-MNT-001 | CLOSED |
+ebcd4f948a3eee16476eb7b15c45b2b81ea67ac8 | <blank>
 ```
 
 Registry Table:
 
 | ID | Title | Classification | Severity | Version | Component | Package | Status | Closure SHA | Release |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| P11-MNT-001 | Word COM collection-time availability probe | TEST_DEFECT | P2 | v1.0.0 | test_word_com_final_artifact.py | P11-MNT-001 | VERIFIED | — | — |
+| P11-MNT-001 | Word COM collection-time availability probe | TEST_DEFECT | P2 | v1.0.0 | test_word_com_final_artifact.py | P11-MNT-001 | CLOSED | ebcd4f948a3eee16476eb7b15c45b2b81ea67ac8 | — |
 
 首个真实 issue 已登记（来源：PLAN_A final validation）。Package 证据：
 
@@ -71,10 +71,21 @@ OPEN（登记）
     ↓
 VERIFIED（Targeted COM 3/3 + Full Regression 277/277 + B-12 merger strict PASS）
     ↓
-WAITING_REVIEWER_ACCEPTANCE（当前状态）
+WAITING_REVIEWER_ACCEPTANCE
+    ↓
+CLOSED / ACCEPTED（Reviewer + Human Final Acceptance，2026-09-04）
 ```
 
-Implementation / Git Closure Evidence Commit（不是 Reviewer Final Acceptance SHA）：
+Reviewer Final Acceptance:
+APPROVED
+
+Human Final Acceptance:
+APPROVED
+
+Acceptance Basis Validation HEAD:
+a315444d499c76ac60a2da96f0ad177ab7678aec
+
+Git Closure Evidence Commit:
 
 ```text
 ebcd4f948a3eee16476eb7b15c45b2b81ea67ac8
@@ -82,8 +93,16 @@ ebcd4f948a3eee16476eb7b15c45b2b81ea67ac8
 ```
 
 HG-B4（RATIFY EXISTING BOUNDED PATCH）与 HG-B2（merger inclusion-policy
-scope expansion）均已由 Human 于 2026-09-04 批准。最终 Status = CLOSED /
-ACCEPTED 仅在 Reviewer / Human Final Acceptance 后记录。
+scope expansion）均已由 Human 于 2026-09-04 批准。
+
+P11 Program:
+ACTIVE
+
+Patch Release:
+NOT REQUESTED / NOT AUTHORIZED BY PLAN_B
+
+Final Acceptance Record Commit SHA 按 P11_AGENT_PLAN_B §22 在 post-commit
+final report 中记录（同一 commit 不得自引用自身尚不存在的 SHA）。
 
 不得人为创建虚假 defect 只是为了测试流程。
 

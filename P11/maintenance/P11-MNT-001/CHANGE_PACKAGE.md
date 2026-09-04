@@ -7,7 +7,7 @@
 | Plan | P11_AGENT_PLAN_B — Maintenance Change Package Execution |
 | Change Package | P11-MNT-001 |
 | Authority | `Doc/Phase_11_Maintenance_Specification.md` v1.0（§8 Maintenance Change Package / §12） |
-| Status | **VERIFIED / WAITING_REVIEWER_ACCEPTANCE**（HG-B4 RATIFY + HG-B2 Scope Expansion 均已批准；最终 CLOSED 待 Reviewer / Human） |
+| Status | **CLOSED / ACCEPTED**（Reviewer Final Acceptance = APPROVED；Human Final Acceptance = APPROVED，2026-09-04） |
 | Date | 2026-09-04 |
 
 ---
@@ -319,24 +319,13 @@ closure commit SHA recorded
 
 ```text
 Registry Status:
-VERIFIED / WAITING_REVIEWER_ACCEPTANCE
+CLOSED / ACCEPTED
 
 Package Lifecycle State:
-RATIFIED
-    ↓
-IMPLEMENTED
-    ↓
-TARGET_VERIFIED
-    ↓
-REGRESSION_VERIFIED
-    ↓
-SCOPE_AUDITED
-    ↓
-GIT_CLOSED
-    ↓
-VERIFIED
-    ↓
-WAITING_REVIEWER_ACCEPTANCE
+CLOSED / ACCEPTED
+（RATIFIED -> IMPLEMENTED -> TARGET_VERIFIED -> REGRESSION_VERIFIED ->
+SCOPE_AUDITED -> GIT_CLOSED -> VERIFIED -> WAITING_REVIEWER_ACCEPTANCE ->
+CLOSED / ACCEPTED）
 
 HG-B4:
 APPROVED — RATIFY EXISTING BOUNDED PATCH
@@ -344,6 +333,21 @@ APPROVED — RATIFY EXISTING BOUNDED PATCH
 HG-B2:
 APPROVED — merger inclusion-policy scope expansion
 
+Reviewer Final Acceptance:
+APPROVED
+
+Human Final Acceptance:
+APPROVED
+
+Acceptance Basis Validation HEAD:
+a315444d499c76ac60a2da96f0ad177ab7678aec
+
+P11 Program:
+ACTIVE
+
+Patch Release:
+NOT REQUESTED / NOT AUTHORIZED BY PLAN_B
+
 Next:
-Reviewer Final Acceptance
+WAIT FOR NEXT REAL MAINTENANCE ISSUE
 ```
