@@ -7,7 +7,7 @@
 | Plan | P11_AGENT_PLAN_B — Maintenance Change Package Execution |
 | Work Package | P11-MNT-001 |
 | Authority | `Doc/Phase_11_Maintenance_Specification.md` v1.0（§20 / §21 Continuous Model） |
-| Status | ACTIVE — P11-MNT-001 OPEN / WAITING_HUMAN_APPROVAL（HG-B4） |
+| Status | ACTIVE — P11 Program; P11-MNT-001 VERIFIED / WAITING_REVIEWER_ACCEPTANCE |
 
 ---
 
@@ -45,15 +45,15 @@ Release:        关联 patch release（如有）
 
 ```text
 P11-MNT-001 | Word COM collection-time availability probe | TEST_DEFECT | P2 |
-v1.0.0 | test_word_com_final_artifact.py | P11-MNT-001 | CLOSED |
-ebcd4f948a3eee16476eb7b15c45b2b81ea67ac8 | <blank>
+v1.0.0 | test_word_com_final_artifact.py | P11-MNT-001 | VERIFIED |
+<blank> | <blank>
 ```
 
 Registry Table:
 
 | ID | Title | Classification | Severity | Version | Component | Package | Status | Closure SHA | Release |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| P11-MNT-001 | Word COM collection-time availability probe | TEST_DEFECT | P2 | v1.0.0 | test_word_com_final_artifact.py | P11-MNT-001 | CLOSED | ebcd4f948a3eee16476eb7b15c45b2b81ea67ac8 | — |
+| P11-MNT-001 | Word COM collection-time availability probe | TEST_DEFECT | P2 | v1.0.0 | test_word_com_final_artifact.py | P11-MNT-001 | VERIFIED | — | — |
 
 首个真实 issue 已登记（来源：PLAN_A final validation）。Package 证据：
 
@@ -64,11 +64,26 @@ P11/maintenance/P11-MNT-001/ROOT_CAUSE_ANALYSIS.md
 P11/maintenance/P11-MNT-001/CHANGE_PACKAGE.md
 ```
 
-P11-MNT-001 状态轨迹：OPEN（登记）-> VERIFIED（B-16，Targeted 3/3 +
-Full Regression 277/277 完成）-> CLOSED（Closure commit
-ebcd4f948a3eee16476eb7b15c45b2b81ea67ac8；B-12 merger strict PASS；
-ratification record 于 2026-09-04 固化）。HG-B4（RATIFY）与 HG-B2
-（Scope Expansion：merger inclusion policy）均已由 Human 于 2026-09-04 批准。
+P11-MNT-001 状态轨迹：
+
+```text
+OPEN（登记）
+    ↓
+VERIFIED（Targeted COM 3/3 + Full Regression 277/277 + B-12 merger strict PASS）
+    ↓
+WAITING_REVIEWER_ACCEPTANCE（当前状态）
+```
+
+Implementation / Git Closure Evidence Commit（不是 Reviewer Final Acceptance SHA）：
+
+```text
+ebcd4f948a3eee16476eb7b15c45b2b81ea67ac8
+（governance(p11): close P11-MNT-001 test defect）
+```
+
+HG-B4（RATIFY EXISTING BOUNDED PATCH）与 HG-B2（merger inclusion-policy
+scope expansion）均已由 Human 于 2026-09-04 批准。最终 Status = CLOSED /
+ACCEPTED 仅在 Reviewer / Human Final Acceptance 后记录。
 
 不得人为创建虚假 defect 只是为了测试流程。
 

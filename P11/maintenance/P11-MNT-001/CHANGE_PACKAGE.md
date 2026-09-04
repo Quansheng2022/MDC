@@ -7,7 +7,7 @@
 | Plan | P11_AGENT_PLAN_B — Maintenance Change Package Execution |
 | Change Package | P11-MNT-001 |
 | Authority | `Doc/Phase_11_Maintenance_Specification.md` v1.0（§8 Maintenance Change Package / §12） |
-| Status | **RATIFIED（HG-B4）/ SCOPE EXPANDED（HG-B2）/ IMPLEMENTED — Verification / Closure 进行中** |
+| Status | **VERIFIED / WAITING_REVIEWER_ACCEPTANCE**（HG-B4 RATIFY + HG-B2 Scope Expansion 均已批准；最终 CLOSED 待 Reviewer / Human） |
 | Date | 2026-09-04 |
 
 ---
@@ -319,13 +319,31 @@ closure commit SHA recorded
 
 ```text
 Registry Status:
-OPEN（登记 / 分类 / 定级 / Repro / RCA 完成）
+VERIFIED / WAITING_REVIEWER_ACCEPTANCE
 
 Package Lifecycle State:
-PACKAGE_DRAFTED
+RATIFIED
     ↓
-WAITING_HUMAN_APPROVAL（HG-B4）
+IMPLEMENTED
+    ↓
+TARGET_VERIFIED
+    ↓
+REGRESSION_VERIFIED
+    ↓
+SCOPE_AUDITED
+    ↓
+GIT_CLOSED
+    ↓
+VERIFIED
+    ↓
+WAITING_REVIEWER_ACCEPTANCE
 
-下一步:
-Human 决策（RATIFY / REJECT）
+HG-B4:
+APPROVED — RATIFY EXISTING BOUNDED PATCH
+
+HG-B2:
+APPROVED — merger inclusion-policy scope expansion
+
+Next:
+Reviewer Final Acceptance
 ```
