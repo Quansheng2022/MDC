@@ -67,11 +67,48 @@ from pathlib import Path
 from typing import Iterable, Sequence
 
 
-TOOL_VERSION = "1.0.0"
+TOOL_VERSION = "1.1.0"
 
 EXPECTED_RELEASE_TAG = "v1.0.0"
 EXPECTED_RELEASE_TAG_TARGET = "5d2c92a6af662ec8ee392f5a1a4d66f1f022229e"
 EXPECTED_P10_CLOSURE_SHA = "dab9142f1ece898f7dcd66c2fe53d6106f59230c"
+
+# P11 governance closure baselines. These identify governance commits; they do
+# not change the immutable product release baseline above.
+EXPECTED_P11_SPEC_VERSION = "1.0"
+EXPECTED_P11_FREEZE_DATE = "2026-09-04"
+EXPECTED_P11_FREEZE_SHA = "bddf36f0ae5667c485aca7cd7132a38d765eb5cc"
+EXPECTED_P11_FOUNDATION_SHA = "617463ef0f412211e5bfad98c934d27b1d01895b"
+EXPECTED_P11_CLOSURE_SHA = "76a3b52d8f68b970672990045757bd5164d59628"
+
+# Common mojibake signatures seen when UTF-8 Chinese text is decoded/written
+# through the wrong legacy code page. Authority documents are checked strictly.
+MOJIBAKE_SIGNATURES = (
+    "\ufffd",
+    "Ã",
+    "Â",
+    "â€",
+    "â†",
+    "ï¼",
+    "é¡",
+    "å½",
+    "ç»",
+    "æœ",
+    "è¿",
+    "å†",
+    "å¼",
+    "ä¸",
+    "æ­",
+    "æŽ",
+    "çš",
+    "è¯",
+)
+
+PYTEST_FATAL_SIGNATURES = (
+    "Windows fatal exception",
+    "0x800706be",
+    "0x800706ba",
+)
 
 DEFAULT_OUTPUT = {
     "foundation": "Merged_Code/merged_MDC_phase11_foundation_review.txt",
@@ -452,6 +489,197 @@ def read_text_file(path: Path) -> tuple[str, bytes, str | None]:
         return text, raw, "undecodable bytes replaced with U+FFFD"
 
 
+
+def read_utf8_strict(path: Path) -> tuple[str | None, str | None]:
+    """Read an authority file as UTF-8/UTF-8-BOM only."""
+    try:
+        raw = path.read_bytes()
+    except OSError as exc:
+        return None, f"read failed: {exc}"
+
+    for encoding in ("utf-8-sig", "utf-8"):
+        try:
+            return raw.decode(encoding), None
+        except UnicodeDecodeError:
+            continue
+    return None, "not valid UTF-8"
+
+
+def mojibake_hits(text: str) -> list[str]:
+    """Return detected mojibake markers, preserving deterministic order."""
+    hits: list[str] = []
+    for marker in MOJIBAKE_SIGNATURES:
+        count = text.count(marker)
+        if count:
+            hits.append(f"{marker!r} x{count}")
+    return hits
+
+
+def authority_encoding_check(label: str, path: Path | None) -> Check:
+    if path is None:
+        return Check(label, "FAIL", "authority file NOT FOUND")
+    text, error = read_utf8_strict(path)
+    rel = path.as_posix()
+    if error is not None or text is None:
+        return Check(label, "FAIL", f"{rel}: {error}")
+    hits = mojibake_hits(text)
+    if hits:
+        preview = ", ".join(hits[:8])
+        if len(hits) > 8:
+            preview += f", ... (+{len(hits) - 8} more markers)"
+        return Check(label, "FAIL", f"{rel}: mojibake signatures detected: {preview}")
+    return Check(label, "PASS", f"{rel}: valid UTF-8; mojibake signatures=0")
+
+
+def git_commit_check(root: Path, label: str, sha: str) -> Check:
+    rc, detail = run_cmd(["git", "cat-file", "-e", f"{sha}^{{commit}}"], root)
+    if rc != 0:
+        return Check(label, "FAIL", f"commit not found: {sha}\n{detail}".rstrip())
+    rc, detail = run_cmd(["git", "merge-base", "--is-ancestor", sha, "HEAD"], root)
+    if rc != 0:
+        return Check(label, "FAIL", f"commit exists but is not an ancestor of HEAD: {sha}\n{detail}".rstrip())
+    return Check(label, "PASS", sha)
+
+
+def p11_authority_state_checks(root: Path, p11_spec: Path | None) -> list[Check]:
+    checks: list[Check] = []
+    if p11_spec is None:
+        return [Check("P11 Authority state", "FAIL", "Phase 11 Maintenance Specification NOT FOUND")]
+
+    text, error = read_utf8_strict(p11_spec)
+    rel = p11_spec.relative_to(root).as_posix()
+    if error is not None or text is None:
+        return [Check("P11 Authority state", "FAIL", f"{rel}: {error}")]
+
+    header = "\n".join(text.splitlines()[:80])
+    if "DRAFT" in header.upper():
+        checks.append(
+            Check(
+                "P11 Authority state",
+                "FAIL",
+                f"{rel}: header still declares DRAFT after Human Freeze",
+            )
+        )
+    elif "FROZEN / ACTIVE" not in header.upper():
+        checks.append(
+            Check(
+                "P11 Authority state",
+                "FAIL",
+                f"{rel}: header does not declare FROZEN / ACTIVE",
+            )
+        )
+    else:
+        checks.append(Check("P11 Authority state", "PASS", "FROZEN / ACTIVE"))
+
+    # The spec header should no longer describe the Authority as only becoming
+    # effective after a future Human Freeze once that Freeze has occurred.
+    stale_fragments = (
+        "READY FOR HUMAN REVIEW / FREEZE",
+        "经 Human Freeze 后生效",
+    )
+    stale = [frag for frag in stale_fragments if frag in header]
+    if stale:
+        checks.append(
+            Check(
+                "P11 Authority header consistency",
+                "WARN",
+                f"stale pre-freeze wording remains: {', '.join(stale)}",
+            )
+        )
+    else:
+        checks.append(Check("P11 Authority header consistency", "PASS", "no stale pre-freeze wording"))
+
+    return checks
+
+
+def p11_governance_consistency_checks(root: Path) -> list[Check]:
+    checks: list[Check] = []
+    baseline = root / "P11" / "P11_GOVERNANCE_BASELINE.md"
+    closure = root / "P11" / "evidence" / "P11-MNT-GOV-01" / "GOVERNANCE_CLOSURE.md"
+
+    for label, path in (
+        ("P11 Governance Baseline encoding", baseline),
+        ("P11 Governance Closure encoding", closure),
+    ):
+        checks.append(authority_encoding_check(label, path if path.is_file() else None))
+
+    if baseline.is_file():
+        text, error = read_utf8_strict(baseline)
+        if error is None and text is not None:
+            required = {
+                "P11 Authority Status": "FROZEN / ACTIVE",
+                "Human Freeze": "APPROVED",
+                "Freeze Date": EXPECTED_P11_FREEZE_DATE,
+                "Freeze Commit": EXPECTED_P11_FREEZE_SHA,
+            }
+            missing = [f"{k}={v}" for k, v in required.items() if v not in text]
+            checks.append(
+                Check(
+                    "P11 Governance Baseline state",
+                    "PASS" if not missing else "FAIL",
+                    "consistent" if not missing else "missing/incorrect: " + "; ".join(missing),
+                )
+            )
+    else:
+        checks.append(Check("P11 Governance Baseline state", "FAIL", baseline.as_posix() + " NOT FOUND"))
+
+    if closure.is_file():
+        text, error = read_utf8_strict(closure)
+        if error is None and text is not None:
+            required_values = (
+                "FROZEN / ACTIVE",
+                "APPROVED",
+                EXPECTED_P11_FREEZE_DATE,
+                EXPECTED_P11_FREEZE_SHA,
+                EXPECTED_P11_FOUNDATION_SHA,
+                "CLOSED / ACCEPTED",
+                "P11 Program:\nACTIVE",
+            )
+            missing = [v for v in required_values if v not in text]
+            checks.append(
+                Check(
+                    "P11 Governance Closure state",
+                    "PASS" if not missing else "FAIL",
+                    "consistent" if not missing else "missing/incorrect: " + "; ".join(missing),
+                )
+            )
+    else:
+        checks.append(Check("P11 Governance Closure state", "FAIL", closure.as_posix() + " NOT FOUND"))
+
+    checks.extend(
+        [
+            git_commit_check(root, "P11 Authority Freeze commit", EXPECTED_P11_FREEZE_SHA),
+            git_commit_check(root, "P11 Governance Foundation commit", EXPECTED_P11_FOUNDATION_SHA),
+            git_commit_check(root, "P11 Governance Closure commit", EXPECTED_P11_CLOSURE_SHA),
+        ]
+    )
+    return checks
+
+
+def architecture_authority_checks(root: Path) -> list[Check]:
+    checks: list[Check] = []
+    preferred = root / "Doc" / "ARCHITECTURE.md"
+    architecture = preferred if preferred.is_file() else locate_first(root, ["ARCHITECTURE.md"])
+    if architecture is None:
+        return [Check("ADR / architecture authority", "FAIL", "Doc/ARCHITECTURE.md NOT FOUND")]
+
+    rel = architecture.relative_to(root).as_posix()
+    checks.append(Check("ADR / architecture authority", "PASS", rel))
+    checks.append(authority_encoding_check("Architecture authority encoding", architecture))
+
+    text, error = read_utf8_strict(architecture)
+    if error is None and text is not None:
+        missing = [f"ADR-{i:03d}" for i in range(1, 10) if f"ADR-{i:03d}" not in text]
+        checks.append(
+            Check(
+                "ADR-001..ADR-009 coverage",
+                "PASS" if not missing else "FAIL",
+                "ADR-001..ADR-009 located" if not missing else "missing: " + ", ".join(missing),
+            )
+        )
+    return checks
+
+
 def git_check(root: Path) -> list[Check]:
     checks: list[Check] = []
 
@@ -583,21 +811,13 @@ def structure_checks(root: Path, mode: str) -> list[Check]:
             )
         )
 
-    adr_candidates = []
-    for dirname in ("ADR", "adr", "architecture", "docs/adr", "docs/architecture"):
-        p = root / dirname
-        if p.exists():
-            adr_candidates.append(p.as_posix())
-    checks.append(
-        Check(
-            "ADR / architecture authority",
-            "PASS" if adr_candidates else "WARN",
-            ", ".join(adr_candidates) if adr_candidates else "not located by conventional path",
-        )
-    )
+    # Encoding/authority checks are semantic gates, not mere existence checks.
+    checks.append(authority_encoding_check("Canonical authority encoding", canonical))
+    checks.append(authority_encoding_check("P11 Maintenance Authority encoding", p11_spec))
+    checks.extend(p11_authority_state_checks(root, p11_spec))
+    checks.extend(architecture_authority_checks(root))
+    checks.extend(p11_governance_consistency_checks(root))
 
-    # P11 governance files are expected after foundation execution, but absence
-    # before PLAN_A is not necessarily fatal.
     governance_names = [
         "P11_GOVERNANCE_BASELINE.md",
         "P11_SCOPE_BASELINE.md",
@@ -609,16 +829,8 @@ def structure_checks(root: Path, mode: str) -> list[Check]:
         "P11_P12_BOUNDARY.md",
         "P11_MAINTENANCE_REGISTRY.md",
     ]
-    found_count = 0
-    for name in governance_names:
-        if locate_first(root, [name]):
-            found_count += 1
-
-    if mode == "foundation":
-        status = "INFO" if found_count == 0 else ("PASS" if found_count == len(governance_names) else "WARN")
-    else:
-        status = "PASS" if found_count == len(governance_names) else "WARN"
-
+    found_count = sum(1 for name in governance_names if locate_first(root, [name]))
+    status = "PASS" if found_count == len(governance_names) else "WARN"
     checks.append(
         Check(
             "P11 governance artifact set",
@@ -629,19 +841,29 @@ def structure_checks(root: Path, mode: str) -> list[Check]:
 
     return checks
 
-
 def pytest_run(root: Path, timeout: int) -> Check:
     rc, output = run_cmd(
         [sys.executable, "-m", "pytest"],
         root,
         timeout=timeout,
     )
+    output = output or ""
+    lower = output.lower()
+    fatal_hits = [sig for sig in PYTEST_FATAL_SIGNATURES if sig.lower() in lower]
+
+    if rc == 0 and fatal_hits:
+        return Check(
+            "Pytest",
+            "WARN",
+            output
+            + "\n\nFATAL SIGNATURE DETECTED despite pytest rc=0: "
+            + ", ".join(fatal_hits),
+        )
     if rc == 0:
         return Check("Pytest", "PASS", output or "pytest exited 0")
     if rc == 5:
         return Check("Pytest", "WARN", output or "no tests collected")
     return Check("Pytest", "FAIL", output or f"pytest exited {rc}")
-
 
 def format_checks(checks: Sequence[Check]) -> str:
     lines = []
@@ -803,8 +1025,8 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         "--strict",
         action="store_true",
         help=(
-            "Treat dirty working tree WARN and missing conventional governance "
-            "artifacts in maintenance/release modes as failure."
+            "Escalate dirty tree, incomplete governance, stale Authority wording, "
+            "and pytest fatal/no-test warnings to failure."
         ),
     )
     p.add_argument(
@@ -821,19 +1043,17 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
 
 
 def apply_strict_policy(checks: list[Check], mode: str) -> None:
+    """Escalate review warnings that are unacceptable for a strict final gate."""
+    strict_warn_names = {
+        "Working tree",
+        "P11 governance artifact set",
+        "P11 Authority header consistency",
+        "Pytest",
+    }
     for c in checks:
-        if c.name == "Working tree" and c.status == "WARN":
+        if c.status == "WARN" and c.name in strict_warn_names:
             c.status = "FAIL"
-            c.detail = "strict mode: working tree must be CLEAN\n" + c.detail
-
-        if (
-            mode in {"maintenance", "release"}
-            and c.name == "P11 governance artifact set"
-            and c.status == "WARN"
-        ):
-            c.status = "FAIL"
-            c.detail = "strict mode: incomplete P11 governance artifact set\n" + c.detail
-
+            c.detail = "strict mode: warning escalated to failure\n" + c.detail
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = parse_args(argv)
