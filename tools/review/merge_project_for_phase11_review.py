@@ -67,7 +67,10 @@ from pathlib import Path
 from typing import Iterable, Sequence
 
 
-TOOL_VERSION = "1.1.0"
+# 1.2.0: maintenance/release source-root policy now includes the repository's
+# product package root (md_converter), so bounded patch reviews can merge the
+# modified product code and test files (e.g. md_converter/tests/*).
+TOOL_VERSION = "1.2.0"
 
 EXPECTED_RELEASE_TAG = "v1.0.0"
 EXPECTED_RELEASE_TAG_TARGET = "5d2c92a6af662ec8ee392f5a1a4d66f1f022229e"
@@ -235,6 +238,8 @@ GOVERNANCE_KEYWORDS = (
 
 SOURCE_ROOT_NAMES = {
     "src",
+    # MDC keeps product code and tests under the md_converter package root.
+    "md_converter",
     "tests",
     "tools",
     "scripts",
