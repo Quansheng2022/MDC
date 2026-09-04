@@ -6,7 +6,7 @@
 | --- | --- |
 | Plan | P11_AGENT_PLAN_A — Maintenance Governance Foundation |
 | Work Package | P11-MNT-GOV-01 |
-| Authority | `Doc/Phase_11_Maintenance_Specification.md` v1.0（Human Freeze 前仅作为 Authority 候选） |
+| Authority | `Doc/Phase_11_Maintenance_Specification.md` v1.0 — FROZEN / ACTIVE P11 Maintenance Authority |
 | Canonical | `CANONICAL_SPEC.md` v1.0 FROZEN（SPEC-GOAL-006 / SPEC-INV-010..012 等） |
 | Architecture | ADR-001..ADR-009（`Doc/ARCHITECTURE.md`） |
 | Execution Type | Governance / Baseline / Triage Foundation |
@@ -73,15 +73,15 @@ Authority。
 
 ```text
 P11 Authority Version:    1.0
-P11 Authority Status:     DRAFT / NOT YET FROZEN
-Human Freeze:             NOT YET AVAILABLE
-Freeze Date:              NOT YET AVAILABLE
-Freeze Commit:            NOT YET AVAILABLE
+P11 Authority Status:     FROZEN / ACTIVE
+Human Freeze:             APPROVED
+Freeze Date:              2026-09-04
+Freeze Commit:            bddf36f0ae5667c485aca7cd7132a38d765eb5cc
 ```
 
-记录依据：`Doc/Phase_11_Maintenance_Specification.md` v1.0 当前状态为
-`DRAFT — READY FOR HUMAN REVIEW / FREEZE`。AI Agent 不得自行将该状态改为
-FROZEN / ACTIVE。
+记录依据：Human 已于 2026-09-04 明确批准
+`Doc/Phase_11_Maintenance_Specification.md` v1.0 作为 P11 Maintenance Authority，
+Authority Freeze 已由 Git commit `bddf36f0ae5667c485aca7cd7132a38d765eb5cc` 固化。
 
 未知值一律写 `NOT YET AVAILABLE`，不得猜测。
 
@@ -217,4 +217,4 @@ Spec / Governance Change → Human Approval 流程。
 | Governance Baseline File | `P11/P11_GOVERNANCE_BASELINE.md` |
 | Created By | P11_AGENT_PLAN_A / P11-MNT-GOV-01 |
 | Created Date | 2026-09-04 |
-| Status | ESTABLISHED — pending Human Freeze of P11 Authority |
+| Status | FROZEN / ACTIVE — Human Freeze approved 2026-09-04 |
