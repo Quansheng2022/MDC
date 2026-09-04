@@ -45,14 +45,15 @@ Release:        关联 patch release（如有）
 
 ```text
 P11-MNT-001 | Word COM collection-time availability probe | TEST_DEFECT | P2 |
-v1.0.0 | test_word_com_final_artifact.py | P11-MNT-001 | OPEN | <blank> | <blank>
+v1.0.0 | test_word_com_final_artifact.py | P11-MNT-001 | CLOSED |
+ebcd4f948a3eee16476eb7b15c45b2b81ea67ac8 | <blank>
 ```
 
 Registry Table:
 
 | ID | Title | Classification | Severity | Version | Component | Package | Status | Closure SHA | Release |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| P11-MNT-001 | Word COM collection-time availability probe | TEST_DEFECT | P2 | v1.0.0 | test_word_com_final_artifact.py | P11-MNT-001 | VERIFIED | — | — |
+| P11-MNT-001 | Word COM collection-time availability probe | TEST_DEFECT | P2 | v1.0.0 | test_word_com_final_artifact.py | P11-MNT-001 | CLOSED | ebcd4f948a3eee16476eb7b15c45b2b81ea67ac8 | — |
 
 首个真实 issue 已登记（来源：PLAN_A final validation）。Package 证据：
 
@@ -64,9 +65,10 @@ P11/maintenance/P11-MNT-001/CHANGE_PACKAGE.md
 ```
 
 P11-MNT-001 状态轨迹：OPEN（登记）-> VERIFIED（B-16，Targeted 3/3 +
-Full Regression 277/277 完成）-> CLOSED（Git Closure 后由 ratification 记录
-填入 Closure SHA）。HG-B4（RATIFY）与 HG-B2（Scope Expansion：merger
-inclusion policy）均已由 Human 于 2026-09-04 批准。
+Full Regression 277/277 完成）-> CLOSED（Closure commit
+ebcd4f948a3eee16476eb7b15c45b2b81ea67ac8；B-12 merger strict PASS；
+ratification record 于 2026-09-04 固化）。HG-B4（RATIFY）与 HG-B2
+（Scope Expansion：merger inclusion policy）均已由 Human 于 2026-09-04 批准。
 
 不得人为创建虚假 defect 只是为了测试流程。
 

@@ -74,7 +74,7 @@ Registry / ratification record 引用 SHA
 
 ```text
 Closure Commit SHA:
-（post-commit 记录于 CLOSURE.md / Registry 状态行 / 本文件 ratification 更新）
+ebcd4f948a3eee16476eb7b15c45b2b81ea67ac8
 ```
 
 ---
@@ -83,10 +83,10 @@ Closure Commit SHA:
 
 ```text
 git rev-parse HEAD:
-（见 ratification 更新）
+ebcd4f948a3eee16476eb7b15c45b2b81ea67ac8
 
 git status --short:
-（见 ratification 更新）
+（closure commit 后：CLEAN）
 
 Working Tree:
 CLEAN
@@ -104,5 +104,7 @@ python .\tools\review\merge_project_for_phase11_review.py
     --strict
 
 Result:
-（见 ratification 更新）
+RESULT: PASS
+（277 passed in 542.35s；merged files 163；manifest 含测试文件、
+P11/maintenance/P11-MNT-001/*、Registry；详见 REGRESSION_EVIDENCE.md）
 ```
