@@ -70,7 +70,8 @@ from typing import Iterable, Sequence
 # 1.2.0: maintenance/release source-root policy now includes the repository's
 # product package root (md_converter), so bounded patch reviews can merge the
 # modified product code and test files (e.g. md_converter/tests/*).
-TOOL_VERSION = "1.2.0"
+# 1.2.1: generated review snapshots are excluded from later review snapshots.
+TOOL_VERSION = "1.2.1"
 
 EXPECTED_RELEASE_TAG = "v1.0.0"
 EXPECTED_RELEASE_TAG_TARGET = "5d2c92a6af662ec8ee392f5a1a4d66f1f022229e"
@@ -154,6 +155,9 @@ EXCLUDED_PATH_PARTS = {
     "downloads",
     "tmp",
     "temp",
+    # Generated review snapshots must never be embedded into later snapshots.
+    "Merged_Code",
+    "Review_Bundle",
 }
 
 # Source-like files safe and useful for code/governance review.
@@ -193,6 +197,14 @@ TEXT_FILENAMES = {
     "MANIFEST.in",
     "Makefile",
 }
+
+# Generated review artifacts are excluded even when written outside the
+# conventional generated directories.
+GENERATED_REVIEW_NAME_PATTERNS = (
+    re.compile(r"^merged[_-].*", re.I),
+    re.compile(r"^MDC_.*_review_\d{8}_\d{6}.*", re.I),
+    re.compile(r".*review.*bundle.*", re.I),
+)
 
 # Never merge credential / key material.
 SECRET_NAME_PATTERNS = [
@@ -340,6 +352,11 @@ def is_text_candidate(path: Path) -> bool:
     return path.suffix.lower() in TEXT_EXTENSIONS
 
 
+def is_generated_review_artifact(path: Path) -> bool:
+    """Return True for generated review bundles/snapshots, never source files."""
+    return any(pattern.fullmatch(path.name) for pattern in GENERATED_REVIEW_NAME_PATTERNS)
+
+
 def contains_governance_keyword(path: Path, root: Path) -> bool:
     rel = path.relative_to(root).as_posix().lower()
     return any(k in rel for k in GOVERNANCE_KEYWORDS)
@@ -444,6 +461,9 @@ def enumerate_files(
                 continue
             if is_secret_path(p):
                 skipped.append((rel, "sensitive filename"))
+                continue
+            if is_generated_review_artifact(p):
+                skipped.append((rel, "generated review artifact"))
                 continue
             if not is_text_candidate(p):
                 continue
