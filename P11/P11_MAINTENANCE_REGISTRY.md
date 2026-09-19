@@ -5,9 +5,9 @@
 | Field | Value |
 | --- | --- |
 | Plan | P11_AGENT_PLAN_B — Maintenance Change Package Execution |
-| Work Package | P11-MNT-001（CLOSED） / P11-MNT-002（CLOSED / ACCEPTED） / P11-MNT-003（CLOSED / ACCEPTED） / P11-MNT-004（CLOSED / ACCEPTED） |
+| Work Package | P11-MNT-001..004（CLOSED / ACCEPTED） / P11-MNT-005（VERIFIED / AWAITING REVIEW） |
 | Authority | `Doc/Phase_11_Maintenance_Specification.md` v1.0（§20 / §21 Continuous Model） |
-| Status | ACTIVE — P11 Program; P11-MNT-001 CLOSED / ACCEPTED; P11-MNT-002 CLOSED / ACCEPTED; P11-MNT-003 CLOSED / ACCEPTED; P11-MNT-004 CLOSED / ACCEPTED |
+| Status | ACTIVE — P11 Program; P11-MNT-001..004 CLOSED / ACCEPTED; P11-MNT-005 VERIFIED / AWAITING REVIEW |
 
 ---
 
@@ -58,7 +58,11 @@ CLOSED | 83f7117a295d72df8001feaaa2ae673e463c58b0 | <blank>
 
 P11-MNT-004 | Required Pipeline Pass Failure Does Not Fail Closed | DEFECT | P2 |
 v1.0.x | md_converter/pipeline/pipeline.py | P11-MNT-004 |
-OPEN | <blank> | <blank>
+CLOSED | fe0bcc0d1aa045e177846658de4bf00f2c3de614 | <blank>
+
+P11-MNT-005 | Top-Level convert() Uses Stale Parallel Compiler Construction | DEFECT | P3 |
+v1.0.x | md_converter/__init__.py | P11-MNT-005 |
+APPROVED | <blank> | <blank>
 ```
 
 Registry Table:
@@ -69,6 +73,7 @@ Registry Table:
 | P11-MNT-002 | Generated Review Snapshot Nesting | DEFECT | P3 | v1.0.x | tools/review/merge_project_for_phase11_review.py | P11-MNT-002 | CLOSED | cf8460604e5e5adebb5882d3c2dc77f2762b05ac | — |
 | P11-MNT-003 | Explicit text fenced block auto-conversion | DEFECT | P2 | v1.0.x | md_converter/pipeline/passes/ascii_mermaid_pass.py | P11-MNT-003 | CLOSED | 83f7117a295d72df8001feaaa2ae673e463c58b0 | — |
 | P11-MNT-004 | Required Pipeline Pass Failure Does Not Fail Closed | DEFECT | P2 | v1.0.x | md_converter/pipeline/pipeline.py | P11-MNT-004 | CLOSED | fe0bcc0d1aa045e177846658de4bf00f2c3de614 | — |
+| P11-MNT-005 | Top-Level convert() Uses Stale Parallel Compiler Construction | DEFECT | P3 | v1.0.x | md_converter/__init__.py | P11-MNT-005 | VERIFIED | — | — |
 
 首个真实 issue 已登记（来源：PLAN_A final validation）。Package 证据：
 
@@ -259,6 +264,28 @@ P11/maintenance/P11-MNT-003/REGRESSION_EVIDENCE.md
 P11/maintenance/P11-MNT-003/SCOPE_AUDIT.md
 P11/maintenance/P11-MNT-003/CLOSURE.md
 P11/maintenance/P11-MNT-003/GIT_CLOSURE.md
+```
+
+P11-MNT-005 状态轨迹：
+
+```text
+APPROVED（Human 授权 bounded implementation / 登记）
+    ↓
+VERIFIED（targeted 2/2 + manual smoke + Full Regression 292/292）
+    ↓
+WAITING_REVIEWER_ACCEPTANCE
+```
+
+P11-MNT-005 Package 证据：
+
+```text
+P11/maintenance/P11-MNT-005/ISSUE_INTAKE.md
+P11/maintenance/P11-MNT-005/REPRODUCTION.md
+P11/maintenance/P11-MNT-005/ROOT_CAUSE_ANALYSIS.md
+P11/maintenance/P11-MNT-005/CHANGE_PACKAGE.md
+P11/maintenance/P11-MNT-005/TARGET_VERIFICATION.md
+P11/maintenance/P11-MNT-005/REGRESSION_EVIDENCE.md
+P11/maintenance/P11-MNT-005/SCOPE_AUDIT.md
 ```
 
 HG-B4（RATIFY EXISTING BOUNDED PATCH）与 HG-B2（merger inclusion-policy
