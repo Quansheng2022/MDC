@@ -76,7 +76,7 @@ Final immutable strict validation on ratification HEAD
 
 ```text
 Closure Commit SHA:
-PENDING_POST_COMMIT
+fe0bcc0d1aa045e177846658de4bf00f2c3de614
 ```
 
 ---
@@ -115,3 +115,11 @@ closure commit + ratification commit 后：
 
 Final strict gate result is recorded in the closure final report because the
 ratification commit cannot self-reference its own not-yet-existing SHA.
+
+```text
+git rev-parse HEAD（closure commit）:
+fe0bcc0d1aa045e177846658de4bf00f2c3de614
+
+git status --short（closure commit 后）:
+CLEAN
+```
