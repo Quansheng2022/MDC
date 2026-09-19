@@ -5,9 +5,9 @@
 | Field | Value |
 | --- | --- |
 | Plan | P11_AGENT_PLAN_B — Maintenance Change Package Execution |
-| Work Package | P11-MNT-001（CLOSED） / P11-MNT-002（AWAITING REVIEW） |
+| Work Package | P11-MNT-001（CLOSED） / P11-MNT-002（CLOSED / ACCEPTED） |
 | Authority | `Doc/Phase_11_Maintenance_Specification.md` v1.0（§20 / §21 Continuous Model） |
-| Status | ACTIVE — P11 Program; P11-MNT-001 CLOSED / ACCEPTED; P11-MNT-002 VERIFIED / AWAITING REVIEW |
+| Status | ACTIVE — P11 Program; P11-MNT-001 CLOSED / ACCEPTED; P11-MNT-002 CLOSED / ACCEPTED |
 
 ---
 
@@ -58,7 +58,7 @@ Registry Table:
 | ID | Title | Classification | Severity | Version | Component | Package | Status | Closure SHA | Release |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | P11-MNT-001 | Word COM collection-time availability probe | TEST_DEFECT | P2 | v1.0.0 | test_word_com_final_artifact.py | P11-MNT-001 | CLOSED | ebcd4f948a3eee16476eb7b15c45b2b81ea67ac8 | — |
-| P11-MNT-002 | Generated Review Snapshot Nesting | DEFECT | P3 | v1.0.x | tools/review/merge_project_for_phase11_review.py | P11-MNT-002 | VERIFIED | — | — |
+| P11-MNT-002 | Generated Review Snapshot Nesting | DEFECT | P3 | v1.0.x | tools/review/merge_project_for_phase11_review.py | P11-MNT-002 | CLOSED | — | — |
 
 首个真实 issue 已登记（来源：PLAN_A final validation）。Package 证据：
 
@@ -105,6 +105,24 @@ OPEN（Human 授权 Batch A / 登记）
 VERIFIED（targeted 4/4 + merger double-run no-nesting + Full Regression 281/281）
     ↓
 WAITING_REVIEWER_ACCEPTANCE
+    ↓
+CLOSED / ACCEPTED（Reviewer + Human Final Acceptance，2026-09-19）
+```
+
+Reviewer Final Acceptance:
+APPROVED
+
+Human Final Acceptance:
+APPROVED
+
+Acceptance Basis Validation HEAD:
+ace26d7a5e1a3ef4f0db2e1a5ef94a9ec1ae202f
+
+P11-MNT-002 Closure Evidence:
+
+```text
+P11/maintenance/P11-MNT-002/CLOSURE.md
+P11/maintenance/P11-MNT-002/GIT_CLOSURE.md
 ```
 
 P11-MNT-002 Package 证据：
@@ -118,6 +136,8 @@ P11/maintenance/P11-MNT-002/TARGET_VERIFICATION.md
 P11/maintenance/P11-MNT-002/REGRESSION_EVIDENCE.md
 P11/maintenance/P11-MNT-002/SCOPE_AUDIT.md
 P11/maintenance/P11-MNT-002/IMPLEMENTATION_COMMIT.md
+P11/maintenance/P11-MNT-002/CLOSURE.md
+P11/maintenance/P11-MNT-002/GIT_CLOSURE.md
 ```
 
 HG-B4（RATIFY EXISTING BOUNDED PATCH）与 HG-B2（merger inclusion-policy
