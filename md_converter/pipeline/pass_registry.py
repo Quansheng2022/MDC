@@ -230,7 +230,8 @@ class PassRegistry:
                     print(f"[PassRegistry]   {name} -> None")
             except Exception as e:
                 print(f"[PassRegistry]   {name} - ERROR: {e}")
-                # 继续处理其他 Pass
+                # Enabled pass construction failure must not be silently omitted.
+                raise
 
         if sort_by_priority:
             passes.sort(key=lambda x: x[0])

@@ -128,7 +128,8 @@ class Pipeline:
                 )
                 import traceback
                 traceback.print_exc()
-                # 继续执行后续 Pass（但保留当前文档）
+                # Required pass failure must fail closed; do not bypass the stage.
+                raise
 
         return current_doc
 

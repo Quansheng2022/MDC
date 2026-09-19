@@ -5,9 +5,9 @@
 | Field | Value |
 | --- | --- |
 | Plan | P11_AGENT_PLAN_B — Maintenance Change Package Execution |
-| Work Package | P11-MNT-001（CLOSED） / P11-MNT-002（CLOSED / ACCEPTED） / P11-MNT-003（CLOSED / ACCEPTED） |
+| Work Package | P11-MNT-001（CLOSED） / P11-MNT-002（CLOSED / ACCEPTED） / P11-MNT-003（CLOSED / ACCEPTED） / P11-MNT-004（VERIFIED / AWAITING REVIEW） |
 | Authority | `Doc/Phase_11_Maintenance_Specification.md` v1.0（§20 / §21 Continuous Model） |
-| Status | ACTIVE — P11 Program; P11-MNT-001 CLOSED / ACCEPTED; P11-MNT-002 CLOSED / ACCEPTED; P11-MNT-003 CLOSED / ACCEPTED |
+| Status | ACTIVE — P11 Program; P11-MNT-001 CLOSED / ACCEPTED; P11-MNT-002 CLOSED / ACCEPTED; P11-MNT-003 CLOSED / ACCEPTED; P11-MNT-004 VERIFIED / AWAITING REVIEW |
 
 ---
 
@@ -50,10 +50,14 @@ ebcd4f948a3eee16476eb7b15c45b2b81ea67ac8 | <blank>
 
 P11-MNT-002 | Generated Review Snapshot Nesting | DEFECT | P3 |
 v1.0.x | tools/review/merge_project_for_phase11_review.py | P11-MNT-002 |
-VERIFIED | <blank> | <blank>
+CLOSED | cf8460604e5e5adebb5882d3c2dc77f2762b05ac | <blank>
 
 P11-MNT-003 | Explicit text fenced block auto-conversion | DEFECT | P2 |
 v1.0.x | md_converter/pipeline/passes/ascii_mermaid_pass.py | P11-MNT-003 |
+CLOSED | 83f7117a295d72df8001feaaa2ae673e463c58b0 | <blank>
+
+P11-MNT-004 | Required Pipeline Pass Failure Does Not Fail Closed | DEFECT | P2 |
+v1.0.x | md_converter/pipeline/pipeline.py | P11-MNT-004 |
 OPEN | <blank> | <blank>
 ```
 
@@ -64,6 +68,7 @@ Registry Table:
 | P11-MNT-001 | Word COM collection-time availability probe | TEST_DEFECT | P2 | v1.0.0 | test_word_com_final_artifact.py | P11-MNT-001 | CLOSED | ebcd4f948a3eee16476eb7b15c45b2b81ea67ac8 | — |
 | P11-MNT-002 | Generated Review Snapshot Nesting | DEFECT | P3 | v1.0.x | tools/review/merge_project_for_phase11_review.py | P11-MNT-002 | CLOSED | cf8460604e5e5adebb5882d3c2dc77f2762b05ac | — |
 | P11-MNT-003 | Explicit text fenced block auto-conversion | DEFECT | P2 | v1.0.x | md_converter/pipeline/passes/ascii_mermaid_pass.py | P11-MNT-003 | CLOSED | 83f7117a295d72df8001feaaa2ae673e463c58b0 | — |
+| P11-MNT-004 | Required Pipeline Pass Failure Does Not Fail Closed | DEFECT | P2 | v1.0.x | md_converter/pipeline/pipeline.py | P11-MNT-004 | VERIFIED | — | — |
 
 首个真实 issue 已登记（来源：PLAN_A final validation）。Package 证据：
 
@@ -185,6 +190,28 @@ P11-MNT-003 Git Closure Evidence Commit:
 ```text
 83f7117a295d72df8001feaaa2ae673e463c58b0
 （governance(p11): close P11-MNT-003 explicit text fence defect）
+```
+
+P11-MNT-004 状态轨迹：
+
+```text
+OPEN（Human 授权 Batch C / 登记）
+    ↓
+VERIFIED（targeted 5/5 + behavior matrix + Full Regression 289/289）
+    ↓
+WAITING_REVIEWER_ACCEPTANCE
+```
+
+P11-MNT-004 Package 证据：
+
+```text
+P11/maintenance/P11-MNT-004/ISSUE_INTAKE.md
+P11/maintenance/P11-MNT-004/REPRODUCTION.md
+P11/maintenance/P11-MNT-004/ROOT_CAUSE_ANALYSIS.md
+P11/maintenance/P11-MNT-004/CHANGE_PACKAGE.md
+P11/maintenance/P11-MNT-004/TARGET_VERIFICATION.md
+P11/maintenance/P11-MNT-004/REGRESSION_EVIDENCE.md
+P11/maintenance/P11-MNT-004/SCOPE_AUDIT.md
 ```
 
 P11-MNT-003 Package 证据：
