@@ -163,6 +163,7 @@ EXCLUDED_PATH_PARTS = {
 # Source-like files safe and useful for code/governance review.
 TEXT_EXTENSIONS = {
     ".py",
+    ".typed",
     ".pyi",
     ".md",
     ".markdown",

@@ -109,3 +109,14 @@ def test_collector_exclude_tests_override_keeps_py_typed() -> None:
     assert tests_enabled is False
     assert "md_converter/py.typed" in rels
     assert "md_converter/tests/test_word_com_final_artifact.py" not in rels
+
+
+def test_merger_maintenance_scope_includes_py_typed() -> None:
+    files, _ = MERGER.enumerate_files(
+        root=PROJECT_ROOT,
+        mode="maintenance",
+        max_file_bytes=MAX_FILE_BYTES,
+    )
+    rels = _relative_paths(files, PROJECT_ROOT)
+
+    assert "md_converter/py.typed" in rels
