@@ -73,7 +73,7 @@ Final immutable strict validation on ratification HEAD
 
 ```text
 Closure Commit SHA:
-recorded by ratification commit
+cf8460604e5e5adebb5882d3c2dc77f2762b05ac
 ```
 
 ---
@@ -108,3 +108,11 @@ closure commit + ratification commit 后：
 
 Final strict gate result is recorded in the Batch B final report because the
 ratification commit cannot self-reference its own not-yet-existing SHA.
+
+```text
+git rev-parse HEAD（closure commit）:
+cf8460604e5e5adebb5882d3c2dc77f2762b05ac
+
+git status --short（closure commit 后）:
+CLEAN
+```
