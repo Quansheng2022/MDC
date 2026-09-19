@@ -5,9 +5,9 @@
 | Field | Value |
 | --- | --- |
 | Plan | P11_AGENT_PLAN_B — Maintenance Change Package Execution |
-| Work Package | P11-MNT-001（CLOSED） / P11-MNT-002（CLOSED / ACCEPTED） / P11-MNT-003（CLOSED / ACCEPTED） / P11-MNT-004（VERIFIED / AWAITING REVIEW） |
+| Work Package | P11-MNT-001（CLOSED） / P11-MNT-002（CLOSED / ACCEPTED） / P11-MNT-003（CLOSED / ACCEPTED） / P11-MNT-004（CLOSED / ACCEPTED） |
 | Authority | `Doc/Phase_11_Maintenance_Specification.md` v1.0（§20 / §21 Continuous Model） |
-| Status | ACTIVE — P11 Program; P11-MNT-001 CLOSED / ACCEPTED; P11-MNT-002 CLOSED / ACCEPTED; P11-MNT-003 CLOSED / ACCEPTED; P11-MNT-004 VERIFIED / AWAITING REVIEW |
+| Status | ACTIVE — P11 Program; P11-MNT-001 CLOSED / ACCEPTED; P11-MNT-002 CLOSED / ACCEPTED; P11-MNT-003 CLOSED / ACCEPTED; P11-MNT-004 CLOSED / ACCEPTED |
 
 ---
 
@@ -68,7 +68,7 @@ Registry Table:
 | P11-MNT-001 | Word COM collection-time availability probe | TEST_DEFECT | P2 | v1.0.0 | test_word_com_final_artifact.py | P11-MNT-001 | CLOSED | ebcd4f948a3eee16476eb7b15c45b2b81ea67ac8 | — |
 | P11-MNT-002 | Generated Review Snapshot Nesting | DEFECT | P3 | v1.0.x | tools/review/merge_project_for_phase11_review.py | P11-MNT-002 | CLOSED | cf8460604e5e5adebb5882d3c2dc77f2762b05ac | — |
 | P11-MNT-003 | Explicit text fenced block auto-conversion | DEFECT | P2 | v1.0.x | md_converter/pipeline/passes/ascii_mermaid_pass.py | P11-MNT-003 | CLOSED | 83f7117a295d72df8001feaaa2ae673e463c58b0 | — |
-| P11-MNT-004 | Required Pipeline Pass Failure Does Not Fail Closed | DEFECT | P2 | v1.0.x | md_converter/pipeline/pipeline.py | P11-MNT-004 | VERIFIED | — | — |
+| P11-MNT-004 | Required Pipeline Pass Failure Does Not Fail Closed | DEFECT | P2 | v1.0.x | md_converter/pipeline/pipeline.py | P11-MNT-004 | CLOSED | — | — |
 
 首个真实 issue 已登记（来源：PLAN_A final validation）。Package 证据：
 
@@ -200,6 +200,29 @@ OPEN（Human 授权 Batch C / 登记）
 VERIFIED（targeted 5/5 + behavior matrix + Full Regression 289/289）
     ↓
 WAITING_REVIEWER_ACCEPTANCE
+    ↓
+REVIEW RECOVERY（P11-RECOVERY-PYTYPED；strict snapshot 含 py.typed）
+    ↓
+CLOSED / ACCEPTED（Reviewer + Human Final Acceptance，2026-09-19）
+```
+
+Reviewer Final Acceptance:
+APPROVED — TECHNICAL ACCEPTANCE
+
+Human Final Acceptance:
+APPROVED
+
+Acceptance Basis Validation HEAD:
+17b74e13ad5599f08dbdeddf9486c7ac74be4dcc
+
+Recovery Evidence HEAD:
+798a65809f7ebc6367e7a9f058b8c40f09ca29a0
+
+P11-MNT-004 Closure Evidence:
+
+```text
+P11/maintenance/P11-MNT-004/CLOSURE.md
+P11/maintenance/P11-MNT-004/GIT_CLOSURE.md
 ```
 
 P11-MNT-004 Package 证据：
@@ -212,6 +235,9 @@ P11/maintenance/P11-MNT-004/CHANGE_PACKAGE.md
 P11/maintenance/P11-MNT-004/TARGET_VERIFICATION.md
 P11/maintenance/P11-MNT-004/REGRESSION_EVIDENCE.md
 P11/maintenance/P11-MNT-004/SCOPE_AUDIT.md
+P11/maintenance/P11-MNT-004/REVIEW_RECOVERY.md
+P11/maintenance/P11-MNT-004/CLOSURE.md
+P11/maintenance/P11-MNT-004/GIT_CLOSURE.md
 ```
 
 P11-MNT-003 Package 证据：
