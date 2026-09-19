@@ -197,3 +197,65 @@ def test_rescues_swallowed_mermaid_in_code_block() -> None:
     assert isinstance(converted, Diagram)
     assert converted.diagram_type == "mermaid"
     assert "Code Push" in converted.content
+
+
+def test_explicit_text_fence_keeps_ascii_like_content_as_code_block() -> None:
+    """显式 ```text 内即使像 ASCII 图，也必须保持字面 CodeBlock。"""
+    markdown = "```text\n" + FLOWCHART_ASCII + "```\n"
+    diag = DiagnosticCollector()
+    ast = MarkdownParser(ParserContext(diag=diag, config={})).parse(markdown)
+    parsed = ast.children[0]
+    assert isinstance(parsed, CodeBlock)
+    assert parsed.language == "text"
+
+    result = AsciiToMermaidPass().run(ast, diag)
+    kept = result.document.children[0]
+
+    assert isinstance(kept, CodeBlock)
+    assert kept.language == "text"
+    assert kept == parsed
+    assert result.metadata["stats"]["converted"] == 0
+
+
+def test_explicit_text_fence_keeps_mermaid_like_content_as_code_block() -> None:
+    """显式 ```text 内即使像 Mermaid，也不得触发 rescue。"""
+    markdown = (
+        "```text\n"
+        "graph LR\n"
+        "    A[Code Push] --> B[Build]\n"
+        "```\n"
+    )
+    diag = DiagnosticCollector()
+    ast = MarkdownParser(ParserContext(diag=diag, config={})).parse(markdown)
+    parsed = ast.children[0]
+    assert isinstance(parsed, CodeBlock)
+    assert parsed.language == "text"
+
+    result = AsciiToMermaidPass().run(ast, diag)
+    kept = result.document.children[0]
+
+    assert isinstance(kept, CodeBlock)
+    assert kept.language == "text"
+    assert kept == parsed
+    assert result.metadata["stats"]["converted"] == 0
+
+
+def test_compiler_preserves_explicit_text_fence(tmp_path: Path) -> None:
+    """Compiler integration：显式 text fence 不应产生 ASCII/Mermaid 转换。"""
+    markdown = "# Test\n\n" "```text\n" + FLOWCHART_ASCII + "```\n"
+    context = CompilerContext.create(
+        {
+            "diagram": True,
+            "output_dir": str(tmp_path),
+            "enable_cover": False,
+            "toc": False,
+        }
+    )
+    output = tmp_path / "out.docx"
+    doc = context.compile(markdown, output_path=output)
+
+    assert output.exists()
+    assert doc is not None
+    codes = {d.code for d in context.diag.diagnostics}
+    assert "ASCI001" not in codes
+    assert "ASCI004" not in codes

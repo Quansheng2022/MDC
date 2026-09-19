@@ -124,6 +124,9 @@ class AsciiToMermaidPass(TransformPass):
 
         if isinstance(node, CodeBlock):
             lang = (node.language or "").strip().lower()
+            # 显式 ```text 是字面代码块，不得被 Mermaid 抢救或 ASCII 启发式覆盖。
+            if lang == "text":
+                return node
             # 抢救因围栏错配而被吞进代码块的 mermaid/gantt 图
             rescued = self._rescue_diagram_code(node.text, node.span)
             if rescued is not None:
