@@ -73,7 +73,7 @@ Registry Table:
 | P11-MNT-002 | Generated Review Snapshot Nesting | DEFECT | P3 | v1.0.x | tools/review/merge_project_for_phase11_review.py | P11-MNT-002 | CLOSED | cf8460604e5e5adebb5882d3c2dc77f2762b05ac | — |
 | P11-MNT-003 | Explicit text fenced block auto-conversion | DEFECT | P2 | v1.0.x | md_converter/pipeline/passes/ascii_mermaid_pass.py | P11-MNT-003 | CLOSED | 83f7117a295d72df8001feaaa2ae673e463c58b0 | — |
 | P11-MNT-004 | Required Pipeline Pass Failure Does Not Fail Closed | DEFECT | P2 | v1.0.x | md_converter/pipeline/pipeline.py | P11-MNT-004 | CLOSED | fe0bcc0d1aa045e177846658de4bf00f2c3de614 | — |
-| P11-MNT-005 | Top-Level convert() Uses Stale Parallel Compiler Construction | DEFECT | P3 | v1.0.x | md_converter/__init__.py | P11-MNT-005 | CLOSED | — | — |
+| P11-MNT-005 | Top-Level convert() Uses Stale Parallel Compiler Construction | DEFECT | P3 | v1.0.x | md_converter/__init__.py | P11-MNT-005 | CLOSED | 1b29bfd373e9000568244b9e940a65234af8d666 | — |
 
 首个真实 issue 已登记（来源：PLAN_A final validation）。Package 证据：
 
@@ -292,6 +292,13 @@ P11-MNT-005 Closure Evidence:
 ```text
 P11/maintenance/P11-MNT-005/CLOSURE.md
 P11/maintenance/P11-MNT-005/GIT_CLOSURE.md
+```
+
+P11-MNT-005 Git Closure Evidence Commit:
+
+```text
+1b29bfd373e9000568244b9e940a65234af8d666
+（chore(p11): close P11-MNT-005）
 ```
 
 P11-MNT-005 Package 证据：
