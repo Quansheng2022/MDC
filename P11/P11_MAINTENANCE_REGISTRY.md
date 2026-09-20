@@ -450,7 +450,9 @@ Cycle-01 Issue Disposition（更新：Human Classification Decision 2026-09-21�
                    Human 裁定 2026-09-21；非 release-critical；P11 patch NOT AUTHORIZED
     BACKLOG:       ISSUE-005（DEFECT / P3，lower-priority P11 candidate，deferred non-blocking）
                    ISSUE-006（OPTIONAL_IMPROVEMENT / P4，含 SPEC_GAP 说明，deferred non-blocking）
-                   ISSUE-010（P4-borderline / OPTIONAL_IMPROVEMENT，deferred non-blocking）
+                   ISSUE-010（DEFECT / P4，DEFERRED_NON_BLOCKING，P11 backlog；非 P12）
+                   （历史注记：Cycle-01 曾附条件性说明——若 reviewer 要求 Canonical
+                     SPEC-ID 则可视为 OPTIONAL_IMPROVEMENT；该注记非权威分类）
     OBS-01 backlog（needs visual confirmation）；OBS-02 KNOWN_LIMITATION / NO ACTION；
     OBS-03 evidence gap / NO DEFECT；OBS-04 = P12-CAND-001（DISCOVERY ONLY）
     HUMAN_CLASSIFICATION_REQUIRED: 0（ISSUE-003 / ISSUE-009 已由 Human 分类）

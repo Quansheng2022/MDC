@@ -72,7 +72,7 @@ Remote publication is not a prerequisite for P11 governance closure
 | ISSUE-009 Empty heading behaviour policy | **SPEC_GAP**（Human） | P4 | CLASSIFIED | NO | P12_CANDIDATE | P12（P11 patch NOT AUTHORIZED） |
 | ISSUE-005 Random temp image name in document.xml | DEFECT（Cycle-01 记录） | P3 | DEFERRED_NON_BLOCKING | NO | backlog | P11 backlog（未提升） |
 | ISSUE-006 ZIP timestamp byte-level determinism | OPTIONAL_IMPROVEMENT（含 SPEC_GAP 说明） | P4 | DEFERRED_NON_BLOCKING | NO | backlog | P11 backlog |
-| ISSUE-010 Library debug print on stdout | OPTIONAL_IMPROVEMENT（P4-borderline） | P4 | DEFERRED_NON_BLOCKING | NO | backlog | P11 backlog |
+| ISSUE-010 Library debug print on stdout | **DEFECT**（Cycle-01 权威分类） | P4 | DEFERRED_NON_BLOCKING | NO | backlog | P11 historical backlog / deferred（非 P12） |
 | OBS-01 Word-normalised table width | — | P4 (cosmetic, unverified) | DEFERRED_NON_BLOCKING | NO | backlog（needs visual confirmation） | P11 backlog |
 | OBS-02 COM / offline Mermaid / console encoding | — | — | KNOWN_LIMITATION | NO | NO_ACTION | NO ACTION |
 | OBS-03 Diagram visual fidelity not reviewed | — | — | evidence gap | NO | NO_ACTION / NO DEFECT | NO ACTION |
@@ -83,6 +83,15 @@ Closed issues remain closed: ISSUE-001, ISSUE-002, ISSUE-004, ISSUE-007, ISSUE-0
 Human Classification Required: 0
 Items reclassified by assumption: 0    Items routed to P12 by assumption: 0
 HUMAN_CLASSIFICATION_REQUIRED items: 0 (ISSUE-003 / ISSUE-009 resolved by Human)
+```
+
+ISSUE-010 explanatory note（历史注记，非权威分类）:
+
+```text
+Cycle-01 记录中 ISSUE-010 曾附条件性注记：若 reviewer 要求 Canonical SPEC-ID 而非仓库
+编码标准，则该条可视为 OPTIONAL_IMPROVEMENT。该注记是**条件性说明**，不是已发生的
+分类变更；Human 从未将 ISSUE-010 重新分类为 OPTIONAL_IMPROVEMENT。
+权威分类保持：DEFECT / P4 / DEFERRED_NON_BLOCKING / P11 backlog（P12 Candidate = NO）。
 ```
 
 ## 5. P11 / P12 separation
@@ -119,8 +128,9 @@ P12 (evolution, NOT STARTED):
 | 13 | Governance-only Closure Review PASS | PASS | 本文件（P11-18） |
 
 ```text
+P11-18 Objective Closure-Readiness Gates: 13 / 13 PASS
 DoD BLOCKED items: 0
-Human Final Closure: PENDING（保留给 Human，不由 Agent 批准）
+P11-19 Final Human Closure: PENDING（保留给 Human，不由 Agent 批准）
 ```
 
 ## 7. Scope audit
@@ -148,11 +158,11 @@ Tests / build / regression / archive verification: NOT RE-RUN（复用已接受�
 
 ```text
 PLAN_D:            GOVERNANCE REVIEW PASS
-P11-18:            PASS
+P11-18:            OBJECTIVE CLOSURE-READINESS GATES — 13 / 13 PASS
 P11:               FROZEN / ACTIVE — READY FOR HUMAN FINAL CLOSURE
 P11-MNT-010:       NOT CREATED / FREE / UNASSIGNED
 P12:               NOT STARTED
-Human Final Closure: PENDING
+P11-19:            HUMAN FINAL CLOSURE PENDING
 
 Status: P11_READY_FOR_HUMAN_CLOSURE
 Next action: HUMAN FINAL DECISION
