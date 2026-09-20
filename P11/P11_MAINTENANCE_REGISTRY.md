@@ -5,9 +5,9 @@
 | Field | Value |
 | --- | --- |
 | Plan | P11_AGENT_PLAN_B — Maintenance Change Package Execution |
-| Work Package | P11-MNT-001..005（CLOSED / ACCEPTED） |
+| Work Package | P11-MNT-001..006（CLOSED / ACCEPTED） |
 | Authority | `Doc/Phase_11_Maintenance_Specification.md` v1.0（§20 / §21 Continuous Model） |
-| Status | ACTIVE — P11 Program; P11-MNT-001..005 CLOSED / ACCEPTED |
+| Status | ACTIVE — P11 Program; P11-MNT-001..006 CLOSED / ACCEPTED |
 
 ---
 
@@ -63,6 +63,10 @@ CLOSED | fe0bcc0d1aa045e177846658de4bf00f2c3de614 | <blank>
 P11-MNT-005 | Top-Level convert() Uses Stale Parallel Compiler Construction | DEFECT | P3 |
 v1.0.x | md_converter/__init__.py | P11-MNT-005 |
 APPROVED | <blank> | <blank>
+
+P11-MNT-006 | Optional Word COM Import Must Degrade Gracefully | DEFECT | P2 |
+v1.0.x | md_converter/renderer/post_processor.py | P11-MNT-006 |
+CLOSED | <blank> | <blank>
 ```
 
 Registry Table:
@@ -74,6 +78,7 @@ Registry Table:
 | P11-MNT-003 | Explicit text fenced block auto-conversion | DEFECT | P2 | v1.0.x | md_converter/pipeline/passes/ascii_mermaid_pass.py | P11-MNT-003 | CLOSED | 83f7117a295d72df8001feaaa2ae673e463c58b0 | — |
 | P11-MNT-004 | Required Pipeline Pass Failure Does Not Fail Closed | DEFECT | P2 | v1.0.x | md_converter/pipeline/pipeline.py | P11-MNT-004 | CLOSED | fe0bcc0d1aa045e177846658de4bf00f2c3de614 | — |
 | P11-MNT-005 | Top-Level convert() Uses Stale Parallel Compiler Construction | DEFECT | P3 | v1.0.x | md_converter/__init__.py | P11-MNT-005 | CLOSED | 1b29bfd373e9000568244b9e940a65234af8d666 | — |
+| P11-MNT-006 | Optional Word COM Import Must Degrade Gracefully | DEFECT | P2 | v1.0.x | md_converter/renderer/post_processor.py | P11-MNT-006 | CLOSED | <recorded post-commit> | — |
 
 首个真实 issue 已登记（来源：PLAN_A final validation）。Package 证据：
 
@@ -313,6 +318,39 @@ P11/maintenance/P11-MNT-005/REGRESSION_EVIDENCE.md
 P11/maintenance/P11-MNT-005/SCOPE_AUDIT.md
 P11/maintenance/P11-MNT-005/CLOSURE.md
 P11/maintenance/P11-MNT-005/GIT_CLOSURE.md
+```
+
+P11-MNT-006 状态轨迹（来源：Production Usage Validation Cycle 01 / ISSUE-008）：
+
+```text
+CONFIRMED_DEFECT（Batch A reproduction）
+    ↓
+IMPLEMENTED（optional COM boundary guard；Implementation SHA d6be63e3cdb1ace80f01caafb3c37497c0315a81）
+    ↓
+VERIFIED（focused 4/4 + minimal-env smoke + normal-env smoke + full regression 296
+          (293 passed / 2 Golden-environment failures / 1 release-gate skip)）
+    ↓
+CLOSED / ACCEPTED（Bounded maintenance execution，2026-09-20）
+```
+
+Closure Evidence:
+
+```text
+P11/maintenance/P11-MNT-006/CLOSURE.md
+```
+
+P11-MNT-006 Scope:
+
+```text
+md_converter/renderer/post_processor.py   (optional COM import boundary + POST002)
+md_converter/cli.py                       (structured diagnostic presentation)
+md_converter/tests/test_com_optional_import.py
+```
+
+Issue source:
+
+```text
+Doc/production_soak/cycle_01/CLASSIFIED_ISSUES_CYCLE_01.md → ISSUE-008 (DEFECT / P2)
 ```
 
 HG-B4（RATIFY EXISTING BOUNDED PATCH）与 HG-B2（merger inclusion-policy
