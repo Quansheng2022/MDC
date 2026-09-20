@@ -59,7 +59,73 @@ def _extract_signature(docx_path: Path) -> Dict[str, Any]:
         "tables": tables,
         "table_cells": table_cells,
         "inline_shapes": len(doc.inline_shapes),
+        "hyperlink_targets": _extract_hyperlink_targets(doc),
     }
+
+
+def _extract_hyperlink_targets(doc: Any) -> List[str]:
+    """提取超链接目标：外部关系目标 + 文档内锚点（AC010 / P11-MNT-007）。
+
+    参数:
+        doc: 已打开的 python-docx Document
+
+    返回:
+        List[str]: 排序后的目标列表（外部目标为原样引用，锚点以 ``#`` 前缀）
+    """
+    from docx.opc.constants import RELATIONSHIP_TYPE as RT
+    from docx.oxml.ns import qn
+
+    targets = {
+        rel.target_ref
+        for rel in doc.part.rels.values()
+        if rel.is_external and rel.reltype == RT.HYPERLINK
+    }
+    for hyperlink in doc.element.body.iter(qn("w:hyperlink")):
+        anchor = hyperlink.get(qn("w:anchor"))
+        if anchor:
+            targets.add(f"#{anchor}")
+    return sorted(targets)
+
+
+def test_acceptance_ac010_hyperlink_targets(tmp_path: Path) -> None:
+    """AC010: 链接文本与目标都必须保留在最终 DOCX 中（P11-MNT-007）。"""
+    case = next(c for c in load_manifest() if c["id"] == "AC010")
+    _, output_path = _compile_case(case, tmp_path)
+    signature = _extract_signature(output_path)
+
+    targets = signature["hyperlink_targets"]
+    assert "https://openai.com" in targets
+    assert "https://example.com/architecture" in targets
+    assert "mailto:support@example.com" in targets
+
+    # 可见文本仍然存在（No Content Loss）
+    corpus = signature["paragraphs"] + signature["table_cells"]
+    for expected_text in ("OpenAI", "support", "Architecture Document"):
+        assert any(expected_text in text for text in corpus)
+
+
+def test_acceptance_ac010_assertion_detects_missing_target(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """负向证明：若链接目标不再写入 DOCX，AC010 断言必须失败（ISSUE-002）。"""
+    from docx.shared import RGBColor
+
+    from md_converter.renderer.word_renderer import WordRenderer
+
+    def _legacy_render_link(self: Any, node: Any, font_kind: str = "body") -> None:
+        """P11-MNT-007 之前的实现：仅设置样式，不产生超链接关系。"""
+        self.inline_state.push(color=RGBColor(0x00, 0x00, 0xFF), underline=True)
+        self._render_inline(node.content, font_kind)
+        self.inline_state.pop()
+
+    monkeypatch.setattr(WordRenderer, "_render_link", _legacy_render_link)
+
+    case = next(c for c in load_manifest() if c["id"] == "AC010")
+    _, output_path = _compile_case(case, tmp_path)
+    targets = _extract_signature(output_path)["hyperlink_targets"]
+
+    assert "https://openai.com" not in targets
+    assert "mailto:support@example.com" not in targets
 
 
 @pytest.mark.parametrize("case", load_manifest(), ids=[c["id"] for c in load_manifest()])

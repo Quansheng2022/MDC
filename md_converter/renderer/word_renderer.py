@@ -576,9 +576,18 @@ class WordRenderer(NodeVisitor):
         )
 
     def _render_link(self, node: Link, font_kind: str = "body") -> None:
+        """渲染链接：保留可见文本/样式，并写入真实超链接目标（P11-MNT-007）。
+
+        文本与样式沿用既有行为；渲染完成后把新增 run 包裹进 ``w:hyperlink``，
+        使 ``http/https``、``mailto`` 等目标在最终 DOCX 中可恢复。
+        """
+        paragraph = self.writer.current_paragraph
+        start_index = len(paragraph.runs) if paragraph is not None else 0
         self.inline_state.push(color=RGBColor(0x00, 0x00, 0xFF), underline=True)
         self._render_inline(node.content, font_kind)
         self.inline_state.pop()
+        if paragraph is not None:
+            self.writer.wrap_runs_as_hyperlink(paragraph, start_index, node.href)
 
     # ============================================================
     # 样式辅助方法

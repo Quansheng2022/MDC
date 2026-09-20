@@ -11,6 +11,7 @@ from typing import Dict, Optional, Union
 from docx import Document
 from docx.enum.section import WD_ORIENT
 from docx.enum.text import WD_BREAK
+from docx.opc.constants import RELATIONSHIP_TYPE as RT
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from docx.section import Section
@@ -172,6 +173,50 @@ class WordWriter:
         else:
             self.current_paragraph = self.doc.add_paragraph(text)
         return self.current_paragraph
+
+    def wrap_runs_as_hyperlink(self, paragraph: Paragraph, start_index: int, href: str) -> bool:
+        """把段落中新追加的 run 包裹为真实 Word 超链接（P11-MNT-007）。
+
+        ``#anchor`` 形式使用文档内锚点（``w:anchor``，不创建外部关系）；
+        其余目标创建 ``TargetMode="External"`` 关系，http/https/mailto 与
+        相对路径均按 Markdown 源原样保留。既有 run 样式（颜色/下划线）不变。
+
+        参数:
+            paragraph: 目标段落
+            start_index: 链接内容渲染前的直接 ``w:r`` 数量（包裹边界）
+            href: Markdown 链接目标
+
+        返回:
+            bool: 是否创建了超链接（目标为空或无新增 run 时返回 False）
+        """
+        target = (href or "").strip()
+        if not target:
+            return False
+
+        p_el = paragraph._p
+        runs = list(p_el.findall(qn("w:r")))
+        new_runs = runs[start_index:]
+        if not new_runs:
+            return False
+
+        hyperlink = OxmlElement("w:hyperlink")
+        if target.startswith("#"):
+            anchor = target[1:].strip()
+            if not anchor:
+                return False
+            hyperlink.set(qn("w:anchor"), anchor)
+        else:
+            hyperlink.set(
+                qn("r:id"),
+                paragraph.part.relate_to(target, RT.HYPERLINK, is_external=True),
+            )
+        hyperlink.set(qn("w:history"), "1")
+
+        new_runs[0].addprevious(hyperlink)
+        for run in new_runs:
+            p_el.remove(run)
+            hyperlink.append(run)
+        return True
 
     def add_run(
         self,
