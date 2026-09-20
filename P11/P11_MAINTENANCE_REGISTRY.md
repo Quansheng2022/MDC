@@ -438,25 +438,46 @@ Accepted Evidence（shared canonical regression）:
 
 Reviewer / Human Final Acceptance:       APPROVED（2026-09-20）
 
-Cycle-01 Issue Disposition:
+Cycle-01 Issue Disposition（更新：Human Classification Decision 2026-09-21）:
     CLOSED:        ISSUE-001 → P11-MNT-007
                    ISSUE-002 → P11-MNT-007
                    ISSUE-004 → P11-MNT-009
                    ISSUE-007 → P11-MNT-008
                    ISSUE-008 → P11-MNT-006（此前已关闭）
-    OPEN BACKLOG:  ISSUE-003（Human classification / SPEC_GAP question 待裁）
-                   ISSUE-005（lower-priority P11 candidate）
-                   ISSUE-009（behaviour-policy clarification required）
-    BACKLOG:       ISSUE-006（OPTIONAL_IMPROVEMENT / SPEC_GAP）
-                   ISSUE-010（P4-borderline / OPTIONAL_IMPROVEMENT）
+    SPEC_GAP:      ISSUE-003 → P12_CANDIDATE（Figure Page-Fit / Figure Size Policy）
+                   Human 裁定 2026-09-21；非 release-critical；P11 patch NOT AUTHORIZED
+                   ISSUE-009 → P12_CANDIDATE（Empty Heading Behaviour Policy）
+                   Human 裁定 2026-09-21；非 release-critical；P11 patch NOT AUTHORIZED
+    BACKLOG:       ISSUE-005（DEFECT / P3，lower-priority P11 candidate，deferred non-blocking）
+                   ISSUE-006（OPTIONAL_IMPROVEMENT / P4，含 SPEC_GAP 说明，deferred non-blocking）
+                   ISSUE-010（P4-borderline / OPTIONAL_IMPROVEMENT，deferred non-blocking）
     OBS-01 backlog（needs visual confirmation）；OBS-02 KNOWN_LIMITATION / NO ACTION；
     OBS-03 evidence gap / NO DEFECT；OBS-04 = P12-CAND-001（DISCOVERY ONLY）
+    HUMAN_CLASSIFICATION_REQUIRED: 0（ISSUE-003 / ISSUE-009 已由 Human 分类）
 
 Next Maintenance Package:
     P11-MNT-010 NOT CREATED / FREE / UNASSIGNED
 
 P11 Program:
-    FROZEN / ACTIVE（未关闭；PLAN_C / PLAN_D / P12 均未触发）
+    FROZEN / ACTIVE（未关闭；v1.0.1 PLAN_C 已执行并归档）
+```
+
+PLAN_D Final Governance Review（P11-18，2026-09-21）：
+
+```text
+PLAN_D:                 GOVERNANCE REVIEW PASS
+P11-18:                 PASS
+Review artifact:        P11/P11_FINAL_GOVERNANCE_REVIEW.md
+Baseline HEAD:          c1e31677f6fea1f43d97ba5609c57cd6966f6be7
+Release in scope:       v1.0.1（tag v1.0.1 → c1e31677…；Human approved；archive VERIFIED）
+MNT-001..009:           CLOSED / ACCEPTED
+P11-MNT-010:            NOT CREATED / FREE / UNASSIGNED
+Open P1 / Release-critical P2: 0 / 0
+Final Closure DoD:      13/13 PASS（BLOCKED = 0）
+P11 status:             FROZEN / ACTIVE — READY FOR HUMAN FINAL CLOSURE
+Human Final Closure:    PENDING（保留给 Human）
+P12:                    NOT STARTED（P12 候选：P12-CAND-001、Figure Page-Fit / Figure Size
+                        Policy、Empty Heading Behaviour Policy — 均为 discovery only）
 ```
 
 HG-B4（RATIFY EXISTING BOUNDED PATCH）与 HG-B2（merger inclusion-policy
