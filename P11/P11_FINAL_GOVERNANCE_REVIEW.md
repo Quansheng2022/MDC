@@ -6,8 +6,9 @@
 | Authority | Human PLAN_D authorization + Human Classification Decision (ISSUE-003 / ISSUE-009, 2026-09-21) |
 | Canonical | `CANONICAL_SPEC.md` 1.0 FROZEN（未修改） |
 | Review Mode | governance-only, read-only reconciliation（复用既有已接受证据；未运行任何测试/构建） |
-| Result | **GOVERNANCE REVIEW PASS — P11_READY_FOR_HUMAN_CLOSURE** |
-| Human Final Closure | **PENDING**（保留给 Human，本次未批准） |
+| Result | **GOVERNANCE REVIEW PASS**（提交 Human 最终关闭；P11-18） |
+| Human Final Closure | **APPROVED**（Human Final Decision 2026-09-21；Final Governance SHA `25953097dde2dabae5574074d8f79920be1fb280`） |
+| P11 Final Status | **CLOSED / ACCEPTED**（Human Final Decision 2026-09-21） |
 
 ---
 
@@ -130,7 +131,8 @@ P12 (evolution, NOT STARTED):
 ```text
 P11-18 Objective Closure-Readiness Gates: 13 / 13 PASS
 DoD BLOCKED items: 0
-P11-19 Final Human Closure: PENDING（保留给 Human，不由 Agent 批准）
+P11-19 Final Human Closure: APPROVED（Human Final Decision 2026-09-21）
+P11 Final Status: CLOSED / ACCEPTED
 ```
 
 ## 7. Scope audit
@@ -159,13 +161,40 @@ Tests / build / regression / archive verification: NOT RE-RUN（复用已接受�
 ```text
 PLAN_D:            GOVERNANCE REVIEW PASS
 P11-18:            OBJECTIVE CLOSURE-READINESS GATES — 13 / 13 PASS
-P11:               FROZEN / ACTIVE — READY FOR HUMAN FINAL CLOSURE
+P11:               CLOSED / ACCEPTED（Human Final Decision 2026-09-21）
 P11-MNT-010:       NOT CREATED / FREE / UNASSIGNED
-P12:               NOT STARTED
-P11-19:            HUMAN FINAL CLOSURE PENDING
+P12:               NOT STARTED — INTAKE AUTHORIZED（limited）
+P11-19:            HUMAN FINAL CLOSURE APPROVED
 
-Status: P11_READY_FOR_HUMAN_CLOSURE
-Next action: HUMAN FINAL DECISION
-    — APPROVE P11 FINAL CLOSURE
-    — and optionally authorize P12 product-evolution intake
+Status: P11 CLOSED / ACCEPTED
+Next action: P12 product-evolution INTAKE（per separate instruction）
+    — P12 product-code modification NOT YET AUTHORIZED
+```
+
+## 9. Human Final Closure Decision（P11-19）
+
+```text
+Decision:                 HUMAN FINAL DECISION — P11 FINAL CLOSURE
+Date:                     2026-09-21
+Final Governance SHA:     25953097dde2dabae5574074d8f79920be1fb280
+Release:                  v1.0.1
+Approved Release SHA / Tag Target: c1e31677f6fea1f43d97ba5609c57cd6966f6be7
+
+P11-18 Governance Review:               PASS
+P11-18 Objective Gates:                 13 / 13 PASS
+Open P1 / Release-critical P2:          0 / 0
+MNT-001..009:                           CLOSED / ACCEPTED
+MNT-010:                                NOT CREATED
+Human Classification Required:          0
+Human Final Closure:                    APPROVED
+
+P11 Final Status:                       CLOSED / ACCEPTED
+Remaining deferred non-blocking backlog: accepted as historical backlog（不阻塞关闭）
+Existing P12 candidates:                remain candidates only
+
+P12 Product Evolution Intake:           AUTHORIZED（limited）
+    permitted:  candidate consolidation / product-scope selection / requirements /
+                Canonical Specification proposal / ADR proposal where necessary /
+                implementation planning
+P12 product-code modification:          NOT YET AUTHORIZED
 ```

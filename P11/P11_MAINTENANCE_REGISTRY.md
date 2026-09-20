@@ -7,7 +7,7 @@
 | Plan | P11_AGENT_PLAN_B — Maintenance Change Package Execution |
 | Work Package | P11-MNT-001..009（CLOSED / ACCEPTED） |
 | Authority | `Doc/Phase_11_Maintenance_Specification.md` v1.0（§20 / §21 Continuous Model） |
-| Status | ACTIVE — P11 Program; P11-MNT-001..009 CLOSED / ACCEPTED |
+| Status | CLOSED / ACCEPTED — P11 Program（Human Final Closure APPROVED 2026-09-21）；P11-MNT-001..009 CLOSED / ACCEPTED |
 
 ---
 
@@ -461,7 +461,8 @@ Next Maintenance Package:
     P11-MNT-010 NOT CREATED / FREE / UNASSIGNED
 
 P11 Program:
-    FROZEN / ACTIVE（未关闭；v1.0.1 PLAN_C 已执行并归档）
+    CLOSED / ACCEPTED（Human Final Closure APPROVED，2026-09-21；
+    Final Governance SHA 25953097dde2dabae5574074d8f79920be1fb280）
 ```
 
 PLAN_D Final Governance Review（P11-18，2026-09-21）：
@@ -476,20 +477,34 @@ MNT-001..009:           CLOSED / ACCEPTED
 P11-MNT-010:            NOT CREATED / FREE / UNASSIGNED
 Open P1 / Release-critical P2: 0 / 0
 Final Closure DoD:      13/13 PASS（BLOCKED = 0）
-P11 status:             FROZEN / ACTIVE — READY FOR HUMAN FINAL CLOSURE
-Human Final Closure:    PENDING（保留给 Human）
-P12:                    NOT STARTED（P12 候选：P12-CAND-001、Figure Page-Fit / Figure Size
-                        Policy、Empty Heading Behaviour Policy — 均为 discovery only）
+P11 status:             CLOSED / ACCEPTED（Human Final Decision 2026-09-21；
+                        Final Governance SHA 25953097dde2dabae5574074d8f79920be1fb280）
+Human Final Closure:    APPROVED
+P11-19:                 HUMAN FINAL CLOSURE APPROVED
+P12:                    NOT STARTED — INTAKE AUTHORIZED（limited：candidate consolidation /
+                        product-scope selection / requirements / Canonical Specification
+                        proposal / ADR proposal / implementation planning）
+                        P12 product-code modification: NOT YET AUTHORIZED
+                        P12 候选：P12-CAND-001、Figure Page-Fit / Figure Size Policy、
+                        Empty Heading Behaviour Policy — 均为 discovery only
 ```
 
 HG-B4（RATIFY EXISTING BOUNDED PATCH）与 HG-B2（merger inclusion-policy
 scope expansion）均已由 Human 于 2026-09-04 批准。
 
 P11 Program:
-ACTIVE
+CLOSED / ACCEPTED（Human Final Closure APPROVED，2026-09-21；
+Final Governance SHA 25953097dde2dabae5574074d8f79920be1fb280）
 
 Patch Release:
-NOT REQUESTED / NOT AUTHORIZED BY PLAN_B
+v1.0.1 RELEASED / HUMAN APPROVED（PLAN_C；implementation 48efc925bfcee0695457168ebcd7c7a0c6d408b5；
+tag v1.0.1 → c1e31677f6fea1f43d97ba5609c57cd6966f6be7；local archive VERIFIED；
+publication NOT PERFORMED / remote push NOT AUTHORIZED）
+
+P12 Product Evolution:
+INTAKE AUTHORIZED（limited：candidate consolidation / product-scope selection /
+requirements / Canonical Specification proposal / ADR proposal / implementation planning）；
+product-code modification NOT YET AUTHORIZED
 
 Final Acceptance Record Commit SHA 按 P11_AGENT_PLAN_B §22 在 post-commit
 final report 中记录（同一 commit 不得自引用自身尚不存在的 SHA）。
