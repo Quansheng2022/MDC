@@ -4,7 +4,7 @@ MD Converter - Markdown to DOCX Compiler
 A compiler-architecture based converter with immutable AST, pipeline, and plugin support.
 """
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 # 导出核心类
 from .ast.nodes import (

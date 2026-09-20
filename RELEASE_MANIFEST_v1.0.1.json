@@ -1,0 +1,36 @@
+{
+  "release": "v1.0.1",
+  "release_type": "patch",
+  "previous_release": "v1.0.0",
+  "previous_release_tag": "v1.0.0",
+  "spec_version": "1.0",
+  "architecture_version": "2.0",
+  "theme_version": "QS-Word-Default-V1.5",
+  "maintenance_packages": [
+    "P11-MNT-006",
+    "P11-MNT-007",
+    "P11-MNT-008",
+    "P11-MNT-009"
+  ],
+  "fixed_issues": [
+    "ISSUE-001",
+    "ISSUE-002",
+    "ISSUE-004",
+    "ISSUE-007",
+    "ISSUE-008"
+  ],
+  "python_target": ">=3.8 (package metadata); canonical verification environment Python 3.12 (.venv)",
+  "expected_artifacts": {
+    "wheel": "md_converter-1.0.1-py3-none-any.whl",
+    "sdist": "md_converter-1.0.1.tar.gz"
+  },
+  "new_features": "none",
+  "breaking_changes": "none",
+  "canonical_semantic_changes": "none",
+  "architecture_changes": "none",
+  "p12_work": "none",
+  "artifact_hashes": {
+    "location": "RC_EVIDENCE/P11_v1.0.1/",
+    "note": "wheel/sdist SHA256 and the release-candidate source SHA are recorded in the release evidence set, not inside this manifest, to avoid self-referential commit hashes."
+  }
+}
