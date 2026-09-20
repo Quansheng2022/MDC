@@ -1,0 +1,37 @@
+{
+ "MNT-006": {
+  "exit": 0,
+  "docx": true,
+  "bytes": 44721,
+  "traceback": false,
+  "POST002": true,
+  "note": "fresh venv has no pywin32 -> optional COM import fails (guarded path)"
+ },
+ "fresh_probe": {
+  "MNT-007": {
+   "targets": [
+    "https://www.oecd.org/en/publications/asia-capital-markets-report-2026_08f87bed-en/full-report/creating-value-and-increasing-trust_48e57a3d.html?utm_source=chatgpt.com",
+    "https://www.oecd.org/en/publications/corporate-ownership-and-concentration_bc3adca3-en.html?utm_source=chatgpt.com",
+    "https://www.oecd.org/en/publications/methodology-for-assessing-the-implementation-of-the-g20-oecd-principles-of-corporate-governance-2025_80996ea9-en/full-report/the-corporate-governance-landscape_0e15ffbd.html?utm_source=chatgpt.com"
+   ],
+   "link_text_present": true
+  },
+  "MNT-008": {
+   "w": 11906,
+   "h": 16838,
+   "left_margin": 1440
+  },
+  "MNT-009_structural": {
+   "docx_tables": 4,
+   "adjacent_pairs": [],
+   "qa_adjacent_metric": 0
+  }
+ },
+ "MNT-009_wordcom": {
+  "docx_tables": 4,
+  "adjacent_pairs": [],
+  "final_artifact_qa": "PASS",
+  "qa_adjacent_metric": 0,
+  "word_com_produced_file": true
+ }
+}

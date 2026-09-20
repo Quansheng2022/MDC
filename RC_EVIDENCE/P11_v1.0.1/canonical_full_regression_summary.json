@@ -1,0 +1,16 @@
+{
+ "rc_source_sha": "48efc925bfcee0695457168ebcd7c7a0c6d408b5",
+ "tracked_diff_during_run": "(clean)",
+ "exit": 0,
+ "seconds": 514.4,
+ "collected": 308,
+ "passed": 308,
+ "failed": 0,
+ "errors": 0,
+ "skipped": 0,
+ "acceptance_cases": 35,
+ "acceptance_bad": {},
+ "golden_bad": {},
+ "wordcom_bad": {},
+ "bad": {}
+}
