@@ -230,10 +230,25 @@ class WordRenderer(NodeVisitor):
     def visit_Document(self, node: Document) -> None:
         """渲染文档根节点。"""
         self.writer.start_document()
+        self._apply_page_size()
         self._apply_page_margins()
 
         for child in node.children:
             self.visit(child)
+
+    def _apply_page_size(self) -> None:
+        """应用冻结的页面尺寸（主题 ``page.size`` / 配置 ``page_width``；P11-MNT-008）。
+
+        A4 几何由 ``word_writer.set_section_orientation`` 唯一定义：本方法只在
+        portrait 文档初始化时应用它，landscape 表格仍通过 ``visit_Table`` 切换到
+        同一个 A4 权威。修复前首节保留 python-docx 模板的 US Letter 默认尺寸。
+        """
+        try:
+            size = self._theme_value("page_size", None) or self.ctx.config.get("page_width", "A4")
+            orientation = "landscape" if "landscape" in str(size).lower() else "portrait"
+            self.writer.set_section_orientation(orientation)
+        except Exception as e:
+            self.ctx.diag.warning(f"Failed to set page size: {e}", code="RENDER003")
 
     def visit_Heading(self, node: Heading) -> None:
         """渲染标题节点 - 使用 Word 内置标题样式。"""
