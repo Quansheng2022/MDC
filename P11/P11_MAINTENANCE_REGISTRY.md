@@ -415,6 +415,50 @@ Shared canonical regression evidence（three packages 共用一份）：
 P11/maintenance/P11_CANONICAL_REGRESSION_MNT-007-008-009.md
 ```
 
+Human Acceptance（P11 Cycle-01 Priority Defect Repair Batch）：
+
+```text
+Accepted Packages:
+    P11-MNT-007  ISSUE-001 / ISSUE-002   Implementation SHA aae73de99734bb8598442b6f88d84438808e4f0d
+    P11-MNT-008  ISSUE-007               Implementation SHA 91bc0092ed4965e657e08cabe7ae4ab88ee88aeb
+    P11-MNT-009  ISSUE-004               Implementation SHA e7ee94308ed6fb3263bc73a03fde2e5ebe1c3139
+    Shared Closure / Evidence SHA:       c4f26c7c8e49d9c14bc35c994a16021470bf6f29
+
+Accepted Evidence（shared canonical regression）:
+    Canonical Environment:               PASS
+    Golden Environment:                  PASS（backend=playwright, canonical=true）
+    Acceptance:                          PASS 35/35
+    Golden:                              PASS（baseline unchanged）
+    Full Regression:                     PASS 308/308
+    Failed:                              0
+    Errors:                              0
+    Required Skip:                       0
+    Word COM required verification:      PASS
+    Unauthorized scope changes:          0
+
+Reviewer / Human Final Acceptance:       APPROVED（2026-09-20）
+
+Cycle-01 Issue Disposition:
+    CLOSED:        ISSUE-001 → P11-MNT-007
+                   ISSUE-002 → P11-MNT-007
+                   ISSUE-004 → P11-MNT-009
+                   ISSUE-007 → P11-MNT-008
+                   ISSUE-008 → P11-MNT-006（此前已关闭）
+    OPEN BACKLOG:  ISSUE-003（Human classification / SPEC_GAP question 待裁）
+                   ISSUE-005（lower-priority P11 candidate）
+                   ISSUE-009（behaviour-policy clarification required）
+    BACKLOG:       ISSUE-006（OPTIONAL_IMPROVEMENT / SPEC_GAP）
+                   ISSUE-010（P4-borderline / OPTIONAL_IMPROVEMENT）
+    OBS-01 backlog（needs visual confirmation）；OBS-02 KNOWN_LIMITATION / NO ACTION；
+    OBS-03 evidence gap / NO DEFECT；OBS-04 = P12-CAND-001（DISCOVERY ONLY）
+
+Next Maintenance Package:
+    P11-MNT-010 NOT CREATED / FREE / UNASSIGNED
+
+P11 Program:
+    FROZEN / ACTIVE（未关闭；PLAN_C / PLAN_D / P12 均未触发）
+```
+
 HG-B4（RATIFY EXISTING BOUNDED PATCH）与 HG-B2（merger inclusion-policy
 scope expansion）均已由 Human 于 2026-09-04 批准。
 
