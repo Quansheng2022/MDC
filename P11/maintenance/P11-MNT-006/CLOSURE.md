@@ -179,3 +179,51 @@ P11-MNT-006: CLOSED / ACCEPTED
 Patch Release: NOT AUTHORIZED (unchanged by this package)
 Next Action: HUMAN REVIEW ONLY
 ```
+
+---
+
+## 9. Canonical Closure Ratification
+
+The §4 verification above was executed in a restricted sandbox in which Chromium
+could not spawn (`spawn EPERM`) and no interactive Word COM session existed. That
+record is preserved unchanged as historical evidence. The bounded canonical
+re-verification below was executed in the canonical Windows environment
+(non-sandbox process context) and is the basis for final ratification.
+
+```text
+Canonical Environment:                  PASS
+Golden Environment:                     PASS  (backend=playwright, canonical=true)
+Word COM Gate:                          PASS  (test executed, not skipped)
+Focused Tests:                          PASS  (4/4, test_com_optional_import.py)
+Golden:                                 PASS  (test_golden.py)
+Full Regression:                        PASS  (pytest md_converter/tests -rs)
+
+Collected:                              296
+Passed:                                 296
+Failed:                                 0
+Errors:                                 0
+Required Skip:                          0
+
+Product Code Changed During Ratification:  NO
+Tests Changed During Ratification:         NO
+Golden Modified:                        NO
+Canonical Spec Modified:                NO
+Architecture Modified:                  NO
+Acceptance Source Modified:             NO
+Other Issues Changed:                   NO
+P12 Work Performed:                     NO
+
+Final Package Status:                   CLOSED / ACCEPTED
+```
+
+Canonical run evidence (raw outputs retained outside the repository, per the
+minimum-governance rule that no new governance tree is created):
+
+```text
+golden environment gate : pytest md_converter/tests/test_golden_environment.py -q      → 1 passed
+Word COM gate           : pytest md_converter/tests/test_word_com_final_artifact.py -q → 1 passed
+focused                 : pytest md_converter/tests/test_com_optional_import.py -q     → 4 passed
+golden                  : pytest md_converter/tests/test_golden.py -q                  → 1 passed
+full regression         : pytest md_converter/tests -rs --junitxml=…                   → 296/296, 0 failed,
+                          0 errors, 0 skipped (509.8 s)
+```
