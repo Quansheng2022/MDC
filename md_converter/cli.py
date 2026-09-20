@@ -20,6 +20,7 @@ from .release_evidence import (
     validate_test_evidence,
     write_release_evidence,
 )
+from .renderer.post_processor import DocxPostProcessor
 from .utils.helpers import open_docx, parse_frontmatter
 
 
@@ -148,6 +149,7 @@ def main(
     # 逐个编译
     generated: list = []
     errors = 0
+    com_reason_reported = False
     for md_path in md_files:
         try:
             with builtins.open(md_path, "r", encoding="utf-8") as f:
@@ -182,6 +184,18 @@ def main(
                 traceback.print_exc()
             errors += 1
             continue
+
+        # P11-MNT-006：可选 Word COM 不可用时，把降级原因作为结构化诊断上报
+        # （每次 CLI 运行只报告一次），不影响文档生成与 native TOC 解析。
+        if not com_reason_reported and ctx.config.get("word_com", True):
+            com_reason = DocxPostProcessor.com_unavailable_reason()
+            if com_reason:
+                ctx.diag.warning(
+                    f"Word COM unavailable ({com_reason}); "
+                    "native TOC field kept, page numbers refresh with F9 in Word",
+                    code=DocxPostProcessor.COM_DIAGNOSTIC_CODE,
+                )
+                com_reason_reported = True
 
     # 报告诊断信息
     if ctx.diag.diagnostics:

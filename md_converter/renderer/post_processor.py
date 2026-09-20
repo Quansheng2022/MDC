@@ -29,12 +29,25 @@ try:
 except ImportError:
     DOCX_AVAILABLE = False
 
+# ---------------------------------------------------------------------------
+# 可选 Word COM 依赖边界（P11-MNT-006 / ISSUE-008）
+# ---------------------------------------------------------------------------
+# Word COM 只是可选增强（KNOWN_LIMITATIONS_v1.0.0.md §3）：该依赖的导入或能力
+# 初始化失败必须被限制在此边界内并降级，绝不允许终止 package / CLI 初始化。
+# 已知失败模式：
+#   - ImportError（未安装 pywin32）
+#   - PermissionError / OSError（pywin32 gencache 生成目录不可写，例如 APPDATA
+#     不可用时路径解析为 C:\WINDOWS\gen_py）
+# 失败原因记录在 WIN32_UNAVAILABLE_REASON 中，并通过 POST002 诊断对外暴露，
+# 不做静默吞异常；边界之外的失败仍按原样抛出（fail-closed）。
 try:
     import win32com.client
 
     WIN32_AVAILABLE = True
-except ImportError:
+    WIN32_UNAVAILABLE_REASON: Optional[str] = None
+except Exception as exc:  # 可选 COM 能力边界：记录原因后降级，不向上抛出
     WIN32_AVAILABLE = False
+    WIN32_UNAVAILABLE_REASON = f"{type(exc).__name__}: {exc}"
 
 from .word_writer import set_run_font, set_style_font
 
@@ -48,6 +61,37 @@ class DocxPostProcessor:
         2. 为所有表格添加边框和表头样式
         3. 更新目录（TOC）并在 TOC 后插入分页（使用 Word COM）
     """
+
+    #: 可选 Word COM 不可用时使用的稳定诊断代码（P11-MNT-006）
+    COM_DIAGNOSTIC_CODE = "POST002"
+
+    @staticmethod
+    def com_unavailable_reason() -> Optional[str]:
+        """返回 Word COM 不可用的原因；COM 可用时返回 None。
+
+        返回:
+            Optional[str]: 形如 ``"PermissionError: [WinError 5] ..."`` 的原因字符串，
+            或 None（COM 可用）。
+        """
+        if WIN32_AVAILABLE:
+            return None
+        return WIN32_UNAVAILABLE_REASON or "win32com.client unavailable"
+
+    @classmethod
+    def _report_com_skipped(cls, com_requested: bool) -> None:
+        """报告跳过 Word COM TOC 页码刷新（可选能力失败必须可见且不致命）。
+
+        参数:
+            com_requested: 配置是否请求使用 Word COM（``word_com``）。
+        """
+        reason = cls.com_unavailable_reason()
+        if com_requested and reason:
+            print(
+                f"  ⚠️ [{cls.COM_DIAGNOSTIC_CODE}] Word COM 不可用（{reason}）；"
+                "已保留原生 TOC 域，页码可在 Word 中按 F9 刷新"
+            )
+            return
+        print("  📄 TOC 已插入（含目录条目；页码可在 Word 中按 F9 刷新）")
 
     @classmethod
     def process(
@@ -101,10 +145,11 @@ class DocxPostProcessor:
 
         # 6. win32com 可用时用 Word 刷新 TOC 页码（增强，可通过 word_com=False 关闭）
         if config.get("toc", True):
-            if WIN32_AVAILABLE and platform.system() == "Windows" and config.get("word_com", True):
+            com_requested = bool(config.get("word_com", True))
+            if WIN32_AVAILABLE and platform.system() == "Windows" and com_requested:
                 cls._update_toc_with_word(docx_path)
             else:
-                print("  📄 TOC 已插入（含目录条目；页码可在 Word 中按 F9 刷新）")
+                cls._report_com_skipped(com_requested)
 
     # ============================================================
     # 封面页插入
