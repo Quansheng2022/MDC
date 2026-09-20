@@ -5,9 +5,9 @@
 | Field | Value |
 | --- | --- |
 | Plan | P11_AGENT_PLAN_B — Maintenance Change Package Execution |
-| Work Package | P11-MNT-001..006（CLOSED / ACCEPTED） |
+| Work Package | P11-MNT-001..009（CLOSED / ACCEPTED） |
 | Authority | `Doc/Phase_11_Maintenance_Specification.md` v1.0（§20 / §21 Continuous Model） |
-| Status | ACTIVE — P11 Program; P11-MNT-001..006 CLOSED / ACCEPTED |
+| Status | ACTIVE — P11 Program; P11-MNT-001..009 CLOSED / ACCEPTED |
 
 ---
 
@@ -67,6 +67,18 @@ APPROVED | <blank> | <blank>
 P11-MNT-006 | Optional Word COM Import Must Degrade Gracefully | DEFECT | P2 |
 v1.0.x | md_converter/renderer/post_processor.py | P11-MNT-006 |
 CLOSED | <blank> | <blank>
+
+P11-MNT-007 | Preserve Hyperlink Targets and Enforce AC010 | DEFECT | P2 |
+v1.0.x | md_converter/renderer/word_renderer.py | P11-MNT-007 |
+CLOSED | aae73de99734bb8598442b6f88d84438808e4f0d | <blank>
+
+P11-MNT-008 | Apply Frozen A4 Page Size to Portrait Documents | DEFECT | P2 |
+v1.0.x | md_converter/renderer/word_renderer.py | P11-MNT-008 |
+CLOSED | 91bc0092ed4965e657e08cabe7ae4ab88ee88aeb | <blank>
+
+P11-MNT-009 | Preserve Adjacent Markdown Tables Across Word COM | DEFECT | P2 |
+v1.0.x | md_converter/renderer/word_writer.py | P11-MNT-009 |
+CLOSED | e7ee94308ed6fb3263bc73a03fde2e5ebe1c3139 | <blank>
 ```
 
 Registry Table:
@@ -79,6 +91,9 @@ Registry Table:
 | P11-MNT-004 | Required Pipeline Pass Failure Does Not Fail Closed | DEFECT | P2 | v1.0.x | md_converter/pipeline/pipeline.py | P11-MNT-004 | CLOSED | fe0bcc0d1aa045e177846658de4bf00f2c3de614 | — |
 | P11-MNT-005 | Top-Level convert() Uses Stale Parallel Compiler Construction | DEFECT | P3 | v1.0.x | md_converter/__init__.py | P11-MNT-005 | CLOSED | 1b29bfd373e9000568244b9e940a65234af8d666 | — |
 | P11-MNT-006 | Optional Word COM Import Must Degrade Gracefully | DEFECT | P2 | v1.0.x | md_converter/renderer/post_processor.py | P11-MNT-006 | CLOSED | 32f235ea9629ba3c40b24db03a8b6a67e9eeacc8 | — |
+| P11-MNT-007 | Preserve Hyperlink Targets and Enforce AC010 | DEFECT | P2 | v1.0.x | md_converter/renderer/word_renderer.py | P11-MNT-007 | CLOSED | aae73de99734bb8598442b6f88d84438808e4f0d | — |
+| P11-MNT-008 | Apply Frozen A4 Page Size to Portrait Documents | DEFECT | P2 | v1.0.x | md_converter/renderer/word_renderer.py | P11-MNT-008 | CLOSED | 91bc0092ed4965e657e08cabe7ae4ab88ee88aeb | — |
+| P11-MNT-009 | Preserve Adjacent Markdown Tables Across Word COM | DEFECT | P2 | v1.0.x | md_converter/renderer/word_writer.py | P11-MNT-009 | CLOSED | e7ee94308ed6fb3263bc73a03fde2e5ebe1c3139 | — |
 
 首个真实 issue 已登记（来源：PLAN_A final validation）。Package 证据：
 
@@ -355,6 +370,49 @@ Issue source:
 
 ```text
 Doc/production_soak/cycle_01/CLASSIFIED_ISSUES_CYCLE_01.md → ISSUE-008 (DEFECT / P2)
+```
+
+P11-MNT-007 / 008 / 009 状态轨迹（来源：Production Usage Validation Cycle 01）：
+
+```text
+CONFIRMED_DEFECT（bounded root-cause confirmation per package）
+    ↓
+IMPLEMENTED + TARGET_VERIFIED + REGRESSION_PENDING
+    ↓
+SHARED CANONICAL REGRESSION PASS
+    （308/308 collected · 0 failed · 0 errors · 0 required skips）
+    ↓
+CLOSED / ACCEPTED（P11 Cycle-01 Priority Defect Repair Batch，2026-09-20）
+```
+
+P11-MNT-007 Closure Evidence:
+
+```text
+P11/maintenance/P11-MNT-007/CLOSURE.md
+Issue source: ISSUE-001 (DEFECT / P2) + ISSUE-002 (TEST_DEFECT / P3)
+Implementation SHA: aae73de99734bb8598442b6f88d84438808e4f0d
+```
+
+P11-MNT-008 Closure Evidence:
+
+```text
+P11/maintenance/P11-MNT-008/CLOSURE.md
+Issue source: ISSUE-007 (DEFECT / P2)
+Implementation SHA: 91bc0092ed4965e657e08cabe7ae4ab88ee88aeb
+```
+
+P11-MNT-009 Closure Evidence:
+
+```text
+P11/maintenance/P11-MNT-009/CLOSURE.md
+Issue source: ISSUE-004 (DEFECT / P2)
+Implementation SHA: e7ee94308ed6fb3263bc73a03fde2e5ebe1c3139
+```
+
+Shared canonical regression evidence（three packages 共用一份）：
+
+```text
+P11/maintenance/P11_CANONICAL_REGRESSION_MNT-007-008-009.md
 ```
 
 HG-B4（RATIFY EXISTING BOUNDED PATCH）与 HG-B2（merger inclusion-policy
