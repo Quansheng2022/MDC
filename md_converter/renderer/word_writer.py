@@ -391,6 +391,7 @@ class WordWriter:
     # ============================================================
 
     def start_table(self, rows: int = 0, cols: int = 0) -> Table:
+        self.ensure_table_separator()
         if rows > 0 and cols > 0:
             self.current_table = self.doc.add_table(rows=rows, cols=cols)
         else:
@@ -403,6 +404,24 @@ class WordWriter:
         self._row_idx = 0
         self._col_idx = 0
         return self.current_table
+
+    def ensure_table_separator(self) -> bool:
+        """在紧跟表格之后插入 Word 稳定分隔段落（P11-MNT-009）。
+
+        Word 在打开/保存文档时会合并**直接相邻**的 ``w:tbl``，从而丢失 Markdown
+        源中由空行分隔的两个独立表格（表格数量、表头重复、gridSpan 结构被改写）。
+        这里在新建表格前检查 body 末尾内容：若最后一个内容元素是 ``w:tbl``，
+        则补一个空段落作为稳定分隔（``w:sectPr`` 不计入内容元素）。
+
+        返回:
+            bool: 是否插入了分隔段落
+        """
+        body = self.doc.element.body
+        content = [child for child in body if child.tag != qn("w:sectPr")]
+        if content and content[-1].tag == qn("w:tbl"):
+            self.add_paragraph()
+            return True
+        return False
 
     def end_table(self) -> None:
         self.current_table = None

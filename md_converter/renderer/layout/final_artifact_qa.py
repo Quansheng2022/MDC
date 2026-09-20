@@ -229,6 +229,9 @@ class FinalArtifactQA:
         # 7b. 表格样式化验收（style_tables=True 且存在表格时必须生效）
         self._check_table_styling(doc, result, contract)
 
+        # 7c. 相邻表格结构验收（P11-MNT-009：Word 会合并直接相邻的 w:tbl）
+        self._check_adjacent_tables(doc, result)
+
         # 8. No Content Loss（语义 token 覆盖率）
         if source_text:
             coverage = self._content_coverage(source_text, doc_text)
@@ -263,6 +266,39 @@ class FinalArtifactQA:
                 return hashlib.sha256(f.read()).hexdigest()
         except OSError:
             return ""
+
+    @staticmethod
+    def _check_adjacent_tables(doc: Any, result: FinalArtifactQAResult) -> None:
+        """报告最终产物中直接相邻的表格（P11-MNT-009 的有界结构校验）。
+
+        Word 打开/保存时会合并直接相邻的 ``w:tbl``。渲染器已插入稳定分隔段落，
+        因此这里的相邻计数应为 0；一旦回归（分隔丢失）就会产生非静默告警，而不是
+        被质量门静默接受。
+
+        参数:
+            doc: 已打开的 python-docx Document（发布对象）
+            result: 用于记录 metric / warning 的结果对象
+        """
+        from docx.oxml.ns import qn
+
+        content = [child for child in doc.element.body if child.tag != qn("w:sectPr")]
+        adjacent = [
+            idx
+            for idx in range(len(content) - 1)
+            if content[idx].tag == qn("w:tbl") and content[idx + 1].tag == qn("w:tbl")
+        ]
+        result.metrics["adjacent_tables"] = len(adjacent)
+        if adjacent:
+            result.warnings.append(
+                {
+                    "code": "table_adjacent",
+                    "message": (
+                        f"{len(adjacent)} pair(s) of directly adjacent tables found in the "
+                        "final artifact; Word may merge them on open/save (P11-MNT-009)"
+                    ),
+                    "data": {"positions": adjacent[:10]},
+                }
+            )
 
     @staticmethod
     def _collect_doc_text(doc: Any) -> str:
