@@ -1,0 +1,39 @@
+{
+  "build_command": "python -m build --no-isolation --outdir dist",
+  "build_exit_code": 0,
+  "wheel": {
+    "filename": "md_converter-1.1.0-py3-none-any.whl",
+    "size_bytes": 337657,
+    "sha256": "630f79d44f38f7fa49fcfe20a5d5e7a135fed988b3d4e4f765924dbf8bf4952a",
+    "embedded_name": "md_converter",
+    "embedded_version": "1.1.0",
+    "requires_python": ">=3.8",
+    "entries": 129,
+    "suspicious_entries": [],
+    "ships_theme_yaml": true,
+    "ships_py_typed": true,
+    "ships_new_pass": true,
+    "ships_acceptance_fixtures": [
+      "AC010_links.md",
+      "AC011_long_document.md",
+      "AC012_wide_table.md",
+      "AC013_page_break.md",
+      "AC014_frontmatter.md",
+      "AC015_real_world.md",
+      "AC016_figure_fit.md",
+      "AC017_simple_table.md",
+      "AC018_empty_heading.md"
+    ]
+  },
+  "sdist": {
+    "filename": "md_converter-1.1.0.tar.gz",
+    "size_bytes": 282679,
+    "sha256": "1f3d8975beee08ec046d3c7a83bb6235de4f1b6e0fc08d0d5b28f31ca3e32602",
+    "embedded_name": "md_converter",
+    "embedded_version": "1.1.0",
+    "requires_python": ">=3.8",
+    "entries": 156,
+    "suspicious_entries": []
+  },
+  "identity_agreement": true
+}

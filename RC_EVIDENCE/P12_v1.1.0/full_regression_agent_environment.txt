@@ -1,0 +1,97 @@
+...............................................s........................ [ 20%]
+..................................................FF.................... [ 40%]
+........................................................................ [ 61%]
+........................................................................ [ 81%]
+...............................................................s         [100%]
+================================== FAILURES ===================================
+E   AssertionError: Golden test 'sample' failed:
+      Golden environment mismatch: baseline renderer_backend='playwright', actual renderer_backend='fallback'. Run in the canonical Golden environment (see GOLDEN_ENVIRONMENT.md).
+---------------------------- Captured stdout call -----------------------------
+[PassRegistry] get_passes() called
+[PassRegistry] _entries count: 4
+[PassRegistry] _entries keys: ['NormalizePass', 'AsciiToMermaidPass', 'DiagramPass', 'SimpleTablePass']
+[PassRegistry] _cache_dirty: True, _sorted_cache: False
+[PassRegistry] Processing: NormalizePass (enabled: True)
+[PassRegistry] get_pass(NormalizePass) - instantiating...
+[PassRegistry] get_pass(NormalizePass) - instantiated successfully: NormalizePass(name=NormalizePass, priority=100, enabled=True)
+[PassRegistry]   NormalizePass -> NormalizePass(name=NormalizePass, priority=100, enabled=True)
+[PassRegistry] Processing: AsciiToMermaidPass (enabled: True)
+[PassRegistry] get_pass(AsciiToMermaidPass) - instantiating...
+[PassRegistry] get_pass(AsciiToMermaidPass) - instantiated successfully: AsciiToMermaidPass(name=AsciiToMermaidPass, priority=100, enabled=True)
+[PassRegistry]   AsciiToMermaidPass -> AsciiToMermaidPass(name=AsciiToMermaidPass, priority=100, enabled=True)
+[PassRegistry] Processing: DiagramPass (enabled: True)
+[PassRegistry] get_pass(DiagramPass) - instantiating...
+[DiagramPass] mmdc not available
+[PassRegistry] get_pass(DiagramPass) - instantiated successfully: DiagramPass(name=DiagramPass, priority=100, enabled=True)
+[PassRegistry]   DiagramPass -> DiagramPass(name=DiagramPass, priority=100, enabled=True)
+[PassRegistry] Processing: SimpleTablePass (enabled: True)
+[PassRegistry] get_pass(SimpleTablePass) - instantiating...
+[PassRegistry] get_pass(SimpleTablePass) - instantiated successfully: SimpleTablePass(name=SimpleTablePass, priority=100, enabled=True)
+[PassRegistry]   SimpleTablePass -> SimpleTablePass(name=SimpleTablePass, priority=100, enabled=True)
+[PassRegistry] Returning 4 passes: ['AsciiToMermaidPass', 'NormalizePass', 'DiagramPass', 'SimpleTablePass']
+[Pipeline] Running with 4 passes: ['AsciiToMermaidPass', 'NormalizePass', 'DiagramPass', 'SimpleTablePass']
+[Pipeline] Executing pass: AsciiToMermaidPass
+[Pipeline] Executing pass: NormalizePass
+[Pipeline] Executing pass: DiagramPass
+[DiagramPass] Running... (mmdc: False, playwright: True)
+[DiagramPass] Found CodeBlock with language: 'yaml'
+[DiagramPass] Found CodeBlock with language: 'python'
+[DiagramPass] Found CodeBlock with language: 'javascript'
+[DiagramPass] Found CodeBlock with language: 'html'
+[DiagramPass] Found CodeBlock with language: 'sql'
+[DiagramPass] Found CodeBlock with language: 'python'
+[DiagramPass] Found Diagram node (type: mermaid)
+[DiagramPass] Rendering diagram #1 (type: mermaid)
+[DiagramPass] Rendering Mermaid diagram...
+[DiagramPass] Playwright error: BrowserType.launch: spawn EPERM
+Call log:
+  - <launching> C:\Users\Quansheng\AppData\Local\ms-playwright\chromium_headless_shell-1234\chrome-headless-shell-win64\chrome-headless-shell.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=C:\Users\QUANSH~1\AppData\Local\Temp\playwright_chromiumdev_profile-f9ett2 --remote-debugging-pipe --no-startup-window
+
+[DiagramPass] Mermaid rendering failed, using fallback
+[DiagramPass] Found Diagram node (type: mermaid)
+[DiagramPass] Rendering diagram #2 (type: mermaid)
+[DiagramPass] Rendering Mermaid diagram...
+[DiagramPass] Playwright error: BrowserType.launch: spawn EPERM
+Call log:
+  - <launching> C:\Users\Quansheng\AppData\Local\ms-playwright\chromium_headless_shell-1234\chrome-headless-shell-win64\chrome-headless-shell.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=C:\Users\QUANSH~1\AppData\Local\Temp\playwright_chromiumdev_profile-E8xjgH --remote-debugging-pipe --no-startup-window
+
+[DiagramPass] Mermaid rendering failed, using fallback
+[DiagramPass] Found Diagram node (type: mermaid)
+[DiagramPass] Rendering diagram #3 (type: mermaid)
+[DiagramPass] Rendering Mermaid diagram...
+[DiagramPass] Playwright error: BrowserType.launch: spawn EPERM
+Call log:
+  - <launching> C:\Users\Quansheng\AppData\Local\ms-playwright\chromium_headless_shell-1234\chrome-headless-shell-win64\chrome-headless-shell.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=C:\Users\QUANSH~1\AppData\Local\Temp\playwright_chromiumdev_profile-58T6IS --remote-debugging-pipe --no-startup-window
+
+[DiagramPass] Mermaid rendering failed, using fallback
+[DiagramPass] Found CodeBlock with language: ''
+[DiagramPass] Found Diagram node (type: mermaid)
+[DiagramPass] Rendering diagram #4 (type: mermaid)
+[DiagramPass] Rendering Mermaid diagram...
+[DiagramPass] Playwright error: BrowserType.launch: spawn EPERM
+Call log:
+  - <launching> C:\Users\Quansheng\AppData\Local\ms-playwright\chromium_headless_shell-1234\chrome-headless-shell-win64\chrome-headless-shell.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=C:\Users\QUANSH~1\AppData\Local\Temp\playwright_chromiumdev_profile-WteYsN --remote-debugging-pipe --no-startup-window
+
+[DiagramPass] Mermaid rendering failed, using fallback
+[DiagramPass] Found CodeBlock with language: 'python'
+[Pipeline] Executing pass: SimpleTablePass
+[WordWriter] SVG->PNG via cairosvg succeeded
+[WordWriter] SVG->PNG via cairosvg succeeded
+[WordWriter] SVG->PNG via cairosvg succeeded
+[WordWriter] SVG->PNG via cairosvg succeeded
+  📊 处理 6 个表格...
+  ✓ 格式化 6/6 个表格
+  📄 TOC 已插入（含目录条目；页码可在 Word 中按 F9 刷新）
+C:\Users\Quansheng\Documents\projects\MD_Converter\md_converter\tests\test_golden.py:303: AssertionError: Golden test 'sample' failed:
+E   AssertionError: Chromium cannot launch: BrowserType.launch: spawn EPERM
+      Call log:
+        - <launching> C:\Users\Quansheng\AppData\Local\ms-playwright\chromium_headless_shell-1234\chrome-headless-shell-win64\chrome-headless-shell.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=C:\Users\QUANSH~1\AppData\Local\Temp\playwright_chromiumdev_profile-Ha5EOh --remote-debugging-pipe --no-startup-window
+      . Run: python -m playwright install chromium
+    assert False
+     +  where False = GoldenEnvironmentStatus(playwright_installed=True, chromium_launchable=False, backend='fallback', canonical=False, pla...\\QUANSH~1\\AppData\\Local\\Temp\\playwright_chromiumdev_profile-Ha5EOh --remote-debugging-pipe --no-startup-window\n').chromium_launchable
+C:\Users\Quansheng\Documents\projects\MD_Converter\md_converter\tests\test_golden_environment.py:17: AssertionError: Chromium cannot launch: BrowserType.launch: spawn EPERM
+=========================== short test summary info ===========================
+SKIPPED [1] md_converter\tests\test_adjacent_tables.py:130: Requires Windows + installed Word + pywin32 (Windows Release Gate)
+Probe detail: WORD_COM_UNAVAILABLE|dispatch|com_error|(-2147023584, 'A specified logon session does not exist. It may already have been terminated.', None, None)
+SKIPPED [1] md_converter\tests\test_word_com_final_artifact.py:199: Requires Windows + installed Word + pywin32 (Windows Release Gate)
+Probe detail: WORD_COM_UNAVAILABLE|dispatch|com_error|(-2147023584, 'A specified logon session does not exist. It may already have been terminated.', None, None)

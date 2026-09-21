@@ -1,0 +1,15 @@
+{
+  "tests": 352,
+  "failures": 2,
+  "errors": 0,
+  "skipped": 2,
+  "time_s": 44.155,
+  "failed": [
+    "md_converter.tests.test_golden::test_golden[sample]",
+    "md_converter.tests.test_golden_environment::test_canonical_golden_environment"
+  ],
+  "skipped_cases": [
+    "md_converter.tests.test_adjacent_tables::test_it_wordcom_001_table_count_survives_word_roundtrip",
+    "md_converter.tests.test_word_com_final_artifact::test_word_com_roundtrip_final_artifact_qa_pass"
+  ]
+}

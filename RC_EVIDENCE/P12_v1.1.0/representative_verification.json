@@ -1,0 +1,74 @@
+{
+  "env": {
+    "python": "3.12.14",
+    "module_file": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\p12_rc_freshvenv\\Lib\\site-packages\\md_converter\\__init__.py",
+    "module_version": "1.1.0",
+    "installed_metadata_version": "1.1.0",
+    "imported_from_wheel": true
+  },
+  "cand002": {
+    "shapes": 1,
+    "content_box_cm": "15.92 x 24.62",
+    "tall_shape_cm": "10.552 x 24.620",
+    "fits_content_box": true,
+    "clamped_to_content_height": true,
+    "aspect_ratio_preserved": true,
+    "no_upscale_beyond_target_width": true,
+    "rendered_qa_status": "PASS",
+    "figure_overflow": 0,
+    "figure_below_min_width": 0
+  },
+  "cand001_positive": {
+    "tables": 1,
+    "row_count": 3,
+    "header": [
+      "普通软件工程关注",
+      "Governance Engineering 额外关注"
+    ],
+    "second_row": [
+      "代码是否能运行",
+      "AI是否有权这样修改"
+    ],
+    "ruler_row_absent": true,
+    "final_qa_status": "PASS",
+    "content_coverage": 1.0
+  },
+  "cand001_rejection": {
+    "tables": 0,
+    "kept_as_paragraph": true,
+    "diagnostic_codes": [],
+    "no_simple_diagnostic": true
+  },
+  "cand003": {
+    "no_literal_heading_placeholder": true,
+    "rendered_headings": [
+      "Heading Behaviour",
+      "Kept Section"
+    ],
+    "toc_entries": [
+      "Heading Behaviour\t",
+      "Kept Section\t"
+    ],
+    "toc_matches_headings": true,
+    "static_qa_warning_retained": true,
+    "static_qa_status": "PASS_WITH_WARN"
+  },
+  "cli": {
+    "help_exit": 0,
+    "help_has_usage": true,
+    "check_exit": 0,
+    "check_summary": {
+      "required": 4,
+      "optional": 2,
+      "ok": true
+    },
+    "convert_exit": 0,
+    "converted_docx_exists": true,
+    "convert_tables": 1,
+    "stdout_tail": [
+      "✅ Generated: C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\p12_rc_out\\AC017_cli.docx",
+      "📋 Diagnostics:",
+      "  ⚠️ [POST002] Word COM unavailable (ModuleNotFoundError: No module named 'win32com'); native TOC field kept, page numbers refresh with F9 in Word (at unknown)"
+    ]
+  }
+}

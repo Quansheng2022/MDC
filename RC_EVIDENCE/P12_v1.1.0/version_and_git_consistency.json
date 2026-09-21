@@ -1,0 +1,13 @@
+{
+  "pyproject_version": "1.1.0",
+  "module_version": "1.1.0",
+  "release_manifest": "v1.1.0",
+  "manifest_expected_wheel": "md_converter-1.1.0-py3-none-any.whl",
+  "manifest_expected_sdist": "md_converter-1.1.0.tar.gz",
+  "actual_wheel": "md_converter-1.1.0-py3-none-any.whl",
+  "actual_sdist": "md_converter-1.1.0.tar.gz",
+  "artifacts_match_manifest": true,
+  "version_policy_basis": "P11/P11_PATCH_RELEASE_GATE.md §2 Version Policy: backward-compatible feature -> P12 -> candidate 1.1.0",
+  "previous_release": "v1.0.1",
+  "stale_101_references_outside_history": []
+}

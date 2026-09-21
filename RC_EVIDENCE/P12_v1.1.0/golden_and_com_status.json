@@ -1,0 +1,20 @@
+{
+  "agent_execution_environment": {
+    "chromium_launchable": false,
+    "backend": "fallback",
+    "chromium_error_head": "BrowserType.launch: spawn EPERM\nCall log:\n  - <launching> C:\\Users\\Quansheng\\AppData\\Local\\ms-playwright\\chromium_headle",
+    "word_com": {
+      "win32com_import": true
+    },
+    "conclusion": "AGENT EXECUTION-ENVIRONMENT LIMITATION — these two gates cannot execute in the agent sandbox; classified by the Human as execution-environment-specific, not a product defect."
+  },
+  "accepted_human_canonical_evidence": {
+    "playwright_bundled_chromium_launch": "PASS",
+    "canonical_golden_tests": "PASS",
+    "word_com_tests": "PASS",
+    "full_md_converter_test_suite": "PASS",
+    "process_exit_code": 0,
+    "source": "Human release-readiness instruction §0/§1 (independently executed by the Human Product Authority, 2026-09-21)"
+  },
+  "golden_baseline_modified": false
+}
