@@ -1,38 +1,50 @@
 {
-  "provenance": "final v1.1.0 release candidate bundle regenerated after canonical incorporation",
+  "record_type": "release_bundle_identity_and_human_procedure",
+  "provenance": "Final Release Identity Refresh（2026-09-21）",
   "rc_payload_source_sha": "4b7d5ea3cbfc123750e3ff5551db45cd1d5e1c94",
-  "bundle": {
+  "final_bundle": {
+    "filename": "release_bundle_v1.1.0.zip",
+    "status": "TO BE ASSEMBLED BY THE HUMAN from the Human-owned final artifacts（the Agent sandbox must not generate the final bundle）",
+    "sha256": "pending — calculate externally after creation and record outside the bundle",
+    "human_artifact_directory": "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter_v1.1.0_final_artifacts",
+    "self_reference_rule": "the bundle contains RELEASE_MANIFEST_v1.1.0.json; the bundle SHA256 is never written inside the bundle"
+  },
+  "superseded_agent_bundle": {
+    "status": "SUPERSEDED FOR PRODUCTION DISTRIBUTION",
+    "reason": "Agent-generated artifact file-access anomaly in the Agent/Codex execution environment; the Human-owned rebuild and Human-assembled bundle are the final production set.",
     "filename": "release_bundle_v1.1.0.zip",
     "size_bytes": 637890,
     "sha256": "e75a559d2eda9e62637220517521a061d57bab5ff0186bf04cc13957273291e8",
-    "entries": 16,
-    "location": "dist/（local only, git-ignored）"
+    "location": "agent sandbox dist/（local only, git-ignored）",
+    "built_from": "agent-built wheel 941e09ee… / sdist f060c7c8…（also superseded）",
+    "offline_hash_check": "PASS at the time of creation（entries re-verified against dist/SHA256SUMS_v1.1.0）"
   },
-  "contents": [
-    "dist/md_converter-1.1.0-py3-none-any.whl",
-    "dist/md_converter-1.1.0.tar.gz",
-    "RELEASE_NOTES_v1.1.0.md",
-    "RELEASE_MANIFEST_v1.1.0.json",
-    "RC_EVIDENCE/P12_v1.1.0/artifact_integrity.json",
-    "RC_EVIDENCE/P12_v1.1.0/final_artifact_integrity.json",
-    "RC_EVIDENCE/P12_v1.1.0/final_fresh_install_and_smoke.json",
-    "RC_EVIDENCE/P12_v1.1.0/full_regression_agent_environment.txt",
-    "RC_EVIDENCE/P12_v1.1.0/full_regression_agent_environment.xml",
-    "RC_EVIDENCE/P12_v1.1.0/full_regression_agent_environment_summary.json",
-    "RC_EVIDENCE/P12_v1.1.0/golden_and_com_status.json",
-    "RC_EVIDENCE/P12_v1.1.0/human_canonical_verification.json",
-    "RC_EVIDENCE/P12_v1.1.0/RELEASE_CANDIDATE_EVIDENCE.md",
-    "RC_EVIDENCE/P12_v1.1.0/representative_verification.json",
-    "RC_EVIDENCE/P12_v1.1.0/version_and_git_consistency.json",
-    "RC_EVIDENCE/P12_v1.1.0/SHA256SUMS"
-  ],
-  "excluded": [
-    "virtual environments",
-    "Playwright/Chromium binaries",
-    "Word installation",
-    "pytest caches",
-    "untracked production-soak corpus",
-    "dist/ build garbage"
-  ],
-  "offline_check": "bundle re-read and every entry hash re-verified against dist/SHA256SUMS_v1.1.0"
+  "human_bundle_procedure": {
+    "shell": "Windows PowerShell",
+    "note": "copy the final Human-owned wheel/sdist + the committed release manifest, release notes and the RC_EVIDENCE/P12_v1.1.0 evidence set; the bundle hash is written next to the zip, never inside it",
+    "steps": [
+      "$repo = 'C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter'",
+      "$final = 'C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter_v1.1.0_final_artifacts'",
+      "$stage = Join-Path $final 'release_bundle_v1.1.0'",
+      "if (Test-Path -LiteralPath $stage) { Remove-Item -LiteralPath $stage -Recurse -Force }",
+      "New-Item -ItemType Directory -Path $stage | Out-Null",
+      "New-Item -ItemType Directory -Path (Join-Path $stage 'RC_EVIDENCE') | Out-Null",
+      "Copy-Item -LiteralPath (Join-Path $final 'md_converter-1.1.0-py3-none-any.whl') -Destination $stage",
+      "Copy-Item -LiteralPath (Join-Path $final 'md_converter-1.1.0.tar.gz') -Destination $stage",
+      "Copy-Item -LiteralPath (Join-Path $repo 'RELEASE_MANIFEST_v1.1.0.json') -Destination $stage",
+      "Copy-Item -LiteralPath (Join-Path $repo 'RELEASE_NOTES_v1.1.0.md') -Destination $stage",
+      "Copy-Item -LiteralPath (Join-Path $repo 'RC_EVIDENCE\\P12_v1.1.0') -Destination (Join-Path $stage 'RC_EVIDENCE') -Recurse",
+      "# SHA256SUMS of the staged payload (excluding SHA256SUMS itself)",
+      "$lines = Get-ChildItem -LiteralPath $stage -Recurse -File | Where-Object { $_.Name -ne 'SHA256SUMS' } | ForEach-Object { '{0}  {1}' -f (Get-FileHash -Algorithm SHA256 -LiteralPath $_.FullName).Hash.ToLower(), $_.FullName.Substring($stage.Length + 1).Replace('\\','/') }",
+      "$lines | Set-Content -LiteralPath (Join-Path $stage 'SHA256SUMS') -Encoding utf8",
+      "$zip = Join-Path $final 'release_bundle_v1.1.0.zip'",
+      "Compress-Archive -Path (Join-Path $stage '*') -DestinationPath $zip -Force",
+      "# external bundle hash (never inside the bundle)",
+      "$digest = (Get-FileHash -Algorithm SHA256 -LiteralPath $zip).Hash.ToLower()",
+      "'{0}  release_bundle_v1.1.0.zip' -f $digest | Set-Content -LiteralPath ($zip + '.sha256') -Encoding utf8",
+      "# verify the zip opens and list entries for inspection",
+      "Add-Type -AssemblyName System.IO.Compression.FileSystem",
+      "$zipRead = [System.IO.Compression.ZipFile]::OpenRead($zip); $zipRead.Entries | Select-Object FullName, Length; $zipRead.Dispose()"
+    ]
+  }
 }

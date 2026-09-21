@@ -1,52 +1,62 @@
 {
-  "provenance": "final RC artifacts built from RC Payload Source SHA 4b7d5ea",
-  "wheel": {
-    "filename": "md_converter-1.1.0-py3-none-any.whl",
-    "size_bytes": 337661,
-    "sha256": "941e09eeee018bd3b256027df4dba822a8da3f129506444f8521bd02671b0f4a",
-    "embedded_version": "1.1.0",
-    "requires_python": ">=3.8",
-    "distribution_name": "md_converter",
-    "entries": 129,
-    "forbidden_entries": [],
-    "temporary_word_files": [],
-    "intended_package_data": {
-      "theme_yaml": true,
-      "py_typed": true,
-      "simple_table_pass": true,
-      "figure_sizing": true,
-      "canonical_identity_1_1": true
+  "record_type": "final_artifact_identity",
+  "provenance": "Final Release Identity Refresh（2026-09-21）— final production distribution identity is the Human-owned rebuild from the frozen RC Payload Source",
+  "software_version": "1.1.0",
+  "canonical_spec": {
+    "spec_version": "1.1",
+    "spec_status": "FROZEN",
+    "bound_software_version": "1.1.0"
+  },
+  "rc_payload_source_sha": "4b7d5ea3cbfc123750e3ff5551db45cd1d5e1c94",
+  "final_production_artifacts": {
+    "producer": "Human-owned rebuild from the frozen RC Payload Source",
+    "status": "FINAL PRODUCTION DISTRIBUTION IDENTITY",
+    "location": "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter_v1.1.0_final_artifacts",
+    "wheel": {
+      "filename": "md_converter-1.1.0-py3-none-any.whl",
+      "size_bytes": 339809,
+      "sha256": "6e1a8c021a0c0ba7970be87e321b96775e839071b9f4f6228efc481ac5256f44",
+      "sha256_as_supplied_by_human": "6E1A8C021A0C0BA7970BE87E321B96775E839071B9F4F6228EFC481AC5256F44"
     },
-    "p12_acceptance_fixtures": [
-      "AC010_links.md",
-      "AC011_long_document.md",
-      "AC012_wide_table.md",
-      "AC013_page_break.md",
-      "AC014_frontmatter.md",
-      "AC015_real_world.md",
-      "AC016_figure_fit.md",
-      "AC017_simple_table.md",
-      "AC018_empty_heading.md"
-    ]
+    "sdist": {
+      "filename": "md_converter-1.1.0.tar.gz",
+      "size_bytes": 281569,
+      "sha256": "02307da0fcbe66d1c6848aba79369fb63539b3c0abb9c5e544334b2660959ec9",
+      "sha256_as_supplied_by_human": "02307DA0FCBE66D1C6848ABA79369FB63539B3C0ABB9C5E544334B2660959EC9"
+    },
+    "human_reported_verification": {
+      "wheel": "readable; SHA256 calculated; ZIP listing readable; expected MD_Converter 1.1.0 package payload present; P12 implementation surfaces present; AC016/AC017/AC018 present; md_converter-1.1.0.dist-info present",
+      "sdist": "readable; SHA256 calculated; Python tarfile opened successfully; 156 entries; search returned NO MATCH for RELEASE_NOTES / RELEASE_MANIFEST / RC_EVIDENCE",
+      "source": "Human Final Release Identity Refresh instruction §3（Human-authoritative facts）"
+    },
+    "agent_verification": "NOT PERFORMED — the Agent/Codex execution environment can list the Human artifact directory but cannot open the artifact files（PermissionError: [WinError 13] Permission denied）. The Human-supplied hashes are authoritative; the Agent did not rebuild, replace or re-hash them."
   },
-  "sdist": {
-    "filename": "md_converter-1.1.0.tar.gz",
-    "size_bytes": 282686,
-    "sha256": "f060c7c807c3a6f09fcae2a91fd34f30757a4a183cff93cc2b6add3f66e4c96d",
-    "embedded_version": "1.1.0",
-    "entries": 156,
-    "forbidden_entries": [],
-    "temporary_word_files": []
+  "superseded_agent_artifacts": {
+    "status": "SUPERSEDED FOR PRODUCTION DISTRIBUTION",
+    "reason": "Agent-generated artifact file-access anomaly in the Agent/Codex execution environment; Human-owned rebuild from the same frozen payload source is the final production artifact set.",
+    "classification": "Agent/Codex environment-specific artifact file-access anomaly（not a product defect; not a proven packaging-logic defect; exact Windows/security root cause not established）",
+    "wheel": {
+      "filename": "md_converter-1.1.0-py3-none-any.whl",
+      "size_bytes": 337661,
+      "sha256": "941e09eeee018bd3b256027df4dba822a8da3f129506444f8521bd02671b0f4a"
+    },
+    "sdist": {
+      "filename": "md_converter-1.1.0.tar.gz",
+      "size_bytes": 282686,
+      "sha256": "f060c7c807c3a6f09fcae2a91fd34f30757a4a183cff93cc2b6add3f66e4c96d"
+    },
+    "historical_only": true,
+    "payload_relationship": "built from the same frozen RC Payload Source SHA; the Human rebuild is preferred as the distribution identity because the Agent-produced artifact set was inaccessible to the Human Windows environment"
   },
-  "identity_agreement": true,
-  "previous_rc_hashes": {
-    "wheel": "630f79d44f38f7fa49fcfe20a5d5e7a135fed988b3d4e4f765924dbf8bf4952a",
-    "sdist": "1f3d8975beee08ec046d3c7a83bb6235de4f1b6e0fc08d0d5b28f31ca3e32602"
+  "earlier_rc_stage_artifacts": {
+    "status": "SUPERSEDED（pre-canonical RC stage; retained as history only）",
+    "wheel_sha256": "630f79d44f38f7fa49fcfe20a5d5e7a135fed988b3d4e4f765924dbf8bf4952a",
+    "sdist_sha256": "1f3d8975beee08ec046d3c7a83bb6235de4f1b6e0fc08d0d5b28f31ca3e32602",
+    "reason": "built before the approved P12 canonical incorporation changed the packaged canonical-identity constant md_converter/release_evidence.py",
+    "record": "RC_EVIDENCE/P12_v1.1.0/artifact_integrity.json"
   },
-  "changed_vs_previous_rc": {
-    "wheel": true,
-    "sdist": true,
-    "reason": "md_converter/release_evidence.py（canonical identity constant 1.0 -> 1.1）被打包，故 wheel 与 sdist 均合法变化"
-  },
-  "audit_note": "golden baseline asset md_converter/tests/golden/sample.docx.xml is an intended tracked test asset, not a temporary Word file"
+  "journal": {
+    "previous_release_evidence_sha": "2ab285db7fd3b05c700bf75ec6e2f133eddb9b4e",
+    "final_identity_refresh_sha": "the single release-only commit created by this refresh（reported in the final execution report; omitted here to avoid self-reference）"
+  }
 }

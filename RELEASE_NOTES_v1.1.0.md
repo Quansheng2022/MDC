@@ -124,6 +124,9 @@ AGENT RESTRICTED SANDBOX（non-authoritative environment limitation, not a produ
     Word COM           COM dispatch unavailable（logon session）
 Evidence set: RC_EVIDENCE/P12_v1.1.0/（含 human_canonical_verification.json）
 Final wheel        fresh non-editable install PASS + CLI PASS + representative P12 smoke PASS
+Final distribution artifacts（Human-owned rebuild from the frozen RC Payload Source）:
+    md_converter-1.1.0-py3-none-any.whl  SHA256 6e1a8c021a0c0ba7970be87e321b96775e839071b9f4f6228efc481ac5256f44
+    md_converter-1.1.0.tar.gz            SHA256 02307da0fcbe66d1c6848aba79369fb63539b3c0abb9c5e544334b2660959ec9
 ```
 
 ## Publication Status

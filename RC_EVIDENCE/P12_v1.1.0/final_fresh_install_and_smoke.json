@@ -1,4 +1,5 @@
 {
+  "artifact_identity_note": "This smoke run was executed against the Agent-built wheel (941e09ee…), which is SUPERSEDED FOR PRODUCTION DISTRIBUTION. The Human rebuilt the distribution artifacts from the same frozen RC Payload Source SHA 4b7d5ea3cbfc123750e3ff5551db45cd1d5e1c94; the payload content is the same (no product/source change after the payload source freeze), and the final distribution identity is recorded in final_artifact_integrity.json.",
   "fresh_install": {
     "python": "3.12.14",
     "module_file": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\p12_rc_final_venv\\Lib\\site-packages\\md_converter\\__init__.py",

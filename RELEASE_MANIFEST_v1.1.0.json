@@ -10,6 +10,7 @@
     "spec_version": "1.1",
     "spec_status": "FROZEN",
     "freeze_date": "2026-09-21",
+    "bound_software_version": "1.1.0",
     "supersedes": "1.0 (FROZEN 2026-08-30)",
     "incorporated_items": [
       "SPEC-FUNC-022 Simple Table Recognition",
@@ -62,6 +63,30 @@
   "artifact_hashes": {
     "wheel": {
       "filename": "md_converter-1.1.0-py3-none-any.whl",
+      "size_bytes": 339809,
+      "sha256": "6e1a8c021a0c0ba7970be87e321b96775e839071b9f4f6228efc481ac5256f44",
+      "sha256_as_supplied_by_human": "6E1A8C021A0C0BA7970BE87E321B96775E839071B9F4F6228EFC481AC5256F44",
+      "producer": "Human-owned rebuild from the frozen RC Payload Source",
+      "status": "FINAL PRODUCTION DISTRIBUTION IDENTITY"
+    },
+    "sdist": {
+      "filename": "md_converter-1.1.0.tar.gz",
+      "size_bytes": 281569,
+      "sha256": "02307da0fcbe66d1c6848aba79369fb63539b3c0abb9c5e544334b2660959ec9",
+      "sha256_as_supplied_by_human": "02307DA0FCBE66D1C6848ABA79369FB63539B3C0ABB9C5E544334B2660959EC9",
+      "producer": "Human-owned rebuild from the frozen RC Payload Source",
+      "status": "FINAL PRODUCTION DISTRIBUTION IDENTITY"
+    },
+    "location": "Human-owned artifact directory C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter_v1.1.0_final_artifacts（final binaries）+ RC_EVIDENCE/P12_v1.1.0/（identity evidence）",
+    "note": "final production distribution artifacts are the Human-owned rebuild from the frozen RC Payload Source SHA 4b7d5ea3cbfc123750e3ff5551db45cd1d5e1c94 (release_identity_refresh: 2026-09-21).",
+    "agent_sandbox_read_limit": "the Agent/Codex execution environment can list the Human artifact directory but cannot open the artifact files（Permission denied）; the Human-supplied hashes are authoritative and were not re-derived by the Agent."
+  },
+  "superseded_agent_artifacts": {
+    "status": "SUPERSEDED FOR PRODUCTION DISTRIBUTION",
+    "reason": "Agent-generated artifact file-access anomaly in the Agent/Codex execution environment; Human-owned rebuild from the same frozen payload source is the final production artifact set.",
+    "classification": "Agent/Codex environment-specific artifact file-access anomaly（not a product defect; not a proven packaging-logic defect; exact Windows/security root cause not established）",
+    "wheel": {
+      "filename": "md_converter-1.1.0-py3-none-any.whl",
       "size_bytes": 337661,
       "sha256": "941e09eeee018bd3b256027df4dba822a8da3f129506444f8521bd02671b0f4a"
     },
@@ -70,8 +95,7 @@
       "size_bytes": 282686,
       "sha256": "f060c7c807c3a6f09fcae2a91fd34f30757a4a183cff93cc2b6add3f66e4c96d"
     },
-    "location": "RC_EVIDENCE/P12_v1.1.0/",
-    "note": "final artifacts rebuilt from the frozen RC Payload Source after canonical incorporation; both hashes differ from the earlier RC because md_converter/release_evidence.py (canonical identity constant) is packaged."
+    "historical_only": true
   },
   "verification": {
     "human_canonical_golden": "PASS",
@@ -81,13 +105,15 @@
     "fresh_install_final_wheel": "PASS（non-editable install; md_converter imported from site-packages; module and metadata version 1.1.0）",
     "cli_smoke": "PASS（--help / check / Markdown→DOCX，exit 0）",
     "representative_p12_smoke": "PASS（CAND-001 / CAND-002 / CAND-003）",
-    "agent_sandbox_gates": "NON-CANONICAL AGENT EXECUTION ENVIRONMENT — NOT THE RELEASE-GATE RESULT（Chromium spawn EPERM / COM dispatch unavailable）"
+    "agent_sandbox_gates": "NON-CANONICAL AGENT EXECUTION ENVIRONMENT — NOT THE RELEASE-GATE RESULT（Chromium spawn EPERM / COM dispatch unavailable）",
+    "human_final_artifact_verification": "Human-reported: wheel readable + SHA256 calculated; sdist readable by Python tarfile with 156 entries; RELEASE_NOTES / RELEASE_MANIFEST / RC_EVIDENCE absent from the sdist; wheel ZIP listing readable with expected v1.1.0 / P12 payload, AC016–AC018 and md_converter-1.1.0.dist-info present（RC_EVIDENCE/P12_v1.1.0/final_artifact_integrity.json）"
   },
   "release_bundle": {
     "filename": "release_bundle_v1.1.0.zip",
-    "sha256_location": "RC_EVIDENCE/P12_v1.1.0/final_release_bundle.json",
-    "note": "bundle size/SHA256 are recorded in the RC evidence set rather than here, because the bundle contains this manifest (avoiding a self-referential hash).",
-    "location": "dist/（local only, git-ignored）"
+    "status": "TO BE ASSEMBLED BY THE HUMAN from the Human-owned final artifacts（Agent sandbox must not generate the final bundle）",
+    "sha256_location": "external to the bundle — record only after bundle creation（see RC_EVIDENCE/P12_v1.1.0/final_release_bundle.json human_bundle_procedure）",
+    "note": "the bundle contains this manifest, so its hash is never written inside the bundle; the earlier Agent-built dist/release_bundle_v1.1.0.zip is superseded for production distribution.",
+    "human_artifact_directory": "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter_v1.1.0_final_artifacts"
   },
   "tag": "NOT CREATED",
   "remote_push": "NOT PERFORMED",

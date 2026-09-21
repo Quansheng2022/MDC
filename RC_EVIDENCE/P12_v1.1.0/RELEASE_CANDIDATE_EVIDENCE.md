@@ -35,28 +35,35 @@ Authority: P11/P11_PATCH_RELEASE_GATE.md §2 Version Policy
 No conflicting authoritative rule found.
 ```
 
-## 3. Build artifacts（最终版；`python -m build --no-isolation --outdir dist`，exit code 0）
+## 3. Final production artifacts（Human-owned rebuild from the frozen RC Payload Source）
 
 | Artifact | Size | SHA256 | Embedded version |
 | --- | --- | --- | --- |
-| `md_converter-1.1.0-py3-none-any.whl` | 337,661 B | `941e09eeee018bd3b256027df4dba822a8da3f129506444f8521bd02671b0f4a` | 1.1.0 |
-| `md_converter-1.1.0.tar.gz` | 282,686 B | `f060c7c807c3a6f09fcae2a91fd34f30757a4a183cff93cc2b6add3f66e4c96d` | 1.1.0 |
+| `md_converter-1.1.0-py3-none-any.whl` | 339,809 B | `6e1a8c021a0c0ba7970be87e321b96775e839071b9f4f6228efc481ac5256f44` | 1.1.0 |
+| `md_converter-1.1.0.tar.gz` | 281,569 B | `02307da0fcbe66d1c6848aba79369fb63539b3c0abb9c5e544334b2660959ec9` | 1.1.0 |
 
-Final artifacts were rebuilt from the frozen **RC Payload Source SHA
-`4b7d5ea3cbfc123750e3ff5551db45cd1d5e1c94`**（canonical incorporation + re-freeze）.
-Both hashes differ from the earlier RC-stage build because the packaged canonical-identity constant
-`md_converter/release_evidence.py`（`SPEC_VERSION` 1.0 → 1.1）changed；the earlier values are preserved
-in `artifact_integrity.json`（labelled as superseded）.
+Human-reported verification facts（authoritative; `final_artifact_integrity.json`）：
+wheel ZIP 可读、含预期 MD_Converter 1.1.0 payload 与 P12 实现面、AC016/AC017/AC018 与
+`md_converter-1.1.0.dist-info`；sdist 可被 Python `tarfile` 打开、含 156 个条目、
+且 `RELEASE_NOTES` / `RELEASE_MANIFEST` / `RC_EVIDENCE` 均 **NO MATCH**（发布文档不进入 sdist）。
 
-Integrity checks（`final_artifact_integrity.json`）：wheel/sdist identity agreement PASS；
-forbidden entries = 0（no `venv` / cache / production-soak corpus / browser binary / temporary Word
-file / untracked Human file）；wheel ships the frozen theme YAML, `py.typed`, `SimpleTablePass`,
-`figure_sizing` and the AC010–AC018 acceptance fixtures；canonical identity 1.1 present in the wheel.
+Agent 侧限制：agent 沙箱可列出 Human 产物目录但**无法打开产物文件**
+（`PermissionError: [WinError 13] Permission denied`），因此未对 Human 产物重新计算哈希；
+Human 提供的哈希为权威值。Final bundle 由 Human 在本机 shell 组装（见
+`final_release_bundle.json` 的 `human_bundle_procedure`），agent 不生成最终 bundle。
 
-Local release bundle（regenerated after canonical incorporation，offline hash check PASS）：
-`dist/release_bundle_v1.1.0.zip`（637,890 B，SHA256
-`e75a559d2eda9e62637220517521a061d57bab5ff0186bf04cc13957273291e8`，16 entries）——
-明细见 `final_release_bundle.json`；bundle 哈希不写入 manifest（避免自引用）。
+### 3.1 Superseded artifact identities（historical only）
+
+| Artifact set | Wheel SHA256 | Sdist SHA256 | Status |
+| --- | --- | --- | --- |
+| Agent-built（canonical closure 后） | `941e09eeee018bd3b256027df4dba822a8da3f129506444f8521bd02671b0f4a` | `f060c7c807c3a6f09fcae2a91fd34f30757a4a183cff93cc2b6add3f66e4c96d` | **SUPERSEDED FOR PRODUCTION DISTRIBUTION** |
+| Pre-canonical RC stage | `630f79d44f38f7fa49fcfe20a5d5e7a135fed988b3d4e4f765924dbf8bf4952a` | `1f3d8975beee08ec046d3c7a83bb6235de4f1b6e0fc08d0d5b28f31ca3e32602` | **SUPERSEDED**（记录保留于 `artifact_integrity.json`） |
+
+Superseded reason（agent-built set）：`Agent-generated artifact file-access anomaly in the
+Agent/Codex execution environment; Human-owned rebuild from the same frozen payload source is the
+final production artifact set.` Classification: `Agent/Codex environment-specific artifact
+file-access anomaly`（非产品缺陷；未证明打包逻辑缺陷；未确认具体 Windows/安全根因）。
+
 
 ## 3.1 Canonical specification identity（v1.1 re-freeze）
 
