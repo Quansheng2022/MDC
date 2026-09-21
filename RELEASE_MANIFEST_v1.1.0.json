@@ -1,0 +1,45 @@
+{
+  "release": "v1.1.0",
+  "release_type": "minor (backward-compatible feature release)",
+  "previous_release": "v1.0.1",
+  "previous_release_tag": "v1.0.1",
+  "version_policy_basis": "P11/P11_PATCH_RELEASE_GATE.md §2 Version Policy: backward-compatible feature -> P12 -> candidate 1.1.0",
+  "spec_version": "1.0 (FROZEN; not modified by this release)",
+  "spec_proposal": "P12 canonical specification proposal — Human approved 2026-09-21 (SPEC-FUNC-022 / SPEC-FUNC-023 / SPEC-FUNC-024, SPEC-INV-013 / SPEC-INV-014, SPEC-QA-005); incorporation into CANONICAL_SPEC.md and re-freeze are NOT part of this authority",
+  "architecture_version": "2.0 (unmodified)",
+  "theme_version": "QS-Word-Default-V1.5 (frozen, unmodified)",
+  "p12_candidates": [
+    "P12-CAND-002 Figure Page-Fit / Figure Size Policy",
+    "P12-CAND-001 Whitespace-aligned / Simple-Table Recognition",
+    "P12-CAND-003 Empty Heading Behaviour Policy"
+  ],
+  "p12_implementation_status": "IMPLEMENTED / VERIFIED / HUMAN ACCEPTED",
+  "new_features": [
+    "Figure page-fit sizing derived from the effective section content box (aspect-ratio preserving, never upscaling, page-fit mandatory, minimum-width diagnostic, real rendered-figure overflow measurement)",
+    "Conservative two-column whitespace-aligned simple-table recognition (ruler line required, shared column anchor, plain-text cells, config-gated via simple_tables.enabled)"
+  ],
+  "behaviour_corrections": [
+    "An empty heading is no longer replaced by the literal placeholder \"Heading\" and no longer produces a synthetic TOC entry (WARN + DROP)"
+  ],
+  "breaking_changes": "none",
+  "canonical_semantic_changes": "P12-CAND-001 adds a previously undefined Markdown construct (whitespace-aligned simple tables) and P12-CAND-003 defines previously undefined empty-heading behaviour; both are additive/approved evolution, not changes to existing defined semantics",
+  "architecture_changes": "none (no pipeline stage, ownership boundary, LayoutPlan contract or dependency-direction change)",
+  "known_limitations": [
+    "Simple-table recognition is intentionally conservative: 2 columns, plain-text cells, top-level paragraphs, ruler line required; a rejected block stays a paragraph and emits no diagnostic",
+    "Final physical Word pagination remains Word-owned; the converter does not promise an exact page number or deterministic final pagination",
+    "Figure minimum-width behaviour is bounded by the approved policy: a page-fit scaling that lands below the theme floor is delivered fitted and reported as a warning",
+    "Extremely wide figures (very small rendered height) are not addressed by the figure size policy"
+  ],
+  "python_target": ">=3.8 (package metadata); canonical verification environment Python 3.12 (.venv)",
+  "expected_artifacts": {
+    "wheel": "md_converter-1.1.0-py3-none-any.whl",
+    "sdist": "md_converter-1.1.0.tar.gz"
+  },
+  "artifact_hashes": {
+    "location": "RC_EVIDENCE/P12_v1.1.0/",
+    "note": "wheel/sdist SHA256 and release-candidate source SHA are recorded in the release evidence set, not inside this manifest, to avoid self-referential commit hashes."
+  },
+  "tag": "NOT CREATED",
+  "remote_push": "NOT PERFORMED",
+  "publication_status": "NOT PERFORMED — production release approval pending"
+}
