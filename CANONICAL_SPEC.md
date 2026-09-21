@@ -4,15 +4,15 @@
 
 | 字段 | 值 |
 | --- | --- |
-| spec_version | 1.0 |
+| spec_version | 1.1 |
 | spec_status | FROZEN |
-| freeze_date | 2026-08-30 |
+| freeze_date | 2026-09-21 |
 | architecture_version | 2.0 |
 | theme_version | QS-Word-Default-V1.5 (1.5, frozen) |
-| software_version | 1.0.0 |
+| software_version | 1.1.0 |
 | applicable_ADRs | ADR-001 至 ADR-009（见 `Doc/ARCHITECTURE.md`） |
-| acceptance_baseline | AC001–AC015（`md_converter/tests/acceptance/`） |
-| governance_baseline | P0-01..P0-08, P1-09, P1-10 |
+| acceptance_baseline | AC001–AC018（`md_converter/tests/acceptance/`） |
+| governance_baseline | P0-01..P0-08, P1-09, P1-10, P12（S/N 117–118，Human approved 2026-09-21） |
 
 > 本文件是**整个项目的唯一 Canonical Authority**。当 `Doc/ARCHITECTURE.md`、
 > `Doc/MD_Converter_Design_MVP3.0.md`、Theme YAML、代码、测试或任何 AI 生成计划
@@ -24,10 +24,10 @@
 
 | 版本号 | 含义 | 当前值 | 变更控制 |
 | --- | --- | --- | --- |
-| Specification Version | 规范版本（本文件） | 1.0 | 必须通过 SPEC_CHANGELOG + Re-freeze |
-| Software Version | 软件包版本（`pyproject.toml` / `md_converter.__version__`） | 1.0.0 | 按语义化版本发布 |
+| Specification Version | 规范版本（本文件） | 1.1 | 必须通过 SPEC_CHANGELOG + Re-freeze |
+| Software Version | 软件包版本（`pyproject.toml` / `md_converter.__version__`） | 1.1.0 | 按语义化版本发布 |
 | Theme Version | 冻结主题版本 | 1.5 (QS-Word-Default-V1.5) | 必须通过正式 RFC 流程 |
-| Release Version | 发布版本（Release Evidence 中记录） | 1.0.0 | 由 Release Evidence 固化 |
+| Release Version | 发布版本（Release Evidence 中记录） | 1.1.0 | 由 Release Evidence 固化 |
 
 设计文档中的“MVP 3.0”指**设计阶段**（Phase 3 MVP），不是 Software Version，
 也不是 Specification Version。
@@ -85,8 +85,31 @@ DRAFT → REVIEW → FROZEN → SUPERSEDED
 - **SPEC-FUNC-017**：质量门（StaticQA / RenderedQA / FinalArtifactQA，见 §4）
 - **SPEC-FUNC-018**：修复闭环（Repair loop，默认最多 2 次迭代）
 - **SPEC-FUNC-019**：Golden Tests
-- **SPEC-FUNC-020**：Canonical Acceptance Corpus（AC001–AC015）
+- **SPEC-FUNC-020**：Canonical Acceptance Corpus（AC001–AC018）
 - **SPEC-FUNC-021**：Release Evidence（RELEASE_EVIDENCE.md + release_evidence.json）
+- **SPEC-FUNC-022**：Simple Table Recognition（空白对齐简单表格识别）。
+  仅当以下条件全部满足时，顶层段落 SHALL 转换为两列 `Table`：至少 3 行；第 2 行是
+  ruler 行（仅空格与 >= 2 段 >= 3 个连字符，段间至少 1 个空格）；其余每行恰好含 1 段
+  >= 2 个连续空格的列间隔且不含制表符；两个单元格均非空；所有列间隔存在公共锚点
+  `b = max(起始) < min(结束)`；无 `|`；段落仅含纯文本与换行。ruler 行 SHALL NOT
+  产生行，首行为表头行，单元格内容为去除首尾空白的纯文本。不满足任一条件时 SHALL
+  保留原段落，且 SHALL NOT 产生诊断（CLAR-01：识别失败不是错误/警告条件）。
+  识别结果 SHALL 与外部语料、文件路径无关，且对相同输入确定。
+- **SPEC-FUNC-023**：Figure Page-Fit / 图形尺寸策略。交付图形 SHALL 适配**有效 section
+  内容区**：有效宽度 = section 宽度 − 左右页边距，有效高度 = section 高度 − 上下页边距，
+  目标宽度 = min(配置 `image_width`, 有效宽度)；有效内容区 SHALL 取自实际 section 几何，
+  不得退化为硬编码常数（CLAR-02：A4 / 1in ≈ 15.92 × 24.62 cm 仅为当前参考几何）。
+  尺寸 SHALL 保持宽高比、SHALL NOT 放大超过目标宽度、SHALL NOT 超出有效内容区宽高。
+  按主题 `figure.overflow_handling` 顺序执行：先 `move_to_next_page`（按目标宽度插入，
+  保留既有 keep-together 语义，由 Word 决定分页），再 `scale_down`（按有效高度收缩），
+  再 `warn`（收缩后宽度低于主题 `figure.min_width` 时仍交付适配尺寸并产生结构化 WARNING）。
+  图形无法读取时保留既有文档化降级行为。最终物理分页归 Word，converter 不承诺页码或
+  分页确定性。
+- **SPEC-FUNC-024**：空标题行为（WARN + DROP）。plain text 去空白后为空的标题
+  SHALL NOT 被渲染：不产生段落、不产生占位文本、不递增标题计数。该 Heading 节点
+  SHALL 保留在 AST 中（source truth），既有 StaticQA 空标题 WARNING SHALL 保持。
+  compiler SHALL NOT 为空标题注入字面内容（如 `"Heading"`），SHALL NOT 产生合成 TOC
+  条目或标题编号。
 
 ### 2.2 未实现（明确不在当前 Scope）
 
@@ -163,7 +186,7 @@ StaticQA ── FAIL ──→ QualityGateError（Build rejected）
        ↓
      FinalArtifactQA（检查对象 == 发布对象，记录 artifact sha256）
        ↓
-     Acceptance Gate（AC001–AC015）
+     Acceptance Gate（AC001–AC018）
        ↓
      Release Evidence → Release Candidate
 ```
@@ -188,7 +211,10 @@ quality_gate:
 对应 SPEC-ID：**SPEC-QA-001**（StaticQA FAIL → build rejected）、
 **SPEC-QA-002**（RenderedQA FAIL 不得静默进入 Release Candidate）、
 **SPEC-QA-003**（任何被 Repair 的 DOCX 至少再经过一次 RenderedQA）、
-**SPEC-QA-004**（最终发布文件 sha256 必须等于 Final QA 检查文件的 sha256）。
+**SPEC-QA-004**（最终发布文件 sha256 必须等于 Final QA 检查文件的 sha256）、
+**SPEC-QA-005**（RenderedQA SHALL 真实测量每个交付图形的尺寸与有效内容区的关系：
+超出有效内容区 = error，按既有 `fail_on_error` 语义使 Gate FAIL；低于主题
+`figure.min_width` = warning 并计数；测量结果 SHALL 来自已产出文档且确定）。
 
 ## 5. Invariants（SPEC-INV）
 
@@ -211,10 +237,15 @@ quality_gate:
   必须经过 investigate → ADR/Spec approval → approve baseline 流程。
 - **SPEC-INV-012**：任何未列入 Change Plan 的模块不得被修改；发现额外问题
   只报告、不修改。
+- **SPEC-INV-013**：Ambiguous whitespace-aligned input SHALL remain paragraph
+  content；Simple Table Recognition 不得转换不满足全部条件的输入，且不得在识别决策中
+  丢弃、重排或改写源文本。
+- **SPEC-INV-014**：No delivered figure SHALL exceed the effective section content
+  box；任何交付图形超出有效内容区的 build SHALL NOT 通过质量门。
 
 ## 6. Acceptance Criteria（SPEC-AC）
 
-每个 Release Candidate 必须通过完整 Acceptance Corpus（AC001–AC015），
+每个 Release Candidate 必须通过完整 Acceptance Corpus（AC001–AC018），
 评价维度固定为：
 
 | 维度 | 定义 | 对应检查 |
@@ -248,7 +279,7 @@ quality_gate:
 | --- | --- |
 | FROZEN（已实现） | §2.1 全部功能 |
 | PLANNED（未实现） | §2.2 全部条目 |
-| FROZEN（治理） | Canonical Spec 1.0、Change Classification、Traceable Implementation Plan、Quality Gates、Acceptance Corpus、Release Evidence |
+| FROZEN（治理） | Canonical Spec 1.1、Change Classification、Traceable Implementation Plan、Quality Gates、Acceptance Corpus、Release Evidence |
 
 ## 9. Referenced ADR
 

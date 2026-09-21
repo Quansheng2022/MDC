@@ -28,7 +28,7 @@ FULL_TEST_SUITES = {
 
 
 GOVERNANCE_OK = {
-    "spec_version": "1.0",
+    "spec_version": "1.1",
     "spec_status": "FROZEN",
     "checked_at": "2026-08-30T15:30:00+08:00",
     "checked_by": "Codex governance compliance check",
@@ -206,7 +206,7 @@ def test_build_release_evidence_from_compiler(tmp_path: Path) -> None:
     )
 
     assert evidence.software_version == "1.1.0"
-    assert evidence.spec_version == "1.0"
+    assert evidence.spec_version == "1.1"
     assert evidence.spec_status == "FROZEN"
     assert evidence.theme_version == "QS-Word-Default-V1.5"
     assert evidence.qa["static_qa"] == "PASS"

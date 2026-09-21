@@ -29,7 +29,7 @@ from typing import Any, Dict, List, Optional
 # Specification 元数据（与 CANONICAL_SPEC.md 头部保持一致）
 # ============================================================
 
-SPEC_VERSION = "1.0"
+SPEC_VERSION = "1.1"
 SPEC_STATUS = "FROZEN"
 ARCHITECTURE_VERSION = "2.0"
 THEME_VERSION = "QS-Word-Default-V1.5"

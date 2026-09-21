@@ -2,6 +2,43 @@
 
 记录 Canonical Specification 的创建、冻结与变更历史。
 
+## 1.1（FROZEN，2026-09-21）
+
+- **动作**：把 Human 已批准的 P12 canonical delta 并入 `CANONICAL_SPEC.md`，
+  并将 Canonical Specification re-freeze 为 1.1。
+- **来源**：Human-approved P12 specification（S/N 118 批准 + P12 implementation
+  acceptance 2026-09-21）；提案文本 `P12/P12_CANONICAL_SPEC_PROPOSAL.md`；
+  需求 `P12/P12_REQUIREMENTS.md`；实现计划 `P12/P12_IMPLEMENTATION_PLAN.md`。
+- **Added（Canonical / Frozen）**：
+  - `SPEC-FUNC-022` Simple Table Recognition（空白对齐两列简单表格；CLAR-01：
+    不满足条件时保留段落且不产生诊断）
+  - `SPEC-FUNC-023` Figure Page-Fit / 图形尺寸策略（有效 section 内容区；CLAR-02：
+    几何取自实际 section，A4/1in 仅为参考；保持宽高比、永不放大、永不超出内容区；
+    低于主题 `figure.min_width` 时交付适配尺寸并 WARNING；物理分页归 Word）
+  - `SPEC-FUNC-024` 空标题行为（WARN + DROP：不渲染、不注入 `"Heading"`、
+    不产生合成 TOC 条目；AST 保留节点；既有 StaticQA WARNING 保持）
+  - `SPEC-INV-013` 歧义输入保持段落，识别不得丢失/重排/改写源文本
+  - `SPEC-INV-014` 交付图形不得超出有效内容区，违者不得通过质量门
+  - `SPEC-QA-005` RenderedQA 真实测量图形几何（超出 = error → Gate FAIL；
+    低于最小宽度 = warning 并计数）
+- **Amended（最小冲突文本）**：`SPEC-FUNC-020` 与 §4.1 flow、§6 的 Acceptance
+  Corpus 基线从 AC001–AC015 更新为 AC001–AC018（P12 新增 AC016/AC017/AC018）。
+- **Unchanged**：`SPEC-GOAL-001..006`、`SPEC-ARCH-001..013`、
+  `SPEC-FUNC-001..021`、`SPEC-INV-001..012`、`SPEC-QA-001..004`、
+  `SPEC-AC-001..005`、`SPEC-NON-001..004`、冻结主题值、架构与依赖方向。
+- **冻结基线**：
+  - `spec_version`: 1.1
+  - `spec_status`: FROZEN
+  - `freeze_date`: 2026-09-21
+  - `architecture_version`: 2.0（未修改）
+  - `theme_version`: QS-Word-Default-V1.5 (1.5)（未修改）
+  - `software_version`: 1.1.0
+  - `acceptance_baseline`: AC001–AC018
+  - `governance_baseline`: P0-01..P0-08, P1-09, P1-10, P12（S/N 117–118）
+- **Superseded**：Spec 1.0（FROZEN 2026-08-30）标记为 SUPERSEDED，记录保留于本文件。
+- **ADR**：本 delta 不需要 ADR（CAND-001/002/003 均为有界实现面，无新 pipeline
+  阶段、无所有权迁移、无 `LayoutPlan` 契约扩展；见 `P12/P12_REQUIREMENTS.md` §0）。
+
 ## 1.0（FROZEN，2026-08-30）
 
 - **动作**：创建 `CANONICAL_SPEC.md`，确立项目唯一 Canonical Authority。
