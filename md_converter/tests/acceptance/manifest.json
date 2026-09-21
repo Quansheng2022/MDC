@@ -1,5 +1,5 @@
 {
-  "spec_baseline": "AC001-AC015",
+  "spec_baseline": "AC001-AC018",
   "spec_ids": ["SPEC-AC-001", "SPEC-AC-002", "SPEC-AC-003", "SPEC-AC-004"],
   "cases": [
     {
@@ -240,6 +240,25 @@
         "min_tables": 1,
         "min_inline_shapes": 0,
         "deterministic": false
+      }
+    },
+    {
+      "id": "AC016",
+      "file": "AC016_figure_fit.md",
+      "spec_ids": ["SPEC-FUNC-023", "SPEC-INV-014", "SPEC-QA-005"],
+      "semantics": {
+        "headings": ["Figure Fit"],
+        "contains": [
+          "scaled to fit the page content area",
+          "inside the page content area"
+        ]
+      },
+      "signature": {
+        "min_headings": 1,
+        "min_paragraphs": 2,
+        "min_tables": 0,
+        "min_inline_shapes": 1,
+        "deterministic": true
       }
     }
   ]
