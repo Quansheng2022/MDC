@@ -253,10 +253,16 @@ class WordRenderer(NodeVisitor):
             self.ctx.diag.warning(f"Failed to set page size: {e}", code="RENDER003")
 
     def visit_Heading(self, node: Heading) -> None:
-        """渲染标题节点 - 使用 Word 内置标题样式。"""
+        """
+        渲染标题节点 - 使用 Word 内置标题样式。
+
+        P12-CAND-003（WARN + DROP）：空标题不渲染（不产生段落、不产生占位文本、不递增
+        标题计数，因而 TOC 与编号也不会出现合成条目）。AST 仍保留该节点作为源码事实，
+        既有 StaticQA ``semantic_empty_heading`` 警告继续作为该状态的诊断。
+        """
         text = node.to_plain_text().strip()
         if not text:
-            text = "Heading"
+            return
 
         style_name = f"Heading {node.level}"
         self.writer.add_paragraph(text, style=style_name)

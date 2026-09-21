@@ -281,6 +281,22 @@
         "min_inline_shapes": 0,
         "deterministic": true
       }
+    },
+    {
+      "id": "AC018",
+      "file": "AC018_empty_heading.md",
+      "spec_ids": ["SPEC-FUNC-024"],
+      "semantics": {
+        "headings": ["Heading Behaviour", "Kept Section"],
+        "contains": ["must not produce placeholder content"]
+      },
+      "signature": {
+        "min_headings": 2,
+        "min_paragraphs": 2,
+        "min_tables": 0,
+        "min_inline_shapes": 0,
+        "deterministic": true
+      }
     }
   ]
 }
