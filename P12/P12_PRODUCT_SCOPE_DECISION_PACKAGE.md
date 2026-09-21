@@ -13,6 +13,17 @@
 | Product code modification | NOT AUTHORIZED |
 | Companion documents | `P12/P12_CANDIDATE_REGISTRY.md`; `P12/P12_INTAKE_ANALYSIS.md` |
 
+Outcome of the Human scope gate (recorded 2026-09-21, S/N 118 master instruction):
+
+```text
+P12 S/N 117: COMPLETE / ACCEPTED
+P12-CAND-001 / 002 / 003: SELECTED FOR SPECIFICATION
+S/N 118: AUTHORIZED TO START（specification and planning only）
+Recommended scope in §E was adopted in full (all three candidates);
+recommended order 002 → 001 → 003 remains the initial assumption and is
+reassessed in P12/P12_IMPLEMENTATION_PLAN.md §6.
+```
+
 This package is self-sufficient for the scope decision. It references evidence instead of
 duplicating it.
 

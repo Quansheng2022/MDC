@@ -9,8 +9,24 @@
 | Roadmap task | S/N 117 — Candidate Consolidation & Product Scope Selection |
 | Authority | P12 Product Evolution Intake instruction (Human, 2026-09-21); `CANONICAL_SPEC.md` 1.0 FROZEN; `P11/P11_P12_BOUNDARY.md`; `P11/P11_MAINTENANCE_REGISTRY.md` §3 (Human Classification Decision 2026-09-21) |
 | Baseline | branch `master` @ `bc70fd69137ccaf045a0790bfdf1a69470ea0253` |
-| Status | INTAKE — candidate IDs stable; dispositions RECOMMENDED only; Human Product Scope Selection REQUIRED |
+| Status | S/N 117 COMPLETE / ACCEPTED — all three candidates Human-SELECTED for S/N 118 specification and planning |
 | Product code modification | NOT AUTHORIZED |
+
+Human Product Scope Selection (recorded 2026-09-21, S/N 118 master instruction):
+
+```text
+P12-CAND-001  SELECTED FOR SPECIFICATION
+P12-CAND-002  SELECTED FOR SPECIFICATION
+P12-CAND-003  SELECTED FOR SPECIFICATION
+S/N 117: COMPLETE / ACCEPTED
+S/N 118: AUTHORIZED（requirements / Canonical Specification proposal / ADR where
+         genuinely necessary / implementation planning）
+Product implementation: NOT AUTHORIZED
+```
+
+S/N 118 specification surface: `P12/P12_REQUIREMENTS.md`,
+`P12/P12_CANONICAL_SPEC_PROPOSAL.md`, `P12/P12_IMPLEMENTATION_PLAN.md`.
+ADR: NOT REQUIRED for all three candidates (recorded in `P12/P12_REQUIREMENTS.md`).
 
 ---
 
