@@ -21,7 +21,7 @@ SETUP_PY = PROJECT_ROOT / "setup.py"
 MANIFEST_IN = PROJECT_ROOT / "MANIFEST.in"
 README = PROJECT_ROOT / "README.md"
 AGENTS = PROJECT_ROOT / "AGENTS.md"
-RELEASE_MANIFEST = PROJECT_ROOT / "RELEASE_MANIFEST_v1.0.1.json"
+RELEASE_MANIFEST = PROJECT_ROOT / "RELEASE_MANIFEST_v1.1.0.json"
 
 
 def _load_pyproject() -> dict:
@@ -58,16 +58,16 @@ def test_pkg_core_metadata(pyproject: dict) -> None:
     """PKG-META-02: core [project] metadata is present and canonical."""
     project = pyproject["project"]
     assert project["name"] == "md_converter"
-    assert project["version"] == "1.0.1"
+    assert project["version"] == "1.1.0"
     assert project["readme"] == "README.md"
     assert pyproject["build-system"]["build-backend"] == "setuptools.build_meta"
 
 
 def test_pkg_version_consistency(pyproject: dict) -> None:
-    """PKG-META-03: pyproject / __version__ / release manifest agree on 1.0.1."""
-    assert pyproject["project"]["version"] == md_converter.__version__ == "1.0.1"
+    """PKG-META-03: pyproject / __version__ / release manifest agree on 1.1.0."""
+    assert pyproject["project"]["version"] == md_converter.__version__ == "1.1.0"
     manifest = json.loads(RELEASE_MANIFEST.read_text(encoding="utf-8"))
-    assert manifest["release"] == "v1.0.1"
+    assert manifest["release"] == "v1.1.0"
 
 
 def test_pkg_scripts_contract(pyproject: dict) -> None:

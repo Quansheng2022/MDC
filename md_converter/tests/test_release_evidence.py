@@ -205,7 +205,7 @@ def test_build_release_evidence_from_compiler(tmp_path: Path) -> None:
         governance=GOVERNANCE_OK,
     )
 
-    assert evidence.software_version == "1.0.1"
+    assert evidence.software_version == "1.1.0"
     assert evidence.spec_version == "1.0"
     assert evidence.spec_status == "FROZEN"
     assert evidence.theme_version == "QS-Word-Default-V1.5"
