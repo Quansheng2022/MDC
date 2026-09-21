@@ -24,6 +24,20 @@ recommended order 002 → 001 → 003 remains the initial assumption and is
 reassessed in P12/P12_IMPLEMENTATION_PLAN.md §6.
 ```
 
+Outcome of the Human implementation-acceptance gate (recorded 2026-09-21,
+release-readiness instruction):
+
+```text
+P12 IMPLEMENTATION:        HUMAN ACCEPTED
+P12 VERIFICATION:          COMPLETE
+P12-CAND-001 / 002 / 003:  IMPLEMENTED / VERIFIED / HUMAN ACCEPTED
+CLAR-01 / CLAR-02:         BOUND / ACCEPTED
+Human canonical-environment verification: Chromium launch PASS / Canonical Golden PASS /
+    Word COM PASS / full suite PASS (exit code 0) — accepted as the release evidence;
+    "spawn EPERM" classified as EXECUTION-ENVIRONMENT-SPECIFIC LIMITATION and CLOSED.
+Current lifecycle state:   RELEASE READINESS / RELEASE CANDIDATE PREPARATION (v1.1.0)
+```
+
 This package is self-sufficient for the scope decision. It references evidence instead of
 duplicating it.
 

@@ -9,7 +9,7 @@
 | Roadmap task | S/N 117 — Candidate Consolidation & Product Scope Selection |
 | Authority | P12 Product Evolution Intake instruction (Human, 2026-09-21); `CANONICAL_SPEC.md` 1.0 FROZEN; `P11/P11_P12_BOUNDARY.md`; `P11/P11_MAINTENANCE_REGISTRY.md` §3 (Human Classification Decision 2026-09-21) |
 | Baseline | branch `master` @ `bc70fd69137ccaf045a0790bfdf1a69470ea0253` |
-| Status | S/N 117 COMPLETE / ACCEPTED — all three candidates Human-SELECTED for S/N 118 specification and planning |
+| Status | S/N 117 COMPLETE / ACCEPTED；S/N 118 CLOSED / ACCEPTED；P12 IMPLEMENTATION HUMAN ACCEPTED — lifecycle now RELEASE READINESS / RC PREPARATION |
 | Product code modification | NOT AUTHORIZED |
 
 Human Product Scope Selection (recorded 2026-09-21, S/N 118 master instruction):
@@ -27,6 +27,30 @@ Product implementation: NOT AUTHORIZED
 S/N 118 specification surface: `P12/P12_REQUIREMENTS.md`,
 `P12/P12_CANONICAL_SPEC_PROPOSAL.md`, `P12/P12_IMPLEMENTATION_PLAN.md`.
 ADR: NOT REQUIRED for all three candidates (recorded in `P12/P12_REQUIREMENTS.md`).
+
+Human P12 Implementation Acceptance (recorded 2026-09-21, release-readiness instruction):
+
+```text
+P12-CAND-001 / 002 / 003:  IMPLEMENTED / VERIFIED / HUMAN ACCEPTED
+CLAR-01 / CLAR-02:         BOUND / ACCEPTED
+P12 SPECIFICATION:         HUMAN APPROVED
+P12 IMPLEMENTATION:        HUMAN ACCEPTED
+P12 VERIFICATION:          COMPLETE
+S/N 118:                   CLOSED / ACCEPTED
+
+Human canonical-environment verification（Human 独立执行并接受）:
+    Playwright bundled Chromium launch:  PASS
+    Canonical Golden tests:              PASS
+    Word COM tests:                      PASS
+    Full md_converter test suite:        PASS（process exit code 0）
+    Previous "BrowserType.launch: spawn EPERM" classified as
+    EXECUTION-ENVIRONMENT-SPECIFIC LIMITATION — CLOSED, not a product defect,
+    not a local canonical-environment defect; no remediation package required.
+
+Lifecycle transition: PRODUCT EVOLUTION IMPLEMENTATION -> RELEASE READINESS / RC PREPARATION
+Release version candidate（per P11_PATCH_RELEASE_GATE.md §2 Version Policy）: 1.1.0
+Production release / tag / publication: NOT AUTHORIZED
+```
 
 ---
 
