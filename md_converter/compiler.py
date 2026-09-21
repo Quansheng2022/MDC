@@ -21,6 +21,7 @@ from .pipeline.pass_registry import PassRegistry
 from .pipeline.passes.ascii_mermaid_pass import AsciiToMermaidPass
 from .pipeline.passes.diagram_pass import DiagramPass
 from .pipeline.passes.normalize_pass import NormalizePass
+from .pipeline.passes.simple_table_pass import SimpleTablePass
 from .pipeline.pipeline import Pipeline
 from .quality_gate import (
     QualityGateDecision,
@@ -128,6 +129,12 @@ class CompilerContext:
                     config=ascii_config,
                 )
             pass_registry.register(DiagramPass)
+
+        # P12-CAND-001：空白对齐简单表格识别（在 NormalizePass 之后运行）
+        simple_tables_config = config.get("simple_tables") or {}
+        if simple_tables_config.get("enabled", True):
+            pass_registry.register(SimpleTablePass, priority=110)
+
         logger.debug("Registered compiler passes: %s", pass_registry.get_names())
 
         # 插件发现（暂时禁用）

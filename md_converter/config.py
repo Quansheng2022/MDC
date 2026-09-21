@@ -25,6 +25,10 @@ DEFAULT_CONFIG: Dict[str, Any] = {
         "confidence_threshold": 0.30,
         "preview_dir": "output/ascii_preview",
     },
+    # P12-CAND-001：空白对齐简单表格识别（保守规则；失败即保留段落）
+    "simple_tables": {
+        "enabled": True,
+    },
     "theme": "default",
     "toc": True,
     "toc_depth": 3,
@@ -468,6 +472,16 @@ def validate_config(config: Dict[str, Any]) -> list:
     image_width = config.get("image_width", 5)
     if not isinstance(image_width, (int, float)) or image_width <= 0:
         errors.append("image_width must be a positive number")
+
+    # 验证 simple_tables（P12-CAND-001）
+    simple_tables = config.get("simple_tables", {})
+    if simple_tables is not None:
+        if not isinstance(simple_tables, dict):
+            errors.append("simple_tables must be a mapping")
+        else:
+            enabled = simple_tables.get("enabled", True)
+            if not isinstance(enabled, bool):
+                errors.append("simple_tables.enabled must be a boolean")
 
     # 验证 page_margins
     margins = config.get("page_margins", {})

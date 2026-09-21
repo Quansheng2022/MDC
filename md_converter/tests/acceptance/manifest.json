@@ -260,6 +260,27 @@
         "min_inline_shapes": 1,
         "deterministic": true
       }
+    },
+    {
+      "id": "AC017",
+      "file": "AC017_simple_table.md",
+      "spec_ids": ["SPEC-FUNC-022", "SPEC-INV-013"],
+      "semantics": {
+        "headings": ["Simple Table Recognition"],
+        "contains": [
+          "Governance Engineering 额外关注",
+          "代码是否能运行",
+          "测试是否覆盖正确 authority",
+          "Plain prose stays prose"
+        ]
+      },
+      "signature": {
+        "min_headings": 1,
+        "min_paragraphs": 2,
+        "min_tables": 1,
+        "min_inline_shapes": 0,
+        "deterministic": true
+      }
     }
   ]
 }
