@@ -7,7 +7,7 @@
 | Previous Release | `v1.0.1` |
 | Artifact Authority | `RELEASE_MANIFEST_v1.1.0.json` |
 | Version Policy Basis | `P11/P11_PATCH_RELEASE_GATE.md` §2（backward-compatible feature → P12 → candidate `1.1.0`） |
-| Canonical Spec | 1.0（FROZEN，未修改；P12 提案已 Human 批准，尚未并入 canonical 文档） |
+| Canonical Spec | **1.1（FROZEN，2026-09-21 re-freeze；supersedes 1.0）** |
 | Architecture | 2.0（未修改） |
 | Theme | QS-Word-Default-V1.5（frozen，未修改） |
 | Implementation Status | IMPLEMENTED / VERIFIED / HUMAN ACCEPTED（2026-09-21） |
@@ -100,15 +100,30 @@ Python >= 3.8（包元数据）；canonical 验证环境 Python 3.12（.venv）
 NONE
 ```
 
+## Canonical Specification Identity
+
+```text
+CANONICAL_SPEC.md  spec_version 1.1 / spec_status FROZEN / freeze_date 2026-09-21
+Supersedes         spec 1.0（FROZEN 2026-08-30；记录保留于 SPEC_CHANGELOG.md）
+Incorporated       SPEC-FUNC-022 / SPEC-FUNC-023 / SPEC-FUNC-024
+                   SPEC-INV-013 / SPEC-INV-014 / SPEC-QA-005
+Clarifications     CLAR-01（识别失败不产生诊断）/ CLAR-02（有效 section 内容区）
+Acceptance corpus  AC001–AC018
+ADR                none required for the P12 delta
+```
+
 ## Verification Basis（release readiness）
 
 ```text
-Human canonical-environment verification（独立执行并接受）:
-    Playwright bundled Chromium launch: PASS
-    Canonical Golden tests:             PASS
-    Word COM tests:                     PASS
-    Full md_converter suite:            PASS（process exit code 0）
-Evidence set: RC_EVIDENCE/P12_v1.1.0/
+HUMAN CANONICAL ENVIRONMENT（authoritative release-gate evidence; executed by the Human）:
+    Canonical Golden   PASS（-k "canonical_golden_environment or golden" → "....."）
+    Word COM           PASS（-k "wordcom or word_com" → ".." + [100%]）
+    Full regression    PASS / exit 0（[100%]；PowerShell $LASTEXITCODE = 0）
+AGENT RESTRICTED SANDBOX（non-authoritative environment limitation, not a product defect）:
+    Chromium           cannot launch（BrowserType.launch: spawn EPERM）
+    Word COM           COM dispatch unavailable（logon session）
+Evidence set: RC_EVIDENCE/P12_v1.1.0/（含 human_canonical_verification.json）
+Final wheel        fresh non-editable install PASS + CLI PASS + representative P12 smoke PASS
 ```
 
 ## Publication Status

@@ -4,8 +4,32 @@
   "previous_release": "v1.0.1",
   "previous_release_tag": "v1.0.1",
   "version_policy_basis": "P11/P11_PATCH_RELEASE_GATE.md §2 Version Policy: backward-compatible feature -> P12 -> candidate 1.1.0",
-  "spec_version": "1.0 (FROZEN; not modified by this release)",
-  "spec_proposal": "P12 canonical specification proposal — Human approved 2026-09-21 (SPEC-FUNC-022 / SPEC-FUNC-023 / SPEC-FUNC-024, SPEC-INV-013 / SPEC-INV-014, SPEC-QA-005); incorporation into CANONICAL_SPEC.md and re-freeze are NOT part of this authority",
+  "spec_version": "1.1 (FROZEN, re-frozen 2026-09-21; supersedes spec 1.0 of 2026-08-30)",
+  "spec_identity": {
+    "document": "CANONICAL_SPEC.md",
+    "spec_version": "1.1",
+    "spec_status": "FROZEN",
+    "freeze_date": "2026-09-21",
+    "supersedes": "1.0 (FROZEN 2026-08-30)",
+    "incorporated_items": [
+      "SPEC-FUNC-022 Simple Table Recognition",
+      "SPEC-FUNC-023 Figure Page-Fit / Figure Size Policy",
+      "SPEC-FUNC-024 Empty Heading Behaviour (WARN + DROP)",
+      "SPEC-INV-013 conservative recognition",
+      "SPEC-INV-014 delivered figures fit the effective section content box",
+      "SPEC-QA-005 figure geometry verification"
+    ],
+    "clarifications": ["CLAR-01（failed recognition produces no diagnostic）", "CLAR-02（effective section content box; A4/1in is reference geometry only）"],
+    "changelog": "SPEC_CHANGELOG.md §1.1（FROZEN, 2026-09-21）",
+    "acceptance_baseline": "AC001–AC018"
+  },
+  "rc_identity": {
+    "rc_payload_source_sha": "4b7d5ea3cbfc123750e3ff5551db45cd1d5e1c94",
+    "rc_payload_source_note": "source state from which the final v1.1.0 wheel/sdist were built (canonical incorporation + re-freeze commit); no packaged-source change occurred after it",
+    "rc_evidence_archive_sha": "the commit that records this manifest update and the final RC evidence set（see final RC report; not recorded here to avoid self-reference）",
+    "rc_preparation_head": "the repository HEAD after the RC evidence commit（equals the RC Evidence/Archive SHA when it is the last commit）"
+  },
+  "spec_proposal": "P12 canonical specification proposal — Human approved 2026-09-21; incorporated into CANONICAL_SPEC.md 1.1 and re-frozen",
   "architecture_version": "2.0 (unmodified)",
   "theme_version": "QS-Word-Default-V1.5 (frozen, unmodified)",
   "p12_candidates": [
@@ -36,8 +60,34 @@
     "sdist": "md_converter-1.1.0.tar.gz"
   },
   "artifact_hashes": {
+    "wheel": {
+      "filename": "md_converter-1.1.0-py3-none-any.whl",
+      "size_bytes": 337661,
+      "sha256": "941e09eeee018bd3b256027df4dba822a8da3f129506444f8521bd02671b0f4a"
+    },
+    "sdist": {
+      "filename": "md_converter-1.1.0.tar.gz",
+      "size_bytes": 282686,
+      "sha256": "f060c7c807c3a6f09fcae2a91fd34f30757a4a183cff93cc2b6add3f66e4c96d"
+    },
     "location": "RC_EVIDENCE/P12_v1.1.0/",
-    "note": "wheel/sdist SHA256 and release-candidate source SHA are recorded in the release evidence set, not inside this manifest, to avoid self-referential commit hashes."
+    "note": "final artifacts rebuilt from the frozen RC Payload Source after canonical incorporation; both hashes differ from the earlier RC because md_converter/release_evidence.py (canonical identity constant) is packaged."
+  },
+  "verification": {
+    "human_canonical_golden": "PASS",
+    "human_word_com": "PASS",
+    "human_full_regression": "PASS / exit 0",
+    "human_evidence_record": "RC_EVIDENCE/P12_v1.1.0/human_canonical_verification.json",
+    "fresh_install_final_wheel": "PASS（non-editable install; md_converter imported from site-packages; module and metadata version 1.1.0）",
+    "cli_smoke": "PASS（--help / check / Markdown→DOCX，exit 0）",
+    "representative_p12_smoke": "PASS（CAND-001 / CAND-002 / CAND-003）",
+    "agent_sandbox_gates": "NON-CANONICAL AGENT EXECUTION ENVIRONMENT — NOT THE RELEASE-GATE RESULT（Chromium spawn EPERM / COM dispatch unavailable）"
+  },
+  "release_bundle": {
+    "filename": "release_bundle_v1.1.0.zip",
+    "sha256_location": "RC_EVIDENCE/P12_v1.1.0/final_release_bundle.json",
+    "note": "bundle size/SHA256 are recorded in the RC evidence set rather than here, because the bundle contains this manifest (avoiding a self-referential hash).",
+    "location": "dist/（local only, git-ignored）"
   },
   "tag": "NOT CREATED",
   "remote_push": "NOT PERFORMED",

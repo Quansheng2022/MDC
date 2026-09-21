@@ -35,21 +35,48 @@ Authority: P11/P11_PATCH_RELEASE_GATE.md §2 Version Policy
 No conflicting authoritative rule found.
 ```
 
-## 3. Build artifacts（`python -m build --no-isolation --outdir dist`，exit code 0）
+## 3. Build artifacts（最终版；`python -m build --no-isolation --outdir dist`，exit code 0）
 
 | Artifact | Size | SHA256 | Embedded version |
 | --- | --- | --- | --- |
-| `md_converter-1.1.0-py3-none-any.whl` | 337,657 B | `630f79d44f38f7fa49fcfe20a5d5e7a135fed988b3d4e4f765924dbf8bf4952a` | 1.1.0 |
-| `md_converter-1.1.0.tar.gz` | 282,679 B | `1f3d8975beee08ec046d3c7a83bb6235de4f1b6e0fc08d0d5b28f31ca3e32602` | 1.1.0 |
+| `md_converter-1.1.0-py3-none-any.whl` | 337,661 B | `941e09eeee018bd3b256027df4dba822a8da3f129506444f8521bd02671b0f4a` | 1.1.0 |
+| `md_converter-1.1.0.tar.gz` | 282,686 B | `f060c7c807c3a6f09fcae2a91fd34f30757a4a183cff93cc2b6add3f66e4c96d` | 1.1.0 |
 
-Integrity checks（`artifact_integrity.json`）：wheel/sdist identity agreement PASS；no `venv` / cache /
-production-soak corpus / browser binary / temporary Word file entries；wheel ships the frozen theme YAML,
-`py.typed`, the new `SimpleTablePass` and the AC016–AC018 fixtures.
+Final artifacts were rebuilt from the frozen **RC Payload Source SHA
+`4b7d5ea3cbfc123750e3ff5551db45cd1d5e1c94`**（canonical incorporation + re-freeze）.
+Both hashes differ from the earlier RC-stage build because the packaged canonical-identity constant
+`md_converter/release_evidence.py`（`SPEC_VERSION` 1.0 → 1.1）changed；the earlier values are preserved
+in `artifact_integrity.json`（labelled as superseded）.
 
-## 4. Fresh installation（`fresh_install`）
+Integrity checks（`final_artifact_integrity.json`）：wheel/sdist identity agreement PASS；
+forbidden entries = 0（no `venv` / cache / production-soak corpus / browser binary / temporary Word
+file / untracked Human file）；wheel ships the frozen theme YAML, `py.typed`, `SimpleTablePass`,
+`figure_sizing` and the AC010–AC018 acceptance fixtures；canonical identity 1.1 present in the wheel.
+
+Local release bundle（regenerated after canonical incorporation，offline hash check PASS）：
+`dist/release_bundle_v1.1.0.zip`（637,890 B，SHA256
+`e75a559d2eda9e62637220517521a061d57bab5ff0186bf04cc13957273291e8`，16 entries）——
+明细见 `final_release_bundle.json`；bundle 哈希不写入 manifest（避免自引用）。
+
+## 3.1 Canonical specification identity（v1.1 re-freeze）
 
 ```text
-Isolated venv created outside the editable source workflow; BUILT WHEEL ONLY installed
+CANONICAL_SPEC.md   spec_version 1.1 / spec_status FROZEN / freeze_date 2026-09-21
+Supersedes          spec 1.0（FROZEN 2026-08-30；记录保留于 SPEC_CHANGELOG.md）
+Incorporated        SPEC-FUNC-022 / SPEC-FUNC-023 / SPEC-FUNC-024
+                    SPEC-INV-013 / SPEC-INV-014 / SPEC-QA-005
+Amended（minimal）  Acceptance 基线 AC001–AC015 → AC001–AC018（SPEC-FUNC-020、§4.1、§6）
+Clarifications      CLAR-01（识别失败不产生诊断）/ CLAR-02（有效 section 内容区）
+Unchanged           SPEC-GOAL / SPEC-ARCH / SPEC-FUNC-001..021 / SPEC-INV-001..012 /
+                    SPEC-QA-001..004 / SPEC-AC / SPEC-NON、冻结主题值、架构与依赖方向
+ADR                 none required（有界实现面；无新阶段 / 所有权迁移 / LayoutPlan 扩展）
+Changelog           SPEC_CHANGELOG.md §1.1（FROZEN，2026-09-21）
+```
+
+## 4. Fresh installation（`final_fresh_install_and_smoke.json`）
+
+```text
+NEW isolated venv created outside the editable source workflow; FINAL BUILT WHEEL installed
     pip install --no-deps --no-index dist/md_converter-1.1.0-py3-none-any.whl
 Import proof: md_converter.__file__ inside the fresh venv site-packages
     module version 1.1.0 / installed metadata version 1.1.0
@@ -68,6 +95,8 @@ md-converter <AC017> -o <docx> --no-open
 POST002（Word COM unavailable in the agent sandbox）: documented degradation, native TOC field kept
 ```
 
+最终 wheel 的 CLI 复验见 `final_fresh_install_and_smoke.json`（`--help` / `check` / 转换均 exit 0）。
+
 ## 6. Representative P12 verification（installed wheel; `representative_verification.json`）
 
 | Candidate | Evidence | Result |
@@ -77,19 +106,27 @@ POST002（Word COM unavailable in the agent sandbox）: documented degradation, 
 | P12-CAND-001（conservative rejection） | ruler present but inconsistent columns | 0 tables；block kept as paragraph；**no diagnostic**（CLAR-01） |
 | P12-CAND-003 | AC018 | no literal `Heading` paragraph；rendered headings = TOC entries = 2；`semantic_empty_heading` WARNING retained；StaticQA PASS_WITH_WARN |
 
+最终 wheel 的同类复验见 `final_fresh_install_and_smoke.json`（CAND-001 / CAND-002 / CAND-003 全部 PASS）。
+
 ## 7. Canonical Golden and Word COM
 
 ```text
-Agent execution environment（this evidence run）:
+NON-CANONICAL AGENT EXECUTION ENVIRONMENT — NOT THE RELEASE-GATE RESULT:
     Chromium launch          FAIL — BrowserType.launch: spawn EPERM（backend=fallback）
-    Word COM                 UNAVAILABLE — win32com absent / no interactive logon session
+    Word COM                 UNAVAILABLE — win32com importable but COM dispatch fails
+                             （"A specified logon session does not exist"）/ no interactive session
     => these two gates cannot execute here; Golden baseline NOT modified
 
-Accepted Human canonical evidence（Human Product Authority, 2026-09-21）:
-    Playwright bundled Chromium launch   PASS
-    Canonical Golden tests               PASS
-    Word COM tests                       PASS
-    Full md_converter test suite         PASS（process exit code 0）
+AUTHORITATIVE RELEASE-GATE EVIDENCE — executed by the Human, not by the Agent
+（`human_canonical_verification.json`, Human Product / Release Authority, 2026-09-21）:
+
+    Canonical Golden   python -m pytest md_converter/tests -q -k "canonical_golden_environment or golden"
+                       observed: "....."  → PASS
+    Word COM           python -m pytest md_converter/tests -q -k "wordcom or word_com"
+                       observed: ".." + [100%] → PASS
+    Full regression    python -m pytest md_converter/tests -q
+                       observed: [100%]；PowerShell $LASTEXITCODE = 0 → PASS / EXIT 0
+
     The previous "spawn EPERM" is classified EXECUTION-ENVIRONMENT-SPECIFIC LIMITATION, CLOSED,
     not a product defect and not a local canonical-environment defect.
 ```

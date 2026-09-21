@@ -1,4 +1,6 @@
 {
+  "provenance": "NON-CANONICAL AGENT EXECUTION ENVIRONMENT — NOT THE RELEASE-GATE RESULT",
+  "authoritative_result_source": "RC_EVIDENCE/P12_v1.1.0/human_canonical_verification.json",
   "tests": 352,
   "failures": 2,
   "errors": 0,

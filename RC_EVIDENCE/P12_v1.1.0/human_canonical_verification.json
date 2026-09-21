@@ -1,0 +1,34 @@
+{
+  "record_type": "human_canonical_verification",
+  "provenance": "AUTHORITATIVE RELEASE-GATE EVIDENCE — executed by the Human, not by the Agent",
+  "executor": "Human（Human Product / Release Authority）",
+  "environment": "real local Windows project environment, MD_Converter .venv",
+  "recorded_at": "2026-09-21",
+  "source_of_record": "Human v1.1.0 pre-production canonical closure instruction §1（observed console output as supplied）",
+  "canonical_golden": {
+    "command": "python -m pytest md_converter/tests -q -k \"canonical_golden_environment or golden\"",
+    "observed_console": ".....",
+    "completion": "successful completion",
+    "result": "PASS"
+  },
+  "word_com": {
+    "command": "python -m pytest md_converter/tests -q -k \"wordcom or word_com\"",
+    "observed_console": "..\n[100%]",
+    "result": "PASS"
+  },
+  "full_regression": {
+    "command": "python -m pytest md_converter/tests -q",
+    "observed_console": "test progress reached [100%]",
+    "powershell_lastexitcode": 0,
+    "result": "PASS / EXIT 0",
+    "note": "Recorded exactly as supplied: 100% completed + exit code 0. No console summary line was captured by the Human, and none is fabricated here."
+  },
+  "agent_sandbox_limitations": {
+    "provenance": "NON-CANONICAL AGENT EXECUTION ENVIRONMENT — NOT THE RELEASE-GATE RESULT",
+    "previous_agent_chromium": "BrowserType.launch: spawn EPERM（backend=fallback）— environment-specific, CLOSED, not a product defect",
+    "previous_agent_word_com": "COM dispatch unavailable（logon session）/ no interactive Word session — environment-specific, CLOSED, not a product defect",
+    "previous_agent_full_regression": "environment-gate failures（2）+ documented Word COM skips（2）— non-authoritative; see full_regression_agent_environment_summary.json",
+    "required_remediation": "NONE（no Chromium fix, no permission work package, no Golden update, no Word COM fix, no product remediation）"
+  },
+  "golden_baseline_modified": false
+}

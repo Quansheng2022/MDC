@@ -1,0 +1,62 @@
+{
+  "fresh_install": {
+    "python": "3.12.14",
+    "module_file": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\p12_rc_final_venv\\Lib\\site-packages\\md_converter\\__init__.py",
+    "module_version": "1.1.0",
+    "installed_metadata_version": "1.1.0",
+    "imported_from_wheel": true,
+    "install_mode": "non-editable wheel install (pip install --no-deps --no-index <final wheel>); runtime deps staged locally (no index access)"
+  },
+  "representative_p12_smoke": {
+    "cand002_figure_page_fit": {
+      "content_box_cm": "15.92 x 24.62",
+      "tall_shape_cm": "10.552 x 24.620",
+      "fits": true,
+      "clamped_to_content_height": true,
+      "aspect_preserved": true,
+      "no_upscale": true,
+      "rendered_qa": "PASS",
+      "figure_overflow": 0
+    },
+    "cand001_simple_table": {
+      "tables": 1,
+      "rows": 3,
+      "header": [
+        "普通软件工程关注",
+        "Governance Engineering 额外关注"
+      ],
+      "ruler_row_absent": true,
+      "final_qa": "PASS",
+      "coverage": 1.0
+    },
+    "cand003_empty_heading": {
+      "no_literal_heading": true,
+      "headings": [
+        "Heading Behaviour",
+        "Kept Section"
+      ],
+      "toc_entries": [
+        "Heading Behaviour\t",
+        "Kept Section\t"
+      ],
+      "toc_matches_headings": true,
+      "static_qa_warning_retained": true,
+      "static_qa_status": "PASS_WITH_WARN"
+    }
+  },
+  "cli_smoke": {
+    "help_exit": 0,
+    "help_has_usage": true,
+    "check_exit": 0,
+    "check": {
+      "required": 4,
+      "optional": 2,
+      "ok": true
+    },
+    "convert_exit": 0,
+    "docx_exists": true,
+    "tables": 1,
+    "post002_expected": true
+  },
+  "smoke_provenance": "final wheel installed non-editably in a fresh isolated venv; md_converter imported from that venv's site-packages"
+}

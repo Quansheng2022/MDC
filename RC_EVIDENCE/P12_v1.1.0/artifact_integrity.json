@@ -1,4 +1,6 @@
 {
+  "stage": "RC PREPARATION STAGE ARTIFACTS（before canonical incorporation）",
+  "superseded_by": "final_artifact_integrity.json（final artifacts rebuilt from RC Payload Source）",
   "build_command": "python -m build --no-isolation --outdir dist",
   "build_exit_code": 0,
   "wheel": {

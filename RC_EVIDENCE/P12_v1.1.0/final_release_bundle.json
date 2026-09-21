@@ -1,0 +1,38 @@
+{
+  "provenance": "final v1.1.0 release candidate bundle regenerated after canonical incorporation",
+  "rc_payload_source_sha": "4b7d5ea3cbfc123750e3ff5551db45cd1d5e1c94",
+  "bundle": {
+    "filename": "release_bundle_v1.1.0.zip",
+    "size_bytes": 637890,
+    "sha256": "e75a559d2eda9e62637220517521a061d57bab5ff0186bf04cc13957273291e8",
+    "entries": 16,
+    "location": "dist/（local only, git-ignored）"
+  },
+  "contents": [
+    "dist/md_converter-1.1.0-py3-none-any.whl",
+    "dist/md_converter-1.1.0.tar.gz",
+    "RELEASE_NOTES_v1.1.0.md",
+    "RELEASE_MANIFEST_v1.1.0.json",
+    "RC_EVIDENCE/P12_v1.1.0/artifact_integrity.json",
+    "RC_EVIDENCE/P12_v1.1.0/final_artifact_integrity.json",
+    "RC_EVIDENCE/P12_v1.1.0/final_fresh_install_and_smoke.json",
+    "RC_EVIDENCE/P12_v1.1.0/full_regression_agent_environment.txt",
+    "RC_EVIDENCE/P12_v1.1.0/full_regression_agent_environment.xml",
+    "RC_EVIDENCE/P12_v1.1.0/full_regression_agent_environment_summary.json",
+    "RC_EVIDENCE/P12_v1.1.0/golden_and_com_status.json",
+    "RC_EVIDENCE/P12_v1.1.0/human_canonical_verification.json",
+    "RC_EVIDENCE/P12_v1.1.0/RELEASE_CANDIDATE_EVIDENCE.md",
+    "RC_EVIDENCE/P12_v1.1.0/representative_verification.json",
+    "RC_EVIDENCE/P12_v1.1.0/version_and_git_consistency.json",
+    "RC_EVIDENCE/P12_v1.1.0/SHA256SUMS"
+  ],
+  "excluded": [
+    "virtual environments",
+    "Playwright/Chromium binaries",
+    "Word installation",
+    "pytest caches",
+    "untracked production-soak corpus",
+    "dist/ build garbage"
+  ],
+  "offline_check": "bundle re-read and every entry hash re-verified against dist/SHA256SUMS_v1.1.0"
+}

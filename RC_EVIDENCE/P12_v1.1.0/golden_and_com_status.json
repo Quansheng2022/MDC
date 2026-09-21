@@ -1,20 +1,29 @@
 {
+  "provenance": "NON-CANONICAL AGENT EXECUTION ENVIRONMENT — NOT THE RELEASE-GATE RESULT",
   "agent_execution_environment": {
     "chromium_launchable": false,
     "backend": "fallback",
     "chromium_error_head": "BrowserType.launch: spawn EPERM\nCall log:\n  - <launching> C:\\Users\\Quansheng\\AppData\\Local\\ms-playwright\\chromium_headle",
     "word_com": {
-      "win32com_import": true
+      "win32com_import": true,
+      "com_dispatch": "UNAVAILABLE — COM dispatch failed (A specified logon session does not exist. It may already have been terminated.) / no interactive Word session"
     },
-    "conclusion": "AGENT EXECUTION-ENVIRONMENT LIMITATION — these two gates cannot execute in the agent sandbox; classified by the Human as execution-environment-specific, not a product defect."
+    "conclusion": "AGENT EXECUTION-ENVIRONMENT LIMITATION — these two gates cannot execute in the agent sandbox; classified by the Human as execution-environment-specific, not a product defect. NOT THE RELEASE-GATE RESULT."
   },
   "accepted_human_canonical_evidence": {
-    "playwright_bundled_chromium_launch": "PASS",
-    "canonical_golden_tests": "PASS",
-    "word_com_tests": "PASS",
-    "full_md_converter_test_suite": "PASS",
-    "process_exit_code": 0,
-    "source": "Human release-readiness instruction §0/§1 (independently executed by the Human Product Authority, 2026-09-21)"
+    "authoritative_release_gate_result": true,
+    "record": "RC_EVIDENCE/P12_v1.1.0/human_canonical_verification.json",
+    "executor": "Human（Human Product / Release Authority）",
+    "environment": "real local Windows project environment, MD_Converter .venv",
+    "canonical_golden_command": "python -m pytest md_converter/tests -q -k \"canonical_golden_environment or golden\"",
+    "canonical_golden_observed": ".....",
+    "canonical_golden_result": "PASS",
+    "word_com_command": "python -m pytest md_converter/tests -q -k \"wordcom or word_com\"",
+    "word_com_observed": "..\n[100%]",
+    "word_com_result": "PASS",
+    "full_regression_command": "python -m pytest md_converter/tests -q",
+    "full_regression_observed": "test progress reached [100%]",
+    "full_regression_result": "PASS（$LASTEXITCODE = 0）"
   },
   "golden_baseline_modified": false
 }
