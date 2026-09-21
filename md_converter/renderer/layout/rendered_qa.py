@@ -4,6 +4,7 @@ Rendered QA - 渲染后质量检查（第十八章 18.2）
 基于 python-docx 解析渲染后的文档，检查:
     - font_substitution / 最小字号违规
     - table_clipping（表格估算宽度超内容宽度）
+    - figure_overflow / figure_below_min_width（图形几何，P12-CAND-002）
     - orphan_heading（孤立标题，无后续内容）
     - empty_page（连续分页符）
 """
@@ -14,6 +15,7 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
 from ...diagnostics.collector import DiagnosticCollector
+from .figure_sizing import figure_policy_from_theme
 from .themes_v15_protocol import ThemeProtocol
 
 
@@ -57,11 +59,93 @@ class RenderedQA:
         result = RenderedQAResult()
         self._check_font_violations(doc, result)
         self._check_table_overflow(doc, result)
+        self._check_figure_geometry(doc, result)
         self._check_orphan_headings(doc, result)
         self._check_empty_pages(doc, result)
         self._finalize(result)
         self._emit(result)
         return result
+
+    def _check_figure_geometry(self, doc: Any, result: RenderedQAResult) -> None:
+        """
+        检查交付图形是否落在有效内容区内（P12-CAND-002；SPEC-QA-005 提案）。
+
+        内容区取自文档实际 section 几何（CLAR-02）；仅在几何不可用时退回参考 A4 几何。
+        超出内容区为 error（由既有 ``fail_on_error`` 语义决定是否 FAIL），
+        低于主题声明最小宽度下限为 warning。
+
+        参数:
+            doc: 已打开/已渲染的 python-docx 文档。
+            result: RenderedQA 结果（就地写入 metrics / errors / warnings）。
+        """
+        tolerance_cm = 0.05
+        try:
+            section = doc.sections[-1]
+            content_width_cm = (
+                section.page_width.cm - section.left_margin.cm - section.right_margin.cm
+            )
+            content_height_cm = (
+                section.page_height.cm - section.top_margin.cm - section.bottom_margin.cm
+            )
+        except Exception:
+            from .section_manager import PageGeometry
+
+            geometry = PageGeometry()
+            margins = getattr(self.theme, "page_margins_cm", None) or {}
+            content_width_cm = (
+                geometry.portrait_width_cm
+                - float(margins.get("left", 2.54))
+                - float(margins.get("right", 2.54))
+            )
+            content_height_cm = (
+                geometry.portrait_height_cm
+                - float(margins.get("top", 2.54))
+                - float(margins.get("bottom", 2.54))
+            )
+
+        min_width_cm = figure_policy_from_theme(self.theme).min_width_cm
+        overflow = 0
+        below_min_width = 0
+
+        for idx, shape in enumerate(doc.inline_shapes):
+            try:
+                width_cm = shape.width.cm
+                height_cm = shape.height.cm
+            except Exception:
+                continue
+
+            if (
+                width_cm > content_width_cm + tolerance_cm
+                or height_cm > content_height_cm + tolerance_cm
+            ):
+                overflow += 1
+                if overflow <= 5:
+                    result.errors.append(
+                        {
+                            "code": "figure_overflow",
+                            "message": (
+                                f"Figure {idx + 1}: {width_cm:.2f}cm x {height_cm:.2f}cm "
+                                f"exceeds the content area "
+                                f"{content_width_cm:.2f}cm x {content_height_cm:.2f}cm"
+                            ),
+                        }
+                    )
+
+            if min_width_cm is not None and width_cm < min_width_cm - tolerance_cm:
+                below_min_width += 1
+                if below_min_width <= 5:
+                    result.warnings.append(
+                        {
+                            "code": "figure_below_min_width",
+                            "message": (
+                                f"Figure {idx + 1}: width {width_cm:.2f}cm is below the "
+                                f"theme minimum {min_width_cm:.2f}cm"
+                            ),
+                        }
+                    )
+
+        result.metrics["figure_overflow"] = overflow
+        result.metrics["figure_below_min_width"] = below_min_width
 
     def _check_font_violations(self, doc: Any, result: RenderedQAResult) -> None:
         minimums = (
@@ -189,6 +273,7 @@ class RenderedQA:
         result.metrics.setdefault("orphan_headings", 0)
         result.metrics.setdefault("table_overflow", 0)
         result.metrics.setdefault("figure_overflow", 0)
+        result.metrics.setdefault("figure_below_min_width", 0)
         result.metrics.setdefault("font_violations", 0)
         if result.errors:
             result.status = "FAIL"

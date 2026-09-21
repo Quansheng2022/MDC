@@ -14,6 +14,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.shared import Cm, Pt, RGBColor
 
 from .inline_state import InlineStyle
+from .layout.figure_sizing import FigurePolicy, figure_policy_from_theme
 from .themes.default import DefaultTheme
 
 
@@ -479,11 +480,33 @@ class StyleResolver:
         }
 
     def figure_style(self) -> Dict[str, Any]:
-        """获取图形段落样式（第十五章）。"""
+        """
+        获取图形段落样式（第十五章；P12-CAND-002 起由主题驱动）。
+
+        返回:
+            Dict[str, Any]: 对齐方式与 keep_together 标记。
+        """
+        policy = self.figure_size_policy()
+        alignment = {
+            "left": WD_ALIGN_PARAGRAPH.LEFT,
+            "center": WD_ALIGN_PARAGRAPH.CENTER,
+            "right": WD_ALIGN_PARAGRAPH.RIGHT,
+        }.get(policy.alignment or "center", WD_ALIGN_PARAGRAPH.CENTER)
         return {
-            "alignment": WD_ALIGN_PARAGRAPH.CENTER,
-            "keep_together": True,
+            "alignment": alignment,
+            "keep_together": policy.keep_together,
         }
+
+    def figure_size_policy(self) -> FigurePolicy:
+        """
+        获取图形尺寸策略（读取冻结主题 ``figure`` 块；P12-CAND-002）。
+
+        主题未声明该块时返回"有效内容区边界"策略，由渲染层以实际 section 几何补齐。
+
+        返回:
+            FigurePolicy: 最大宽高、最小宽度下限、宽高比与对齐策略。
+        """
+        return figure_policy_from_theme(self.theme)
 
     def link_style(self, href: str) -> Dict[str, Any]:
         """获取链接样式"""

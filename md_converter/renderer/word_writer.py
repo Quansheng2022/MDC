@@ -5,12 +5,14 @@ Word Writer - Word 文档原子操作封装
 import base64
 import os
 import tempfile
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, Optional, Union
+from typing import Any, Dict, Optional, Union
 
 from docx import Document
 from docx.enum.section import WD_ORIENT
 from docx.enum.text import WD_BREAK
+from docx.image.image import Image as DocxImage
 from docx.opc.constants import RELATIONSHIP_TYPE as RT
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
@@ -18,6 +20,46 @@ from docx.section import Section
 from docx.shared import Cm, Inches, Pt, RGBColor
 from docx.table import Table
 from docx.text.paragraph import Paragraph
+
+from .layout.figure_sizing import FigureFit, fit_figure_size
+
+
+@dataclass(frozen=True)
+class FigureBounds:
+    """
+    图形适配边界（有效内容区，厘米）。
+
+    属性:
+        target_width_cm: 目标宽度（不超过有效内容区宽度）。
+        max_width_cm: 有效内容区宽度。
+        max_height_cm: 有效内容区高度。
+        min_width_cm: 主题声明的最小宽度下限（可选）。
+    """
+
+    target_width_cm: float
+    max_width_cm: float
+    max_height_cm: float
+    min_width_cm: Optional[float] = None
+
+
+@dataclass(frozen=True)
+class ImagePlacement:
+    """
+    图形插入结果（P12-CAND-002）。
+
+    属性:
+        width_cm: 实际插入宽度（厘米）。
+        height_cm: 实际插入高度（厘米）；未测量时为 ``None``。
+        scaled: 是否发生了缩小。
+        below_min_width: 是否低于主题声明的最小宽度下限。
+        measured: 固有尺寸是否测量成功。
+    """
+
+    width_cm: float
+    height_cm: Optional[float]
+    scaled: bool
+    below_min_width: bool
+    measured: bool
 
 
 def set_style_font(
@@ -499,17 +541,33 @@ class WordWriter:
         alt: str = "",
         width: Optional[Inches] = None,
         height: Optional[Inches] = None,
-    ) -> None:
+        bounds: Optional[FigureBounds] = None,
+    ) -> Optional[ImagePlacement]:
+        """
+        插入图片。
+
+        参数:
+            src: 图片路径或 ``data:`` URI。
+            alt: 替代文本（不可用时作为占位文本）。
+            width / height: 传统用法下的显式尺寸（``bounds`` 为 ``None`` 时生效）。
+            bounds: 有效内容区适配边界（P12-CAND-002）；给出时按内容区适配插入，
+                并返回实际尺寸信息。
+
+        返回:
+            Optional[ImagePlacement]: 适配插入结果；传统用法或无法插入时返回 ``None``。
+        """
         p = self.add_paragraph()
         try:
             if src.startswith("data:"):
-                self._add_image_from_data_uri(p, src, width, height)
+                return self._add_image_from_data_uri(p, src, width, height, bounds)
             elif Path(src).exists():
-                self._add_image_from_file(p, src, width, height)
+                return self._add_image_from_file(p, src, width, height, bounds)
             else:
                 p.add_run(f"[Image: {alt or src}]")
+                return None
         except Exception as e:
             p.add_run(f"[Image error: {e}]")
+            return None
 
     def _add_image_from_file(
         self,
@@ -517,14 +575,18 @@ class WordWriter:
         src: str,
         width: Optional[Inches] = None,
         height: Optional[Inches] = None,
-    ) -> None:
+        bounds: Optional[FigureBounds] = None,
+    ) -> Optional[ImagePlacement]:
         run = paragraph.add_run()
+        if bounds is not None:
+            return self._add_fitted_picture(run, src, None, bounds)
         if width:
             run.add_picture(src, width=width)
         elif height:
             run.add_picture(src, height=height)
         else:
             run.add_picture(src)
+        return None
 
     def _add_image_from_data_uri(
         self,
@@ -532,7 +594,8 @@ class WordWriter:
         data_uri: str,
         width: Optional[Inches] = None,
         height: Optional[Inches] = None,
-    ) -> None:
+        bounds: Optional[FigureBounds] = None,
+    ) -> Optional[ImagePlacement]:
         header, data = data_uri.split(",", 1)
 
         if ";base64" in header:
@@ -585,6 +648,7 @@ class WordWriter:
             with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as f:
                 f.write(png_data)
                 temp_path = f.name
+            raster_bytes = png_data
         else:
             ext = ".png"
             if "jpeg" in header or "jpg" in header:
@@ -594,17 +658,83 @@ class WordWriter:
             with tempfile.NamedTemporaryFile(suffix=ext, delete=False) as f:
                 f.write(img_data)
                 temp_path = f.name
+            raster_bytes = img_data
 
         try:
             run = paragraph.add_run()
+            if bounds is not None:
+                return self._add_fitted_picture(run, temp_path, raster_bytes, bounds)
             if width:
                 run.add_picture(temp_path, width=width)
             elif height:
                 run.add_picture(temp_path, height=height)
             else:
                 run.add_picture(temp_path)
+            return None
         finally:
             os.unlink(temp_path)
+
+    def _add_fitted_picture(
+        self,
+        run: Any,
+        picture_source: str,
+        image_bytes: Optional[bytes],
+        bounds: FigureBounds,
+    ) -> ImagePlacement:
+        """
+        按有效内容区适配插入图片（P12-CAND-002）。
+
+        保持宽高比、永不放大、永不超出内容区宽高；固有尺寸不可测量时，
+        退化为按目标宽度插入（仍不超出内容区宽度）。
+
+        参数:
+            run: 目标 run。
+            picture_source: 供 ``add_picture`` 使用的路径（文件路径或临时文件）。
+            image_bytes: 已解码的位图字节（``data:`` URI 场景）；文件场景为 ``None``。
+            bounds: 有效内容区适配边界。
+
+        返回:
+            ImagePlacement: 实际插入尺寸与标记。
+        """
+        fit: Optional[FigureFit] = None
+        try:
+            if image_bytes is not None:
+                measured = DocxImage.from_blob(image_bytes)
+            else:
+                measured = DocxImage.from_file(picture_source)
+            fit = fit_figure_size(
+                px_width=int(measured.px_width),
+                px_height=int(measured.px_height),
+                target_width_cm=bounds.target_width_cm,
+                max_width_cm=bounds.max_width_cm,
+                max_height_cm=bounds.max_height_cm,
+                min_width_cm=bounds.min_width_cm,
+            )
+        except Exception:
+            fit = None
+
+        if fit is None:
+            run.add_picture(picture_source, width=Cm(bounds.target_width_cm))
+            return ImagePlacement(
+                width_cm=bounds.target_width_cm,
+                height_cm=None,
+                scaled=False,
+                below_min_width=False,
+                measured=False,
+            )
+
+        run.add_picture(
+            picture_source,
+            width=Cm(fit.width_cm),
+            height=Cm(fit.height_cm),
+        )
+        return ImagePlacement(
+            width_cm=fit.width_cm,
+            height_cm=fit.height_cm,
+            scaled=fit.scaled,
+            below_min_width=fit.below_min_width,
+            measured=True,
+        )
 
     # ============================================================
     # 节（Section）操作

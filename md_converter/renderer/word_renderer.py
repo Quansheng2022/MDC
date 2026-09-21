@@ -16,7 +16,7 @@ V1.5 增强（QS-Word-Default-V1.5）:
 from typing import Dict, List, Optional
 
 from docx.enum.text import WD_ALIGN_PARAGRAPH
-from docx.shared import Cm, Inches, Pt, RGBColor
+from docx.shared import Cm, Pt, RGBColor
 
 from ..ast.node_visitor import NodeVisitor
 from ..ast.nodes import (
@@ -45,11 +45,13 @@ from ..ast.nodes import (
 from .inline_state import InlineState
 from .layout.content_analyzer import infer_table_column_types
 from .layout.decision_engine import DecisionEngine
+from .layout.figure_sizing import CM_PER_INCH
 from .layout.language_detection import segment_text
 from .layout.layout_plan import LayoutPlan
+from .layout.section_manager import PageGeometry
 from .render_context import RenderContext
 from .style_resolver import StyleResolver
-from .word_writer import WordWriter, set_run_font, set_style_font
+from .word_writer import FigureBounds, WordWriter, set_run_font, set_style_font
 
 _ASCII_BOX_CHARS = set("┌┐└┘├┤┬┴┼─│┏┓┗┛┣┫╋╔╗╚╝║═◄►▼▲")
 
@@ -494,18 +496,38 @@ class WordRenderer(NodeVisitor):
         self.writer.add_run(f"[Diagram: {len(lines)} lines]")
 
     def visit_Image(self, node: Image) -> None:
-        """渲染图片节点。"""
+        """渲染图片节点 - 按有效内容区适配（P12-CAND-002）。"""
         try:
-            width = self.ctx.config.get("image_width", 5)
-            if isinstance(width, (int, float)):
-                width = Inches(width)
-
+            bounds = self._figure_bounds_cm()
             self.writer.add_paragraph()
-            self.writer.add_image(node.src, node.alt, width=width)
+            placement = self.writer.add_image(node.src, node.alt, bounds=bounds)
+
+            if placement is not None and placement.below_min_width:
+                self.ctx.diag.warning(
+                    "Figure scaled below the theme minimum width",
+                    code="RENDER005",
+                    location=node.span,
+                    suggestion=(
+                        "Reduce the figure aspect ratio, or split the source figure, "
+                        "if the scaled size is not readable"
+                    ),
+                    data={
+                        "width_cm": round(placement.width_cm, 2),
+                        "height_cm": (
+                            round(placement.height_cm, 2)
+                            if placement.height_cm is not None
+                            else None
+                        ),
+                        "min_width_cm": bounds.min_width_cm,
+                    },
+                )
 
             if self.writer.current_paragraph:
-                self.writer.current_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
-                self.writer.set_keep_lines(self.writer.current_paragraph)
+                figure_style = self.style_resolver.figure_style()
+                if figure_style.get("alignment") is not None:
+                    self.writer.current_paragraph.alignment = figure_style["alignment"]
+                if figure_style.get("keep_together", True):
+                    self.writer.set_keep_lines(self.writer.current_paragraph)
 
         except Exception as e:
             self.ctx.diag.warning(
@@ -513,6 +535,51 @@ class WordRenderer(NodeVisitor):
             )
             self.writer.add_paragraph()
             self.writer.add_run(f"[Image: {node.alt}]")
+
+    def _figure_bounds_cm(self) -> FigureBounds:
+        """
+        计算图形适配边界（P12-CAND-002 / CLAR-02）。
+
+        有效内容区优先取自当前 section 的实际几何（页宽/页高减去页边距）；
+        仅在 section 几何不可用时，退回主题/配置的参考 A4 几何（``PageGeometry``）。
+
+        返回:
+            FigureBounds: 目标宽度与有效内容区宽高（厘米）。
+        """
+        policy = self.style_resolver.figure_size_policy()
+        try:
+            section = self.writer.doc.sections[-1]
+            available_width = (
+                section.page_width.cm - section.left_margin.cm - section.right_margin.cm
+            )
+            available_height = (
+                section.page_height.cm - section.top_margin.cm - section.bottom_margin.cm
+            )
+        except Exception:
+            geometry = PageGeometry()
+            margins = self._theme_value("page_margins_cm", None) or {}
+            available_width = (
+                geometry.portrait_width_cm
+                - float(margins.get("left", 2.54))
+                - float(margins.get("right", 2.54))
+            )
+            available_height = (
+                geometry.portrait_height_cm
+                - float(margins.get("top", 2.54))
+                - float(margins.get("bottom", 2.54))
+            )
+
+        max_width = policy.max_width_cm or available_width
+        max_height = policy.max_height_cm or available_height
+        configured = self.ctx.config.get("image_width", 5)
+        target = min(float(configured) * CM_PER_INCH, float(max_width))
+
+        return FigureBounds(
+            target_width_cm=target,
+            max_width_cm=float(max_width),
+            max_height_cm=float(max_height),
+            min_width_cm=policy.min_width_cm,
+        )
 
     def visit_HorizontalRule(self, node: HorizontalRule) -> None:
         """渲染水平分割线。"""

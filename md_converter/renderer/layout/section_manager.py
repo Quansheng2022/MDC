@@ -28,6 +28,11 @@ class PageGeometry:
         return self.portrait_width_cm - self.margins.left - self.margins.right
 
     @property
+    def portrait_content_height_cm(self) -> float:
+        """Portrait 有效内容高度（页高减去上下页边距；P12-CAND-002）。"""
+        return self.portrait_height_cm - self.margins.top - self.margins.bottom
+
+    @property
     def landscape_content_width_cm(self) -> float:
         return self.portrait_height_cm - self.margins.left - self.margins.right
 
