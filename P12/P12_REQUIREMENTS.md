@@ -63,16 +63,30 @@ but never measures anything.
 
 **Required / PROPOSED behaviour.**
 
-Definitions (interpretation of the existing frozen theme tokens):
+Definitions (interpretation of the existing frozen theme tokens; **CLAR-02**: the normative
+constraint is the *effective section content box*, derived from the actual section geometry):
 
 ```text
-page            A4 portrait 21.0 x 29.7 cm  (theme page.size)
-margins         theme page.margins (1 in / 2.54 cm each side)
-available text area
-                width  = content_width         = 21.0 - 2.54 - 2.54 = 15.92 cm
-                height = available_page_height = 29.7 - 2.54 - 2.54 = 24.62 cm
+effective section content box
+                width  = section page width  - left margin - right margin
+                height = section page height - top margin  - bottom margin
+                (derived from the section actually being rendered; never a hard-coded constant)
+current baseline/reference geometry
+                A4 portrait 21.0 x 29.7 cm with 1 in / 2.54 cm margins
+                -> approximately 15.92 cm x 24.62 cm
+                   (reference for the current frozen theme; not a universal magic constant)
 intrinsic size  the image's own pixel dimensions, read from the image header
-target width W0 min(config image_width, available text width) = min(5 in, 15.92 cm) = 12.70 cm
+target width W0 min(config image_width, effective content width) = min(5 in, 15.92 cm) = 12.70 cm
+```
+
+Ownership split (CLAR-02):
+
+```text
+converter owns:   figure sizing / aspect-ratio preservation / width-height bounds /
+                  never-upscale behaviour / minimum-width diagnostic / overflow measurement /
+                  placement semantics exposed to Word（keep-together）
+Word owns:        final physical pagination
+converter does NOT promise: an exact physical page number or deterministic final Word pagination
 ```
 
 Sizing rule, applied per figure, deterministic:
@@ -163,7 +177,8 @@ sample, 2 fixture files and 17 `input_test` documents):
 ```text
 blocks satisfying the proposed recognition rule:      2  (both in Governance_AI_Engineering.md)
 documents with at least one match:                    1
-documents containing a ruler line that fails the rule: 1  (2 blocks, reported as SIMPLE001)
+documents containing a ruler line that fails the rule: 1  (2 blocks the strict rule rejects;
+                                                        no diagnostic is emitted — CLAR-01)
 false positives in 85 scanned documents:              0
 separator-free 2-column blocks that would match without the ruler requirement: 0
 => the S/N 117 intake figure "3 aligned blocks in 2 documents" is a looser count than the strict
@@ -218,16 +233,22 @@ configuration (`simple_tables.enabled`), so the change can be turned off without
 **Failure behaviour.** Ambiguous or unrecognised input stays ordinary paragraph content — the
 recognition never guesses and never drops content (SPEC-INV-001 / SPEC-GOAL-004).
 
-**Diagnostics.**
+**Diagnostics（CLAR-01: 默认不产生诊断）**
 
 ```text
-SIMPLE001 (INFO)  a ruler line was found but the block was not recognised as a simple table;
-                  carries the failing condition (e.g. "line 3 has an empty cell")
-No diagnostic on a successful conversion (the resulting table is visible in the output).
-No diagnostic for ordinary text without a ruler line (avoids noise).
+Failed recognition is NOT a diagnostic condition by default:
+  - a block that does not satisfy R1..R7 is preserved as a Paragraph and emits NO diagnostic;
+  - SIMPLE001 MUST NOT be emitted merely because a ruler is present and recognition failed;
+  - no diagnostic on a successful conversion either (the resulting table is visible in output).
+
+SIMPLE001 is NOT part of the approved default behaviour. It may only ever be introduced later for
+a narrowly defined strong near-match case with demonstrable user value — never to expose internal
+recognition decisions. Default implementation: ordinary non-match -> Paragraph, no diagnostic.
 ```
 
 **Acceptance examples.** `P12/P12_IMPLEMENTATION_PLAN.md` §4 (cases SIMPLE-1..SIMPLE-7).
+Rejected ruler-bearing near-matches are part of the Golden-impact analysis, not only successful
+conversions.
 
 **Known implementation constraints.** The AST line/gap information must be read from `Text` +
 `SoftBreak` nodes (that is all the Parser preserves); the pass must not touch non-`Paragraph` nodes;
@@ -323,8 +344,9 @@ Inventing that invariant would contradict accepted behaviour.
 AST invariants      Candidates 001 and 003 both add nodes; neither mutates existing nodes.
                     003 relies on the AST *keeping* the empty heading while the renderer omits it.
                     No conflict: 001 replaces a Paragraph with a Table; 003 changes no node type.
-Diagnostics         001 adds INFO SIMPLE001; 002 adds WARNING RENDER005 plus two RenderedQA
-                    metrics; 003 adds nothing. No code collision, no severity interaction.
+Diagnostics         001 adds no diagnostic by default（CLAR-01）; 002 adds WARNING RENDER005 plus
+                    two RenderedQA metrics; 003 adds nothing. No code collision, no severity
+                    interaction.
 Theme/config        002 reads the existing frozen `figure:` block read-only; 001 adds a new
                     `simple_tables.enabled` config flag. No frozen theme value changes.
 Layout ownership    002 keeps layout intent (keep_together) as-is and keeps sizing in the render

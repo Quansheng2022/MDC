@@ -67,7 +67,9 @@ the line preceding the ruler line and whose remaining rows are the lines followi
 ruler line SHALL NOT produce a row. Cell content SHALL be the stripped cell text.
 
 When the ruler line of (c) is present but any other condition fails, the block SHALL remain
-ordinary paragraph content and the compiler SHALL report the condition as an INFO diagnostic.
+ordinary paragraph content and SHALL NOT produce a diagnostic (CLAR-01: failed recognition is not
+an error or warning condition, and the compiler SHALL NOT emit diagnostic noise to expose internal
+recognition decisions).
 
 Recognition SHALL NOT depend on any external corpus, file path, or author identity, and SHALL be
 deterministic for identical input.
@@ -79,12 +81,16 @@ Related existing items: `SPEC-FUNC-004` (Markdown tables), `SPEC-FUNC-014` (Asci
 ## SPEC-FUNC-023 (proposed) — Figure page-fit and size policy
 
 ```text
-The compiler SHALL size every figure so that the delivered figure fits inside the available text
-area of the page, where
+The compiler SHALL size every figure so that the delivered figure fits inside the effective
+section content box of the section being rendered, where
 
-    available text width  = page width  - left margin - right margin
-    available text height = page height - top margin  - bottom margin
-    target width          = min(configured image width, available text width)
+    effective content width  = section width  - left margin - right margin
+    effective content height = section height - top margin  - bottom margin
+    target width             = min(configured image width, effective content width)
+
+The effective content box SHALL be derived from the actual section geometry (CLAR-02). The frozen
+A4 / 1-inch-margin geometry (approximately 15.92 cm x 24.62 cm) is the current baseline reference;
+it SHALL NOT become a universal constant while the architecture provides section geometry.
 
 The compiler SHALL determine a figure's intrinsic size from the image itself and SHALL preserve
 its aspect ratio.
@@ -102,9 +108,14 @@ figure.overflow_handling:
   (c) warn: a figure whose fitted width is smaller than theme figure.min_width SHALL be delivered
       at the fitted size and SHALL produce a structured WARNING diagnostic.
 
-A figure SHALL NOT be inserted with a size exceeding either text-area bound, and SHALL NOT be
+A figure SHALL NOT be inserted with a size exceeding either content-box bound, and SHALL NOT be
 upscaled beyond target width. When a figure cannot be read at all, the existing documented
 fallback behaviour is unchanged.
+
+The converter owns figure sizing, aspect-ratio preservation, width/height bounds, never-upscale
+behaviour, the minimum-width diagnostic, overflow measurement, and the placement semantics exposed
+to Word. Final physical pagination remains Word-owned: the compiler does not promise an exact
+physical page number or deterministic final Word pagination.
 ```
 
 Related existing items: `SPEC-GOAL-001` (directly deliverable DOCX), `SPEC-INV-002`

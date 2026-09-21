@@ -56,8 +56,9 @@ below the declared minimum width, and a real QA measurement behind the declared 
 ```text
 Policy source      theme `figure:` block, read-only（max_width, max_height, min_width,
                    preserve_aspect_ratio, overflow_handling). No theme value changes.
-Bounds             available text area derived from the section being rendered
-                   (page width/height minus the configured margins).
+Bounds             effective section content box derived from the section being rendered
+                   (page width/height minus the configured margins). CLAR-02: A4 / 1in
+                   (~15.92 x 24.62 cm) is only the current reference geometry, never a constant.
 Arithmetic         one pure function: intrinsic size + bounds -> fitted size + floor flag.
 Physical sizing    the render path inserts the picture with an explicit width AND height, so Word
                    does not re-derive the size.
@@ -182,7 +183,8 @@ Recognition      one pure function over reconstructed lines（Text segments spli
 Output           one Table node with 2 columns, header row = the line before the ruler, body rows
                  = the lines after it, cells = plain Text.
 Emission         the document is rebuilt immutably; the matched Paragraph is replaced in place.
-Ambiguity        ruler present but rules unsatisfied -> paragraph kept unchanged + INFO SIMPLE001.
+Ambiguity        ruler present but rules unsatisfied -> paragraph kept unchanged, no diagnostic
+                 (CLAR-01).
 Configuration    simple_tables.enabled（default true）gates registration of the pass.
 Ordering         registered after NormalizePass so it sees normalised inline text; the diagram
                  passes operate on CodeBlock/Diagram nodes and cannot interact.
@@ -312,7 +314,7 @@ Planning only — no test file is created or modified by S/N 118.
 | SIMPLE-3 normal prose | multi-line paragraph | unchanged paragraph |
 | SIMPLE-4 aligned prose | wrapped field list with shifting gaps | unchanged paragraph (no conversion, no diagnostic) |
 | SIMPLE-5 fenced text | aligned block inside a code fence | CodeBlock unchanged |
-| SIMPLE-6 ambiguous block | ruler present, inconsistent columns / empty cell | unchanged paragraph + `SIMPLE001` INFO |
+| SIMPLE-6 ambiguous block | ruler present, inconsistent columns / empty cell | unchanged paragraph and **no diagnostic**（CLAR-01） |
 | SIMPLE-7 existing pipe table | existing Markdown table | unchanged table (AC004 / AC012 unaffected) |
 
 ## 4.3 CAND-003 cases
@@ -354,6 +356,10 @@ approved specification → implementation → observed legitimate output change 
 delta → authorized baseline update. "Golden failed" alone is never a reason to update it.
 ```
 
+Golden-impact analysis for CAND-001 covers rejected ruler-bearing near-matches as well as
+successful conversions (CLAR-01): a rejected near-match must leave the delivered document unchanged
+and must not add diagnostics.
+
 ---
 
 # 5. Cross-Candidate Consistency and Boundary Preservation
@@ -361,7 +367,7 @@ delta → authorized baseline update. "Golden failed" alone is never a reason to
 ```text
 AST contracts        001 emits existing Table nodes; 002 changes no node; 003 relies on the AST
                      keeping an empty Heading. No conflicting invariant.
-Diagnostic registry  001 INFO SIMPLE001; 002 WARNING RENDER005 + two RenderedQA metrics;
+Diagnostic registry  001 adds no diagnostic by default（CLAR-01）; 002 WARNING RENDER005 + two RenderedQA metrics;
                      003 no new code. No collision, no double-reporting of one condition.
 Theme/configuration  002 reads the frozen figure policy; 001 adds simple_tables.enabled;
                      003 adds nothing. No frozen value changes.
