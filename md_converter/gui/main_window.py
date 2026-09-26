@@ -39,6 +39,7 @@ from pathlib import Path
 from typing import Optional, Union
 
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QCloseEvent
 from PySide6.QtWidgets import (
     QHBoxLayout,
     QLabel,
@@ -164,6 +165,8 @@ class MainWindow(QMainWindow):
             retained untouched for the P12-06 diagnostics UX.
         latest_job_failure: Most recent worker infrastructure failure, if any;
             kept distinct from application results.
+        is_conversion_active: Whether a conversion job is running or its thread
+            is still cleaning up (drives the close policy).
         drop_zone: Drop-area placeholder frame.
         drop_label: Instruction text inside the drop area.
         source_label: Selected source display (hidden while EMPTY).
@@ -246,6 +249,35 @@ class MainWindow(QMainWindow):
         """
         return self._latest_job_failure
 
+    @property
+    def is_conversion_active(self) -> bool:
+        """Whether a conversion job is running or still cleaning up.
+
+        The worker boundary is the source of truth: a real conversion always has
+        an active job, and ``worker.is_running`` stays ``True`` until the job
+        thread has exited and its references were released.  The P12-04 mock
+        ``request_convert()`` transition has no job, so it does not block
+        closing (WP-P12-05-05 §4).
+        """
+        return self.worker.is_running
+
+    def closeEvent(self, event: QCloseEvent) -> None:
+        """Refuse to close while a conversion is active (WP-P12-05-05 §4).
+
+        Bounded policy: the close request is simply rejected while the
+        conversion runs, so no Qt thread or worker object is destroyed
+        underneath it.  After the conversion completes and the worker is idle,
+        a later close succeeds normally.  No cancellation framework and no
+        forced thread termination are involved.
+
+        Args:
+            event: Qt close event.
+        """
+        if self.is_conversion_active:
+            event.ignore()
+            return
+        event.accept()
+
     def set_source(self, source: Optional[str]) -> GuiState:
         """Select a source and return the resulting GUI state.
 
@@ -318,6 +350,11 @@ class MainWindow(QMainWindow):
             when the candidate is not a usable directory.  Nothing is persisted
             beyond the current session (WP-P12-04-06 §4).
         """
+        if not self.state_model.effect.change_output_enabled:
+            # Output changes are unavailable in this state (CONVERTING): reuse
+            # the state-model effect instead of a second lock (WP-P12-05-05 §3).
+            return self._output_directory
+
         validated = file_picker.validate_output_directory(directory)
         if validated is None:
             return self._output_directory

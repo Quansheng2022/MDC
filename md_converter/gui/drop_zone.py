@@ -55,8 +55,10 @@ class DropZone(QFrame):
 
         Everything rejected here is never dropped, so unsupported files,
         folders and multi-file payloads cannot be applied silently.
+        Acceptance is also gated by the GUI state: input is unavailable while
+        ``CONVERTING`` (see the state effects applied by ``MainWindow``).
         """
-        if self._dropped_source(event) is None:
+        if not self.acceptDrops() or self._dropped_source(event) is None:
             event.ignore()
             return
         event.acceptProposedAction()
@@ -64,7 +66,7 @@ class DropZone(QFrame):
 
     def dragMoveEvent(self, event: QDragMoveEvent) -> None:
         """Keep accepting while a valid payload hovers the area."""
-        if self._dropped_source(event) is None:
+        if not self.acceptDrops() or self._dropped_source(event) is None:
             event.ignore()
             return
         event.acceptProposedAction()
@@ -75,8 +77,13 @@ class DropZone(QFrame):
         event.accept()
 
     def dropEvent(self, event: QDropEvent) -> None:
-        """Select the dropped Markdown file, or reject the payload."""
-        source = self._dropped_source(event)
+        """Select the dropped Markdown file, or reject the payload.
+
+        A payload is applied only while the drop area accepts input, so a forced
+        drop during ``CONVERTING`` is rejected here as well as by the state
+        model.
+        """
+        source = self._dropped_source(event) if self.acceptDrops() else None
         self.hover_changed.emit(False)
         if source is None:
             event.ignore()
