@@ -14,7 +14,7 @@ from __future__ import annotations
 import ast
 import os
 from pathlib import Path
-from typing import TYPE_CHECKING, Set
+from typing import TYPE_CHECKING, List, Set
 
 import pytest
 
@@ -43,13 +43,16 @@ REQUIRED_WIDGETS = (
     "statusLabel",
 )
 
-#: Conversion-core / application-layer modules the GUI layer must not import.
+#: Conversion-core modules the GUI layer must not import.  The application layer
+#: (``md_converter.application``) is the authorized GUI -> service boundary
+#: (WP-P12-05-03 §5).
 FORBIDDEN_IMPORT_PREFIXES = (
-    "md_converter.application",
     "md_converter.compiler",
     "md_converter.parser",
     "md_converter.pipeline",
     "md_converter.renderer",
+    "md_converter.services",
+    "md_converter.quality_gate",
 )
 
 
@@ -69,18 +72,38 @@ def _process_events() -> None:
     QApplication.instance().processEvents()
 
 
+def _package_parts(path: Path) -> List[str]:
+    """Return the dotted package parts of ``path`` within the project."""
+    relative = path.resolve().relative_to(PROJECT_ROOT)
+    return list(relative.with_suffix("").parts)[:-1]
+
+
+def _resolve_relative(package_parts: List[str], level: int, module: str) -> str:
+    """Resolve a relative ``ImportFrom`` target to an absolute dotted name."""
+    if level == 0:
+        return module
+    keep = len(package_parts) - (level - 1)
+    base = ".".join(package_parts[:keep]) if keep > 0 else ""
+    return f"{base}.{module}" if module else base
+
+
 def _imported_modules(path: Path) -> Set[str]:
-    """Return the module names imported by ``path``."""
+    """Return the module names imported by ``path``.
+
+    Relative imports are resolved against the module's own package, so this
+    architecture guard cannot be bypassed with ``from ..compiler import ...``.
+    """
+    package_parts = _package_parts(path)
     tree = ast.parse(path.read_text(encoding="utf-8"))
     names: Set[str] = set()
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             names.update(alias.name for alias in node.names)
         elif isinstance(node, ast.ImportFrom):
-            module = node.module or ""
-            if module:
-                names.add(module)
-            names.update(f"{module}.{alias.name}".lstrip(".") for alias in node.names)
+            base = _resolve_relative(package_parts, node.level, node.module or "")
+            if base:
+                names.add(base)
+            names.update(f"{base}.{alias.name}" if base else alias.name for alias in node.names)
     return names
 
 
@@ -216,7 +239,12 @@ def test_drop_acceptance_follows_gui_state() -> None:
 
 
 def test_gui_layer_imports_no_conversion_core() -> None:
-    """WP §10: no Core / application-service import inside the GUI layer."""
+    """WP-P12-05-03 §5: the GUI never imports conversion-core internals.
+
+    The application layer stays allowed (GUI -> ConversionService is the
+    sanctioned boundary); compiler, parser, pipeline, renderer, services and QA
+    remain forbidden.
+    """
     modules = sorted(GUI_DIR.glob("*.py"))
 
     assert modules

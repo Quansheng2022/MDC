@@ -175,12 +175,13 @@ def test_cancelled_directory_dialog_returns_none(monkeypatch: pytest.MonkeyPatch
 # ============================================================
 
 
-def test_default_presentation_is_same_as_source() -> None:
-    """WP §6: the default presentation is clearly "Same as source"."""
+def test_default_presentation_is_default_location() -> None:
+    """WP-P12-05-03: the default presentation is "Default location"."""
     from md_converter.gui.main_window import OUTPUT_VALUE_TEXT
 
     window = _make_window()
     try:
+        assert OUTPUT_VALUE_TEXT == "Default location"
         assert window.output_directory is None
         assert window.output_value_label.text() == OUTPUT_VALUE_TEXT
         assert window.output_value_label.toolTip() == ""
@@ -244,7 +245,7 @@ def test_cancel_preserves_previous_output_choice(
 
         assert window.output_directory == output_dir
 
-        # ... and cancelling from the default also keeps "Same as source".
+        # ... and cancelling from the default also keeps "Default location".
         fresh = _make_window()
         try:
             _patch_directory_dialog(monkeypatch, None)

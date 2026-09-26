@@ -1,4 +1,4 @@
-"""Main window foundation for the MD_Converter GUI (WP-P12-04-02..06).
+"""Main window foundation for the MD_Converter GUI (WP-P12-04-02..06, P12-05-03).
 
 Visible shell for the v2.0 workflow (``V2_GUI_UX_SPEC`` §3):
 
@@ -6,8 +6,10 @@ Visible shell for the v2.0 workflow (``V2_GUI_UX_SPEC`` §3):
 
 Scope limits:
 
-* no conversion call, no Core / ``ConversionService`` import;
-* no worker/thread, diagnostics UX framework or settings persistence;
+* conversion runs only through the application service
+  (:mod:`md_converter.application`); the GUI never imports the compiler,
+  parser, pipeline, renderer or QA internals (WP-P12-05-03 §5);
+* no diagnostics UX framework and no settings persistence;
 * no DOCX naming or frontmatter logic (WP-P12-04-06 §5).
 
 The GUI state model (WP-P12-04-03) governs enablement, the source display and
@@ -17,9 +19,12 @@ and drag & drop (WP-P12-04-05) both funnel into
 the single state path :meth:`MainWindow.set_source`.  Output folder selection
 (WP-P12-04-06) stores a session preference only: the approved
 application/service behavior remains the authority for the final DOCX name.
-Real conversion wiring arrives with P12-05.  Standard Qt layouts are used
-throughout (WP-P12-04-02 §7): no absolute positioning, no custom painting, no
-theming.
+The Convert action (WP-P12-05-03) builds its request with the shared
+:mod:`md_converter.gui.request_builder` and runs
+``ConversionService.convert`` through the :class:`~md_converter.gui.worker.GuiWorker`
+boundary, so conversion never executes on the GUI thread.  Standard Qt layouts
+are used throughout (WP-P12-04-02 §7): no absolute positioning, no custom
+painting, no theming.
 
 WP-P12-04-03 adds the explicit GUI state model.  Widget enablement, the source
 display and the status text are derived from :mod:`md_converter.gui.state`
@@ -29,6 +34,7 @@ writes those widget states.
 
 from __future__ import annotations
 
+from functools import partial
 from pathlib import Path
 from typing import Optional, Union
 
@@ -42,9 +48,13 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from ..application.conversion_result import ConversionResult, ConversionStatus
+from ..application.conversion_service import ConversionService
 from . import file_picker
 from .drop_zone import DropZone
+from .request_builder import build_conversion_request
 from .state import GuiState, GuiStateModel
+from .worker import GuiWorker, JobFailure
 
 __all__ = [
     "CHANGE_OUTPUT_TEXT",
@@ -83,7 +93,9 @@ DROP_HINT_TEXT = "Drop Markdown file here"
 DROP_RELEASE_HINT_TEXT = "Release to select this file"
 SELECT_FILE_TEXT = "Select File"
 OUTPUT_CAPTION_TEXT = "Output folder:"
-OUTPUT_VALUE_TEXT = "Same as source"
+#: Default output presentation.  The service resolves the actual location, so
+#: the wording does not promise a source-directory default (WP-P12-05-03).
+OUTPUT_VALUE_TEXT = "Default location"
 CHANGE_OUTPUT_TEXT = "Change"
 CONVERT_TEXT = "Convert"
 
@@ -144,7 +156,9 @@ class MainWindow(QMainWindow):
         state_model: Explicit GUI state model (Qt-free).
         state: Current GUI state (read-only convenience accessor).
         output_directory: Session output-folder preference (``None`` means
-            "same as source").
+            the default location).
+        service: Application conversion service (GUI -> service boundary).
+        worker: Worker boundary that runs the service off the GUI thread.
         drop_zone: Drop-area placeholder frame.
         drop_label: Instruction text inside the drop area.
         source_label: Selected source display (hidden while EMPTY).
@@ -165,6 +179,10 @@ class MainWindow(QMainWindow):
         super().__init__(parent)
         self.state_model = GuiStateModel()
         self._output_directory: Optional[Path] = None
+        self.service = ConversionService()
+        self.worker = GuiWorker(self)
+        self.worker.succeeded.connect(self._on_conversion_result)
+        self.worker.failed.connect(self._on_conversion_failure)
         self.setObjectName("MainWindow")
         self.setWindowTitle(WINDOW_TITLE)
         self.setMinimumSize(MINIMUM_WIDTH, MINIMUM_HEIGHT)
@@ -196,8 +214,8 @@ class MainWindow(QMainWindow):
     def output_directory(self) -> Optional[Path]:
         """Return the session output-folder preference.
 
-        ``None`` means the default presentation "Same as source"
-        (WP-P12-04-06 §6): the GUI does not compute a DOCX path from it.
+        ``None`` means the default presentation "Default location"
+        (WP-P12-05-03): the GUI does not compute a DOCX path from it.
         """
         return self._output_directory
 
@@ -305,14 +323,68 @@ class MainWindow(QMainWindow):
         """Request conversion, moving ``READY`` -> ``CONVERTING``.
 
         The request is rejected (state unchanged) from every other state, which
-        prevents duplicate starts while converting.  No conversion work is
-        performed in P12-04.
+        prevents duplicate starts while converting.  This is the state-model
+        transition only; the real Convert action is :meth:`start_conversion`.
 
         Returns:
             GuiState: The state after the request.
         """
         self.state_model.request_convert()
         return self._apply_state()
+
+    def start_conversion(self) -> GuiState:
+        """Run the real Convert action for the current selections.
+
+        Flow (WP-P12-05-03 §3): ``READY`` -> ``CONVERTING`` -> one
+        ``ConversionRequest`` from the shared request builder -> exactly one
+        worker job running ``ConversionService.convert`` outside the GUI thread.
+        The GUI leaves ``CONVERTING`` when the job's outcome arrives.
+
+        Returns:
+            GuiState: The state after the request.  The state is unchanged when
+            the action is unavailable (no source, not ``READY``, or a job is
+            already running).
+        """
+        if self.state is not GuiState.READY or self.worker.is_running:
+            return self.state
+
+        request = build_conversion_request(self.state_model.source, self.output_directory)
+        if request is None:
+            return self.state
+
+        # Start the job first: a refused start must not leave the GUI stuck in
+        # CONVERTING.  The transition below happens synchronously, before any
+        # queued completion signal can be delivered by the event loop.
+        if not self.worker.start(partial(self.service.convert, request)):
+            return self.state
+
+        return self.request_convert()
+
+    def _on_conversion_result(self, result: ConversionResult) -> None:
+        """Leave ``CONVERTING`` once the worker delivered a conversion result.
+
+        Minimal completion mapping for the vertical slice; WP-P12-05-04 owns the
+        final centralized ``ConversionResult`` -> ``GuiState`` mapping.
+
+        Args:
+            result: Conversion outcome returned by the application service.
+        """
+        if result.status is ConversionStatus.SUCCESS_WITH_WARNING:
+            self.state_model.complete_warning()
+        elif result.status is ConversionStatus.FAILED:
+            self.state_model.complete_failure()
+        else:
+            self.state_model.complete_success()
+        self._apply_state()
+
+    def _on_conversion_failure(self, failure: JobFailure) -> None:
+        """Leave ``CONVERTING`` once the worker reported failure evidence.
+
+        Args:
+            failure: Structured evidence from the worker boundary.
+        """
+        self.state_model.complete_failure()
+        self._apply_state()
 
     def simulate_success(self) -> GuiState:
         """Apply the mocked ``CONVERTING`` -> ``SUCCESS`` completion.
@@ -464,8 +536,8 @@ class MainWindow(QMainWindow):
         self.convert_button.setObjectName("convertButton")
         self.convert_button.setMinimumWidth(CONVERT_MINIMUM_WIDTH)
         self.convert_button.setDefault(True)
-        # Enablement is applied from the GUI state by _apply_state();
-        # real conversion is not authorized in P12-04 (WP-P12-04-02 §6).
+        self.convert_button.clicked.connect(self.start_conversion)
+        # Enablement is applied from the GUI state by _apply_state().
 
         row.addStretch(1)
         row.addWidget(self.convert_button)
