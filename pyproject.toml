@@ -7,7 +7,12 @@ name = "md_converter"
 version = "1.1.0"
 description = "Markdown to DOCX Converter with compiler architecture"
 readme = "README.md"
-license = "MIT"
+license = "LicenseRef-Proprietary"
+license-files = [
+    "EULA.txt",
+    "THIRD_PARTY_NOTICES.txt",
+]
+
 authors = [
     {name = "MD Converter Team", email = "support@mdconverter.io"}
 ]
@@ -41,6 +46,7 @@ dev = [
     "mypy>=1.0.0",
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0",
+    "PySide6>=6.6",
     "ruff>=0.0.0",
     "twine>=4.0.0",
 ]

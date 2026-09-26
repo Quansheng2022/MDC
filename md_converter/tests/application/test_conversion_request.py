@@ -7,12 +7,15 @@ exercise conversion behaviour.
 from __future__ import annotations
 
 import dataclasses
+import subprocess
 import sys
 from pathlib import Path
 
 import pytest
 
 from md_converter.application import ConversionRequest
+
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
 
 # ============================================================
 # Construction
@@ -142,9 +145,33 @@ def test_source_extension_is_not_restricted(tmp_path: Path) -> None:
     assert ConversionRequest(tmp_path / "notes.txt").source_path.suffix == ".txt"
 
 
-def test_model_does_not_pull_in_gui_framework(tmp_path: Path) -> None:
-    """The request model is usable without a GUI framework."""
-    ConversionRequest(tmp_path / "guide.md")
+def test_model_does_not_pull_in_gui_framework() -> None:
+    """The request model is usable without a GUI framework.
 
-    gui_modules = {"PySide6", "PyQt5", "PyQt6"}
-    assert not gui_modules & {name.split(".")[0] for name in sys.modules}
+    Verified in a fresh interpreter: other test modules in this process (for
+    example the GUI bootstrap tests) may legitimately have Qt loaded, so a
+    process-wide ``sys.modules`` assertion would be order-dependent.
+    """
+    check = "\n".join(
+        [
+            "import sys",
+            "from md_converter.application.conversion_request import ConversionRequest",
+            "ConversionRequest('guide.md')",
+            "names = {'PySide6', 'PyQt5', 'PyQt6'}",
+            "loaded = sorted(n for n in sys.modules if n.split('.')[0] in names)",
+            "print('GUI_MODULES=' + ','.join(loaded))",
+        ]
+    )
+
+    proc = subprocess.run(
+        [sys.executable, "-c", check],
+        capture_output=True,
+        text=True,
+        cwd=str(PROJECT_ROOT),
+        timeout=120,
+    )
+
+    assert proc.returncode == 0, proc.stderr
+    assert [line for line in proc.stdout.splitlines() if line.startswith("GUI_MODULES=")] == [
+        "GUI_MODULES="
+    ]
