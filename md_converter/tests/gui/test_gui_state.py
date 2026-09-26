@@ -381,12 +381,20 @@ def test_window_reset_returns_to_empty() -> None:
 # ============================================================
 
 
-def test_gui_layer_has_no_threading_or_worker_code() -> None:
-    """No worker/thread machinery is introduced (P12-04 scope)."""
+def test_threading_machinery_is_confined_to_the_worker_boundary() -> None:
+    """Thread machinery lives only in ``worker.py`` (WP-P12-05-01 boundary).
+
+    Replaces the P12-04 stage guard, which forbade all threading in the GUI
+    layer: WP-P12-05-01 authorizes exactly one worker boundary module, and the
+    thread mechanism must not spread to the other GUI modules.
+    """
     modules = sorted(GUI_DIR.glob("*.py"))
 
     assert modules
+    assert any(module.name == "worker.py" for module in modules)
     for module in modules:
+        if module.name == "worker.py":
+            continue
         text = module.read_text(encoding="utf-8")
         for token in _THREAD_TOKENS:
             assert token not in text, f"{module.name}: {token}"
