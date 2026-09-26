@@ -1,9 +1,13 @@
-"""Markdown file picker for the MD_Converter GUI (WP-P12-04-04).
+"""Standard GUI dialogs for MD_Converter (WP-P12-04-04/06).
 
-Implements user-driven Markdown selection and nothing else: the standard Qt
-file dialog plus GUI-boundary validation.  The picker decides *which file the
-user selected*; it does not parse frontmatter, inspect the AST, or call the
-conversion core (WP-P12-04-04 §8).
+Implements the standard Qt dialogs plus GUI-boundary validation:
+
+* Markdown file selection (WP-P12-04-04);
+* output-folder selection (WP-P12-04-06).
+
+The dialogs decide *what the user selected*; they do not parse frontmatter,
+inspect the AST, derive DOCX file names, or call the conversion core
+(WP-P12-04-04 §8, WP-P12-04-06 §5).
 
 The validated path is handed to ``MainWindow.set_source`` so that source
 selection always flows through the single GUI state-model path
@@ -20,10 +24,13 @@ from PySide6.QtWidgets import QFileDialog, QWidget
 
 __all__ = [
     "DIALOG_TITLE",
+    "DIRECTORY_DIALOG_TITLE",
     "MARKDOWN_EXTENSIONS",
     "MARKDOWN_FILTER",
     "ask_for_markdown_source",
+    "ask_for_output_directory",
     "validate_markdown_source",
+    "validate_output_directory",
 ]
 
 #: Supported source extensions.  The v2.0 GUI contract covers ``.md``; other
@@ -35,6 +42,9 @@ MARKDOWN_FILTER = "Markdown Files (*.md)"
 
 #: File-dialog caption (plain product language).
 DIALOG_TITLE = "Select Markdown file"
+
+#: Directory-dialog caption for the output folder (WP-P12-04-06 §7).
+DIRECTORY_DIALOG_TITLE = "Select output folder"
 
 
 def validate_markdown_source(path: Optional[Union[str, Path]]) -> Optional[Path]:
@@ -84,6 +94,49 @@ def ask_for_markdown_source(
     return _open_dialog(parent, DIALOG_TITLE, start_dir, MARKDOWN_FILTER) or None
 
 
+def validate_output_directory(path: Optional[Union[str, Path]]) -> Optional[Path]:
+    """Return ``path`` as a usable output directory, or ``None``.
+
+    Only "the user selected this folder" is validated (WP-P12-04-06 §5): the
+    folder must exist and be a directory.  No DOCX file name is derived here.
+
+    Args:
+        path: Candidate directory from a dialog.
+
+    Returns:
+        Optional[Path]: The validated directory, or ``None`` when the candidate
+        is not usable.
+    """
+    if path is None:
+        return None
+    text = str(path).strip()
+    if not text:
+        return None
+    candidate = Path(text)
+    if not candidate.is_dir():
+        return None
+    return candidate
+
+
+def ask_for_output_directory(
+    parent: Optional[QWidget] = None,
+    directory: Optional[Union[str, Path]] = None,
+) -> Optional[str]:
+    """Open the standard directory chooser and return the chosen folder.
+
+    Args:
+        parent: Optional parent widget for the dialog.
+        directory: Optional directory the chooser starts in (the current
+            session choice, when there is one).  Nothing is persisted.
+
+    Returns:
+        Optional[str]: The selected folder, or ``None`` when the user
+        cancelled.  Cancelling keeps the previous choice (WP-P12-04-06 §7).
+    """
+    start_dir = str(directory) if directory is not None else str(Path.home())
+    return _open_directory_dialog(parent, DIRECTORY_DIALOG_TITLE, start_dir) or None
+
+
 def _open_dialog(
     parent: Optional[QWidget],
     title: str,
@@ -104,3 +157,27 @@ def _open_dialog(
     """
     selected, _ = QFileDialog.getOpenFileName(parent, title, directory, file_filter)
     return selected
+
+
+def _open_directory_dialog(
+    parent: Optional[QWidget],
+    title: str,
+    directory: str,
+) -> str:
+    """Call Qt's standard directory chooser and return its raw selection.
+
+    Args:
+        parent: Optional parent widget for the dialog.
+        title: Dialog caption.
+        directory: Initial directory.
+
+    Returns:
+        str: Selected folder, or ``""`` when the dialog was cancelled.  The
+        public :func:`ask_for_output_directory` normalizes that to ``None``.
+    """
+    return QFileDialog.getExistingDirectory(
+        parent,
+        title,
+        directory,
+        QFileDialog.Option.ShowDirsOnly,
+    )

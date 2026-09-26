@@ -1,23 +1,25 @@
-"""Main window foundation for the MD_Converter GUI (WP-P12-04-02..05).
+"""Main window foundation for the MD_Converter GUI (WP-P12-04-02..06).
 
 Visible shell for the v2.0 workflow (``V2_GUI_UX_SPEC`` §3):
 
     drop area -> output row -> Convert -> status
 
-Scope limits for this work package:
+Scope limits:
 
 * no conversion call, no Core / ``ConversionService`` import;
-* no file picker, drag & drop or output-selection behavior;
-* no worker/thread, diagnostics UX or settings.
+* no worker/thread, diagnostics UX framework or settings persistence;
+* no DOCX naming or frontmatter logic (WP-P12-04-06 §5).
 
 The GUI state model (WP-P12-04-03) governs enablement, the source display and
 the status text.  Source selection (WP-P12-04-04) uses the standard file dialog
 and drag & drop (WP-P12-04-05) both funnel into
 :meth:`MainWindow.set_source_file`, which applies the shared validation before
-the single state path :meth:`MainWindow.set_source`.  Output selection and
-conversion wiring arrive with later work packages.  Standard Qt layouts are
-used throughout (WP-P12-04-02 §7): no absolute positioning, no custom painting,
-no theming.
+the single state path :meth:`MainWindow.set_source`.  Output folder selection
+(WP-P12-04-06) stores a session preference only: the approved
+application/service behavior remains the authority for the final DOCX name.
+Real conversion wiring arrives with P12-05.  Standard Qt layouts are used
+throughout (WP-P12-04-02 §7): no absolute positioning, no custom painting, no
+theming.
 
 WP-P12-04-03 adds the explicit GUI state model.  Widget enablement, the source
 display and the status text are derived from :mod:`md_converter.gui.state`
@@ -55,6 +57,7 @@ __all__ = [
     "MINIMUM_WIDTH",
     "MainWindow",
     "OUTPUT_CAPTION_TEXT",
+    "OUTPUT_PATH_MAX_CHARS",
     "OUTPUT_VALUE_TEXT",
     "SELECT_FILE_TEXT",
     "SOURCE_PATH_MAX_CHARS",
@@ -94,6 +97,9 @@ CONVERT_MINIMUM_WIDTH = 140
 #: internally in ``state_model.source``.
 SOURCE_PATH_MAX_CHARS = 56
 
+#: Long-path display budget for the output folder row (WP-P12-04-06 §7).
+OUTPUT_PATH_MAX_CHARS = 56
+
 
 def _source_display_name(source: Optional[str]) -> str:
     """Return the file-name text shown for a selected source."""
@@ -124,19 +130,28 @@ def _elide_middle(text: str, max_chars: int) -> str:
     return f"{text[:head]}\u2026{text[-tail:]}"
 
 
+def _output_display_text(directory: Optional[Path]) -> str:
+    """Return the output-folder display text (default: same as source)."""
+    if directory is None:
+        return OUTPUT_VALUE_TEXT
+    return _elide_middle(str(directory), OUTPUT_PATH_MAX_CHARS)
+
+
 class MainWindow(QMainWindow):
     """Main window foundation: the visible v2.0 workflow shell.
 
     Attributes:
         state_model: Explicit GUI state model (Qt-free).
         state: Current GUI state (read-only convenience accessor).
+        output_directory: Session output-folder preference (``None`` means
+            "same as source").
         drop_zone: Drop-area placeholder frame.
         drop_label: Instruction text inside the drop area.
         source_label: Selected source display (hidden while EMPTY).
         source_path_label: Containing folder of the selected source.
         select_file_button: Placeholder for the file picker.
-        output_value_label: Current output destination display.
-        change_output_button: Placeholder for output selection.
+        output_value_label: Output destination display.
+        change_output_button: Opens the output-folder chooser.
         convert_button: Primary action placeholder.
         status_label: Status area text.
     """
@@ -149,6 +164,7 @@ class MainWindow(QMainWindow):
         """
         super().__init__(parent)
         self.state_model = GuiStateModel()
+        self._output_directory: Optional[Path] = None
         self.setObjectName("MainWindow")
         self.setWindowTitle(WINDOW_TITLE)
         self.setMinimumSize(MINIMUM_WIDTH, MINIMUM_HEIGHT)
@@ -175,6 +191,15 @@ class MainWindow(QMainWindow):
     def state(self) -> GuiState:
         """Return the current GUI state."""
         return self.state_model.state
+
+    @property
+    def output_directory(self) -> Optional[Path]:
+        """Return the session output-folder preference.
+
+        ``None`` means the default presentation "Same as source"
+        (WP-P12-04-06 §6): the GUI does not compute a DOCX path from it.
+        """
+        return self._output_directory
 
     def set_source(self, source: Optional[str]) -> GuiState:
         """Select a source and return the resulting GUI state.
@@ -237,6 +262,37 @@ class MainWindow(QMainWindow):
             return self.state
         return self.set_source(str(validated))
 
+    def set_output_directory(self, directory: Optional[Union[str, Path]]) -> Optional[Path]:
+        """Validate ``directory`` and remember it for this session.
+
+        Args:
+            directory: Candidate output folder.
+
+        Returns:
+            Optional[Path]: The stored preference, or the unchanged preference
+            when the candidate is not a usable directory.  Nothing is persisted
+            beyond the current session (WP-P12-04-06 §4).
+        """
+        validated = file_picker.validate_output_directory(directory)
+        if validated is None:
+            return self._output_directory
+        self._output_directory = validated
+        self._apply_state()
+        return self._output_directory
+
+    def choose_output_directory(self) -> Optional[Path]:
+        """Open the standard directory chooser and apply the chosen folder.
+
+        Cancelling keeps the current choice (WP-P12-04-06 §7).
+
+        Returns:
+            Optional[Path]: The output-folder preference after the request.
+        """
+        chosen = file_picker.ask_for_output_directory(self, self._output_directory)
+        if chosen is None:
+            return self._output_directory
+        return self.set_output_directory(chosen)
+
     def _set_drop_hover(self, active: bool) -> None:
         """Show transient drag-over feedback in the drop area hint.
 
@@ -289,8 +345,8 @@ class MainWindow(QMainWindow):
         """Apply the current state effects to the widgets.
 
         This is the *only* place that writes workflow-driven widget state
-        (WP-P12-04-03 §7).  Output-selection availability is not part of the
-        workflow state; its control stays disabled until WP-P12-04-06.
+        (WP-P12-04-03 §7), including the output-folder display and the
+        availability of the Change control (WP-P12-04-06).
 
         Returns:
             GuiState: The current GUI state.
@@ -300,6 +356,7 @@ class MainWindow(QMainWindow):
         self.select_file_button.setEnabled(effect.select_enabled)
         self.drop_zone.setEnabled(effect.drop_enabled)
         self.drop_zone.setAcceptDrops(effect.drop_enabled)
+        self.change_output_button.setEnabled(effect.change_output_enabled)
         source = self.state_model.source
         self.source_label.setText(_source_display_name(source))
         self.source_label.setToolTip(source or "")
@@ -308,6 +365,10 @@ class MainWindow(QMainWindow):
         self.source_path_label.setText(folder_text)
         self.source_path_label.setToolTip(source or "")
         self.source_path_label.setVisible(effect.source_visible and bool(folder_text))
+        self.output_value_label.setText(_output_display_text(self._output_directory))
+        self.output_value_label.setToolTip(
+            str(self._output_directory) if self._output_directory is not None else ""
+        )
         self.status_label.setText(effect.status_text)
         return self.state_model.state
 
@@ -361,7 +422,7 @@ class MainWindow(QMainWindow):
         return zone
 
     def _create_output_row(self, parent: QWidget) -> QHBoxLayout:
-        """Create the output-location row (display-only placeholder).
+        """Create the output-location row (folder preference and chooser).
 
         Args:
             parent: Parent widget for the labels and button.
@@ -379,8 +440,7 @@ class MainWindow(QMainWindow):
         self.output_value_label.setObjectName("outputValueLabel")
         self.change_output_button = QPushButton(CHANGE_OUTPUT_TEXT, parent)
         self.change_output_button.setObjectName("changeOutputButton")
-        # Output selection is implemented by WP-P12-04-06.
-        self.change_output_button.setEnabled(False)
+        self.change_output_button.clicked.connect(self.choose_output_directory)
 
         row.addWidget(caption)
         row.addWidget(self.output_value_label)

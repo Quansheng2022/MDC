@@ -72,6 +72,7 @@ class StateEffect:
         convert_enabled: Whether the primary Convert action is available.
         select_enabled: Whether the Select File control is available.
         drop_enabled: Whether the input (drop) area is available for input.
+        change_output_enabled: Whether the output folder may be changed.
         source_visible: Whether the selected source is displayed.
 
     The ``drop_enabled`` flag governs input *availability*.  Drag & drop
@@ -82,6 +83,7 @@ class StateEffect:
     convert_enabled: bool
     select_enabled: bool
     drop_enabled: bool
+    change_output_enabled: bool
     source_visible: bool
 
 
@@ -92,6 +94,7 @@ STATE_EFFECTS: Dict[GuiState, StateEffect] = {
         convert_enabled=False,
         select_enabled=True,
         drop_enabled=True,
+        change_output_enabled=True,
         source_visible=False,
     ),
     GuiState.READY: StateEffect(
@@ -99,6 +102,7 @@ STATE_EFFECTS: Dict[GuiState, StateEffect] = {
         convert_enabled=True,
         select_enabled=True,
         drop_enabled=True,
+        change_output_enabled=True,
         source_visible=True,
     ),
     GuiState.CONVERTING: StateEffect(
@@ -106,6 +110,7 @@ STATE_EFFECTS: Dict[GuiState, StateEffect] = {
         convert_enabled=False,
         select_enabled=False,
         drop_enabled=False,
+        change_output_enabled=False,
         source_visible=True,
     ),
     GuiState.SUCCESS: StateEffect(
@@ -113,6 +118,7 @@ STATE_EFFECTS: Dict[GuiState, StateEffect] = {
         convert_enabled=False,
         select_enabled=True,
         drop_enabled=True,
+        change_output_enabled=True,
         source_visible=True,
     ),
     GuiState.SUCCESS_WITH_WARNING: StateEffect(
@@ -120,6 +126,7 @@ STATE_EFFECTS: Dict[GuiState, StateEffect] = {
         convert_enabled=False,
         select_enabled=True,
         drop_enabled=True,
+        change_output_enabled=True,
         source_visible=True,
     ),
     GuiState.FAILED: StateEffect(
@@ -127,6 +134,7 @@ STATE_EFFECTS: Dict[GuiState, StateEffect] = {
         convert_enabled=False,
         select_enabled=True,
         drop_enabled=True,
+        change_output_enabled=True,
         source_visible=True,
     ),
 }
