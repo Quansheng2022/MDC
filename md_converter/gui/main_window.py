@@ -1,4 +1,4 @@
-"""Main window foundation for the MD_Converter GUI (WP-P12-04-02/03).
+"""Main window foundation for the MD_Converter GUI (WP-P12-04-02/03/04).
 
 Visible shell for the v2.0 workflow (``V2_GUI_UX_SPEC`` §3):
 
@@ -10,11 +10,12 @@ Scope limits for this work package:
 * no file picker, drag & drop or output-selection behavior;
 * no worker/thread, diagnostics UX or settings.
 
-The controls remain inert placeholders: the GUI state model (WP-P12-04-03)
-governs enablement, the source display and the status text, while the behavior
-behind each control arrives with later work packages (WP-P12-04-04 onwards).
-Standard Qt layouts are used throughout (WP-P12-04-02 §7): no absolute
-positioning, no custom painting, no theming.
+The GUI state model (WP-P12-04-03) governs enablement, the source display and
+the status text.  Source selection (WP-P12-04-04) uses the standard file dialog
+and funnels into :meth:`MainWindow.set_source`; drag & drop, output selection
+and conversion wiring arrive with later work packages.  Standard Qt layouts are
+used throughout (WP-P12-04-02 §7): no absolute positioning, no custom painting,
+no theming.
 
 WP-P12-04-03 adds the explicit GUI state model.  Widget enablement, the source
 display and the status text are derived from :mod:`md_converter.gui.state`
@@ -24,6 +25,7 @@ writes those widget states.
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Optional
 
 from PySide6.QtCore import Qt
@@ -37,6 +39,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from . import file_picker
 from .state import GuiState, GuiStateModel
 
 __all__ = [
@@ -51,6 +54,7 @@ __all__ = [
     "OUTPUT_CAPTION_TEXT",
     "OUTPUT_VALUE_TEXT",
     "SELECT_FILE_TEXT",
+    "SOURCE_PATH_MAX_CHARS",
     "WINDOW_HEIGHT",
     "WINDOW_TITLE",
     "WINDOW_WIDTH",
@@ -79,6 +83,41 @@ CONVERT_TEXT = "Convert"
 DROP_ZONE_MINIMUM_HEIGHT = 180
 CONVERT_MINIMUM_WIDTH = 140
 
+#: Long-path display strategy (WP-P12-04-04 §7): the file name stays complete,
+#: the containing folder is middle-elided to this many characters, and both
+#: labels carry the full path as a tooltip.  The full path remains available
+#: internally in ``state_model.source``.
+SOURCE_PATH_MAX_CHARS = 56
+
+
+def _source_display_name(source: Optional[str]) -> str:
+    """Return the file-name text shown for a selected source."""
+    if not source:
+        return ""
+    return Path(source).name or source
+
+
+def _source_display_folder(source: Optional[str]) -> str:
+    """Return the middle-elided containing folder shown for a selected source."""
+    if not source:
+        return ""
+    folder = Path(source).parent
+    folder_text = str(folder)
+    if folder_text in ("", "."):
+        return ""
+    return _elide_middle(folder_text, SOURCE_PATH_MAX_CHARS)
+
+
+def _elide_middle(text: str, max_chars: int) -> str:
+    """Shorten ``text`` to ``max_chars`` characters, eliding its middle."""
+    if max_chars <= 1 or len(text) <= max_chars:
+        return text
+    head = (max_chars - 1) // 2
+    tail = max_chars - 1 - head
+    if tail <= 0:
+        return f"{text[:head]}\u2026"
+    return f"{text[:head]}\u2026{text[-tail:]}"
+
 
 class MainWindow(QMainWindow):
     """Main window foundation: the visible v2.0 workflow shell.
@@ -89,6 +128,7 @@ class MainWindow(QMainWindow):
         drop_zone: Drop-area placeholder frame.
         drop_label: Instruction text inside the drop area.
         source_label: Selected source display (hidden while EMPTY).
+        source_path_label: Containing folder of the selected source.
         select_file_button: Placeholder for the file picker.
         output_value_label: Current output destination display.
         change_output_button: Placeholder for output selection.
@@ -156,6 +196,26 @@ class MainWindow(QMainWindow):
         self.state_model.reset()
         return self._apply_state()
 
+    def choose_source(self) -> GuiState:
+        """Open the Markdown file dialog and apply the chosen source.
+
+        The dialog path is validated at the GUI boundary and then applied
+        through :meth:`set_source`, so source selection has exactly one state
+        path.  Cancelling the dialog keeps the current selection, and an
+        invalid selection is rejected without entering ``READY`` (user-facing
+        error UX belongs to a later work package).
+
+        Returns:
+            GuiState: The state after the request.
+        """
+        chosen = file_picker.ask_for_markdown_source(self)
+        if chosen is None:
+            return self.state
+        validated = file_picker.validate_markdown_source(chosen)
+        if validated is None:
+            return self.state
+        return self.set_source(str(validated))
+
     def request_convert(self) -> GuiState:
         """Request conversion, moving ``READY`` -> ``CONVERTING``.
 
@@ -210,8 +270,14 @@ class MainWindow(QMainWindow):
         self.convert_button.setEnabled(effect.convert_enabled)
         self.select_file_button.setEnabled(effect.select_enabled)
         self.drop_zone.setEnabled(effect.drop_enabled)
-        self.source_label.setText(self.state_model.source or "")
+        source = self.state_model.source
+        self.source_label.setText(_source_display_name(source))
+        self.source_label.setToolTip(source or "")
         self.source_label.setVisible(effect.source_visible)
+        folder_text = _source_display_folder(source)
+        self.source_path_label.setText(folder_text)
+        self.source_path_label.setToolTip(source or "")
+        self.source_path_label.setVisible(effect.source_visible and bool(folder_text))
         self.status_label.setText(effect.status_text)
         return self.state_model.state
 
@@ -246,10 +312,16 @@ class MainWindow(QMainWindow):
         self.source_label.setWordWrap(True)
         zone_layout.addWidget(self.source_label)
 
+        self.source_path_label = QLabel("", zone)
+        self.source_path_label.setObjectName("sourcePathLabel")
+        self.source_path_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        zone_layout.addWidget(self.source_path_label)
+
         # File-picker behavior is implemented by WP-P12-04-04; button
         # enablement is applied from the GUI state by _apply_state().
         self.select_file_button = QPushButton(SELECT_FILE_TEXT, zone)
         self.select_file_button.setObjectName("selectFileButton")
+        self.select_file_button.clicked.connect(self.choose_source)
 
         button_row = QHBoxLayout()
         button_row.addStretch(1)
