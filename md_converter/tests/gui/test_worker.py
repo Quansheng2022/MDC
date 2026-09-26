@@ -248,6 +248,26 @@ def test_worker_is_reusable_after_completion(worker: "GuiWorker") -> None:
     assert worker.thread is None
 
 
+def test_repeated_jobs_release_every_thread(worker: "GuiWorker") -> None:
+    """WP §8: repeated job cycles release each thread and its references.
+
+    Regression guard for a native heap-corruption race in the cleanup path:
+    the deferred thread deletion must be scheduled before the Python references
+    are released, otherwise the wrapper release deletes a QThread that Qt is
+    still finishing.
+    """
+    results: List[int] = []
+    worker.succeeded.connect(lambda payload: results.append(payload))
+
+    for index in range(25):
+        assert worker.start(lambda index=index: index) is True
+        assert _wait_idle(worker)
+        assert worker.thread is None
+        _pump()
+
+    assert results == list(range(25))
+
+
 def test_start_rejects_non_callable_job(worker: "GuiWorker") -> None:
     """A programming error fails loudly instead of starting an empty job."""
     with pytest.raises(TypeError, match="callable"):

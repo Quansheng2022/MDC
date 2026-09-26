@@ -62,6 +62,13 @@ STATUS_SUCCESS = "Conversion completed."
 STATUS_SUCCESS_WITH_WARNING = "Conversion completed with warnings."
 STATUS_FAILED = "Conversion failed."
 
+#: States that finish a conversion (WP-P12-04-03 §4).
+_COMPLETION_STATES = (
+    GuiState.SUCCESS,
+    GuiState.SUCCESS_WITH_WARNING,
+    GuiState.FAILED,
+)
+
 
 @dataclass(frozen=True)
 class StateEffect:
@@ -228,7 +235,7 @@ class GuiStateModel:
         Returns:
             GuiState: The state after the transition.
         """
-        return self._complete(GuiState.SUCCESS)
+        return self.complete(GuiState.SUCCESS)
 
     def complete_warning(self) -> GuiState:
         """Move ``CONVERTING`` -> ``SUCCESS_WITH_WARNING``.
@@ -236,7 +243,7 @@ class GuiStateModel:
         Returns:
             GuiState: The state after the transition.
         """
-        return self._complete(GuiState.SUCCESS_WITH_WARNING)
+        return self.complete(GuiState.SUCCESS_WITH_WARNING)
 
     def complete_failure(self) -> GuiState:
         """Move ``CONVERTING`` -> ``FAILED``.
@@ -244,17 +251,27 @@ class GuiStateModel:
         Returns:
             GuiState: The state after the transition.
         """
-        return self._complete(GuiState.FAILED)
+        return self.complete(GuiState.FAILED)
 
-    def _complete(self, state: GuiState) -> GuiState:
+    def complete(self, state: GuiState) -> GuiState:
         """Apply a completion transition when the model is ``CONVERTING``.
+
+        This is the generic entry used by the centralized ``ConversionResult``
+        -> ``GuiState`` mapping (WP-P12-05-04); the named ``complete_success`` /
+        ``complete_warning`` / ``complete_failure`` helpers remain for the
+        P12-04 mock hooks and existing callers.
 
         Args:
             state: Completion state to apply.
 
         Returns:
             GuiState: The state after the request.
+
+        Raises:
+            ValueError: ``state`` is not a completion state.
         """
+        if state not in _COMPLETION_STATES:
+            raise ValueError(f"{state} is not a completion state")
         if self._state is GuiState.CONVERTING:
             self._state = state
         return self._state

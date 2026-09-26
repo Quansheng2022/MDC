@@ -48,11 +48,12 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from ..application.conversion_result import ConversionResult, ConversionStatus
+from ..application.conversion_result import ConversionResult
 from ..application.conversion_service import ConversionService
 from . import file_picker
 from .drop_zone import DropZone
 from .request_builder import build_conversion_request
+from .result_mapping import gui_state_for_result
 from .state import GuiState, GuiStateModel
 from .worker import GuiWorker, JobFailure
 
@@ -159,6 +160,10 @@ class MainWindow(QMainWindow):
             the default location).
         service: Application conversion service (GUI -> service boundary).
         worker: Worker boundary that runs the service off the GUI thread.
+        latest_result: Most recent application-layer ``ConversionResult``,
+            retained untouched for the P12-06 diagnostics UX.
+        latest_job_failure: Most recent worker infrastructure failure, if any;
+            kept distinct from application results.
         drop_zone: Drop-area placeholder frame.
         drop_label: Instruction text inside the drop area.
         source_label: Selected source display (hidden while EMPTY).
@@ -179,6 +184,8 @@ class MainWindow(QMainWindow):
         super().__init__(parent)
         self.state_model = GuiStateModel()
         self._output_directory: Optional[Path] = None
+        self._latest_result: Optional[ConversionResult] = None
+        self._latest_job_failure: Optional[JobFailure] = None
         self.service = ConversionService()
         self.worker = GuiWorker(self)
         self.worker.succeeded.connect(self._on_conversion_result)
@@ -218,6 +225,26 @@ class MainWindow(QMainWindow):
         (WP-P12-05-03): the GUI does not compute a DOCX path from it.
         """
         return self._output_directory
+
+    @property
+    def latest_result(self) -> Optional[ConversionResult]:
+        """Return the most recent application-layer conversion result.
+
+        The complete result - diagnostics, warnings, errors, quality-gate
+        evidence and output path - is retained untouched for the P12-06
+        diagnostics UX (WP-P12-05-04 §5).
+        """
+        return self._latest_result
+
+    @property
+    def latest_job_failure(self) -> Optional[JobFailure]:
+        """Return the most recent worker infrastructure failure, if any.
+
+        Worker failures keep their own semantics: they are never converted into
+        a fabricated ``ConversionResult`` and never overwrite
+        :attr:`latest_result`.
+        """
+        return self._latest_job_failure
 
     def set_source(self, source: Optional[str]) -> GuiState:
         """Select a source and return the resulting GUI state.
@@ -361,28 +388,26 @@ class MainWindow(QMainWindow):
         return self.request_convert()
 
     def _on_conversion_result(self, result: ConversionResult) -> None:
-        """Leave ``CONVERTING`` once the worker delivered a conversion result.
+        """Retain and map one application-layer result, then leave ``CONVERTING``.
 
-        Minimal completion mapping for the vertical slice; WP-P12-05-04 owns the
-        final centralized ``ConversionResult`` -> ``GuiState`` mapping.
+        The status -> state interpretation lives in
+        :func:`md_converter.gui.result_mapping.gui_state_for_result`; this
+        callback only stores the evidence and applies the mapped state.
 
         Args:
             result: Conversion outcome returned by the application service.
         """
-        if result.status is ConversionStatus.SUCCESS_WITH_WARNING:
-            self.state_model.complete_warning()
-        elif result.status is ConversionStatus.FAILED:
-            self.state_model.complete_failure()
-        else:
-            self.state_model.complete_success()
+        self._latest_result = result
+        self.state_model.complete(gui_state_for_result(result))
         self._apply_state()
 
     def _on_conversion_failure(self, failure: JobFailure) -> None:
-        """Leave ``CONVERTING`` once the worker reported failure evidence.
+        """Retain worker failure evidence and leave ``CONVERTING``.
 
         Args:
             failure: Structured evidence from the worker boundary.
         """
+        self._latest_job_failure = failure
         self.state_model.complete_failure()
         self._apply_state()
 

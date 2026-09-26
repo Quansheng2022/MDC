@@ -167,9 +167,13 @@ class GuiWorker(QObject):
         # Graceful shutdown: no terminate(); the thread's event loop is asked to
         # quit once the job reported its completion.
         runner.finished.connect(thread.quit)
+        # Qt must own both deletions *before* the Python references are released
+        # below: releasing a wrapper whose C++ object still exists deletes the
+        # object immediately and can race the pending deferred delete (observed
+        # as a native heap-corruption crash inside the cleanup slot).
         thread.finished.connect(runner.deleteLater)
-        thread.finished.connect(self._on_thread_finished)
         thread.finished.connect(thread.deleteLater)
+        thread.finished.connect(self._on_thread_finished)
 
         self._thread = thread
         self._runner = runner
