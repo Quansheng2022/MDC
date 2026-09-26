@@ -218,7 +218,10 @@ Formal Closure Master Instruction.
 ```text
 P12-03 status                     CLOSED / ACCEPTED
 Baseline HEAD                     e025a36 (e025a36c645039acb1bb38208db73e8550a76156)
-Closure SHA                       recorded in the follow-up closure-record commit
+Closure SHA                       1e3ebe9 (1e3ebe9392bdbd610c17dbb5088d80c803b2ed1d)
+Commit message                    "P12-03 application service extraction"
+Committed files                   17 (3998 insertions) - application layer, application tests, P12-03 docs
+Closure record                    this document; SHA recorded by the documentation-only follow-up commit
 Focused application tests         PASS (72 passed / 0 failed)
 Public API + CLI                  PASS (47 passed / 0 failed)
 Full regression                   422 passed / 2 known pre-existing failures
