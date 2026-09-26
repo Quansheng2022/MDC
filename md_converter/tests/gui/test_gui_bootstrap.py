@@ -115,7 +115,10 @@ def test_main_window_can_be_instantiated(qapp, main_window_class) -> None:
         assert central is not None
         assert central.layout() is not None
 
-        placeholder = window.findChild(QLabel, "placeholderLabel")
+        # WP-P12-04-02 replaced the bootstrap placeholder label with the
+        # drop-area placeholder; the bootstrap intent (placeholder content
+        # exists) is unchanged.
+        placeholder = window.findChild(QLabel, "dropLabel")
         assert placeholder is not None
         assert placeholder.text().strip()
     finally:
