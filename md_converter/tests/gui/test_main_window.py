@@ -112,7 +112,6 @@ def test_controls_have_understandable_labels() -> None:
         OUTPUT_CAPTION_TEXT,
         OUTPUT_VALUE_TEXT,
         SELECT_FILE_TEXT,
-        STATUS_TEXT,
     )
 
     expected_text = {
@@ -122,7 +121,6 @@ def test_controls_have_understandable_labels() -> None:
         "outputValueLabel": OUTPUT_VALUE_TEXT,
         "changeOutputButton": CHANGE_OUTPUT_TEXT,
         "convertButton": CONVERT_TEXT,
-        "statusLabel": STATUS_TEXT,
     }
 
     window = _make_window()
@@ -135,6 +133,13 @@ def test_controls_have_understandable_labels() -> None:
             assert "--" not in text
             assert "CompilerContext" not in text
             assert "ConversionService" not in text
+
+        # The status text is state-driven from WP-P12-04-03 onwards; its exact
+        # per-state wording is asserted by the GUI state-model tests.
+        status = window.findChild(QWidget, "statusLabel")
+        assert status is not None
+        assert status.text().strip()
+        assert "--" not in status.text()
     finally:
         window.close()
 
@@ -167,8 +172,9 @@ def test_resize_keeps_primary_layout_intact() -> None:
 def test_convert_is_not_wired_to_conversion() -> None:
     """WP §6/§9: Convert is an inert placeholder and changes nothing.
 
-    Stage guard: WP-P12-04-03 (state model) and WP-P12-04-06 (closure) wire the
-    action through the application service and will update this guard.
+    Stage guard: the state model (WP-P12-04-03) now owns Convert enablement; the
+    real action is wired through the application service by a later work
+    package, which will update this guard.
     """
     window = _make_window()
     try:

@@ -1,4 +1,4 @@
-"""Main window foundation for the MD_Converter GUI (WP-P12-04-02).
+"""Main window foundation for the MD_Converter GUI (WP-P12-04-02/03).
 
 Visible shell for the v2.0 workflow (``V2_GUI_UX_SPEC`` §3):
 
@@ -10,10 +10,16 @@ Scope limits for this work package:
 * no file picker, drag & drop or output-selection behavior;
 * no worker/thread, diagnostics UX or settings.
 
-The controls are present as inert placeholders; the GUI state model and the
-behavior behind them arrive with later work packages (WP-P12-04-03 onwards).
+The controls remain inert placeholders: the GUI state model (WP-P12-04-03)
+governs enablement, the source display and the status text, while the behavior
+behind each control arrives with later work packages (WP-P12-04-04 onwards).
 Standard Qt layouts are used throughout (WP-P12-04-02 §7): no absolute
 positioning, no custom painting, no theming.
+
+WP-P12-04-03 adds the explicit GUI state model.  Widget enablement, the source
+display and the status text are derived from :mod:`md_converter.gui.state`
+through the single :meth:`MainWindow._apply_state` path, so no other method
+writes those widget states.
 """
 
 from __future__ import annotations
@@ -31,6 +37,8 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from .state import GuiState, GuiStateModel
+
 __all__ = [
     "CHANGE_OUTPUT_TEXT",
     "CONVERT_MINIMUM_WIDTH",
@@ -43,7 +51,6 @@ __all__ = [
     "OUTPUT_CAPTION_TEXT",
     "OUTPUT_VALUE_TEXT",
     "SELECT_FILE_TEXT",
-    "STATUS_TEXT",
     "WINDOW_HEIGHT",
     "WINDOW_TITLE",
     "WINDOW_WIDTH",
@@ -67,7 +74,6 @@ OUTPUT_CAPTION_TEXT = "Output folder:"
 OUTPUT_VALUE_TEXT = "Same as source"
 CHANGE_OUTPUT_TEXT = "Change"
 CONVERT_TEXT = "Convert"
-STATUS_TEXT = "Ready"
 
 #: Layout sizing for the drop area and the primary action.
 DROP_ZONE_MINIMUM_HEIGHT = 180
@@ -78,8 +84,11 @@ class MainWindow(QMainWindow):
     """Main window foundation: the visible v2.0 workflow shell.
 
     Attributes:
+        state_model: Explicit GUI state model (Qt-free).
+        state: Current GUI state (read-only convenience accessor).
         drop_zone: Drop-area placeholder frame.
         drop_label: Instruction text inside the drop area.
+        source_label: Selected source display (hidden while EMPTY).
         select_file_button: Placeholder for the file picker.
         output_value_label: Current output destination display.
         change_output_button: Placeholder for output selection.
@@ -94,6 +103,7 @@ class MainWindow(QMainWindow):
             parent: Optional Qt parent widget.
         """
         super().__init__(parent)
+        self.state_model = GuiStateModel()
         self.setObjectName("MainWindow")
         self.setWindowTitle(WINDOW_TITLE)
         self.setMinimumSize(MINIMUM_WIDTH, MINIMUM_HEIGHT)
@@ -114,6 +124,96 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.status_label)
 
         self.setCentralWidget(central)
+        self._apply_state()
+
+    @property
+    def state(self) -> GuiState:
+        """Return the current GUI state."""
+        return self.state_model.state
+
+    def set_source(self, source: Optional[str]) -> GuiState:
+        """Select a source and return the resulting GUI state.
+
+        This is the state-model entry point for source selection; the file
+        picker (WP-P12-04-04) and drag & drop (WP-P12-04-05) call it once their
+        behavior is implemented.
+
+        Args:
+            source: Display label of the selected source.
+
+        Returns:
+            GuiState: The state after the request.
+        """
+        self.state_model.set_source(source)
+        return self._apply_state()
+
+    def reset(self) -> GuiState:
+        """Clear the selection and return to ``EMPTY``.
+
+        Returns:
+            GuiState: The state after the request.
+        """
+        self.state_model.reset()
+        return self._apply_state()
+
+    def request_convert(self) -> GuiState:
+        """Request conversion, moving ``READY`` -> ``CONVERTING``.
+
+        The request is rejected (state unchanged) from every other state, which
+        prevents duplicate starts while converting.  No conversion work is
+        performed in P12-04.
+
+        Returns:
+            GuiState: The state after the request.
+        """
+        self.state_model.request_convert()
+        return self._apply_state()
+
+    def simulate_success(self) -> GuiState:
+        """Apply the mocked ``CONVERTING`` -> ``SUCCESS`` completion.
+
+        Returns:
+            GuiState: The state after the transition.
+        """
+        self.state_model.complete_success()
+        return self._apply_state()
+
+    def simulate_warning(self) -> GuiState:
+        """Apply the mocked ``CONVERTING`` -> ``SUCCESS_WITH_WARNING`` completion.
+
+        Returns:
+            GuiState: The state after the transition.
+        """
+        self.state_model.complete_warning()
+        return self._apply_state()
+
+    def simulate_failure(self) -> GuiState:
+        """Apply the mocked ``CONVERTING`` -> ``FAILED`` completion.
+
+        Returns:
+            GuiState: The state after the transition.
+        """
+        self.state_model.complete_failure()
+        return self._apply_state()
+
+    def _apply_state(self) -> GuiState:
+        """Apply the current state effects to the widgets.
+
+        This is the *only* place that writes workflow-driven widget state
+        (WP-P12-04-03 §7).  Output-selection availability is not part of the
+        workflow state; its control stays disabled until WP-P12-04-06.
+
+        Returns:
+            GuiState: The current GUI state.
+        """
+        effect = self.state_model.effect
+        self.convert_button.setEnabled(effect.convert_enabled)
+        self.select_file_button.setEnabled(effect.select_enabled)
+        self.drop_zone.setEnabled(effect.drop_enabled)
+        self.source_label.setText(self.state_model.source or "")
+        self.source_label.setVisible(effect.source_visible)
+        self.status_label.setText(effect.status_text)
+        return self.state_model.state
 
     def _create_drop_zone(self, parent: QWidget) -> QFrame:
         """Create the drop-area placeholder (no drag & drop behavior yet).
@@ -140,10 +240,16 @@ class MainWindow(QMainWindow):
         self.drop_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         zone_layout.addWidget(self.drop_label)
 
+        self.source_label = QLabel("", zone)
+        self.source_label.setObjectName("sourceLabel")
+        self.source_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.source_label.setWordWrap(True)
+        zone_layout.addWidget(self.source_label)
+
+        # File-picker behavior is implemented by WP-P12-04-04; button
+        # enablement is applied from the GUI state by _apply_state().
         self.select_file_button = QPushButton(SELECT_FILE_TEXT, zone)
         self.select_file_button.setObjectName("selectFileButton")
-        # File-picker behavior is implemented by WP-P12-04-04.
-        self.select_file_button.setEnabled(False)
 
         button_row = QHBoxLayout()
         button_row.addStretch(1)
@@ -197,17 +303,16 @@ class MainWindow(QMainWindow):
         self.convert_button.setObjectName("convertButton")
         self.convert_button.setMinimumWidth(CONVERT_MINIMUM_WIDTH)
         self.convert_button.setDefault(True)
-        # Real conversion is not authorized in P12-04 (WP-P12-04-02 §6).
-        self.convert_button.setEnabled(False)
+        # Enablement is applied from the GUI state by _apply_state();
+        # real conversion is not authorized in P12-04 (WP-P12-04-02 §6).
 
         row.addStretch(1)
         row.addWidget(self.convert_button)
         row.addStretch(1)
         return row
 
-    @staticmethod
-    def _create_status_label(parent: QWidget) -> QLabel:
-        """Create the status area (static text until WP-P12-04-03).
+    def _create_status_label(self, parent: QWidget) -> QLabel:
+        """Create the status area, initially showing the state model text.
 
         Args:
             parent: Parent widget for the label.
@@ -215,6 +320,6 @@ class MainWindow(QMainWindow):
         Returns:
             QLabel: The status label.
         """
-        label = QLabel(STATUS_TEXT, parent)
+        label = QLabel(self.state_model.effect.status_text, parent)
         label.setObjectName("statusLabel")
         return label
