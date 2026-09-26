@@ -191,20 +191,26 @@ def test_convert_is_not_wired_to_conversion() -> None:
         window.close()
 
 
-def test_drop_area_does_not_accept_drops_yet() -> None:
-    """WP §8: drag & drop behavior belongs to WP-P12-04-05 (stage guard).
+def test_drop_acceptance_follows_gui_state() -> None:
+    """Drop acceptance is driven by the GUI state (WP-P12-04-05).
 
-    ``QMainWindow.acceptDrops()`` is enabled by Qt itself (dock/widget
-    handling), so the boundary is verified on the drop area and on the absence
-    of drag/drop event handlers rather than on that Qt default.
+    Replaces the WP-P12-04-02 stage guard now that drag & drop exists: the
+    window itself still implements no drag/drop handlers - the drop area owns
+    them - and the drop area accepts input only in states that allow it.
     """
     from md_converter.gui.main_window import MainWindow
 
     window = _make_window()
     try:
-        assert window.drop_zone.acceptDrops() is False
+        assert window.drop_zone.acceptDrops() is True
         for handler in ("dragEnterEvent", "dragMoveEvent", "dragLeaveEvent", "dropEvent"):
             assert handler not in MainWindow.__dict__, handler
+
+        window.set_source("notes.md")
+        assert window.drop_zone.acceptDrops() is True
+
+        window.request_convert()
+        assert window.drop_zone.acceptDrops() is False
     finally:
         window.close()
 

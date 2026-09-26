@@ -1,4 +1,4 @@
-"""Main window foundation for the MD_Converter GUI (WP-P12-04-02/03/04).
+"""Main window foundation for the MD_Converter GUI (WP-P12-04-02..05).
 
 Visible shell for the v2.0 workflow (``V2_GUI_UX_SPEC`` §3):
 
@@ -12,8 +12,10 @@ Scope limits for this work package:
 
 The GUI state model (WP-P12-04-03) governs enablement, the source display and
 the status text.  Source selection (WP-P12-04-04) uses the standard file dialog
-and funnels into :meth:`MainWindow.set_source`; drag & drop, output selection
-and conversion wiring arrive with later work packages.  Standard Qt layouts are
+and drag & drop (WP-P12-04-05) both funnel into
+:meth:`MainWindow.set_source_file`, which applies the shared validation before
+the single state path :meth:`MainWindow.set_source`.  Output selection and
+conversion wiring arrive with later work packages.  Standard Qt layouts are
 used throughout (WP-P12-04-02 §7): no absolute positioning, no custom painting,
 no theming.
 
@@ -26,11 +28,10 @@ writes those widget states.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Union
 
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
-    QFrame,
     QHBoxLayout,
     QLabel,
     QMainWindow,
@@ -40,6 +41,7 @@ from PySide6.QtWidgets import (
 )
 
 from . import file_picker
+from .drop_zone import DropZone
 from .state import GuiState, GuiStateModel
 
 __all__ = [
@@ -47,6 +49,7 @@ __all__ = [
     "CONVERT_MINIMUM_WIDTH",
     "CONVERT_TEXT",
     "DROP_HINT_TEXT",
+    "DROP_RELEASE_HINT_TEXT",
     "DROP_ZONE_MINIMUM_HEIGHT",
     "MINIMUM_HEIGHT",
     "MINIMUM_WIDTH",
@@ -73,6 +76,8 @@ MINIMUM_HEIGHT = 480
 
 #: Visible labels.  Plain product language only (WP-P12-04-02 §5).
 DROP_HINT_TEXT = "Drop Markdown file here"
+#: Transient drag-over feedback (WP-P12-04-05 §6: "text change").
+DROP_RELEASE_HINT_TEXT = "Release to select this file"
 SELECT_FILE_TEXT = "Select File"
 OUTPUT_CAPTION_TEXT = "Output folder:"
 OUTPUT_VALUE_TEXT = "Same as source"
@@ -199,11 +204,11 @@ class MainWindow(QMainWindow):
     def choose_source(self) -> GuiState:
         """Open the Markdown file dialog and apply the chosen source.
 
-        The dialog path is validated at the GUI boundary and then applied
-        through :meth:`set_source`, so source selection has exactly one state
-        path.  Cancelling the dialog keeps the current selection, and an
-        invalid selection is rejected without entering ``READY`` (user-facing
-        error UX belongs to a later work package).
+        The dialog result is applied through :meth:`set_source_file`, so the
+        picker and drag & drop share one validation and state path.
+        Cancelling the dialog keeps the current selection, and an invalid
+        selection is rejected without entering ``READY`` (user-facing error UX
+        belongs to a later work package).
 
         Returns:
             GuiState: The state after the request.
@@ -211,10 +216,34 @@ class MainWindow(QMainWindow):
         chosen = file_picker.ask_for_markdown_source(self)
         if chosen is None:
             return self.state
-        validated = file_picker.validate_markdown_source(chosen)
+        return self.set_source_file(chosen)
+
+    def set_source_file(self, path: Optional[Union[str, Path]]) -> GuiState:
+        """Validate ``path`` and apply it as the selected source.
+
+        This is the shared source-selection entry point for the file picker and
+        for drag & drop (WP-P12-04-05 §4): one validation rule, one source
+        display, one state transition.
+
+        Args:
+            path: Candidate source path (typically a local ``.md`` file).
+
+        Returns:
+            GuiState: The state after the request; unchanged when the candidate
+            is not selectable.
+        """
+        validated = file_picker.validate_markdown_source(path)
         if validated is None:
             return self.state
         return self.set_source(str(validated))
+
+    def _set_drop_hover(self, active: bool) -> None:
+        """Show transient drag-over feedback in the drop area hint.
+
+        Args:
+            active: ``True`` while a valid file hovers the drop area.
+        """
+        self.drop_label.setText(DROP_RELEASE_HINT_TEXT if active else DROP_HINT_TEXT)
 
     def request_convert(self) -> GuiState:
         """Request conversion, moving ``READY`` -> ``CONVERTING``.
@@ -270,6 +299,7 @@ class MainWindow(QMainWindow):
         self.convert_button.setEnabled(effect.convert_enabled)
         self.select_file_button.setEnabled(effect.select_enabled)
         self.drop_zone.setEnabled(effect.drop_enabled)
+        self.drop_zone.setAcceptDrops(effect.drop_enabled)
         source = self.state_model.source
         self.source_label.setText(_source_display_name(source))
         self.source_label.setToolTip(source or "")
@@ -281,20 +311,19 @@ class MainWindow(QMainWindow):
         self.status_label.setText(effect.status_text)
         return self.state_model.state
 
-    def _create_drop_zone(self, parent: QWidget) -> QFrame:
+    def _create_drop_zone(self, parent: QWidget) -> DropZone:
         """Create the drop-area placeholder (no drag & drop behavior yet).
 
         Args:
             parent: Parent widget for the frame.
 
         Returns:
-            QFrame: Drop area holding the instruction text and file button.
+            DropZone: Drop area holding the instruction text and file button.
         """
-        zone = QFrame(parent)
-        zone.setObjectName("dropZone")
-        zone.setFrameShape(QFrame.Shape.StyledPanel)
-        zone.setFrameShadow(QFrame.Shadow.Sunken)
+        zone = DropZone(parent)
         zone.setMinimumHeight(DROP_ZONE_MINIMUM_HEIGHT)
+        zone.source_dropped.connect(self.set_source_file)
+        zone.hover_changed.connect(self._set_drop_hover)
 
         zone_layout = QVBoxLayout(zone)
         zone_layout.setObjectName("dropZoneLayout")
