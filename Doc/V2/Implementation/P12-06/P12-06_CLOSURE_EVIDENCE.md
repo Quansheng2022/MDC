@@ -150,13 +150,18 @@ Bounded real-platform run (real Windows Qt platform, real `MainWindow`, real
 OS launches; temporary workspace under `%TEMP%`). Harness script lives outside
 the repository.
 
+> **Open Document evidence was corrected after closure** — see §5.1. The original
+> harness deleted its temporary artifact immediately after the launcher returned,
+> which produced a Microsoft Word "file not found" message. The persistent-artifact
+> re-verification below supersedes the original Open Document row.
+
 | Check | Result |
 | --- | --- |
 | SUCCESS conversion state | `SUCCESS` |
 | SUCCESS artifact on disk | `True` |
 | SUCCESS: Open Document / Open Folder enabled | `True` / `True` |
 | SUCCESS Details affordance | absent by design (plain-SUCCESS boundary) |
-| Open Document (real platform launch) | `True` |
+| Open Document (real platform launch) | `True` (see §5.1 for the corrected check) |
 | Open Folder (real platform launch) | `True` |
 | Missing artifact fails safely / no path substitution | `True` / `True` |
 | SUCCESS_WITH_WARNING state | `SUCCESS_WITH_WARNING` |
@@ -176,6 +181,45 @@ report open/close, OS launches, missing-artifact path, recovery, close).
 Automated-only: the exhaustive outcome/eligibility matrix and all mocked-OS
 launch checks in `test_output_actions.py`, plus the report content matrix in
 `test_report_view.py`.
+
+### 5.1 Evidence correction — persistent Open Document re-verification
+
+The first smoke generated its DOCX in a `tempfile.mkdtemp(...)` workspace and
+then deleted it (an explicit `artifact.unlink()` in the missing-artifact step)
+immediately after `QDesktopServices.openUrl(...)` returned. Word starts
+asynchronously, so it was handed a path whose file was already gone — hence the
+observed *"Sorry, we couldn't find your file. Was it moved, renamed, or
+deleted?"*. `launcher accepted = True` was therefore **not** sufficient evidence
+of an actual Word open.
+
+Re-verified with a persistent artifact produced by the accepted product path
+(`MainWindow` → `GuiWorker` → `ConversionService` → Canonical Core) into the
+repository's git-ignored `output/` directory, opened through the real product
+action, with the harness kept alive and the artifact left in place:
+
+| Check | Result |
+| --- | --- |
+| Persistent artifact path | `C:\Users\Quansheng\Documents\projects\MD_Converter\output\p12_06_open_document_smoke_135805.docx` |
+| Artifact existed before launch | `True` |
+| Artifact size | `37330` bytes (unchanged after open) |
+| Valid DOCX / ZIP container | `True` |
+| Path authority | `latest_result.output_path` (identity match) |
+| Launcher accepted the request | `True` |
+| Artifact remained present after launch | `True` |
+| Microsoft Word actually opened the document | `True` — Word window title `p12_06_open_document_smoke_135805 [Compatibility Mode] - Word` |
+| Open Folder (same persistent artifact) | `True` |
+| Missing artifact (dedicated second artifact, deleted) | refused, no substitution, no Word window, no crash |
+| Persistent success artifact survived the run | `True` |
+| Production code changed for this correction | **NO** |
+| P12-06 blocker | **NO** |
+
+Observation (not a defect, no action): while Word holds an artifact open, a new
+conversion to the same output name fails closed with an `OUTPUT_ERROR`, because
+Word locks the file. The GUI reports it as an ordinary failure; nothing is
+reconstructed or overwritten.
+
+The `output/` smoke artifact was intentionally left in place as evidence; the
+working tree is otherwise untouched.
 
 Smoke observation (known deferred issue, not owned by P12-06): with a cp1252
 console the pipeline's emoji `print` raises `UnicodeEncodeError` and the
