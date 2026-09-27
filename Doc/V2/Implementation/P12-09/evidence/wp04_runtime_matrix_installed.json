@@ -1,0 +1,118 @@
+﻿{
+    "executable":  "C:\\Users\\Quansheng\\AppData\\Local\\Programs\\MD_Converter\\MD_Converter.exe",
+    "work_dir":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_p1209_wp04_matrix",
+    "non_ascii_dir":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_p1209_wp04_matrix\\MDC smoke Ã¼ æµ‹è¯• 225144",
+    "python_io_encoding_env":  "",
+    "started_at":  "2026-09-27T22:51:44.6247076+08:00",
+    "startup":  {
+                    "passed":  true,
+                    "detail":  "main window visible (pid 20356)"
+                },
+    "main_window_rect":  "285,135 1350x900",
+    "high-dpi-controls-in-bounds":  {
+                                        "passed":  true,
+                                        "detail":  "window 285,135 1350x900; clipped controls: none"
+                                    },
+    "conversion":  {
+                       "selected":  true,
+                       "convert_enabled":  true,
+                       "outcome":  {
+                                       "outcome":  "SUCCESS",
+                                       "seconds":  4.7,
+                                       "detail":  "Open Document / Open Folder enabled"
+                                   }
+                   },
+    "conversion-non-ascii-path":  {
+                                      "passed":  true,
+                                      "detail":  "outcome=SUCCESS after 4.7s for a spaces+non-ASCII input path"
+                                  },
+    "artifacts":  [
+                      "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_p1209_wp04_matrix\\output\\runtime_smoke_Ã¼_225144.docx"
+                  ],
+    "artifact-created":  {
+                             "passed":  true,
+                             "detail":  "1 DOCX artifact(s)"
+                         },
+    "pref_last_source_directory":  "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_p1209_wp04_matrix\\MDC smoke Ã¼ æµ‹è¯• 225144",
+    "preference-written-on-conversion":  {
+                                             "passed":  true,
+                                             "detail":  "product preference store remembered this run\u0027s source folder: C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_p1209_wp04_matrix\\MDC smoke Ã¼ æµ‹è¯• 225144"
+                                         },
+    "word_document_window":  "runtime_smoke_Ã¼_225144 [Compatibility Mode] - Word",
+    "open-document-word-opens":  {
+                                     "passed":  true,
+                                     "detail":  "artifact existed before=True; Word document window: \u0027runtime_smoke_Ã¼_225144 [Compatibility Mode] - Word\u0027"
+                                 },
+    "open-document-word-reads-file":  {
+                                          "passed":  true,
+                                          "detail":  "document held open by Word while displayed (exclusive lock observed): True"
+                                      },
+    "artifact-persists-after-open":  {
+                                         "passed":  true,
+                                         "detail":  "artifact present before and after opening"
+                                     },
+    "word-document-closed-lock-released":  {
+                                               "passed":  true,
+                                               "detail":  "closing the Word document window released the file lock: True"
+                                           },
+    "explorer_window_title":  "output - File Explorer",
+    "open-folder":  {
+                        "passed":  true,
+                        "detail":  "expected folder \u0027output\u0027; new Explorer window: \u0027output - File Explorer\u0027"
+                    },
+    "missing_artifact_dialog":  "File not available - MD Converter",
+    "missing-artifact-fails-closed":  {
+                                          "passed":  true,
+                                          "detail":  "notice=shown; new Word window=; artifact recreated=False; app alive=True"
+                                      },
+    "settings_toggle_before":  "On",
+    "settings_toggle_set":  "On",
+    "pref_remember_after_save":  "true",
+    "settings-saved":  {
+                           "passed":  true,
+                           "detail":  "remember-folders checkbox: before=On, set to On and saved"
+                       },
+    "clean-close-and-restart-step":  {
+                                         "passed":  true,
+                                         "detail":  "application closed cleanly before restart"
+                                     },
+    "restart":  {
+                    "passed":  true,
+                    "detail":  "restarted application window visible (pid 716)"
+                },
+    "settings_toggle_after_restart":  "On",
+    "remembered_folder_texts":  [
+                                    "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_p1209_wp04_matrix\\MDC smoke Ã¼ æµ‹è¯• 225144"
+                                ],
+    "settings-persist-across-restart":  {
+                                            "passed":  true,
+                                            "detail":  "remember-folders after restart = On"
+                                        },
+    "remembered-folders-restored":  {
+                                        "passed":  true,
+                                        "detail":  "1 remembered-folder value(s) shown by the restarted app"
+                                    },
+    "worker-active-close-protection":  {
+                                           "passed":  true,
+                                           "detail":  "window close during an active conversion did not terminate the application (still running=True)"
+                                       },
+    "close_protection_outcome":  {
+                                     "outcome":  "SUCCESS",
+                                     "seconds":  1.4,
+                                     "detail":  "Open Document / Open Folder enabled"
+                                 },
+    "close-protection-conversion-completes":  {
+                                                  "passed":  true,
+                                                  "detail":  "conversion outcome after protected close: SUCCESS"
+                                              },
+    "clean-close":  {
+                        "passed":  true,
+                        "detail":  "application exits when closed while idle"
+                    },
+    "settings_restored":  "failed: The operation completed successfully.",
+    "finished_at":  "2026-09-27T22:52:37.5184002+08:00",
+    "failed_checks":  [
+
+                      ],
+    "status":  "PASS"
+}

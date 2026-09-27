@@ -1,0 +1,52 @@
+{
+  "wp": "WP-P12-09-04",
+  "installer": {
+    "path": "dist_installer\\MD_Converter_v1.1.0_Setup.exe",
+    "size_bytes": 51109717,
+    "sha256": "EFEC378F11B00A53791158199B4DC98AA09F44F5B1F013363FF744A92B91B9BF",
+    "silent_install_exit_code": 0,
+    "privileged_required": "lowest",
+    "default_dir_name": "{localappdata}\\Programs\\MD_Converter",
+    "license_file": "EULA.txt",
+    "architectures": "x64compatible"
+  },
+  "installed": {
+    "path": "%LOCALAPPDATA%\\Programs\\MD_Converter\\MD_Converter.exe",
+    "size_bytes": 6845458,
+    "sha256": "F5AB988168DFA976ED50095A272FB3405CE2CAB395C4A77A34637318D60F7E04",
+    "version": "1.1.0",
+    "matches_packaged_exe": true,
+    "files": [
+      "MD_Converter.exe",
+      "EULA.txt",
+      "THIRD_PARTY_NOTICES.txt",
+      "unins000.exe",
+      "unins000.dat"
+    ],
+    "uninstall_registry_key": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\MDConverter.Quansheng2022_is1",
+    "display_name": "MD Converter 1.1.0",
+    "display_version": "1.1.0",
+    "publisher": "Quansheng2022",
+    "install_location": "C:\\Users\\Quansheng\\AppData\\Local\\Programs\\MD_Converter\\",
+    "service_created": false,
+    "autostart_created": false,
+    "start_menu_shortcuts": [
+      "MD Converter.lnk",
+      "MD Converter - Input Folder.lnk",
+      "MD Converter - Output Folder.lnk",
+      "Uninstall MD Converter.lnk"
+    ],
+    "start_menu_launch_verified": true,
+    "start_menu_shortcut_target": "C:\\Users\\Quansheng\\AppData\\Local\\Programs\\MD_Converter\\MD_Converter.exe"
+  },
+  "uninstall": {
+    "exit_code": 0,
+    "install_dir_removed": true,
+    "uninstall_key_removed": true,
+    "start_menu_removed": true,
+    "user_documents_preserved": true,
+    "unrelated_file_preserved": true,
+    "prefs_key_preserved": true
+  },
+  "failed_checks": []
+}
