@@ -1,0 +1,116 @@
+﻿{
+    "executable":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\dist\\MD_Converter_Lite\\MD_Converter_Lite.exe",
+    "executable_size_bytes":  6845458,
+    "executable_sha256":  "F5AB988168DFA976ED50095A272FB3405CE2CAB395C4A77A34637318D60F7E04",
+    "input_markdown":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\Doc\\V2\\Implementation\\P12-09\\corpus\\01_simple.md",
+    "work_dir":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_p1209_smoke_20260927_220938",
+    "started_at":  "2026-09-27T22:09:45.9141551+08:00",
+    "process_id":  30996,
+    "gui-startup":  {
+                        "passed":  true,
+                        "detail":  "window \u0027MD Converter\u0027 is visible"
+                    },
+    "main_window_elements":  [
+                                 "ControlType.Group|",
+                                 "ControlType.Custom|Markdown file drop area",
+                                 "ControlType.Text|Markdown file drop area",
+                                 "ControlType.Text|Markdown files (.md) are converted on this computer.",
+                                 "ControlType.Button|Select File",
+                                 "ControlType.Text|Output folder:",
+                                 "ControlType.Text|Output folder",
+                                 "ControlType.Button|Change output folder",
+                                 "ControlType.Button|Convert",
+                                 "ControlType.Text|Status",
+                                 "ControlType.Group|",
+                                 "ControlType.Button|Settings",
+                                 "ControlType.Button|About"
+                             ],
+    "settings_dialog_title":  "Settings - MD Converter",
+    "settings_text":  [
+                          "Folders",
+                          "Remember the last folders I used",
+                          "When this is on, the file and folder dialogs open where you last worked. The folders are remembered on this computer only.",
+                          "Last source folder:",
+                          "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_wp07",
+                          "Last output folder:",
+                          "Not remembered",
+                          "Reset to Defaults",
+                          "Cancel",
+                          "Save"
+                      ],
+    "settings-opens":  {
+                           "passed":  true,
+                           "detail":  "dialog \u0027\u0027 opened with 10 element(s)"
+                       },
+    "settings-closes":  {
+                            "passed":  true,
+                            "detail":  "dialog closed cleanly: True"
+                        },
+    "about_text":  [
+                       "MD Converter",
+                       "Version 1.1.0",
+                       "Turn Markdown into polished Word documents — locally, privately, and without a subscription.",
+                       "Processing: Local, on this computer",
+                       "Account required: No",
+                       "Document upload: Not required for normal conversion",
+                       "Copyright © 2026 Quansheng2022. All rights reserved.",
+                       "Licensed under the Proprietary Single-User License (see EULA.txt).",
+                       "Close"
+                   ],
+    "about-opens":  {
+                        "passed":  true,
+                        "detail":  "dialog \u0027About MD Converter\u0027 opened"
+                    },
+    "about-version":  {
+                          "passed":  true,
+                          "detail":  "version text: Version 1.1.0"
+                      },
+    "about-closes":  {
+                         "passed":  true,
+                         "detail":  "dialog closed cleanly: True"
+                     },
+    "select-file":  {
+                        "passed":  true,
+                        "detail":  "file dialog accepted \u002701_simple.md\u0027"
+                    },
+    "convert-enabled":  {
+                            "passed":  true,
+                            "detail":  "Convert button enabled after selecting a file"
+                        },
+    "conversion_outcome":  {
+                               "outcome":  "SUCCESS",
+                               "seconds":  4.8,
+                               "detail":  "Open Document / Open Folder enabled"
+                           },
+    "conversion":  {
+                       "passed":  true,
+                       "detail":  "outcome=SUCCESS after 4.8s (Open Document / Open Folder enabled)"
+                   },
+    "docx_artifacts":  [
+                           "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_p1209_smoke_20260927_220938\\output\\01_simple.docx"
+                       ],
+    "docx-artifact":  {
+                          "passed":  true,
+                          "detail":  "1 DOCX artifact(s) created"
+                      },
+    "valid_docx_artifacts":  [
+                                 "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_p1209_smoke_20260927_220938\\output\\01_simple.docx"
+                             ],
+    "docx-valid":  {
+                       "passed":  true,
+                       "detail":  "1 of 1 artifact(s) contain word/document.xml"
+                   },
+    "details-report":  {
+                           "passed":  true,
+                           "detail":  "not applicable: successful conversion exposes no report button"
+                       },
+    "clean-close":  {
+                        "passed":  true,
+                        "detail":  "process exited: True"
+                    },
+    "finished_at":  "2026-09-27T22:10:34.5352204+08:00",
+    "failed_checks":  [
+
+                      ],
+    "status":  "PASS"
+}

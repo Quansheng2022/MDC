@@ -1,0 +1,277 @@
+﻿{
+    "executable":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\dist\\MD_Converter_Lite\\MD_Converter_Lite.exe",
+    "executable_sha256":  "F5AB988168DFA976ED50095A272FB3405CE2CAB395C4A77A34637318D60F7E04",
+    "work_dir":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_p1209_accept_20260927_222635",
+    "started_at":  "2026-09-27T22:26:35.5162516+08:00",
+    "process_id":  8692,
+    "startup":  {
+                    "passed":  true,
+                    "detail":  "main window \u0027MD Converter\u0027 visible (pid 8692)"
+                },
+    "state_empty":  {
+                        "state":  "EMPTY",
+                        "convert":  {
+                                        "present":  true,
+                                        "enabled":  false,
+                                        "onscreen":  true
+                                    },
+                        "open_document":  {
+                                              "present":  false,
+                                              "enabled":  false,
+                                              "onscreen":  false
+                                          },
+                        "details":  {
+                                        "present":  false,
+                                        "enabled":  false,
+                                        "onscreen":  false
+                                    },
+                        "source_selected":  false,
+                        "warning_summary":  false,
+                        "visible_texts":  [
+                                              "Markdown file drop area",
+                                              "Markdown files (.md) are converted on this computer.",
+                                              "Output folder:",
+                                              "Output folder",
+                                              "Status"
+                                          ]
+                    },
+    "state-empty":  {
+                        "passed":  true,
+                        "detail":  "fresh window state=EMPTY"
+                    },
+    "ws_ex_acceptfiles":  false,
+    "wm_dropfiles":  {
+                         "sent":  true,
+                         "resulting_state":  "EMPTY"
+                     },
+    "about_text":  [
+                       "MD Converter",
+                       "Version 1.1.0",
+                       "Turn Markdown into polished Word documents — locally, privately, and without a subscription.",
+                       "Processing: Local, on this computer",
+                       "Account required: No",
+                       "Document upload: Not required for normal conversion",
+                       "Copyright © 2026 Quansheng2022. All rights reserved.",
+                       "Licensed under the Proprietary Single-User License (see EULA.txt).",
+                       "Close"
+                   ],
+    "about-wording":  {
+                          "passed":  true,
+                          "detail":  "name=True version=True tagline=True processing=True account=True upload=True"
+                      },
+    "state_ready":  {
+                        "state":  "READY",
+                        "convert":  {
+                                        "present":  true,
+                                        "enabled":  true,
+                                        "onscreen":  true
+                                    },
+                        "open_document":  {
+                                              "present":  false,
+                                              "enabled":  false,
+                                              "onscreen":  false
+                                          },
+                        "details":  {
+                                        "present":  false,
+                                        "enabled":  false,
+                                        "onscreen":  false
+                                    },
+                        "source_selected":  true,
+                        "warning_summary":  false,
+                        "visible_texts":  [
+                                              "Markdown file drop area",
+                                              "Selected Markdown file",
+                                              "Selected file folder",
+                                              "Markdown files (.md) are converted on this computer.",
+                                              "Output folder:",
+                                              "Output folder",
+                                              "Status"
+                                          ]
+                    },
+    "state-ready":  {
+                        "passed":  true,
+                        "detail":  "state after selecting a Markdown file = READY"
+                    },
+    "invalid_input":  {
+                          "notice":  null,
+                          "notice_text":  [
+
+                                          ],
+                          "resulting_state":  "READY"
+                      },
+    "invalid-input-safe":  {
+                               "passed":  true,
+                               "detail":  "app alive=True; state=READY; notice=\u0027none\u0027"
+                           },
+    "missing_source":  {
+                           "state":  "FAILED",
+                           "notice":  null,
+                           "notice_text":  [
+
+                                           ]
+                       },
+    "missing-source-safe":  {
+                                "passed":  true,
+                                "detail":  "app alive=True; state=FAILED; notice=\u0027none\u0027"
+                            },
+    "warning_outcome":  {
+                            "state":  "SUCCESS_WITH_WARNING",
+                            "seconds":  4.8,
+                            "open_document":  {
+                                                  "present":  true,
+                                                  "enabled":  true,
+                                                  "onscreen":  true
+                                              },
+                            "details":  {
+                                            "present":  true,
+                                            "enabled":  true,
+                                            "onscreen":  true
+                                        },
+                            "artifacts":  [
+                                              "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_p1209_accept_20260927_222635\\output\\05_warning_empty_heading.docx"
+                                          ],
+                            "during_state":  "CONVERTING",
+                            "during_select_file":  {
+                                                       "present":  true,
+                                                       "enabled":  false,
+                                                       "onscreen":  true
+                                                   },
+                            "during_drop_area":  {
+                                                     "present":  true,
+                                                     "enabled":  false,
+                                                     "onscreen":  true
+                                                 }
+                        },
+    "state-success-with-warning":  {
+                                       "passed":  true,
+                                       "detail":  "state=SUCCESS_WITH_WARNING after 4.8s (open_document enabled=True; details on-screen=True)"
+                                   },
+    "state-converting-observed":  {
+                                      "passed":  true,
+                                      "detail":  "in-flight state=CONVERTING; Select File enabled=False; drop area enabled=False"
+                                  },
+    "warning-keeps-artifact-actionable":  {
+                                              "passed":  true,
+                                              "detail":  "valid DOCX=1; Open Document enabled=True"
+                                          },
+    "warning_details_text":  [
+                                 "Conversion summary",
+                                 "Report:",
+                                 "Conversion report",
+                                 "Copy",
+                                 "Close"
+                             ],
+    "warning-details-report":  {
+                                   "passed":  true,
+                                   "detail":  "dialog \u0027Warning details - MD Converter\u0027 returned 5 element(s); Traceback present=False"
+                               },
+    "failure_outcome":  {
+                            "state":  "FAILED",
+                            "seconds":  8.7,
+                            "open_document":  {
+                                                  "present":  false,
+                                                  "enabled":  false,
+                                                  "onscreen":  false
+                                              },
+                            "details":  {
+                                            "present":  true,
+                                            "enabled":  true,
+                                            "onscreen":  true
+                                        },
+                            "artifacts":  [
+
+                                          ],
+                            "during_state":  "FAILED",
+                            "during_select_file":  {
+                                                       "present":  true,
+                                                       "enabled":  true,
+                                                       "onscreen":  true
+                                                   },
+                            "during_drop_area":  {
+                                                     "present":  true,
+                                                     "enabled":  true,
+                                                     "onscreen":  true
+                                                 }
+                        },
+    "state-failed":  {
+                         "passed":  true,
+                         "detail":  "state=FAILED after 8.7s (open_document enabled=False; details on-screen=True)"
+                     },
+    "failed-suppresses-output-actions":  {
+                                             "passed":  true,
+                                             "detail":  "Open Document enabled=False on-screen=False"
+                                         },
+    "failure_details_text":  [
+                                 "Conversion summary",
+                                 "Report:",
+                                 "Conversion report",
+                                 "Copy",
+                                 "Close"
+                             ],
+    "failure-details-report":  {
+                                   "passed":  true,
+                                   "detail":  "dialog \u0027Failure details - MD Converter\u0027 returned 5 element(s); Traceback present=False"
+                               },
+    "recovery_outcome":  {
+                             "state":  "SUCCESS",
+                             "seconds":  11.6,
+                             "open_document":  {
+                                                   "present":  true,
+                                                   "enabled":  true,
+                                                   "onscreen":  true
+                                               },
+                             "details":  {
+                                             "present":  false,
+                                             "enabled":  false,
+                                             "onscreen":  false
+                                         },
+                             "artifacts":  [
+                                               "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_p1209_accept_20260927_222635\\output\\02_headings_lists_tables.docx"
+                                           ],
+                             "during_state":  "CONVERTING",
+                             "during_select_file":  {
+                                                        "present":  true,
+                                                        "enabled":  false,
+                                                        "onscreen":  true
+                                                    },
+                             "during_drop_area":  {
+                                                      "present":  true,
+                                                      "enabled":  false,
+                                                      "onscreen":  true
+                                                  }
+                         },
+    "recovery-and-sequential-conversion":  {
+                                               "passed":  true,
+                                               "detail":  "state after recovering from FAILED = SUCCESS in 11.6s"
+                                           },
+    "settings_cancel_reset":  {
+                                  "before":  "On",
+                                  "flipped":  "Off",
+                                  "after_cancel":  "On",
+                                  "reset_clicked":  true,
+                                  "after_reset":  "On"
+                              },
+    "settings-reset-to-defaults":  {
+                                       "passed":  true,
+                                       "detail":  "Reset to Defaults clicked=True; toggle after reset=On"
+                                   },
+    "settings-cancel-discards":  {
+                                     "passed":  true,
+                                     "detail":  "toggle before/flipped/after-cancel = {\"before\":\"On\",\"flipped\":\"Off\",\"after_cancel\":\"On\",\"reset_clicked\":true,\"after_reset\":\"On\"}"
+                                 },
+    "clean-close":  {
+                        "passed":  true,
+                        "detail":  "process exited: True"
+                    },
+    "observations":  [
+                         {
+                             "name":  "drag-and-drop",
+                             "detail":  "WM_DROPFILES did not register a source (state=EMPTY; WS_EX_ACCEPTFILES=False); Qt uses OLE IDropTarget, which cannot be scripted with window messages. The drop path is verified by the product\u0027s own drop-event tests in WP-09-03."
+                         }
+                     ],
+    "finished_at":  "2026-09-27T22:28:08.5360588+08:00",
+    "failed_checks":  [
+
+                      ],
+    "status":  "PASS"
+}
