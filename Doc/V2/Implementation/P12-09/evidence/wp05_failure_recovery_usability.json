@@ -1,0 +1,151 @@
+﻿{
+    "executable":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\dist\\MD_Converter_Lite\\MD_Converter_Lite.exe",
+    "executable_sha256":  "F5AB988168DFA976ED50095A272FB3405CE2CAB395C4A77A34637318D60F7E04",
+    "work_dir":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_p1209_usability_20260927_230320",
+    "output_dir":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_p1209_usability_20260927_230320\\output",
+    "started_at":  "2026-09-27T23:03:21.2479869+08:00",
+    "startup":  {
+                    "passed":  true,
+                    "detail":  "main window visible (pid 30632)"
+                },
+    "baseline_conversion":  {
+                                "state":  "SUCCESS",
+                                "seconds":  14.9,
+                                "artifacts":  [
+                                                  "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_p1209_usability_20260927_230320\\output\\usability_source.docx"
+                                              ],
+                                "summary_texts":  [
+
+                                                  ]
+                            },
+    "baseline-conversion":  {
+                                "passed":  true,
+                                "detail":  "state=SUCCESS in 14.9s; artifacts=1"
+                            },
+    "duplicate_convert":  {
+                              "state":  "SUCCESS",
+                              "artifacts":  [
+                                                "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_p1209_usability_20260927_230320\\output\\usability_second.docx"
+                                            ]
+                          },
+    "duplicate-convert-protection":  {
+                                         "passed":  true,
+                                         "detail":  "state=SUCCESS; artifacts for the second source=1 (expected exactly 1)"
+                                     },
+    "word_lock_observed":  true,
+    "word_locked_output":  {
+                               "state":  "FAILED",
+                               "alive":  true,
+                               "files_before":  [
+                                                    "usability_second.docx",
+                                                    "usability_source.docx"
+                                                ],
+                               "files_after":  [
+                                                   "usability_second.docx",
+                                                   "usability_source.docx"
+                                               ],
+                               "summary":  [
+                                               "The output document could not be written. ([Errno 13] Permission denied: \u0027output\\\\usability_source.docx\u0027)"
+                                           ]
+                           },
+    "word-locked-output-fails-closed":  {
+                                            "passed":  true,
+                                            "detail":  "app alive=True; terminal state=FAILED; output files before=2 after=2"
+                                        },
+    "artifact_intact_after_lock_release":  true,
+    "locked-output-no-data-loss":  {
+                                       "passed":  true,
+                                       "detail":  "artifact still a valid DOCX after the Word lock was released: True"
+                                   },
+    "blocked_output":  {
+                           "state":  "FAILED",
+                           "alive":  true,
+                           "summary":  [
+                                           "The output document could not be written. ([Errno 13] Permission denied: \u0027output\\\\blocked_output.docx\u0027)"
+                                       ]
+                       },
+    "unavailable-output-fails-closed":  {
+                                            "passed":  true,
+                                            "detail":  "app alive=True; terminal state=FAILED"
+                                        },
+    "stale-directory-startup":  {
+                                    "passed":  true,
+                                    "detail":  "application starts normally with a stale remembered directory"
+                                },
+    "stale_directory_settings_text":  [
+                                          "Folders",
+                                          "Remember the last folders I used",
+                                          "When this is on, the file and folder dialogs open where you last worked. The folders are remembered on this computer only.",
+                                          "Last source folder:",
+                                          "Not remembered",
+                                          "Last output folder:",
+                                          "Not remembered",
+                                          "Reset to Defaults",
+                                          "Cancel",
+                                          "Save"
+                                      ],
+    "stale-remembered-directory":  {
+                                       "passed":  true,
+                                       "detail":  "Settings shows \u0027Not remembered\u0027=True; stale path leaked=False"
+                                   },
+    "usable-after-stale-directory":  {
+                                         "passed":  true,
+                                         "detail":  "conversion after a stale remembered directory: SUCCESS"
+                                     },
+    "moved_offscreen_rect":  "5000,5000,6372,5956",
+    "geometry-saved-on-close":  {
+                                    "passed":  true,
+                                    "detail":  "application closed (storing its off-screen geometry)"
+                                },
+    "restored_rect":  "558,134,1930,1090",
+    "screen":  "1920 x 1080",
+    "visible_pixels":  "1362 x 946",
+    "offscreen-geometry-rejected":  {
+                                        "passed":  true,
+                                        "detail":  "restored window rect 558,134,1930,1090 on a 1920 x 1080 screen (visible 1362 x 946)"
+                                    },
+    "accessible-names":  {
+                             "passed":  true,
+                             "detail":  "missing accessible names: none"
+                         },
+    "status-is-textual":  {
+                              "passed":  true,
+                              "detail":  "status area exposes the accessible name \u0027Status\u0027 and outcome wording is text"
+                          },
+    "keyboard_focus_order":  [
+                                 "Select File",
+                                 "Change output folder",
+                                 "Convert",
+                                 "Settings",
+                                 "About"
+                             ],
+    "tab-order-logical":  {
+                              "passed":  true,
+                              "detail":  "focus order indices: Select File=0, Change output folder=1, Convert=2"
+                          },
+    "report_dialog_focusable_count":  3,
+    "report_dialog_texts":  [
+                                "Conversion summary",
+                                "Report:",
+                                "Conversion report",
+                                "Copy",
+                                "Close"
+                            ],
+    "report-keyboard-reachable":  {
+                                      "passed":  true,
+                                      "detail":  "dialog exposes 8 element(s), 3 keyboard-focusable"
+                                  },
+    "clean-close":  {
+                        "passed":  true,
+                        "detail":  "application exits when closed while idle: True"
+                    },
+    "settings_restored":  "failed: The operation completed successfully.",
+    "observations":  [
+
+                     ],
+    "finished_at":  "2026-09-27T23:04:53.9070501+08:00",
+    "failed_checks":  [
+
+                      ],
+    "status":  "PASS"
+}
