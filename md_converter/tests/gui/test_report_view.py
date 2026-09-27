@@ -271,7 +271,13 @@ def _report(evidence: object) -> str:
 
 
 def test_only_one_report_surface_exists() -> None:
-    """WP §17: no second diagnostics/report dialog module exists."""
+    """WP §17: no second diagnostics/report dialog module exists.
+
+    WP-P12-07 adds two further bounded user-facing dialogs (Settings and
+    About).  Neither renders retained conversion evidence, so the guard pins the
+    complete set of dialog modules: a new unbounded dialog still fails it, and
+    the report surface itself stays exactly one module.
+    """
     from PySide6.QtWidgets import QDialog
 
     from md_converter.gui import result_details
@@ -287,7 +293,7 @@ def test_only_one_report_surface_exists() -> None:
             if "QDialog" in bases:
                 dialog_modules.add(module.name)
 
-    assert dialog_modules == {"result_details.py"}
+    assert dialog_modules == {"about_dialog.py", "result_details.py", "settings_dialog.py"}
     assert result_details.ResultDetailsDialog.__mro__[1] is QDialog
     # The WP-P12-06-02 module is a pure alias: no implementation, no classes.
     alias_tree = ast.parse((GUI_DIR / "failure_details.py").read_text(encoding="utf-8"))

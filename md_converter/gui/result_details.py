@@ -31,6 +31,7 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from typing import Any, Dict, List, Optional, Tuple
 
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
     QApplication,
     QDialog,
@@ -50,8 +51,10 @@ __all__ = [
     "CLOSE_TEXT",
     "COPY_TEXT",
     "DETAILS_TITLES",
+    "EVIDENCE_ACCESSIBLE_NAME",
     "EVIDENCE_CAPTION_TEXT",
     "ResultDetailsDialog",
+    "SUMMARY_ACCESSIBLE_NAME",
     "TITLE_FAILURE_DETAILS",
     "TITLE_GENERIC_DETAILS",
     "TITLE_WARNING_DETAILS",
@@ -80,6 +83,10 @@ DETAILS_TITLES: Dict[PresentationOutcome, str] = {
 #: Stable dialog size for the full report.
 DIALOG_WIDTH = 720
 DIALOG_HEIGHT = 520
+
+#: Accessible names for the read-only report surface (WP-P12-07-05).
+SUMMARY_ACCESSIBLE_NAME = "Conversion summary"
+EVIDENCE_ACCESSIBLE_NAME = "Conversion report"
 
 
 def details_title(presentation: Presentation) -> str:
@@ -288,6 +295,7 @@ class ResultDetailsDialog(QDialog):
         self.summary_label = QLabel(presentation.summary, self)
         self.summary_label.setObjectName("resultDetailsSummaryLabel")
         self.summary_label.setWordWrap(True)
+        self.summary_label.setAccessibleName(SUMMARY_ACCESSIBLE_NAME)
         layout.addWidget(self.summary_label)
 
         caption = QLabel(EVIDENCE_CAPTION_TEXT, self)
@@ -298,20 +306,29 @@ class ResultDetailsDialog(QDialog):
         self.evidence_view.setObjectName("resultDetailsEvidenceView")
         self.evidence_view.setPlainText(evidence_text)
         self.evidence_view.setReadOnly(True)
+        # Keyboard reachable: the report is a read-only text surface, so it can
+        # be reached with Tab and its text selected and copied with the keyboard
+        # (WP-P12-07-05).
+        self.evidence_view.setAccessibleName(EVIDENCE_ACCESSIBLE_NAME)
+        self.evidence_view.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
         layout.addWidget(self.evidence_view, 1)
 
         button_row = QHBoxLayout()
         button_row.addStretch(1)
         self.copy_button = QPushButton(COPY_TEXT, self)
         self.copy_button.setObjectName("resultDetailsCopyButton")
+        self.copy_button.setAccessibleName(COPY_TEXT)
         self.copy_button.clicked.connect(self._copy_report)
         button_row.addWidget(self.copy_button)
         self.close_button = QPushButton(CLOSE_TEXT, self)
         self.close_button.setObjectName("resultDetailsCloseButton")
+        self.close_button.setAccessibleName(CLOSE_TEXT)
         self.close_button.clicked.connect(self.accept)
         button_row.addWidget(self.close_button)
         layout.addLayout(button_row)
 
+        self.setTabOrder(self.evidence_view, self.copy_button)
+        self.setTabOrder(self.copy_button, self.close_button)
         self.resize(DIALOG_WIDTH, DIALOG_HEIGHT)
 
     @property

@@ -6,8 +6,10 @@ Runtime boundary for the desktop GUI (WP-P12-04-01 §4):
 
 Scope is the bootstrap only.  This module must not call ``ConversionService``
 or ``CompilerContext``, must not create worker threads, and must not add file
-selection, drag & drop, output selection, diagnostics UX or settings
-(WP-P12-04-01 §8).
+selection, drag & drop, output selection or diagnostics UX (WP-P12-04-01 §8).
+It does hand the production window the GUI-local preference store
+``GuiPreferences.for_application()`` (WP-P12-07-01), which is the only settings
+mechanism the desktop product has.
 
 High-DPI scaling is provided by Qt 6 defaults (``V2_GUI_UX_SPEC`` §17); no
 deprecated high-DPI attributes are set here.
@@ -26,6 +28,7 @@ from PySide6.QtCore import QCoreApplication
 from PySide6.QtWidgets import QApplication
 
 from .main_window import MainWindow
+from .preferences import GuiPreferences
 
 __all__ = ["APPLICATION_NAME", "ORGANIZATION_NAME", "create_application", "main"]
 
@@ -77,6 +80,6 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         int: Process exit code returned by the Qt event loop.
     """
     app = create_application(argv)
-    window = MainWindow()
+    window = MainWindow(preferences=GuiPreferences.for_application())
     window.show()
     return app.exec()

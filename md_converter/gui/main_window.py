@@ -9,7 +9,8 @@ Scope limits:
 * conversion runs only through the application service
   (:mod:`md_converter.application`); the GUI never imports the compiler,
   parser, pipeline, renderer or QA internals (WP-P12-05-03 §5);
-* no diagnostics UX framework and no settings persistence;
+* no diagnostics UX framework (WP-P12-06) and only the bounded GUI-local
+  preferences of WP-P12-07-01 (window geometry, last-used folders);
 * no DOCX naming or frontmatter logic (WP-P12-04-06 §5).
 
 The GUI state model (WP-P12-04-03) governs enablement, the source display and
@@ -45,6 +46,19 @@ WP-P12-06-05 adds the bounded output actions.  ``Open Document`` and
 artifact, and they act on the retained ``ConversionResult.output_path`` verbatim
 (see :mod:`md_converter.gui.output_actions`).  No output name is derived or
 reconstructed here, and no action triggers a conversion.
+
+WP-P12-07-01 adds the GUI-local preferences (:mod:`md_converter.gui.preferences`):
+the window restores a safely validated geometry, the file and folder choosers
+start in the last-used folder, and the document's own ``output_path`` remains
+the only output authority.  A remembered output folder is GUI convenience only -
+it is never restored as an output override, so the approved application default
+output behaviour is preserved unless the user explicitly selects a folder.
+
+WP-P12-07-02/03 add the two bounded product surfaces behind the footer entry
+points: the compact Settings dialog (:mod:`md_converter.gui.settings_dialog`)
+and the read-only About / product-information dialog
+(:mod:`md_converter.gui.about_dialog`).  Both are presentation plus the small
+GUI-local preferences; neither starts a conversion.
 """
 
 from __future__ import annotations
@@ -54,8 +68,9 @@ from pathlib import Path
 from typing import Callable, Optional, Union
 
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QCloseEvent
+from PySide6.QtGui import QAction, QCloseEvent, QKeySequence
 from PySide6.QtWidgets import (
+    QDialog,
     QHBoxLayout,
     QLabel,
     QMainWindow,
@@ -67,33 +82,60 @@ from PySide6.QtWidgets import (
 from ..application.conversion_result import ConversionResult
 from ..application.conversion_service import ConversionService
 from . import file_picker
+from .about_dialog import AboutDialog
 from .drop_zone import DropZone
 from .output_actions import notify_missing_artifact, open_document, open_folder
+from .preferences import GuiPreferences, available_screen_rects, geometry_is_usable
 from .presentation_model import Presentation, present_job_failure, present_result
 from .request_builder import build_conversion_request
 from .result_details import show_result_details
 from .result_mapping import gui_state_for_result
+from .settings_dialog import SettingsDialog
 from .state import GuiState, GuiStateModel
 from .worker import GuiWorker, JobFailure
 
 __all__ = [
+    "ABOUT_TEXT",
+    "ABOUT_TOOLTIP",
+    "DROP_ZONE_ACCESSIBLE_NAME",
+    "DROP_ZONE_ACCESSIBLE_DESCRIPTION",
     "CHANGE_OUTPUT_TEXT",
+    "CHANGE_OUTPUT_TOOLTIP",
+    "CHANGE_OUTPUT_ACCESSIBLE_NAME",
     "CONVERT_MINIMUM_WIDTH",
     "CONVERT_TEXT",
+    "CONVERT_TOOLTIP",
+    "DETAILS_TEXT",
+    "DETAILS_TOOLTIP",
     "DROP_HINT_TEXT",
     "DROP_RELEASE_HINT_TEXT",
+    "DROP_SUB_HINT_TEXT",
+    "DROP_ZONE_TOOLTIP",
     "DROP_ZONE_MINIMUM_HEIGHT",
-    "DETAILS_TEXT",
+    "FOOTER_BUTTON_MINIMUM_WIDTH",
+    "LAYOUT_MARGIN_BOTTOM",
+    "LAYOUT_MARGIN_HORIZONTAL",
+    "LAYOUT_MARGIN_TOP",
+    "LAYOUT_SPACING",
     "MINIMUM_HEIGHT",
     "MINIMUM_WIDTH",
     "MainWindow",
     "OPEN_DOCUMENT_TEXT",
+    "OPEN_DOCUMENT_TOOLTIP",
     "OPEN_FOLDER_TEXT",
+    "OPEN_FOLDER_TOOLTIP",
     "OUTPUT_CAPTION_TEXT",
     "OUTPUT_PATH_MAX_CHARS",
     "OUTPUT_VALUE_TEXT",
+    "SECONDARY_BUTTON_MINIMUM_WIDTH",
     "SELECT_FILE_TEXT",
+    "SELECT_FILE_TOOLTIP",
+    "SETTINGS_TEXT",
+    "SETTINGS_TOOLTIP",
+    "SHORTCUT_SELECT_FILE",
+    "SHORTCUT_SETTINGS",
     "SOURCE_PATH_MAX_CHARS",
+    "STATUS_ACCESSIBLE_NAME",
     "WINDOW_HEIGHT",
     "WINDOW_TITLE",
     "WINDOW_WIDTH",
@@ -112,6 +154,9 @@ MINIMUM_HEIGHT = 480
 
 #: Visible labels.  Plain product language only (WP-P12-04-02 §5).
 DROP_HINT_TEXT = "Drop Markdown file here"
+#: Secondary empty-state wording (WP-P12-07-04): what the drop area expects and
+#: where the conversion happens.  No unbounded privacy claim is made.
+DROP_SUB_HINT_TEXT = "Markdown files (.md) are converted on this computer."
 #: Transient drag-over feedback (WP-P12-04-05 §6: "text change").
 DROP_RELEASE_HINT_TEXT = "Release to select this file"
 SELECT_FILE_TEXT = "Select File"
@@ -129,6 +174,12 @@ DETAILS_TEXT = "Details..."
 OPEN_DOCUMENT_TEXT = "Open Document"
 OPEN_FOLDER_TEXT = "Open Folder"
 
+#: Single Settings entry point (WP-P12-07-02).
+SETTINGS_TEXT = "Settings"
+
+#: Single About / product-information entry point (WP-P12-07-03).
+ABOUT_TEXT = "About"
+
 #: GUI states whose result presentation is shown in the result area.  A plain
 #: ``SUCCESS`` keeps the existing success surface unchanged (WP-P12-06-03).
 _PRESENTED_STATES = (GuiState.SUCCESS_WITH_WARNING, GuiState.FAILED)
@@ -136,6 +187,40 @@ _PRESENTED_STATES = (GuiState.SUCCESS_WITH_WARNING, GuiState.FAILED)
 #: Layout sizing for the drop area and the primary action.
 DROP_ZONE_MINIMUM_HEIGHT = 180
 CONVERT_MINIMUM_WIDTH = 140
+
+#: Consistent minimum widths for the secondary and footer actions
+#: (WP-P12-07-04: even button sizing).
+SECONDARY_BUTTON_MINIMUM_WIDTH = 112
+FOOTER_BUTTON_MINIMUM_WIDTH = 96
+
+#: Layout metrics (WP-P12-07-04: one consistent margin and spacing scale).
+LAYOUT_MARGIN_HORIZONTAL = 28
+LAYOUT_MARGIN_TOP = 24
+LAYOUT_MARGIN_BOTTOM = 20
+LAYOUT_SPACING = 16
+
+#: Short, plain-language tooltips (WP-P12-07-04).
+DROP_ZONE_TOOLTIP = "Drop a single Markdown file (.md) here"
+SELECT_FILE_TOOLTIP = "Choose a Markdown file (.md) to convert"
+CHANGE_OUTPUT_TOOLTIP = "Choose where the Word document is saved"
+CONVERT_TOOLTIP = "Convert the selected Markdown file to a Word document"
+DETAILS_TOOLTIP = "Show the conversion report"
+OPEN_DOCUMENT_TOOLTIP = "Open the generated Word document"
+OPEN_FOLDER_TOOLTIP = "Open the folder that contains the document"
+SETTINGS_TOOLTIP = "Open settings"
+ABOUT_TOOLTIP = "About MD Converter"
+
+#: Accessible names for controls whose visible text is not a complete label
+#: (WP-P12-07-05).  Buttons keep their visible text as the accessible name.
+DROP_ZONE_ACCESSIBLE_NAME = "Markdown file drop area"
+DROP_ZONE_ACCESSIBLE_DESCRIPTION = "Drop one Markdown file here, or choose Select File"
+STATUS_ACCESSIBLE_NAME = "Status"
+CHANGE_OUTPUT_ACCESSIBLE_NAME = "Change output folder"
+
+#: Two standard desktop shortcuts (WP-P12-07-05).  No configurable shortcut
+#: system exists; these are the only accelerators the window installs.
+SHORTCUT_SELECT_FILE = "Ctrl+O"
+SHORTCUT_SETTINGS = "Ctrl+,"
 
 #: Long-path display strategy (WP-P12-04-04 §7): the file name stays complete,
 #: the containing folder is middle-elided to this many characters, and both
@@ -199,10 +284,16 @@ class MainWindow(QMainWindow):
             kept distinct from application results.
         presentation: Presentation view of the most recent failure, or ``None``
             when no failure is being presented (WP-P12-06-02).
+        preferences: GUI-local preference store (WP-P12-07-01).  It owns the
+            window geometry and the last-used folders only.
+        select_file_action: ``Ctrl+O`` accelerator for Select File
+            (WP-P12-07-05).
+        settings_action: ``Ctrl+,`` accelerator for Settings (WP-P12-07-05).
         is_conversion_active: Whether a conversion job is running or its thread
             is still cleaning up (drives the close policy).
         drop_zone: Drop-area placeholder frame.
         drop_label: Instruction text inside the drop area.
+        drop_sub_label: Secondary empty-state wording inside the drop area.
         source_label: Selected source display (hidden while EMPTY).
         source_path_label: Containing folder of the selected source.
         select_file_button: Placeholder for the file picker.
@@ -216,13 +307,22 @@ class MainWindow(QMainWindow):
         actions_area: Container of the post-conversion output actions.
         open_document_button: Opens the retained artifact.
         open_folder_button: Opens the folder containing the retained artifact.
+        settings_button: Single Settings entry point (WP-P12-07-02).
+        about_button: Single About entry point (WP-P12-07-03).
     """
 
-    def __init__(self, parent: Optional[QWidget] = None) -> None:
+    def __init__(
+        self,
+        parent: Optional[QWidget] = None,
+        preferences: Optional[GuiPreferences] = None,
+    ) -> None:
         """Build the window shell.
 
         Args:
             parent: Optional Qt parent widget.
+            preferences: Optional GUI-local preference store.  Defaults to an
+                isolated process-local store, so a window that was not given one
+                never reads or writes the real user settings.
         """
         super().__init__(parent)
         self.state_model = GuiStateModel()
@@ -230,6 +330,7 @@ class MainWindow(QMainWindow):
         self._latest_result: Optional[ConversionResult] = None
         self._latest_job_failure: Optional[JobFailure] = None
         self._presentation: Optional[Presentation] = None
+        self.preferences = preferences if preferences is not None else GuiPreferences.session()
         self.service = ConversionService()
         self.worker = GuiWorker(self)
         self.worker.succeeded.connect(self._on_conversion_result)
@@ -237,14 +338,19 @@ class MainWindow(QMainWindow):
         self.setObjectName("MainWindow")
         self.setWindowTitle(WINDOW_TITLE)
         self.setMinimumSize(MINIMUM_WIDTH, MINIMUM_HEIGHT)
-        self.resize(WINDOW_WIDTH, WINDOW_HEIGHT)
+        self._restore_saved_geometry()
 
         central = QWidget(self)
         central.setObjectName("centralWidget")
         layout = QVBoxLayout(central)
         layout.setObjectName("mainLayout")
-        layout.setContentsMargins(24, 20, 24, 16)
-        layout.setSpacing(14)
+        layout.setContentsMargins(
+            LAYOUT_MARGIN_HORIZONTAL,
+            LAYOUT_MARGIN_TOP,
+            LAYOUT_MARGIN_HORIZONTAL,
+            LAYOUT_MARGIN_BOTTOM,
+        )
+        layout.setSpacing(LAYOUT_SPACING)
 
         self.drop_zone = self._create_drop_zone(central)
         layout.addWidget(self.drop_zone, 1)
@@ -256,8 +362,12 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.result_area)
         self.actions_area = self._create_actions_area(central)
         layout.addWidget(self.actions_area)
+        layout.addLayout(self._create_footer_row(central))
 
         self.setCentralWidget(central)
+        self._configure_accessibility()
+        self._configure_shortcuts()
+        self._configure_tab_order()
         self._apply_state()
 
     @property
@@ -328,13 +438,48 @@ class MainWindow(QMainWindow):
         a later close succeeds normally.  No cancellation framework and no
         forced thread termination are involved.
 
+        A close that is actually accepted also stores the window geometry for
+        the next launch (WP-P12-07-01).  A refused close stores nothing.
+
         Args:
             event: Qt close event.
         """
         if self.is_conversion_active:
             event.ignore()
             return
+        self._save_geometry()
         event.accept()
+
+    def _restore_saved_geometry(self) -> None:
+        """Apply the stored window geometry, falling back to the default size.
+
+        The stored geometry is used only when the platform restored it and the
+        result is still usable on an attached screen (WP-P12-07-01 "invalid or
+        off-screen geometry fails safely").  Otherwise the documented initial
+        size is used and the window is placed on the first available screen, so
+        a stale geometry can never hide the window.
+        """
+        stored = self.preferences.window_geometry()
+        if stored is not None and self.restoreGeometry(stored):
+            if geometry_is_usable(self.geometry(), available_screen_rects()):
+                return
+        self._reset_geometry()
+
+    def _reset_geometry(self) -> None:
+        """Return the window to the documented initial size and a visible spot."""
+        self.resize(WINDOW_WIDTH, WINDOW_HEIGHT)
+        screens = available_screen_rects()
+        if not screens:
+            return
+        target = screens[0]
+        left = target.x() + max((target.width() - WINDOW_WIDTH) // 2, 0)
+        top = target.y() + max((target.height() - WINDOW_HEIGHT) // 2, 0)
+        self.move(left, top)
+
+    def _save_geometry(self) -> None:
+        """Store the current window geometry in the GUI preference store."""
+        self.preferences.set_window_geometry(self.saveGeometry())
+        self.preferences.sync()
 
     def set_source(self, source: Optional[str]) -> GuiState:
         """Select a source and return the resulting GUI state.
@@ -376,10 +521,13 @@ class MainWindow(QMainWindow):
         selection is rejected without entering ``READY`` (user-facing error UX
         belongs to a later work package).
 
+        The dialog starts in the remembered source folder when there is one
+        (WP-P12-07-01); that folder is a starting location only.
+
         Returns:
             GuiState: The state after the request.
         """
-        chosen = file_picker.ask_for_markdown_source(self)
+        chosen = file_picker.ask_for_markdown_source(self, self.preferences.last_source_directory)
         if chosen is None:
             return self.state
         return self.set_source_file(chosen)
@@ -401,6 +549,10 @@ class MainWindow(QMainWindow):
         validated = file_picker.validate_markdown_source(path)
         if validated is None:
             return self.state
+        # GUI convenience only (WP-P12-07-01): the containing folder becomes the
+        # starting location of the next chooser.  The conversion request is
+        # unaffected.
+        self.preferences.remember_source_directory(validated.parent)
         return self.set_source(str(validated))
 
     def set_output_directory(self, directory: Optional[Union[str, Path]]) -> Optional[Path]:
@@ -423,6 +575,9 @@ class MainWindow(QMainWindow):
         if validated is None:
             return self._output_directory
         self._output_directory = validated
+        # GUI convenience only (WP-P12-07-01): remember the folder as the next
+        # chooser's starting location.  It is not restored as an output override.
+        self.preferences.remember_output_directory(validated)
         self._apply_state()
         return self._output_directory
 
@@ -431,10 +586,15 @@ class MainWindow(QMainWindow):
 
         Cancelling keeps the current choice (WP-P12-04-06 §7).
 
+        The chooser starts in the current session choice, or in the remembered
+        output folder when no folder was chosen in this session
+        (WP-P12-07-01).
+
         Returns:
             Optional[Path]: The output-folder preference after the request.
         """
-        chosen = file_picker.ask_for_output_directory(self, self._output_directory)
+        start = self._output_directory or self.preferences.last_output_directory
+        chosen = file_picker.ask_for_output_directory(self, start)
         if chosen is None:
             return self._output_directory
         return self.set_output_directory(chosen)
@@ -446,6 +606,94 @@ class MainWindow(QMainWindow):
             active: ``True`` while a valid file hovers the drop area.
         """
         self.drop_label.setText(DROP_RELEASE_HINT_TEXT if active else DROP_HINT_TEXT)
+
+    def _configure_accessibility(self) -> None:
+        """Give the important controls a meaningful accessible identity.
+
+        Bounded baseline only (WP-P12-07-05): controls whose visible text is not
+        a complete label get an accessible name (and, for the drop area, a short
+        description).  No generalized accessibility framework is built.
+        """
+        self.drop_zone.setAccessibleName(DROP_ZONE_ACCESSIBLE_NAME)
+        self.drop_zone.setAccessibleDescription(DROP_ZONE_ACCESSIBLE_DESCRIPTION)
+        self.drop_label.setAccessibleName(DROP_ZONE_ACCESSIBLE_NAME)
+        self.select_file_button.setAccessibleName(SELECT_FILE_TEXT)
+        self.source_label.setAccessibleName("Selected Markdown file")
+        self.source_path_label.setAccessibleName("Selected file folder")
+        self.output_value_label.setAccessibleName("Output folder")
+        self.change_output_button.setAccessibleName(CHANGE_OUTPUT_ACCESSIBLE_NAME)
+        self.convert_button.setAccessibleName(CONVERT_TEXT)
+        self.status_label.setAccessibleName(STATUS_ACCESSIBLE_NAME)
+        self.details_button.setAccessibleName(DETAILS_TEXT)
+        self.open_document_button.setAccessibleName(OPEN_DOCUMENT_TEXT)
+        self.open_folder_button.setAccessibleName(OPEN_FOLDER_TEXT)
+        self.settings_button.setAccessibleName(SETTINGS_TEXT)
+        self.about_button.setAccessibleName(ABOUT_TEXT)
+
+    def _configure_shortcuts(self) -> None:
+        """Install the two bounded window shortcuts (WP-P12-07-05).
+
+        ``Ctrl+O`` opens the Markdown picker and ``Ctrl+,`` opens Settings.
+        Both reuse the existing actions, so nothing about the workflow changes.
+        """
+        self.select_file_action = QAction(self)
+        self.select_file_action.setObjectName("selectFileAction")
+        self.select_file_action.setShortcut(QKeySequence(SHORTCUT_SELECT_FILE))
+        self.select_file_action.setShortcutContext(Qt.ShortcutContext.WindowShortcut)
+        self.select_file_action.setEnabled(True)
+        self.select_file_action.triggered.connect(self.choose_source)
+        self.addAction(self.select_file_action)
+
+        self.settings_action = QAction(self)
+        self.settings_action.setObjectName("settingsAction")
+        self.settings_action.setShortcut(QKeySequence(SHORTCUT_SETTINGS))
+        self.settings_action.setShortcutContext(Qt.ShortcutContext.WindowShortcut)
+        self.settings_action.setEnabled(True)
+        self.settings_action.triggered.connect(self.open_settings)
+        self.addAction(self.settings_action)
+
+    def _configure_tab_order(self) -> None:
+        """Set the logical Tab order of the window (WP-P12-07-05).
+
+        The order follows the workflow - choose a file, choose the output
+        folder, convert, inspect the result, then the product surfaces - instead
+        of the widget creation order.
+        """
+        chain = (
+            self.select_file_button,
+            self.change_output_button,
+            self.convert_button,
+            self.details_button,
+            self.open_document_button,
+            self.open_folder_button,
+            self.settings_button,
+            self.about_button,
+        )
+        for index, current in enumerate(chain[:-1]):
+            self.setTabOrder(current, chain[index + 1])
+
+    def open_settings(self) -> bool:
+        """Open the compact Settings surface (WP-P12-07-02).
+
+        The dialog edits the GUI-local preferences only.  Opening or saving it
+        never starts a conversion and never changes the current selections; the
+        effects of a saved change (the remembered folders) apply to the next
+        dialog the user opens.
+
+        Returns:
+            bool: ``True`` when the user saved, ``False`` when the edits were
+            discarded (Cancel or ``Esc``).
+        """
+        dialog = SettingsDialog(self.preferences, self)
+        return dialog.exec() == QDialog.DialogCode.Accepted
+
+    def show_about(self) -> None:
+        """Open the read-only About / product-information surface (WP-P12-07-03).
+
+        The surface is informational: it starts no conversion, reads no
+        document and makes no network request.
+        """
+        AboutDialog(self).exec()
 
     def request_convert(self) -> GuiState:
         """Request conversion, moving ``READY`` -> ``CONVERTING``.
@@ -717,12 +965,14 @@ class MainWindow(QMainWindow):
         """
         zone = DropZone(parent)
         zone.setMinimumHeight(DROP_ZONE_MINIMUM_HEIGHT)
+        zone.setToolTip(DROP_ZONE_TOOLTIP)
         zone.source_dropped.connect(self.set_source_file)
         zone.hover_changed.connect(self._set_drop_hover)
 
         zone_layout = QVBoxLayout(zone)
         zone_layout.setObjectName("dropZoneLayout")
-        zone_layout.setSpacing(12)
+        zone_layout.setSpacing(10)
+        zone_layout.setContentsMargins(16, 16, 16, 16)
         zone_layout.addStretch(1)
 
         self.drop_label = QLabel(DROP_HINT_TEXT, zone)
@@ -741,10 +991,20 @@ class MainWindow(QMainWindow):
         self.source_path_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         zone_layout.addWidget(self.source_path_label)
 
+        # Secondary empty-state wording (WP-P12-07-04).  It stays visible with a
+        # selection as well, where it describes what the drop area accepts.
+        self.drop_sub_label = QLabel(DROP_SUB_HINT_TEXT, zone)
+        self.drop_sub_label.setObjectName("dropSubLabel")
+        self.drop_sub_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.drop_sub_label.setWordWrap(True)
+        zone_layout.addWidget(self.drop_sub_label)
+
         # File-picker behavior is implemented by WP-P12-04-04; button
         # enablement is applied from the GUI state by _apply_state().
         self.select_file_button = QPushButton(SELECT_FILE_TEXT, zone)
         self.select_file_button.setObjectName("selectFileButton")
+        self.select_file_button.setMinimumWidth(SECONDARY_BUTTON_MINIMUM_WIDTH)
+        self.select_file_button.setToolTip(SELECT_FILE_TOOLTIP)
         self.select_file_button.clicked.connect(self.choose_source)
 
         button_row = QHBoxLayout()
@@ -774,6 +1034,8 @@ class MainWindow(QMainWindow):
         self.output_value_label.setObjectName("outputValueLabel")
         self.change_output_button = QPushButton(CHANGE_OUTPUT_TEXT, parent)
         self.change_output_button.setObjectName("changeOutputButton")
+        self.change_output_button.setMinimumWidth(SECONDARY_BUTTON_MINIMUM_WIDTH)
+        self.change_output_button.setToolTip(CHANGE_OUTPUT_TOOLTIP)
         self.change_output_button.clicked.connect(self.choose_output_directory)
 
         row.addWidget(caption)
@@ -797,6 +1059,7 @@ class MainWindow(QMainWindow):
         self.convert_button = QPushButton(CONVERT_TEXT, parent)
         self.convert_button.setObjectName("convertButton")
         self.convert_button.setMinimumWidth(CONVERT_MINIMUM_WIDTH)
+        self.convert_button.setToolTip(CONVERT_TOOLTIP)
         self.convert_button.setDefault(True)
         self.convert_button.clicked.connect(self.start_conversion)
         # Enablement is applied from the GUI state by _apply_state().
@@ -847,6 +1110,7 @@ class MainWindow(QMainWindow):
 
         self.details_button = QPushButton(DETAILS_TEXT, area)
         self.details_button.setObjectName("detailsButton")
+        self.details_button.setToolTip(DETAILS_TOOLTIP)
         self.details_button.clicked.connect(self.show_details)
         row.addWidget(self.details_button, 0)
         return area
@@ -873,9 +1137,11 @@ class MainWindow(QMainWindow):
 
         self.open_document_button = QPushButton(OPEN_DOCUMENT_TEXT, area)
         self.open_document_button.setObjectName("openDocumentButton")
+        self.open_document_button.setToolTip(OPEN_DOCUMENT_TOOLTIP)
         self.open_document_button.clicked.connect(self.open_output_document)
         self.open_folder_button = QPushButton(OPEN_FOLDER_TEXT, area)
         self.open_folder_button.setObjectName("openFolderButton")
+        self.open_folder_button.setToolTip(OPEN_FOLDER_TOOLTIP)
         self.open_folder_button.clicked.connect(self.open_output_folder)
 
         row.addStretch(1)
@@ -883,3 +1149,35 @@ class MainWindow(QMainWindow):
         row.addWidget(self.open_folder_button)
         row.addStretch(1)
         return area
+
+    def _create_footer_row(self, parent: QWidget) -> QHBoxLayout:
+        """Create the secondary entry-point row (WP-P12-07-02/03).
+
+        The footer keeps product-level entry points out of the primary
+        workflow: the Markdown -> DOCX job stays the centre of the window.
+
+        Args:
+            parent: Parent widget for the buttons.
+
+        Returns:
+            QHBoxLayout: The footer row.
+        """
+        row = QHBoxLayout()
+        row.setObjectName("footerRow")
+        row.setSpacing(8)
+
+        self.settings_button = QPushButton(SETTINGS_TEXT, parent)
+        self.settings_button.setObjectName("settingsButton")
+        self.settings_button.setMinimumWidth(FOOTER_BUTTON_MINIMUM_WIDTH)
+        self.settings_button.setToolTip(SETTINGS_TOOLTIP)
+        self.settings_button.clicked.connect(self.open_settings)
+        self.about_button = QPushButton(ABOUT_TEXT, parent)
+        self.about_button.setObjectName("aboutButton")
+        self.about_button.setMinimumWidth(FOOTER_BUTTON_MINIMUM_WIDTH)
+        self.about_button.setToolTip(ABOUT_TOOLTIP)
+        self.about_button.clicked.connect(self.show_about)
+
+        row.addStretch(1)
+        row.addWidget(self.settings_button)
+        row.addWidget(self.about_button)
+        return row
