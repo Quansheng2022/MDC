@@ -1,0 +1,79 @@
+{
+  "wp": "WP-P12-10-01",
+  "title": "RC Baseline & Identity",
+  "status": "PASS",
+  "rc_identifier": "MD Converter v1.1.0 RC1",
+  "rc_identifier_label_only": "MD Converter v1.1.0 RC1",
+  "product_version": "1.1.0",
+  "recorded_at": "2026-09-27T23:33:00+08:00",
+  "specification_baseline_sha": "3a0dfdceae70b709c674d43656cbffed7cd969e8",
+  "specification_baseline_note": "commit 'Add P12-10 release candidate specifications'",
+  "product_baseline_sha": "4c02734",
+  "p12_09_closure_sha": "4c027344fbd9ca7d05190fe7f689c4edad11dd8d",
+  "source_head_before_freeze": "3a0dfdceae70b709c674d43656cbffed7cd969e8",
+  "frozen_source_sha": "4c027344fbd9ca7d05190fe7f689c4edad11dd8d",
+  "frozen_source_note": "no change under md_converter/, pyproject.toml, *.spec or packaging/ since the P12-08 packaging closure 38614c7; the P12-09/P12-10 baseline commits add documentation, corpus, evidence and verification tooling only",
+  "candidate": {
+    "installer": {
+      "path": "dist_installer\\MD_Converter_v1.1.0_Setup.exe",
+      "filename": "MD_Converter_v1.1.0_Setup.exe",
+      "size_bytes": 51109717,
+      "sha256": "EFEC378F11B00A53791158199B4DC98AA09F44F5B1F013363FF744A92B91B9BF",
+      "file_version": "1.1.0.0",
+      "matches_p12_09_candidate": true
+    },
+    "packaged_executable": {
+      "path": "dist\\MD_Converter_Lite\\MD_Converter_Lite.exe",
+      "filename": "MD_Converter_Lite.exe",
+      "size_bytes": 6845458,
+      "sha256": "F5AB988168DFA976ED50095A272FB3405CE2CAB395C4A77A34637318D60F7E04",
+      "file_version": "1.1.0",
+      "matches_p12_09_candidate": true
+    },
+    "payload_files": 268,
+    "payload_bytes": 166150109,
+    "published_identity": {
+      "app_id": "MDConverter.Quansheng2022",
+      "app_name": "MD Converter",
+      "app_version": "1.1.0",
+      "publisher": "Quansheng2022"
+    }
+  },
+  "version_consistency": {
+    "pyproject_version": "1.1.0",
+    "executable_file_version": "1.1.0",
+    "installer_file_version": "1.1.0.0",
+    "about_dialog_evidence": "Version 1.1.0 (P12-09 WP-09-02 about_wording PASS)",
+    "consistent": true
+  },
+  "p12_08_build_provenance": {
+    "closure_sha": "38614c7bb555f96685c301bc4b6abd71138c2642",
+    "specification_baseline_sha": "f6a12779303816ad4f9f1cfebce700cbc8f76ace",
+    "bundler": "PyInstaller 6.22.3, onedir COLLECT",
+    "release_spec": "MD_Converter_Lite.spec",
+    "packaged_entry_point": "packaging/windows/launcher_main.py -> md_converter.gui.app.main",
+    "executable_mode": "windowed (console=False)",
+    "installer_technology": "Inno Setup, script packaging/windows/MD_Converter.iss",
+    "clean_build_procedure": "tools/packaging/build_windows_release.ps1",
+    "install_strategy": "per-user {localappdata}\\Programs\\MD_Converter, PrivilegesRequired=lowest, Windows 10+ x64",
+    "installer_sha256": "EFEC378F11B00A53791158199B4DC98AA09F44F5B1F013363FF744A92B91B9BF",
+    "executable_sha256": "F5AB988168DFA976ED50095A272FB3405CE2CAB395C4A77A34637318D60F7E04"
+  },
+  "p12_09_verification_provenance": {
+    "closure_sha": "4c027344fbd9ca7d05190fe7f689c4edad11dd8d",
+    "closure_evidence": "Doc/V2/Implementation/P12-09/P12-09_CLOSURE_EVIDENCE.md",
+    "open_blockers": 0,
+    "introduced_failures": 0,
+    "candidate_unchanged_through_phase": true
+  },
+  "filename_safety": {
+    "windows_invalid_characters": "\\ / : * ? \" < > |",
+    "rc_identifier_used_in_filenames": "MD_Converter_v1.1.0_RC1",
+    "contains_invalid_characters": false
+  },
+  "rebuild_performed": false,
+  "binary_modified": false,
+  "product_source_modified": false,
+  "candidate_drift": 0,
+  "failed_checks": []
+}
