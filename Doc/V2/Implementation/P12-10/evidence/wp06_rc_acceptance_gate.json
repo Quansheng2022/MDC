@@ -1,0 +1,57 @@
+{
+  "wp": "WP-P12-10-06",
+  "title": "RC Acceptance Gate",
+  "status": "PASS",
+  "input_commit": "0894442fa18f7061028157bdc247752bd89b4c46",
+  "recorded_at": "2026-09-27T23:58:00+08:00",
+  "rc_identifier": "MD Converter v1.1.0 RC1",
+  "product_version": "1.1.0",
+  "questions": [
+    { "n": 1, "question": "Is the RC binary identical to the P12-09 verified candidate?", "answer": "YES", "evidence": "WP-01 §2; WP-05 precheck + post-smoke hash" },
+    { "n": 2, "question": "Is source identity frozen?", "answer": "YES", "evidence": "WP-01 §5; git diff 38614c7..HEAD over md_converter, pyproject.toml, *.spec, packaging is empty" },
+    { "n": 3, "question": "Is version internally consistent?", "answer": "YES", "evidence": "WP-01 §3; WP-05 About 'Version 1.1.0' and uninstall entry 1.1.0" },
+    { "n": 4, "question": "Is installer identity frozen and hashable?", "answer": "YES", "evidence": "WP-01 §1-2; RC_MANIFEST.md; SHA256SUMS.txt" },
+    { "n": 5, "question": "Are Release Notes accurate?", "answer": "YES", "evidence": "WP-02; RELEASE_NOTES_v1.1.0.md" },
+    { "n": 6, "question": "Are Known Issues adequate?", "answer": "YES", "evidence": "WP-02; KNOWN_ISSUES_v1.1.0.md" },
+    { "n": 7, "question": "Is signing/trust status explicit?", "answer": "YES", "evidence": "WP-04 (NotSigned, KNOWN RELEASE CONDITION)" },
+    { "n": 8, "question": "Can a user install without developer tooling?", "answer": "YES", "evidence": "WP-05 install exit 0, per-user, no Python, no elevation" },
+    { "n": 9, "question": "Can a user convert successfully?", "answer": "YES", "evidence": "WP-05 conversion SUCCESS 9.6 s, valid DOCX" },
+    { "n": 10, "question": "Can uninstall preserve user documents?", "answer": "YES", "evidence": "WP-05 uninstall exit 0, sentinel + converted DOCX preserved" },
+    { "n": 11, "question": "Is post-freeze binary drift = 0?", "answer": "YES", "evidence": "WP-05 §3" },
+    { "n": 12, "question": "Are open RC blockers = 0?", "answer": "YES", "evidence": "this gate; P12-10_CLOSURE_EVIDENCE.md" }
+  ],
+  "specification_gate_answers": {
+    "1_exact_artifact_or_byte_identical_to_p12_09": "YES",
+    "2_version_internally_consistent": "YES",
+    "3_installer_identity_frozen_and_hashable": "YES",
+    "4_release_notes_accurate": "YES",
+    "5_known_issues_adequate": "YES",
+    "6_signing_trust_status_explicit": "YES",
+    "7_user_can_install_without_developer_tooling": "YES",
+    "8_user_can_convert_successfully": "YES",
+    "9_uninstall_preserves_user_documents": "YES",
+    "10_open_rc_blockers_zero": "YES"
+  },
+  "block_conditions": {
+    "artifact_hash_drift": false,
+    "source_artifact_ambiguity": false,
+    "version_mismatch": false,
+    "missing_required_eula_or_notices": false,
+    "failed_minimal_smoke": false,
+    "unresolved_release_blocker": false,
+    "post_freeze_package_modification": false
+  },
+  "release_payload": {
+    "folder": "release/MD_Converter_v1.1.0_RC1",
+    "files": 9,
+    "release_notes": "present",
+    "known_issues": "present",
+    "eula": "present",
+    "third_party_notices": "present",
+    "checksum_manifest": "present",
+    "rc_manifest": "present"
+  },
+  "signing_classification": "KNOWN RELEASE CONDITION",
+  "open_rc_blockers": 0,
+  "decision": "ALL GREEN - RC may enter P12-11 Human Acceptance"
+}
