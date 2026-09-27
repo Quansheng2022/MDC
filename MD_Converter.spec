@@ -1,8 +1,20 @@
 # -*- mode: python ; coding: utf-8 -*-
 import os
+import sys
 
 from PyInstaller.utils.hooks import collect_data_files
 from PyInstaller.utils.hooks import copy_metadata
+
+# Packaging rules shared by both build profiles (WP-P12-08-02 / WP-P12-08-04).
+_PROJECT_ROOT = os.path.abspath(globals().get('SPECPATH') or os.getcwd())
+sys.path.insert(0, os.path.join(_PROJECT_ROOT, 'packaging', 'windows'))
+
+from pyi_support import (  # noqa: E402  (import path set up above)
+    read_project_version,
+    strip_development_material,
+    strip_shadowed_system_dlls,
+    write_version_resource,
+)
 
 datas = []
 datas += collect_data_files('md_converter')
@@ -22,42 +34,23 @@ a = Analysis(
     noarchive=False,
     optimize=0,
 )
-# ---------------------------------------------------------------------------
-# Packaging-only correction (WP-P12-08-02): never ship shadowing OS libraries.
-#
-# PyInstaller resolves binary dependencies through PATH as well as through the
-# build environment.  On a machine whose PATH contains portable tool runtimes
-# this pulls third-party copies of operating-system DLLs into _internal, where
-# they are found *before* System32 (the application directory is searched
-# first).  The shadowing copies are older/incompatible and make Qt 6 fail with
-# "The specified procedure could not be found" (WinError 127) while importing
-# QtCore/QtWidgets:
-#
-#   * a stale ucrtbase.dll shadows the operating system UCRT;
-#   * api-ms-win-*.dll stubs shadow the Windows API sets that Qt imports
-#     (for example api-ms-win-core-synch-l1-2-0.dll must export WaitOnAddress);
-#   * a portable icuuc.dll/icudt*.dll shadows the Windows ICU that Qt links
-#     against (Qt needs the unversioned ucnv_* exports provided by Windows).
-#
-# Windows 10 and later - the supported product baseline - already provide all
-# of these libraries, so none of them may be bundled.
-# ---------------------------------------------------------------------------
-_SHADOWED_SYSTEM_DLLS = ("ucrtbase.dll",)
-_SHADOWED_SYSTEM_DLL_PREFIXES = ("api-ms-win-", "icu")
+# Operating-system libraries must come from Windows, never from the bundle
+# (WinError 127), and developer/test data must not ship (WP-P12-08-04).
+a.binaries = strip_shadowed_system_dlls(a.binaries)
+a.datas = strip_development_material(a.datas)
 
-
-def _is_shadowed_system_dll(name):
-    lower = os.path.basename(name).lower()
-    if lower.endswith(".dll") is False:
-        return False
-    if lower in _SHADOWED_SYSTEM_DLLS:
-        return True
-    return lower.startswith(_SHADOWED_SYSTEM_DLL_PREFIXES)
-
-
-a.binaries = [
-    _entry for _entry in a.binaries if not _is_shadowed_system_dll(_entry[0])
-]
+# The executable's version resource is generated from the authoritative
+# project version, so the packaged metadata cannot drift from pyproject.toml.
+_VERSION = read_project_version(_PROJECT_ROOT)
+_VERSION_RESOURCE = write_version_resource(
+    os.path.join(_PROJECT_ROOT, 'build', 'MD_Converter', 'version_info.txt'),
+    _VERSION,
+    product_name='MD Converter',
+    original_filename='MD_Converter.exe',
+    file_description='Markdown to Microsoft Word DOCX Converter',
+    company_name='Quansheng2022',
+    copyright_text='Copyright (C) 2026 Quansheng2022',
+)
 
 pyz = PYZ(a.pure)
 
@@ -81,6 +74,7 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
+    version=_VERSION_RESOURCE,
 )
 coll = COLLECT(
     exe,

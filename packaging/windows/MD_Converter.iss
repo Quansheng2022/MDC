@@ -192,6 +192,25 @@ Source: "..\..\dist\MD_Converter_Lite\_internal\*"; \
     Flags: ignoreversion recursesubdirs createallsubdirs
 
 
+; --------------------------------------------------------------------------
+; Release compliance documents (authoritative repository-root sources)
+;
+; THIRD_PARTY_NOTICES.txt is the single authoritative third-party notices
+; file (declared in pyproject.toml [project].license-files); EULA.txt is the
+; authoritative End User License Agreement.  Both ship next to the
+; application so the installed product carries its licence and attribution
+; material.  No second notices/EULA source is created.
+; --------------------------------------------------------------------------
+
+Source: "..\..\THIRD_PARTY_NOTICES.txt"; \
+    DestDir: "{app}"; \
+    Flags: ignoreversion
+
+Source: "..\..\EULA.txt"; \
+    DestDir: "{app}"; \
+    Flags: ignoreversion
+
+
 ; ============================================================================
 ; USER WORKSPACE
 ;
