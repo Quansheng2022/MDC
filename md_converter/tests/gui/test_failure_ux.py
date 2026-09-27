@@ -147,7 +147,7 @@ def _spy_on_details(monkeypatch: pytest.MonkeyPatch) -> List[Tuple[object, objec
     def recording(parent, presentation, evidence):
         calls.append((parent, presentation, evidence))
 
-    monkeypatch.setattr(module, "show_failure_details", recording)
+    monkeypatch.setattr(module, "show_result_details", recording)
     return calls
 
 
@@ -202,8 +202,8 @@ def test_failed_result_shows_failure_presentation(
     assert presentation.outcome is PresentationOutcome.FAILED
     assert presentation.is_failure is True
     assert window.status_label.text().startswith("Conversion failed")
-    assert window.failure_area.isVisible() is True
-    assert window.failure_summary_label.text() == presentation.summary
+    assert window.result_area.isVisible() is True
+    assert window.result_summary_label.text() == presentation.summary
     assert window.details_button.isVisible() is True
     assert window.details_button.isEnabled() is True
 
@@ -214,7 +214,7 @@ def test_failed_summary_is_concise_and_plain(
     """WP §1: the summary is short, user-facing and traceback-free."""
     _fail_conversion(window, tmp_path, monkeypatch)
 
-    summary = window.failure_summary_label.text()
+    summary = window.result_summary_label.text()
 
     assert summary
     assert summary == window.presentation.summary
@@ -265,8 +265,8 @@ def test_job_failure_shows_distinct_infrastructure_presentation(
     assert presentation.is_infrastructure_failure is True
     assert presentation.summary != window.status_label.text()
     assert "RuntimeError" in presentation.summary
-    assert window.failure_area.isVisible() is True
-    assert window.failure_summary_label.text() == presentation.summary
+    assert window.result_area.isVisible() is True
+    assert window.result_summary_label.text() == presentation.summary
     assert window.details_button.isVisible() is True
     # No fabricated application result was produced.
     assert window.latest_result is None
@@ -332,7 +332,7 @@ def test_details_is_unavailable_without_a_failure(window: "MainWindow") -> None:
     """No failure presentation means no details surface."""
     assert window.presentation is None
     assert window.show_details() is False
-    assert window.failure_area.isVisible() is False
+    assert window.result_area.isVisible() is False
     assert window.details_button.isVisible() is False
 
 
@@ -340,11 +340,11 @@ def test_details_dialog_is_read_only_and_evidence_driven(
     window: "MainWindow", tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     """WP §1/§2: the bounded surface is read-only and shows retained evidence."""
-    from md_converter.gui.failure_details import (
+    from md_converter.gui.result_details import (
         CLOSE_TEXT,
-        DETAILS_TITLE,
-        FailureDetailsDialog,
-        failure_evidence_text,
+        TITLE_FAILURE_DETAILS,
+        ResultDetailsDialog,
+        presentation_evidence_text,
     )
     from md_converter.gui.worker import JobFailure
 
@@ -353,12 +353,16 @@ def test_details_dialog_is_read_only_and_evidence_driven(
     assert result is not None
     presentation = present_result(result)
 
-    dialog = FailureDetailsDialog(presentation, failure_evidence_text(presentation, result), window)
+    dialog = ResultDetailsDialog(
+        presentation, presentation_evidence_text(presentation, result), window
+    )
     try:
-        assert dialog.windowTitle() == DETAILS_TITLE
+        assert dialog.windowTitle() == TITLE_FAILURE_DETAILS
         assert dialog.summary_label.text() == presentation.summary
         assert dialog.evidence_view.isReadOnly() is True
-        assert dialog.evidence_view.toPlainText() == failure_evidence_text(presentation, result)
+        assert dialog.evidence_view.toPlainText() == presentation_evidence_text(
+            presentation, result
+        )
         assert result.technical_detail.splitlines()[0] in dialog.evidence_view.toPlainText()
         assert dialog.close_button.text() == CLOSE_TEXT
     finally:
@@ -366,8 +370,8 @@ def test_details_dialog_is_read_only_and_evidence_driven(
 
     failure = JobFailure.from_exception(RuntimeError("service exploded"))
     failure_presentation = present_job_failure(failure)
-    failure_dialog = FailureDetailsDialog(
-        failure_presentation, failure_evidence_text(failure_presentation, failure), window
+    failure_dialog = ResultDetailsDialog(
+        failure_presentation, presentation_evidence_text(failure_presentation, failure), window
     )
     try:
         text = failure_dialog.evidence_view.toPlainText()
@@ -453,7 +457,7 @@ def test_new_valid_source_recovers_and_clears_failure_ux(
     retained = window.latest_result
     window.show()
     _pump()
-    assert window.failure_area.isVisible() is True
+    assert window.result_area.isVisible() is True
 
     recovered = _write_markdown(tmp_path / "recovered.md")
 
@@ -461,8 +465,8 @@ def test_new_valid_source_recovers_and_clears_failure_ux(
     _pump()
 
     assert window.state is GuiState.READY
-    assert window.failure_area.isVisible() is False
-    assert window.failure_summary_label.text() == ""
+    assert window.result_area.isVisible() is False
+    assert window.result_summary_label.text() == ""
     assert window.presentation is None
     assert window.latest_result is retained
 
@@ -474,12 +478,12 @@ def test_reset_clears_failure_ux(
     _fail_conversion(window, tmp_path, monkeypatch)
     window.show()
     _pump()
-    assert window.failure_area.isVisible() is True
+    assert window.result_area.isVisible() is True
 
     assert window.reset() is GuiState.EMPTY
     _pump()
 
-    assert window.failure_area.isVisible() is False
+    assert window.result_area.isVisible() is False
     assert window.presentation is None
 
 
@@ -496,7 +500,7 @@ def test_recovery_then_failure_presents_the_new_failure(
     assert window.state is GuiState.FAILED
     assert window.presentation is not None
     assert window.presentation is not first
-    assert window.failure_summary_label.text() == window.presentation.summary
+    assert window.result_summary_label.text() == window.presentation.summary
 
 
 def test_showing_details_does_not_re_execute_conversion(
@@ -543,7 +547,7 @@ def test_production_ux_reuses_the_presentation_model(
     result, thread_id = calls[0]
     assert thread_id == _gui_thread_id()
     assert result is window.latest_result
-    assert window.failure_summary_label.text() == original(result).summary
+    assert window.result_summary_label.text() == original(result).summary
 
 
 def test_window_contains_no_duplicated_presentation_wording() -> None:
@@ -556,7 +560,7 @@ def test_window_contains_no_duplicated_presentation_wording() -> None:
 
 def test_failure_ux_adds_no_conversion_core_import() -> None:
     """WP §12: the GUI still reaches the Core only through the application layer."""
-    for module in (GUI_DIR / "main_window.py", GUI_DIR / "failure_details.py"):
+    for module in (GUI_DIR / "main_window.py", GUI_DIR / "result_details.py"):
         offenders = {
             name for name in _imported_modules(module) if name.startswith(FORBIDDEN_IMPORT_PREFIXES)
         }

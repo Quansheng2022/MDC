@@ -31,12 +31,14 @@ display and the status text are derived from :mod:`md_converter.gui.state`
 through the single :meth:`MainWindow._apply_state` path, so no other method
 writes those widget states.
 
-WP-P12-06-02 adds the bounded failure UX.  A ``FAILED`` result and a worker
-``JobFailure`` are presented through the WP-P12-06-01 presentation model: the
-window only displays the derived title/summary and offers a bounded
-``Details...`` affordance when the presentation reports evidence.  The
-presentation model stays the single presentation-semantic authority, and the
-retained ``ConversionResult`` / ``JobFailure`` evidence is never modified.
+WP-P12-06-02/03 add the bounded outcome UX.  A ``FAILED`` result, a worker
+``JobFailure`` and a ``SUCCESS_WITH_WARNING`` result are presented through the
+WP-P12-06-01 presentation model: the window only displays the derived summary
+and offers a bounded ``Details...`` affordance when the presentation reports
+evidence.  A warning stays a successful outcome - it is never routed through
+the failure presentation - and a plain ``SUCCESS`` keeps its existing surface.
+The presentation model stays the single presentation-semantic authority, and
+the retained ``ConversionResult`` / ``JobFailure`` evidence is never modified.
 """
 
 from __future__ import annotations
@@ -60,9 +62,9 @@ from ..application.conversion_result import ConversionResult
 from ..application.conversion_service import ConversionService
 from . import file_picker
 from .drop_zone import DropZone
-from .failure_details import show_failure_details
 from .presentation_model import Presentation, present_job_failure, present_result
 from .request_builder import build_conversion_request
+from .result_details import show_result_details
 from .result_mapping import gui_state_for_result
 from .state import GuiState, GuiStateModel
 from .worker import GuiWorker, JobFailure
@@ -111,8 +113,12 @@ OUTPUT_VALUE_TEXT = "Default location"
 CHANGE_OUTPUT_TEXT = "Change"
 CONVERT_TEXT = "Convert"
 
-#: Bounded failure-details affordance (WP-P12-06-02).
+#: Bounded details affordance for presented outcomes (WP-P12-06-02/03).
 DETAILS_TEXT = "Details..."
+
+#: GUI states whose result presentation is shown in the result area.  A plain
+#: ``SUCCESS`` keeps the existing success surface unchanged (WP-P12-06-03).
+_PRESENTED_STATES = (GuiState.SUCCESS_WITH_WARNING, GuiState.FAILED)
 
 #: Layout sizing for the drop area and the primary action.
 DROP_ZONE_MINIMUM_HEIGHT = 180
@@ -191,9 +197,9 @@ class MainWindow(QMainWindow):
         change_output_button: Opens the output-folder chooser.
         convert_button: Primary action placeholder.
         status_label: Status area text.
-        failure_area: Container of the bounded failure presentation.
-        failure_summary_label: Concise failure summary (WP-P12-06-02).
-        details_button: Failure ``Details...`` affordance.
+        result_area: Container of the bounded outcome presentation.
+        result_summary_label: Concise summary of the presented outcome.
+        details_button: Bounded ``Details...`` affordance.
     """
 
     def __init__(self, parent: Optional[QWidget] = None) -> None:
@@ -230,8 +236,8 @@ class MainWindow(QMainWindow):
         layout.addLayout(self._create_convert_row(central))
         self.status_label = self._create_status_label(central)
         layout.addWidget(self.status_label)
-        self.failure_area = self._create_failure_area(central)
-        layout.addWidget(self.failure_area)
+        self.result_area = self._create_result_area(central)
+        layout.addWidget(self.result_area)
 
         self.setCentralWidget(central)
         self._apply_state()
@@ -272,14 +278,14 @@ class MainWindow(QMainWindow):
 
     @property
     def presentation(self) -> Optional[Presentation]:
-        """Return the presentation view of the failure being shown.
+        """Return the presentation view of the most recent completion.
 
         The value comes from the WP-P12-06-01 presentation model
         (:func:`~md_converter.gui.presentation_model.present_result` /
         :func:`~md_converter.gui.presentation_model.present_job_failure`); the
         window never builds title, summary, count or severity wording itself.
-        ``None`` means no failure is presented (no completion yet, a successful
-        completion, or the failure UX was cleared by a new workflow).
+        ``None`` means no completion yet or the outcome presentation was cleared
+        by a new workflow.
         """
         return self._presentation
 
@@ -327,8 +333,8 @@ class MainWindow(QMainWindow):
         """
         state = self.state_model.set_source(source)
         if state in (GuiState.READY, GuiState.EMPTY):
-            # A new workflow begins: the failure presentation is cleared while
-            # the retained failure evidence stays available (WP-P12-06-02).
+            # A new workflow begins: the outcome presentation is cleared while
+            # the retained evidence stays available (WP-P12-06-02/03).
             self._presentation = None
         return self._apply_state()
 
@@ -493,27 +499,39 @@ class MainWindow(QMainWindow):
         self._apply_state()
 
     def show_details(self) -> bool:
-        """Open the bounded failure-details surface when evidence exists.
+        """Open the bounded details surface for the presented outcome.
 
-        The affordance follows the presentation model: it is only offered for a
-        failure whose presentation reports available details, and it always
-        shows the retained evidence of that failure.  The complete
+        The affordance follows the presentation model: it is offered only for a
+        presented outcome whose presentation reports available details, and it
+        always shows the retained evidence of that outcome.  The complete
         diagnostics/report view remains WP-P12-06-04.
 
         Returns:
             bool: ``True`` when the details surface was shown.
         """
-        presentation = self._presentation
-        if presentation is None or not (presentation.is_failure and presentation.details_available):
+        presentation = self._presented_presentation()
+        if presentation is None or not presentation.details_available:
             return False
-        evidence = self._failure_evidence(presentation)
+        evidence = self._presentation_evidence(presentation)
         if evidence is None:
             return False
-        show_failure_details(self, presentation, evidence)
+        show_result_details(self, presentation, evidence)
         return True
 
-    def _failure_evidence(self, presentation: Presentation) -> Optional[object]:
-        """Return the retained evidence the given failure presentation describes."""
+    def _presented_presentation(self) -> Optional[Presentation]:
+        """Return the presentation currently shown in the result area.
+
+        Returns:
+            Optional[Presentation]: The presentation for a state that exposes
+            outcome details, otherwise ``None`` (for example a plain
+            ``SUCCESS``, whose surface is unchanged by WP-P12-06-03).
+        """
+        if self.state_model.state not in _PRESENTED_STATES:
+            return None
+        return self._presentation
+
+    def _presentation_evidence(self, presentation: Presentation) -> Optional[object]:
+        """Return the retained evidence the given presentation describes."""
         if presentation.is_infrastructure_failure:
             return self._latest_job_failure
         return self._latest_result
@@ -551,7 +569,7 @@ class MainWindow(QMainWindow):
         This is the *only* place that writes workflow-driven widget state
         (WP-P12-04-03 §7), including the output-folder display and the
         availability of the Change control (WP-P12-04-06), and the bounded
-        failure presentation (WP-P12-06-02).
+        outcome presentation (WP-P12-06-02/03).
 
         Returns:
             GuiState: The current GUI state.
@@ -575,29 +593,24 @@ class MainWindow(QMainWindow):
             str(self._output_directory) if self._output_directory is not None else ""
         )
         self.status_label.setText(effect.status_text)
-        self._apply_failure_state()
+        self._apply_result_state()
         return self.state_model.state
 
-    def _apply_failure_state(self) -> None:
-        """Apply the bounded failure presentation to the failure-area widgets.
+    def _apply_result_state(self) -> None:
+        """Apply the bounded outcome presentation to the result-area widgets.
 
         This is part of the single :meth:`_apply_state` write path
-        (WP-P12-06-02).  The area appears only for a failure presentation while
-        the GUI state is ``FAILED``; the text and the ``Details...`` affordance
-        come from the presentation model, never from wording built here.
+        (WP-P12-06-02/03).  The area appears for the presented states
+        (``SUCCESS_WITH_WARNING`` and ``FAILED``) only; a plain ``SUCCESS``
+        keeps its existing surface.  The summary text and the ``Details...``
+        affordance come from the presentation model, never from wording built
+        here, and warning evidence is never routed through failure semantics.
         """
-        presentation = self._presentation
-        visible = (
-            presentation is not None
-            and presentation.is_failure
-            and self.state_model.state is GuiState.FAILED
-        )
-        summary = presentation.summary if visible and presentation is not None else ""
-        details_visible = bool(
-            visible and presentation is not None and presentation.details_available
-        )
-        self.failure_summary_label.setText(summary)
-        self.failure_area.setVisible(visible)
+        presentation = self._presented_presentation()
+        visible = presentation is not None
+        self.result_summary_label.setText(presentation.summary if presentation else "")
+        self.result_area.setVisible(visible)
+        details_visible = bool(presentation is not None and presentation.details_available)
         self.details_button.setVisible(details_visible)
         self.details_button.setEnabled(details_visible)
 
@@ -714,30 +727,31 @@ class MainWindow(QMainWindow):
         label.setObjectName("statusLabel")
         return label
 
-    def _create_failure_area(self, parent: QWidget) -> QWidget:
-        """Create the bounded failure presentation area (WP-P12-06-02).
+    def _create_result_area(self, parent: QWidget) -> QWidget:
+        """Create the bounded outcome presentation area (WP-P12-06-02/03).
 
-        The area holds the concise failure summary and the ``Details...``
-        affordance.  It is hidden until a failure is presented and it stays
-        small: the full diagnostics/report surface is WP-P12-06-04.
+        The area holds the concise summary of the presented outcome and the
+        ``Details...`` affordance.  It is hidden until a warning or failure is
+        presented and it stays small: the full diagnostics/report surface is
+        WP-P12-06-04.
 
         Args:
             parent: Parent widget for the container.
 
         Returns:
-            QWidget: The failure-area container.
+            QWidget: The result-area container.
         """
         area = QWidget(parent)
-        area.setObjectName("failureArea")
+        area.setObjectName("resultArea")
         row = QHBoxLayout(area)
-        row.setObjectName("failureAreaLayout")
+        row.setObjectName("resultAreaLayout")
         row.setContentsMargins(0, 0, 0, 0)
         row.setSpacing(8)
 
-        self.failure_summary_label = QLabel("", area)
-        self.failure_summary_label.setObjectName("failureSummaryLabel")
-        self.failure_summary_label.setWordWrap(True)
-        row.addWidget(self.failure_summary_label, 1)
+        self.result_summary_label = QLabel("", area)
+        self.result_summary_label.setObjectName("resultSummaryLabel")
+        self.result_summary_label.setWordWrap(True)
+        row.addWidget(self.result_summary_label, 1)
 
         self.details_button = QPushButton(DETAILS_TEXT, area)
         self.details_button.setObjectName("detailsButton")
