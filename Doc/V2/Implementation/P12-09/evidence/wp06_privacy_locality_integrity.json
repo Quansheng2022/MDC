@@ -1,0 +1,83 @@
+﻿{
+    "executable":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\dist\\MD_Converter_Lite\\MD_Converter_Lite.exe",
+    "installer":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\dist_installer\\MD_Converter_v1.1.0_Setup.exe",
+    "payload_dir":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\dist\\MD_Converter_Lite",
+    "started_at":  "2026-09-27T23:07:35.1862115+08:00",
+    "executable_sha256":  "F5AB988168DFA976ED50095A272FB3405CE2CAB395C4A77A34637318D60F7E04",
+    "installer_sha256":  "EFEC378F11B00A53791158199B4DC98AA09F44F5B1F013363FF744A92B91B9BF",
+    "executable_size":  6845458,
+    "installer_size":  51109717,
+    "executable_version":  "1.1.0",
+    "installer_version":  "1.1.0.0             ",
+    "executable-hash-matches-frozen-candidate":  {
+                                                     "passed":  true,
+                                                     "detail":  "F5AB988168DFA976ED50095A272FB3405CE2CAB395C4A77A34637318D60F7E04"
+                                                 },
+    "installer-hash-matches-frozen-candidate":  {
+                                                    "passed":  true,
+                                                    "detail":  "EFEC378F11B00A53791158199B4DC98AA09F44F5B1F013363FF744A92B91B9BF"
+                                                },
+    "installer-filename-version":  {
+                                       "passed":  true,
+                                       "detail":  "filename=MD_Converter_v1.1.0_Setup.exe; version=1.1.0.0             "
+                                   },
+    "executable-version":  {
+                               "passed":  true,
+                               "detail":  "version=1.1.0"
+                           },
+    "source_version":  "1.1.0",
+    "version-consistency":  {
+                                "passed":  true,
+                                "detail":  "pyproject=1.1.0; executable=1.1.0; installer=1.1.0.0             ; About=Version 1.1.0 (WP-09-02)"
+                            },
+    "eula-present":  {
+                         "passed":  true,
+                         "detail":  "EULA.txt at C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\EULA.txt"
+                     },
+    "third-party-notices-present":  {
+                                        "passed":  true,
+                                        "detail":  "THIRD_PARTY_NOTICES.txt at C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\THIRD_PARTY_NOTICES.txt"
+                                    },
+    "payload_file_count":  268,
+    "payload_total_bytes":  166150109,
+    "forbidden_path_hits":  [
+
+                            ],
+    "payload-free-of-development-material":  {
+                                                 "passed":  true,
+                                                 "detail":  "268 file(s); 0 forbidden-path hit(s)"
+                                             },
+    "developer_path_hits":  [
+
+                            ],
+    "payload-free-of-developer-absolute-paths":  {
+                                                     "passed":  true,
+                                                     "detail":  "0 developer absolute-path hit(s) in bundled text files"
+                                                 },
+    "launch-for-network-observation":  {
+                                           "passed":  true,
+                                           "detail":  "main window visible (pid 16608)"
+                                       },
+    "conversion_outcome":  {
+                               "outcome":  "SUCCESS",
+                               "seconds":  0,
+                               "detail":  "Open Document / Open Folder enabled"
+                           },
+    "connections":  [
+
+                    ],
+    "remote_connections":  0,
+    "established_remote_connections":  0,
+    "no-required-network-dependency":  {
+                                           "passed":  true,
+                                           "detail":  "conversion outcome=SUCCESS; established remote connections owned by the product process=0 (samples=0)"
+                                       },
+    "observations":  [
+
+                     ],
+    "finished_at":  "2026-09-27T23:08:00.3235689+08:00",
+    "failed_checks":  [
+
+                      ],
+    "status":  "PASS"
+}
