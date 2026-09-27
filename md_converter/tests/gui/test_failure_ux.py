@@ -390,17 +390,22 @@ def test_details_dialog_is_read_only_and_evidence_driven(
 def test_no_output_action_is_offered_after_failure(
     window: "MainWindow", tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    """WP §5: failures never expose output actions (WP-P12-06-05 owns them)."""
-    from PySide6.QtWidgets import QPushButton
+    """WP §5: failures never expose an actionable output artifact.
 
+    WP-P12-06-05 added the output controls; for a failure they stay hidden and
+    disabled, so no misleading action is offered.
+    """
     _fail_conversion(window, tmp_path, monkeypatch)
+    window.show()
+    _pump()
 
     assert window.presentation is not None
     assert window.presentation.output_actionable is False
-    assert not hasattr(window, "open_document_button")
-    assert not hasattr(window, "open_folder_button")
-    object_names = [button.objectName().lower() for button in window.findChildren(QPushButton)]
-    assert not [name for name in object_names if "open" in name]
+    for button in (window.open_document_button, window.open_folder_button):
+        assert button.isEnabled() is False
+        assert button.isVisible() is False
+    assert window.open_output_document() is False
+    assert window.open_output_folder() is False
 
 
 # ============================================================

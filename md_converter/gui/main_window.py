@@ -39,13 +39,19 @@ evidence.  A warning stays a successful outcome - it is never routed through
 the failure presentation - and a plain ``SUCCESS`` keeps its existing surface.
 The presentation model stays the single presentation-semantic authority, and
 the retained ``ConversionResult`` / ``JobFailure`` evidence is never modified.
+
+WP-P12-06-05 adds the bounded output actions.  ``Open Document`` and
+``Open Folder`` are offered only when the presentation reports an actionable
+artifact, and they act on the retained ``ConversionResult.output_path`` verbatim
+(see :mod:`md_converter.gui.output_actions`).  No output name is derived or
+reconstructed here, and no action triggers a conversion.
 """
 
 from __future__ import annotations
 
 from functools import partial
 from pathlib import Path
-from typing import Optional, Union
+from typing import Callable, Optional, Union
 
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QCloseEvent
@@ -62,6 +68,7 @@ from ..application.conversion_result import ConversionResult
 from ..application.conversion_service import ConversionService
 from . import file_picker
 from .drop_zone import DropZone
+from .output_actions import notify_missing_artifact, open_document, open_folder
 from .presentation_model import Presentation, present_job_failure, present_result
 from .request_builder import build_conversion_request
 from .result_details import show_result_details
@@ -80,6 +87,8 @@ __all__ = [
     "MINIMUM_HEIGHT",
     "MINIMUM_WIDTH",
     "MainWindow",
+    "OPEN_DOCUMENT_TEXT",
+    "OPEN_FOLDER_TEXT",
     "OUTPUT_CAPTION_TEXT",
     "OUTPUT_PATH_MAX_CHARS",
     "OUTPUT_VALUE_TEXT",
@@ -115,6 +124,10 @@ CONVERT_TEXT = "Convert"
 
 #: Bounded details affordance for presented outcomes (WP-P12-06-02/03).
 DETAILS_TEXT = "Details..."
+
+#: Bounded post-conversion output actions (WP-P12-06-05).
+OPEN_DOCUMENT_TEXT = "Open Document"
+OPEN_FOLDER_TEXT = "Open Folder"
 
 #: GUI states whose result presentation is shown in the result area.  A plain
 #: ``SUCCESS`` keeps the existing success surface unchanged (WP-P12-06-03).
@@ -200,6 +213,9 @@ class MainWindow(QMainWindow):
         result_area: Container of the bounded outcome presentation.
         result_summary_label: Concise summary of the presented outcome.
         details_button: Bounded ``Details...`` affordance.
+        actions_area: Container of the post-conversion output actions.
+        open_document_button: Opens the retained artifact.
+        open_folder_button: Opens the folder containing the retained artifact.
     """
 
     def __init__(self, parent: Optional[QWidget] = None) -> None:
@@ -238,6 +254,8 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.status_label)
         self.result_area = self._create_result_area(central)
         layout.addWidget(self.result_area)
+        self.actions_area = self._create_actions_area(central)
+        layout.addWidget(self.actions_area)
 
         self.setCentralWidget(central)
         self._apply_state()
@@ -536,6 +554,66 @@ class MainWindow(QMainWindow):
             return self._latest_job_failure
         return self._latest_result
 
+    def _actionable_output_path(self) -> Optional[Path]:
+        """Return the retained artifact path when the output actions are eligible.
+
+        The path is the retained ``ConversionResult.output_path``, used verbatim:
+        it is never rebuilt from the source name, the output-folder preference,
+        configuration or a guessed output name.  Eligibility comes from the
+        presentation model, which only marks successful outcomes with an
+        existing artifact as actionable - so failures and infrastructure
+        failures fail closed.
+
+        Returns:
+            Optional[Path]: The retained artifact path, or ``None`` when the
+            actions are not eligible.
+        """
+        presentation = self._presentation
+        if presentation is None or not presentation.output_actionable:
+            return None
+        result = self._latest_result
+        if result is None or result.output_path is None:
+            return None
+        return result.output_path
+
+    def open_output_document(self) -> bool:
+        """Open the retained output document.
+
+        Returns:
+            bool: ``True`` when the platform accepted the request.  A missing
+            artifact fails safely with a concise local message and never
+            triggers another conversion.
+        """
+        return self._run_output_action(open_document)
+
+    def open_output_folder(self) -> bool:
+        """Open the folder containing the retained output document.
+
+        Returns:
+            bool: ``True`` when the platform accepted the request.  A missing
+            artifact fails safely with a concise local message and never
+            triggers another conversion.
+        """
+        return self._run_output_action(open_folder)
+
+    def _run_output_action(self, action: Callable[[Path], bool]) -> bool:
+        """Run one output action against the retained artifact path.
+
+        Args:
+            action: Platform launch helper from
+                :mod:`md_converter.gui.output_actions`.
+
+        Returns:
+            bool: ``True`` when the platform opened the target.
+        """
+        path = self._actionable_output_path()
+        if path is None:
+            return False
+        if action(path):
+            return True
+        notify_missing_artifact(self, path)
+        return False
+
     def simulate_success(self) -> GuiState:
         """Apply the mocked ``CONVERTING`` -> ``SUCCESS`` completion.
 
@@ -594,6 +672,7 @@ class MainWindow(QMainWindow):
         )
         self.status_label.setText(effect.status_text)
         self._apply_result_state()
+        self._apply_output_actions()
         return self.state_model.state
 
     def _apply_result_state(self) -> None:
@@ -613,6 +692,19 @@ class MainWindow(QMainWindow):
         details_visible = bool(presentation is not None and presentation.details_available)
         self.details_button.setVisible(details_visible)
         self.details_button.setEnabled(details_visible)
+
+    def _apply_output_actions(self) -> None:
+        """Apply the post-conversion output actions (WP-P12-06-05).
+
+        Part of the single :meth:`_apply_state` write path.  The actions follow
+        the presentation model's output eligibility: they are offered only for a
+        successful outcome whose retained artifact exists, so failures and
+        infrastructure failures never expose a misleading action.
+        """
+        available = self._actionable_output_path() is not None
+        for button in (self.open_document_button, self.open_folder_button):
+            button.setVisible(available)
+            button.setEnabled(available)
 
     def _create_drop_zone(self, parent: QWidget) -> DropZone:
         """Create the drop-area placeholder (no drag & drop behavior yet).
@@ -757,4 +849,37 @@ class MainWindow(QMainWindow):
         self.details_button.setObjectName("detailsButton")
         self.details_button.clicked.connect(self.show_details)
         row.addWidget(self.details_button, 0)
+        return area
+
+    def _create_actions_area(self, parent: QWidget) -> QWidget:
+        """Create the bounded post-conversion action area (WP-P12-06-05).
+
+        The area holds ``Open Document`` and ``Open Folder``.  It is hidden
+        until a successful conversion produced an artifact that still exists;
+        visibility and enablement are applied by :meth:`_apply_output_actions`.
+
+        Args:
+            parent: Parent widget for the container.
+
+        Returns:
+            QWidget: The output-action container.
+        """
+        area = QWidget(parent)
+        area.setObjectName("actionsArea")
+        row = QHBoxLayout(area)
+        row.setObjectName("actionsAreaLayout")
+        row.setContentsMargins(0, 0, 0, 0)
+        row.setSpacing(8)
+
+        self.open_document_button = QPushButton(OPEN_DOCUMENT_TEXT, area)
+        self.open_document_button.setObjectName("openDocumentButton")
+        self.open_document_button.clicked.connect(self.open_output_document)
+        self.open_folder_button = QPushButton(OPEN_FOLDER_TEXT, area)
+        self.open_folder_button.setObjectName("openFolderButton")
+        self.open_folder_button.clicked.connect(self.open_output_folder)
+
+        row.addStretch(1)
+        row.addWidget(self.open_document_button)
+        row.addWidget(self.open_folder_button)
+        row.addStretch(1)
         return area

@@ -360,8 +360,6 @@ def test_compatibility_alias_matches_the_generalized_surface() -> None:
 
 def test_valid_output_remains_actionable(window: "MainWindow", tmp_path: Path) -> None:
     """WP §7: warnings never suppress artifact eligibility."""
-    from PySide6.QtWidgets import QPushButton
-
     _warning_conversion(window, tmp_path)
     presentation = window.presentation
     assert presentation is not None
@@ -370,11 +368,12 @@ def test_valid_output_remains_actionable(window: "MainWindow", tmp_path: Path) -
     assert presentation.output_path.exists()
     assert presentation.output_actionable is True
 
-    # WP-P12-06-05 owns the Open Document / Open Folder controls.
-    assert not hasattr(window, "open_document_button")
-    assert not hasattr(window, "open_folder_button")
-    object_names = [button.objectName().lower() for button in window.findChildren(QPushButton)]
-    assert not [name for name in object_names if "open" in name]
+    # WP-P12-06-05 provides the controls; a valid artifact keeps them enabled.
+    window.show()
+    _pump()
+    for button in (window.open_document_button, window.open_folder_button):
+        assert button.isEnabled() is True
+        assert button.isVisible() is True
 
 
 def test_failed_ux_is_not_used_for_warnings(window: "MainWindow", tmp_path: Path) -> None:
