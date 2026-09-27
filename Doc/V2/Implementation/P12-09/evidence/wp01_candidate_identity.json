@@ -1,0 +1,78 @@
+{
+  "wp": "WP-P12-09-01",
+  "title": "Verification Baseline",
+  "status": "PASS",
+  "product_baseline_sha": "38614c7bb555f96685c301bc4b6abd71138c2642",
+  "specification_baseline_sha": "08b198043ad107cdcd9293152acfa756fd6fa410",
+  "input_commit": "08b1980",
+  "recorded_at": "2026-09-27T22:06:16+08:00",
+  "candidate": {
+    "installer": {
+      "path": "dist_installer\\MD_Converter_v1.1.0_Setup.exe",
+      "filename": "MD_Converter_v1.1.0_Setup.exe",
+      "size_bytes": 51109717,
+      "sha256": "EFEC378F11B00A53791158199B4DC98AA09F44F5B1F013363FF744A92B91B9BF",
+      "file_version": "1.1.0.0",
+      "mtime": "2026-09-27T21:04:45.8196836+08:00"
+    },
+    "packaged_executable": {
+      "path": "dist\\MD_Converter_Lite\\MD_Converter_Lite.exe",
+      "size_bytes": 6845458,
+      "sha256": "F5AB988168DFA976ED50095A272FB3405CE2CAB395C4A77A34637318D60F7E04",
+      "file_version": "1.1.0",
+      "mtime": "2026-09-27T21:04:15.3326341+08:00"
+    },
+    "payload_files": 268,
+    "payload_bytes": 166150109,
+    "product_version": "1.1.0",
+    "published_identity": {
+      "app_id": "MDConverter.Quansheng2022",
+      "app_name": "MD Converter",
+      "app_version": "1.1.0",
+      "publisher": "Quansheng2022"
+    },
+    "matches_p12_08_closure_record": true
+  },
+  "environment": {
+    "os": "Microsoft Windows 11 Home",
+    "os_build": "26200",
+    "architecture": "x64",
+    "powershell": "7.6.5",
+    "dotnet": "10.0.11",
+    "locale": "en-SG",
+    "ansi_code_page": 1252,
+    "oem_code_page": 1252,
+    "display": {
+      "resolution": "1920x1080",
+      "system_dpi": 144,
+      "scale_percent": 150
+    },
+    "interactive_session": true,
+    "session_id": 1,
+    "word": {
+      "present": true,
+      "path": "C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE",
+      "version": "16.0.20326.20158"
+    },
+    "python": {
+      "path": ".venv\\Scripts\\python.exe",
+      "version": "3.12.14"
+    }
+  },
+  "accepted_exceptions": [
+    "E1 test_packaging_metadata.py::test_pkg_documented_extras_exist_in_metadata (README content)",
+    "E2 test_packaging_metadata.py::test_pkg_readme_has_no_legacy_packaging_references (README content)",
+    "E3 invalid YAML frontmatter behaviour",
+    "E4 output\\document.docx test side effect",
+    "E5 historical repo-wide lint debt outside touched files",
+    "E6 no authoritative custom product icon",
+    "E7 installer not code-signed",
+    "E8 Word COM post-processing dominates conversion time"
+  ],
+  "pre_existing_working_tree_changes": [
+    "README.md (full content rewrite)",
+    ".gitignore (expanded ignore rules)",
+    "md_converter/cli.py (docstring-only CLI usage examples)"
+  ],
+  "failed_checks": []
+}
