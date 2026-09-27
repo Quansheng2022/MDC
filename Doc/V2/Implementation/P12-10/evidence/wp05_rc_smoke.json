@@ -1,0 +1,199 @@
+﻿{
+    "installer":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\release\\MD_Converter_v1.1.0_RC1\\MD_Converter_v1.1.0_Setup.exe",
+    "work_root":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_p1210_rc_smoke_20260927_234638",
+    "input_markdown":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_p1210_rc_smoke_20260927_234638\\input\\01_simple.md",
+    "started_at":  "2026-09-27T23:46:38.3049503+08:00",
+    "word_path":  "C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE",
+    "word_version":  "16.0.20326.20158",
+    "prefs_remember_existed_before":  true,
+    "prefs_remember_value_before":  "true",
+    "install_dir_present_before":  false,
+    "installer_size":  51109717,
+    "installer_sha256":  "EFEC378F11B00A53791158199B4DC98AA09F44F5B1F013363FF744A92B91B9BF",
+    "installer_file_version":  "1.1.0.0             ",
+    "precheck-installer-hash":  {
+                                    "passed":  true,
+                                    "detail":  "EFEC378F11B00A53791158199B4DC98AA09F44F5B1F013363FF744A92B91B9BF"
+                                },
+    "precheck-installer-size":  {
+                                    "passed":  true,
+                                    "detail":  "51109717 bytes"
+                                },
+    "precheck-installer-version":  {
+                                       "passed":  true,
+                                       "detail":  "1.1.0.0             "
+                                   },
+    "install_exit_code":  0,
+    "install-exit-code":  {
+                              "passed":  true,
+                              "detail":  "exit 0"
+                          },
+    "install-directory-created":  {
+                                      "passed":  true,
+                                      "detail":  "C:\\Users\\Quansheng\\AppData\\Local\\Programs\\MD_Converter\\MD_Converter.exe"
+                                  },
+    "installed_executable_sha256":  "F5AB988168DFA976ED50095A272FB3405CE2CAB395C4A77A34637318D60F7E04",
+    "installed_executable_version":  "1.1.0",
+    "installed-executable-identity":  {
+                                          "passed":  true,
+                                          "detail":  "F5AB988168DFA976ED50095A272FB3405CE2CAB395C4A77A34637318D60F7E04"
+                                      },
+    "installed-executable-version":  {
+                                         "passed":  true,
+                                         "detail":  "1.1.0"
+                                     },
+    "installed-eula-and-notices":  {
+                                       "passed":  true,
+                                       "detail":  "EULA.txt + THIRD_PARTY_NOTICES.txt installed"
+                                   },
+    "uninstall_display_name":  "MD Converter 1.1.0",
+    "uninstall_display_version":  "1.1.0",
+    "uninstall_publisher":  "Quansheng2022",
+    "uninstall-registry-entry":  {
+                                     "passed":  true,
+                                     "detail":  "MD Converter 1.1.0 1.1.0 (Quansheng2022)"
+                                 },
+    "no-service-or-autostart-created":  {
+                                            "passed":  true,
+                                            "detail":  "service=none; autostart=none"
+                                        },
+    "process_id":  11816,
+    "launch-installed-app":  {
+                                 "passed":  true,
+                                 "detail":  "window \u0027MD Converter\u0027 is visible (pid 11816)"
+                             },
+    "about_text":  [
+                       "MD Converter",
+                       "Version 1.1.0",
+                       "Turn Markdown into polished Word documents — locally, privately, and without a subscription.",
+                       "Processing: Local, on this computer",
+                       "Account required: No",
+                       "Document upload: Not required for normal conversion",
+                       "Copyright © 2026 Quansheng2022. All rights reserved.",
+                       "Licensed under the Proprietary Single-User License (see EULA.txt).",
+                       "Close"
+                   ],
+    "about-version":  {
+                          "passed":  true,
+                          "detail":  "version text: Version 1.1.0"
+                      },
+    "settings_state_before":  "On",
+    "settings_state_flipped":  "Off",
+    "settings_stored_after_save":  "false",
+    "settings-save-persists":  {
+                                   "passed":  true,
+                                   "detail":  "toggle On -\u003e Off; saved=True; store.remember=false"
+                               },
+    "clean-close-first-run":  {
+                                  "passed":  true,
+                                  "detail":  "process exited: True"
+                              },
+    "settings_state_after_restart":  "Off",
+    "settings-restored-after-restart":  {
+                                            "passed":  true,
+                                            "detail":  "after restart the toggle reads Off (saved Off)"
+                                        },
+    "conversion":  {
+                       "selected":  true,
+                       "convert_enabled":  true,
+                       "outcome":  {
+                                       "outcome":  "SUCCESS",
+                                       "seconds":  9.6,
+                                       "detail":  "Open Document / Open Folder enabled"
+                                   }
+                   },
+    "conversion-success":  {
+                               "passed":  true,
+                               "detail":  "outcome=SUCCESS after 9.6s (Open Document / Open Folder enabled)"
+                           },
+    "docx_artifacts":  [
+                           "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_p1210_rc_smoke_20260927_234638\\output\\01_simple.docx"
+                       ],
+    "docx-artifact-created":  {
+                                  "passed":  true,
+                                  "detail":  "1 DOCX artifact(s)"
+                              },
+    "valid_docx_artifacts":  [
+                                 "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_p1210_rc_smoke_20260927_234638\\output\\01_simple.docx"
+                             ],
+    "docx-artifact-valid":  {
+                                "passed":  true,
+                                "detail":  "1 of 1 artifact(s) contain word/document.xml"
+                            },
+    "opened_artifact":  "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_p1210_rc_smoke_20260927_234638\\output\\01_simple.docx",
+    "open-document-enabled":  {
+                                  "passed":  true,
+                                  "detail":  "Open Document enabled after SUCCESS"
+                              },
+    "artifact-present-before-open":  {
+                                         "passed":  true,
+                                         "detail":  "artifact exists before the launcher runs"
+                                     },
+    "word-actually-opened":  {
+                                 "passed":  true,
+                                 "detail":  "Word window \u002701_simple [Compatibility Mode] - Word\u0027"
+                             },
+    "word_window_title":  "01_simple [Compatibility Mode] - Word",
+    "word-holds-exclusive-lock":  {
+                                      "passed":  true,
+                                      "detail":  "Word held the DOCX under an exclusive lock while displayed"
+                                  },
+    "word-closed-cleanly":  {
+                                "passed":  true,
+                                "detail":  "Word window closed"
+                            },
+    "artifact-present-after-open":  {
+                                        "passed":  true,
+                                        "detail":  "artifact remains present after Word closed"
+                                    },
+    "lock-released-after-word-close":  {
+                                           "passed":  true,
+                                           "detail":  "exclusive lock released"
+                                       },
+    "clean-close":  {
+                        "passed":  true,
+                        "detail":  "process exited: True"
+                    },
+    "uninstall_exit_code":  0,
+    "uninstall-exit-code":  {
+                                "passed":  true,
+                                "detail":  "exit 0"
+                            },
+    "install-directory-removed":  {
+                                      "passed":  true,
+                                      "detail":  "installed executable removed"
+                                  },
+    "uninstall-registry-entry-removed":  {
+                                             "passed":  true,
+                                             "detail":  "uninstall entry removed"
+                                         },
+    "start-menu-entries-removed":  {
+                                       "passed":  true,
+                                       "detail":  "0 shortcut(s) left"
+                                   },
+    "user-document-preserved":  {
+                                    "passed":  true,
+                                    "detail":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_p1210_rc_smoke_20260927_234638\\Documents\\MD_Converter\\user_note.txt"
+                                },
+    "converted-document-preserved":  {
+                                         "passed":  true,
+                                         "detail":  "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_p1210_rc_smoke_20260927_234638\\output\\01_simple.docx"
+                                     },
+    "settings-key-preserved":  {
+                                   "passed":  true,
+                                   "detail":  "GUI settings key still present"
+                               },
+    "post_smoke_installer_sha256":  "EFEC378F11B00A53791158199B4DC98AA09F44F5B1F013363FF744A92B91B9BF",
+    "post-smoke-binary-drift-zero":  {
+                                         "passed":  true,
+                                         "detail":  "EFEC378F11B00A53791158199B4DC98AA09F44F5B1F013363FF744A92B91B9BF"
+                                     },
+    "observations":  [
+
+                     ],
+    "finished_at":  "2026-09-27T23:48:10.4113823+08:00",
+    "failed_checks":  [
+
+                      ],
+    "status":  "PASS"
+}
