@@ -30,6 +30,13 @@ WP-P12-04-03 adds the explicit GUI state model.  Widget enablement, the source
 display and the status text are derived from :mod:`md_converter.gui.state`
 through the single :meth:`MainWindow._apply_state` path, so no other method
 writes those widget states.
+
+WP-P12-06-02 adds the bounded failure UX.  A ``FAILED`` result and a worker
+``JobFailure`` are presented through the WP-P12-06-01 presentation model: the
+window only displays the derived title/summary and offers a bounded
+``Details...`` affordance when the presentation reports evidence.  The
+presentation model stays the single presentation-semantic authority, and the
+retained ``ConversionResult`` / ``JobFailure`` evidence is never modified.
 """
 
 from __future__ import annotations
@@ -53,6 +60,8 @@ from ..application.conversion_result import ConversionResult
 from ..application.conversion_service import ConversionService
 from . import file_picker
 from .drop_zone import DropZone
+from .failure_details import show_failure_details
+from .presentation_model import Presentation, present_job_failure, present_result
 from .request_builder import build_conversion_request
 from .result_mapping import gui_state_for_result
 from .state import GuiState, GuiStateModel
@@ -65,6 +74,7 @@ __all__ = [
     "DROP_HINT_TEXT",
     "DROP_RELEASE_HINT_TEXT",
     "DROP_ZONE_MINIMUM_HEIGHT",
+    "DETAILS_TEXT",
     "MINIMUM_HEIGHT",
     "MINIMUM_WIDTH",
     "MainWindow",
@@ -100,6 +110,9 @@ OUTPUT_CAPTION_TEXT = "Output folder:"
 OUTPUT_VALUE_TEXT = "Default location"
 CHANGE_OUTPUT_TEXT = "Change"
 CONVERT_TEXT = "Convert"
+
+#: Bounded failure-details affordance (WP-P12-06-02).
+DETAILS_TEXT = "Details..."
 
 #: Layout sizing for the drop area and the primary action.
 DROP_ZONE_MINIMUM_HEIGHT = 180
@@ -165,6 +178,8 @@ class MainWindow(QMainWindow):
             retained untouched for the P12-06 diagnostics UX.
         latest_job_failure: Most recent worker infrastructure failure, if any;
             kept distinct from application results.
+        presentation: Presentation view of the most recent failure, or ``None``
+            when no failure is being presented (WP-P12-06-02).
         is_conversion_active: Whether a conversion job is running or its thread
             is still cleaning up (drives the close policy).
         drop_zone: Drop-area placeholder frame.
@@ -176,6 +191,9 @@ class MainWindow(QMainWindow):
         change_output_button: Opens the output-folder chooser.
         convert_button: Primary action placeholder.
         status_label: Status area text.
+        failure_area: Container of the bounded failure presentation.
+        failure_summary_label: Concise failure summary (WP-P12-06-02).
+        details_button: Failure ``Details...`` affordance.
     """
 
     def __init__(self, parent: Optional[QWidget] = None) -> None:
@@ -189,6 +207,7 @@ class MainWindow(QMainWindow):
         self._output_directory: Optional[Path] = None
         self._latest_result: Optional[ConversionResult] = None
         self._latest_job_failure: Optional[JobFailure] = None
+        self._presentation: Optional[Presentation] = None
         self.service = ConversionService()
         self.worker = GuiWorker(self)
         self.worker.succeeded.connect(self._on_conversion_result)
@@ -211,6 +230,8 @@ class MainWindow(QMainWindow):
         layout.addLayout(self._create_convert_row(central))
         self.status_label = self._create_status_label(central)
         layout.addWidget(self.status_label)
+        self.failure_area = self._create_failure_area(central)
+        layout.addWidget(self.failure_area)
 
         self.setCentralWidget(central)
         self._apply_state()
@@ -248,6 +269,19 @@ class MainWindow(QMainWindow):
         :attr:`latest_result`.
         """
         return self._latest_job_failure
+
+    @property
+    def presentation(self) -> Optional[Presentation]:
+        """Return the presentation view of the failure being shown.
+
+        The value comes from the WP-P12-06-01 presentation model
+        (:func:`~md_converter.gui.presentation_model.present_result` /
+        :func:`~md_converter.gui.presentation_model.present_job_failure`); the
+        window never builds title, summary, count or severity wording itself.
+        ``None`` means no failure is presented (no completion yet, a successful
+        completion, or the failure UX was cleared by a new workflow).
+        """
+        return self._presentation
 
     @property
     def is_conversion_active(self) -> bool:
@@ -291,7 +325,11 @@ class MainWindow(QMainWindow):
         Returns:
             GuiState: The state after the request.
         """
-        self.state_model.set_source(source)
+        state = self.state_model.set_source(source)
+        if state in (GuiState.READY, GuiState.EMPTY):
+            # A new workflow begins: the failure presentation is cleared while
+            # the retained failure evidence stays available (WP-P12-06-02).
+            self._presentation = None
         return self._apply_state()
 
     def reset(self) -> GuiState:
@@ -300,7 +338,9 @@ class MainWindow(QMainWindow):
         Returns:
             GuiState: The state after the request.
         """
-        self.state_model.reset()
+        state = self.state_model.reset()
+        if state is GuiState.EMPTY:
+            self._presentation = None
         return self._apply_state()
 
     def choose_source(self) -> GuiState:
@@ -430,11 +470,14 @@ class MainWindow(QMainWindow):
         The status -> state interpretation lives in
         :func:`md_converter.gui.result_mapping.gui_state_for_result`; this
         callback only stores the evidence and applies the mapped state.
+        The failure presentation (WP-P12-06-02) is derived from the retained
+        result by the presentation model.
 
         Args:
             result: Conversion outcome returned by the application service.
         """
         self._latest_result = result
+        self._presentation = present_result(result)
         self.state_model.complete(gui_state_for_result(result))
         self._apply_state()
 
@@ -445,8 +488,35 @@ class MainWindow(QMainWindow):
             failure: Structured evidence from the worker boundary.
         """
         self._latest_job_failure = failure
+        self._presentation = present_job_failure(failure)
         self.state_model.complete_failure()
         self._apply_state()
+
+    def show_details(self) -> bool:
+        """Open the bounded failure-details surface when evidence exists.
+
+        The affordance follows the presentation model: it is only offered for a
+        failure whose presentation reports available details, and it always
+        shows the retained evidence of that failure.  The complete
+        diagnostics/report view remains WP-P12-06-04.
+
+        Returns:
+            bool: ``True`` when the details surface was shown.
+        """
+        presentation = self._presentation
+        if presentation is None or not (presentation.is_failure and presentation.details_available):
+            return False
+        evidence = self._failure_evidence(presentation)
+        if evidence is None:
+            return False
+        show_failure_details(self, presentation, evidence)
+        return True
+
+    def _failure_evidence(self, presentation: Presentation) -> Optional[object]:
+        """Return the retained evidence the given failure presentation describes."""
+        if presentation.is_infrastructure_failure:
+            return self._latest_job_failure
+        return self._latest_result
 
     def simulate_success(self) -> GuiState:
         """Apply the mocked ``CONVERTING`` -> ``SUCCESS`` completion.
@@ -480,7 +550,8 @@ class MainWindow(QMainWindow):
 
         This is the *only* place that writes workflow-driven widget state
         (WP-P12-04-03 §7), including the output-folder display and the
-        availability of the Change control (WP-P12-04-06).
+        availability of the Change control (WP-P12-04-06), and the bounded
+        failure presentation (WP-P12-06-02).
 
         Returns:
             GuiState: The current GUI state.
@@ -504,7 +575,31 @@ class MainWindow(QMainWindow):
             str(self._output_directory) if self._output_directory is not None else ""
         )
         self.status_label.setText(effect.status_text)
+        self._apply_failure_state()
         return self.state_model.state
+
+    def _apply_failure_state(self) -> None:
+        """Apply the bounded failure presentation to the failure-area widgets.
+
+        This is part of the single :meth:`_apply_state` write path
+        (WP-P12-06-02).  The area appears only for a failure presentation while
+        the GUI state is ``FAILED``; the text and the ``Details...`` affordance
+        come from the presentation model, never from wording built here.
+        """
+        presentation = self._presentation
+        visible = (
+            presentation is not None
+            and presentation.is_failure
+            and self.state_model.state is GuiState.FAILED
+        )
+        summary = presentation.summary if visible and presentation is not None else ""
+        details_visible = bool(
+            visible and presentation is not None and presentation.details_available
+        )
+        self.failure_summary_label.setText(summary)
+        self.failure_area.setVisible(visible)
+        self.details_button.setVisible(details_visible)
+        self.details_button.setEnabled(details_visible)
 
     def _create_drop_zone(self, parent: QWidget) -> DropZone:
         """Create the drop-area placeholder (no drag & drop behavior yet).
@@ -618,3 +713,34 @@ class MainWindow(QMainWindow):
         label = QLabel(self.state_model.effect.status_text, parent)
         label.setObjectName("statusLabel")
         return label
+
+    def _create_failure_area(self, parent: QWidget) -> QWidget:
+        """Create the bounded failure presentation area (WP-P12-06-02).
+
+        The area holds the concise failure summary and the ``Details...``
+        affordance.  It is hidden until a failure is presented and it stays
+        small: the full diagnostics/report surface is WP-P12-06-04.
+
+        Args:
+            parent: Parent widget for the container.
+
+        Returns:
+            QWidget: The failure-area container.
+        """
+        area = QWidget(parent)
+        area.setObjectName("failureArea")
+        row = QHBoxLayout(area)
+        row.setObjectName("failureAreaLayout")
+        row.setContentsMargins(0, 0, 0, 0)
+        row.setSpacing(8)
+
+        self.failure_summary_label = QLabel("", area)
+        self.failure_summary_label.setObjectName("failureSummaryLabel")
+        self.failure_summary_label.setWordWrap(True)
+        row.addWidget(self.failure_summary_label, 1)
+
+        self.details_button = QPushButton(DETAILS_TEXT, area)
+        self.details_button.setObjectName("detailsButton")
+        self.details_button.clicked.connect(self.show_details)
+        row.addWidget(self.details_button, 0)
+        return area
