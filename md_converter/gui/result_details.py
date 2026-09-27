@@ -1,31 +1,38 @@
-"""Bounded result-details surface for the MD_Converter GUI (WP-P12-06-02/03).
+"""Unified read-only result report surface for the MD_Converter GUI.
 
-P12-06 requires failure *and* warning evidence to be discoverable from the main
-window, while the complete read-only diagnostics/report view belongs to
-WP-P12-06-04.  This module provides the minimum bounded surface for both:
+P12-06 requires retained failure, warning and diagnostics evidence to be
+discoverable from the main window, with the presentation model as the only
+presentation-semantic authority:
 
-    Details...  ->  read-only dialog with the retained evidence
+    ConversionResult / JobFailure
+            v
+    presentation_model   (title / summary / outcome / counts)
+            v
+    result_details       (this module - read-only report rendering)
+            v
+    MainWindow "Details..." affordance
 
-Properties (WP-P12-06-02 "Details affordance", WP-P12-06-03 "Details surface"):
+The module is the *single* report surface for every outcome kind
+(WP-P12-06-04 §"Primary rule"): it is read-only, on demand, deterministic and
+local-only, and it renders retained evidence exactly as it was recorded.
 
-* read-only, on demand, evidence-driven - it renders retained evidence and the
-  presentation strings derived from it;
-* it never recomputes diagnostics, never calls the Core/QA stages and never
-  edits the retained evidence;
-* one surface for every outcome kind, labelled per outcome, so warning evidence
-  is never mislabelled as a failure; the full report surface is WP-P12-06-04.
+It never recomputes diagnostics, never calls the Core/QA stages, never edits the
+retained evidence and never builds a second result taxonomy.  Optional or empty
+evidence produces no section at all, so the surface stays free of noise.
 
-WP-P12-06-03 generalized the WP-P12-06-02 failure-only surface: the dialog is
-now titled per outcome ("Failure details" / "Warning details") and renders
-warning records as warning evidence.  The former ``failure_details`` module
-remains as a thin compatibility alias and contains no implementation.
+History: WP-P12-06-02 introduced a bounded failure-only details surface;
+WP-P12-06-03 generalized it to warnings; WP-P12-06-04 completed it into the
+unified diagnostics/report view.  The former ``failure_details`` module remains
+as a thin compatibility alias and contains no implementation.
 """
 
 from __future__ import annotations
 
-from typing import Dict, List, Optional
+from collections.abc import Mapping, Sequence
+from typing import Any, Dict, List, Optional, Tuple
 
 from PySide6.QtWidgets import (
+    QApplication,
     QDialog,
     QHBoxLayout,
     QLabel,
@@ -36,16 +43,19 @@ from PySide6.QtWidgets import (
 )
 
 from ..application.conversion_result import ConversionResult
+from ..application.diagnostics_adapter import ApplicationDiagnostic, DiagnosticSummary
 from .presentation_model import Presentation, PresentationOutcome
 
 __all__ = [
     "CLOSE_TEXT",
+    "COPY_TEXT",
     "DETAILS_TITLES",
     "EVIDENCE_CAPTION_TEXT",
     "ResultDetailsDialog",
     "TITLE_FAILURE_DETAILS",
     "TITLE_GENERIC_DETAILS",
     "TITLE_WARNING_DETAILS",
+    "build_report_text",
     "details_title",
     "presentation_evidence_text",
     "show_result_details",
@@ -55,8 +65,9 @@ __all__ = [
 TITLE_FAILURE_DETAILS = "Failure details"
 TITLE_WARNING_DETAILS = "Warning details"
 TITLE_GENERIC_DETAILS = "Conversion details"
-EVIDENCE_CAPTION_TEXT = "Details:"
+EVIDENCE_CAPTION_TEXT = "Report:"
 CLOSE_TEXT = "Close"
+COPY_TEXT = "Copy"
 
 #: Per-outcome dialog title; the label never mislabels warning evidence.
 DETAILS_TITLES: Dict[PresentationOutcome, str] = {
@@ -66,9 +77,9 @@ DETAILS_TITLES: Dict[PresentationOutcome, str] = {
     PresentationOutcome.SUCCESS: TITLE_GENERIC_DETAILS,
 }
 
-#: Stable dialog size; the surface stays bounded until WP-P12-06-04.
-DIALOG_WIDTH = 560
-DIALOG_HEIGHT = 360
+#: Stable dialog size for the full report.
+DIALOG_WIDTH = 720
+DIALOG_HEIGHT = 520
 
 
 def details_title(presentation: Presentation) -> str:
@@ -83,65 +94,161 @@ def details_title(presentation: Presentation) -> str:
     return DETAILS_TITLES.get(presentation.outcome, TITLE_GENERIC_DETAILS)
 
 
-def presentation_evidence_text(presentation: Presentation, evidence: object) -> str:
-    """Return the bounded plain-text evidence block for ``evidence``.
+def build_report_text(presentation: Presentation, evidence: object) -> str:
+    """Return the read-only report text for one retained outcome.
+
+    The text is derived only from ``presentation`` and the retained evidence
+    handed in - no Core/QA stage is consulted and nothing is recomputed.  Empty
+    or missing optional evidence contributes no section.
 
     Args:
-        presentation: Presentation view of the retained outcome; used to select
-            the evidence shape and as a fallback summary.
+        presentation: Presentation view of the retained outcome.
         evidence: Retained evidence - an application ``ConversionResult`` or
             worker-failure evidence.
 
     Returns:
-        str: Read-only text for the details surface; never empty.
+        str: Deterministic report text; never empty.
     """
     if presentation.is_infrastructure_failure:
-        text = _job_failure_text(evidence)
-    elif isinstance(evidence, ConversionResult):
-        if presentation.outcome is PresentationOutcome.SUCCESS_WITH_WARNING:
-            text = _warning_text(evidence)
-        else:
-            text = _result_failure_text(evidence)
-    else:
-        text = ""
-    return text.strip() or presentation.summary
+        return _job_failure_report(presentation, evidence)
+    if isinstance(evidence, ConversionResult):
+        return _result_report(presentation, evidence)
+    return _render_report(presentation.title, _outcome_fields(presentation), [])
 
 
-def _warning_text(result: ConversionResult) -> str:
-    """Return the retained warning evidence of a successful conversion."""
-    return "\n".join(f"{record.code}: {record.user_message}" for record in result.warnings)
+#: WP-P12-06-02/03 name for :func:`build_report_text`.
+presentation_evidence_text = build_report_text
 
 
-def _result_failure_text(result: ConversionResult) -> str:
-    """Return the retained failure evidence of an application result."""
-    lines: List[str] = []
-    message = (result.error_message or "").strip()
-    if message:
-        lines.append(message)
-    for record in result.errors:
-        lines.append(f"{record.code}: {record.user_message}")
+def _outcome_fields(presentation: Presentation) -> List[str]:
+    """Return the headline fields shared by every report kind."""
+    return [f"Status: {presentation.outcome}", f"Summary: {presentation.summary}"]
+
+
+def _result_report(presentation: Presentation, result: ConversionResult) -> str:
+    """Return the report text for a retained application result."""
+    fields = _outcome_fields(presentation)
+    if result.output_path is not None:
+        fields.append(f"Output path: {result.output_path}")
+
+    sections: List[Tuple[str, List[str]]] = []
+    if result.warnings:
+        sections.append(
+            (f"Warnings ({len(result.warnings)})", _record_lines(result.warnings, severity=False))
+        )
+    if result.errors:
+        sections.append(
+            (f"Errors ({len(result.errors)})", _record_lines(result.errors, severity=False))
+        )
+    if result.diagnostics:
+        sections.append(
+            (
+                f"Diagnostics ({len(result.diagnostics)})",
+                _record_lines(result.diagnostics, severity=True),
+            )
+        )
+    if result.diagnostic_summary is not None:
+        sections.append(("Diagnostic summary", _summary_lines(result.diagnostic_summary)))
+    if result.quality_gate_report:
+        sections.append(("Quality gate report", _quality_gate_lines(result.quality_gate_report)))
     detail = (result.technical_detail or "").strip()
     if detail:
-        lines.append("")
-        lines.append("Technical detail:")
-        lines.append(detail)
-    return "\n".join(lines)
+        sections.append(("Technical detail", [detail]))
+    return _render_report(presentation.title, fields, sections)
 
 
-def _job_failure_text(evidence: object) -> str:
-    """Return the retained evidence of a worker infrastructure failure."""
+def _job_failure_report(presentation: Presentation, evidence: object) -> str:
+    """Return the report text for retained worker infrastructure evidence."""
     error_type = str(getattr(evidence, "error_type", "") or "").strip()
     message = str(getattr(evidence, "message", "") or "").strip()
     traceback_text = str(getattr(evidence, "traceback", "") or "").strip()
 
-    lines: List[str] = []
-    headline = ": ".join(part for part in (error_type, message) if part)
-    if headline:
-        lines.append(headline)
+    fields = _outcome_fields(presentation)
+    if error_type:
+        fields.append(f"Exception type: {error_type}")
+    if message:
+        fields.append(f"Exception message: {message}")
+
+    sections: List[Tuple[str, List[str]]] = []
     if traceback_text:
-        lines.append("")
-        lines.append(traceback_text)
-    return "\n".join(lines)
+        sections.append(("Technical detail", [traceback_text]))
+    return _render_report(presentation.title, fields, sections)
+
+
+def _render_report(
+    title: str,
+    fields: Sequence[str],
+    sections: Sequence[Tuple[str, List[str]]],
+) -> str:
+    """Join the report blocks in a deterministic order."""
+    blocks: List[str] = []
+    if title:
+        blocks.append(title)
+    blocks.append("\n".join(fields))
+    for heading, lines in sections:
+        blocks.append(f"{heading}\n" + "\n".join(lines))
+    return "\n\n".join(blocks)
+
+
+def _record_lines(
+    records: Sequence[ApplicationDiagnostic],
+    *,
+    severity: bool,
+) -> List[str]:
+    """Return one display line per retained diagnostic record."""
+    lines: List[str] = []
+    for record in records:
+        prefix = f"[{record.severity}] " if severity else ""
+        lines.append(f"{prefix}{record.code}: {record.user_message}")
+    return lines
+
+
+def _summary_lines(summary: DiagnosticSummary) -> List[str]:
+    """Return the retained diagnostic-summary counts and wording."""
+    lines = [
+        f"Total: {summary.total}",
+        f"Errors: {summary.errors}",
+        f"Warnings: {summary.warnings}",
+        f"Info: {summary.infos}",
+    ]
+    if summary.user_message:
+        lines.append(summary.user_message)
+    return lines
+
+
+def _quality_gate_lines(report: Mapping[str, Any]) -> List[str]:
+    """Return one display line per meaningful quality-gate entry.
+
+    Empty entries are skipped entirely.  A stage that records a status is shown
+    as ``stage: STATUS`` (plus its scalar extras); other mappings are shown as
+    their scalar key/value pairs.  Nothing is interpreted or scored here.
+    """
+    lines: List[str] = []
+    for name, value in report.items():
+        if value is None or value == "" or value == [] or value == {}:
+            continue
+        if isinstance(value, Mapping):
+            status = value.get("status")
+            extras = _scalar_pairs(value, skip=("status",))
+            if status:
+                lines.append(f"{name}: {status}" + (f" ({extras})" if extras else ""))
+            else:
+                lines.append(f"{name}: {extras}" if extras else f"{name}: present")
+        elif isinstance(value, (list, tuple)):
+            lines.append(f"{name}: {len(value)} item(s)")
+        else:
+            lines.append(f"{name}: {value}")
+    return lines
+
+
+def _scalar_pairs(value: Mapping[str, Any], *, skip: Sequence[str] = ()) -> str:
+    """Return deterministic ``key=value`` text for the scalar mapping entries."""
+    pairs = [
+        f"{key}={item}"
+        for key, item in sorted(value.items())
+        if key not in skip and not isinstance(item, (Mapping, list, tuple))
+    ]
+    return ", ".join(pairs)
 
 
 class ResultDetailsDialog(QDialog):
@@ -149,7 +256,8 @@ class ResultDetailsDialog(QDialog):
 
     Attributes:
         summary_label: Concise summary from the presentation model.
-        evidence_view: Read-only text view of the retained evidence.
+        evidence_view: Read-only text view of the full report.
+        copy_button: Copies the report text to the clipboard (optional action).
         close_button: Dismisses the dialog.
     """
 
@@ -163,8 +271,8 @@ class ResultDetailsDialog(QDialog):
 
         Args:
             presentation: Presentation view of the retained outcome.
-            evidence_text: Read-only evidence text produced by
-                :func:`presentation_evidence_text`.
+            evidence_text: Read-only report text produced by
+                :func:`build_report_text`.
             parent: Optional Qt parent widget.
         """
         super().__init__(parent)
@@ -194,6 +302,10 @@ class ResultDetailsDialog(QDialog):
 
         button_row = QHBoxLayout()
         button_row.addStretch(1)
+        self.copy_button = QPushButton(COPY_TEXT, self)
+        self.copy_button.setObjectName("resultDetailsCopyButton")
+        self.copy_button.clicked.connect(self._copy_report)
+        button_row.addWidget(self.copy_button)
         self.close_button = QPushButton(CLOSE_TEXT, self)
         self.close_button.setObjectName("resultDetailsCloseButton")
         self.close_button.clicked.connect(self.accept)
@@ -212,6 +324,12 @@ class ResultDetailsDialog(QDialog):
         """Return the read-only evidence text shown by this surface."""
         return self._evidence_text
 
+    def _copy_report(self) -> None:
+        """Copy the report text to the system clipboard (no export, no upload)."""
+        clipboard = QApplication.clipboard()
+        if clipboard is not None:
+            clipboard.setText(self._evidence_text)
+
 
 def show_result_details(
     parent: Optional[QWidget],
@@ -228,8 +346,6 @@ def show_result_details(
     Returns:
         ResultDetailsDialog: The dialog that was shown (already dismissed).
     """
-    dialog = ResultDetailsDialog(
-        presentation, presentation_evidence_text(presentation, evidence), parent
-    )
+    dialog = ResultDetailsDialog(presentation, build_report_text(presentation, evidence), parent)
     dialog.exec()
     return dialog
