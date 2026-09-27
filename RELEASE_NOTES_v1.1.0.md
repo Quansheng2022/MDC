@@ -1,5 +1,18 @@
 # MD Converter v1.1.0 Release Notes
 
+> **Release Candidate — MD Converter v1.1.0 RC1**
+>
+> `RC1` is an evidence-only label. The artifact frozen for P12-11 Human
+> Acceptance is the byte-identical installer already verified by P12-09
+> (`MD_Converter_v1.1.0_Setup.exe`, SHA-256
+> `EFEC378F11B00A53791158199B4DC98AA09F44F5B1F013363FF744A92B91B9BF`).
+> No application, package or installer version metadata was changed to encode
+> the label — the product version remains `1.1.0`. See
+> `Doc/V2/Implementation/P12-10/RC_MANIFEST.md` for the frozen RC identity,
+> `INSTALLATION_GUIDE_v1.1.0.md` for install/uninstall steps,
+> `KNOWN_ISSUES_v1.1.0.md` for accepted limitations and
+> `PRIVACY_LOCAL_PROCESSING_v1.1.0.md` for the local-processing statement.
+
 | 项目 | 值 |
 | --- | --- |
 | Release | **v1.1.0**（minor / feature） |
