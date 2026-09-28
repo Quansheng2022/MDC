@@ -112,6 +112,7 @@ from .output_actions import (
     open_folder,
 )
 from .preferences import GuiPreferences, available_screen_rects, geometry_is_usable
+from .preflight_model import PreflightSummary, preflight_from_result
 from .presentation_model import Presentation, present_job_failure, present_result
 from .request_builder import build_conversion_request
 from .result_details import show_result_details
@@ -166,6 +167,10 @@ __all__ = [
     "OUTPUT_CAPTION_TEXT",
     "OUTPUT_PATH_MAX_CHARS",
     "OUTPUT_VALUE_TEXT",
+    "PREFLIGHT_CAPTION_TEXT",
+    "PREFLIGHT_LIST_ACCESSIBLE_NAME",
+    "PREFLIGHT_LIST_MINIMUM_HEIGHT",
+    "PREFLIGHT_TOOLTIP",
     "SECONDARY_BUTTON_MINIMUM_WIDTH",
     "SELECT_FILE_TEXT",
     "SELECT_FILE_TOOLTIP",
@@ -221,6 +226,16 @@ BATCH_CLEAR_TEXT = "Clear"
 BATCH_STATUS_TEXT = "Batch complete."
 OPEN_BATCH_FOLDER_TEXT = "Open Output Folder"
 VIEW_BATCH_REPORT_TEXT = "View Batch Report"
+
+#: Document-quality (preflight) surface (WP-DI-03).  The panel presents the
+#: findings the authoritative conversion already reported; it is hidden while
+#: there is nothing to show, so the accepted single-file surface is unchanged.
+PREFLIGHT_CAPTION_TEXT = "Document quality"
+PREFLIGHT_LIST_ACCESSIBLE_NAME = "Document quality findings"
+PREFLIGHT_TOOLTIP = "Quality findings reported for the selected document"
+
+#: Compact list height for a bounded number of findings.
+PREFLIGHT_LIST_MINIMUM_HEIGHT = 72
 
 #: Bounded notice shown when a batch-level problem stopped the queue.
 BATCH_STOPPED_NOTICE_TEXT = (
@@ -430,6 +445,7 @@ class MainWindow(QMainWindow):
         self._latest_result: Optional[ConversionResult] = None
         self._latest_job_failure: Optional[JobFailure] = None
         self._presentation: Optional[Presentation] = None
+        self._preflight: Optional[PreflightSummary] = None
         self._selection = BatchSelection(_validate_source)
         self._batch: Optional[BatchRun] = None
         self._notice_text = ""
@@ -470,6 +486,8 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.notice_label)
         self.batch_summary_area = self._create_batch_summary_area(central)
         layout.addWidget(self.batch_summary_area)
+        self.preflight_area = self._create_preflight_area(central)
+        layout.addWidget(self.preflight_area)
         self.result_area = self._create_result_area(central)
         layout.addWidget(self.result_area)
         self.actions_area = self._create_actions_area(central)
@@ -635,6 +653,7 @@ class MainWindow(QMainWindow):
             # A new workflow begins: the outcome presentation is cleared while
             # the retained evidence stays available (WP-P12-06-02/03).
             self._presentation = None
+            self._preflight = None
         return self._apply_state()
 
     def reset(self) -> GuiState:
@@ -652,6 +671,7 @@ class MainWindow(QMainWindow):
         state = self.state_model.reset()
         if state is GuiState.EMPTY:
             self._presentation = None
+            self._preflight = None
             self._selection.clear()
             self._batch = None
             self._notice_text = ""
@@ -807,6 +827,7 @@ class MainWindow(QMainWindow):
     def _sync_selection_state(self) -> GuiState:
         """Apply the state transition implied by the current selection."""
         self._presentation = None
+        self._preflight = None
         self.state_model.set_source(self._selection_label())
         return self._apply_state()
 
@@ -886,6 +907,8 @@ class MainWindow(QMainWindow):
         self.batch_summary_label.setAccessibleName("Batch summary")
         self.open_batch_folder_button.setAccessibleName(OPEN_BATCH_FOLDER_TEXT)
         self.view_batch_report_button.setAccessibleName(VIEW_BATCH_REPORT_TEXT)
+        self.preflight_summary_label.setAccessibleName("Document quality summary")
+        self.preflight_list.setAccessibleName(PREFLIGHT_LIST_ACCESSIBLE_NAME)
         self.details_button.setAccessibleName(DETAILS_TEXT)
         self.open_document_button.setAccessibleName(OPEN_DOCUMENT_TEXT)
         self.open_folder_button.setAccessibleName(OPEN_FOLDER_TEXT)
@@ -928,6 +951,7 @@ class MainWindow(QMainWindow):
             self.batch_clear_button,
             self.change_output_button,
             self.convert_button,
+            self.preflight_list,
             self.details_button,
             self.open_document_button,
             self.open_folder_button,
@@ -1047,6 +1071,7 @@ class MainWindow(QMainWindow):
         # Defensive path: a result without an active batch is still retained,
         # mapped and reported through the accepted single-file semantics.
         self._presentation = present_result(result)
+        self._preflight = preflight_from_result(result)
         self.state_model.complete(gui_state_for_result(result))
         self._apply_state()
 
@@ -1069,6 +1094,7 @@ class MainWindow(QMainWindow):
             return
 
         self._presentation = present_job_failure(failure)
+        self._preflight = None
         self.state_model.complete_failure()
         self._apply_state()
 
@@ -1138,18 +1164,25 @@ class MainWindow(QMainWindow):
             if item.failure is not None:
                 self._latest_job_failure = item.failure
                 self._presentation = present_job_failure(item.failure)
+                self._preflight = None
                 self.state_model.complete_failure()
             elif item.result is not None:
                 self._latest_result = item.result
                 self._presentation = present_result(item.result)
+                self._preflight = preflight_from_result(item.result)
                 self.state_model.complete(gui_state_for_result(item.result))
             else:
                 self._presentation = None
+                self._preflight = None
                 self.state_model.complete_batch()
         else:
             # The batch summary is the terminal presentation; no single item
             # presentation is exposed as the batch outcome.
             self._presentation = None
+            # Quality findings are owned by exactly one document, so a
+            # multi-file batch keeps its per-file findings in its per-file
+            # reports instead of presenting one file's findings as the batch's.
+            self._preflight = None
             self.state_model.complete_batch()
         self._apply_state()
 
@@ -1350,6 +1383,7 @@ class MainWindow(QMainWindow):
         self.notice_label.setText(self._notice_text)
         self.notice_label.setVisible(bool(self._notice_text))
         self._apply_batch_summary()
+        self._apply_preflight()
         self._apply_result_state()
         self._apply_output_actions()
         return self.state_model.state
@@ -1462,6 +1496,28 @@ class MainWindow(QMainWindow):
         ):
             button.setVisible(visible)
             button.setEnabled(available)
+
+    def _apply_preflight(self) -> None:
+        """Apply the document-quality (preflight) surface (WP-DI-03).
+
+        Part of the single :meth:`_apply_state` write path.  Every row comes
+        from :mod:`md_converter.gui.preflight_model`, which only groups, orders,
+        counts and labels findings that the authoritative conversion already
+        reported - the window composes no wording and invents no finding.
+
+        The surface appears only while there is at least one finding, so the
+        accepted single-file surface stays unchanged when a document is clean
+        and a hidden panel never becomes a Tab stop.
+        """
+        summary = self._preflight
+        rows = summary.rows() if summary is not None else ()
+        self.preflight_summary_label.setText(summary.summary_text() if summary is not None else "")
+        self.preflight_list.clear()
+        for row in rows:
+            entry = QListWidgetItem(row)
+            entry.setToolTip(row)
+            self.preflight_list.addItem(entry)
+        self.preflight_area.setVisible(bool(rows))
 
     def _apply_result_state(self) -> None:
         """Apply the bounded outcome presentation to the result-area widgets.
@@ -1671,6 +1727,49 @@ class MainWindow(QMainWindow):
         button_row.addWidget(self.view_batch_report_button)
         button_row.addStretch(1)
         layout.addLayout(button_row)
+        return area
+
+    def _create_preflight_area(self, parent: QWidget) -> QWidget:
+        """Create the compact document-quality surface (WP-DI-03).
+
+        The smallest compatible UX from the implementation plan: a compact
+        section under the workflow that lists the findings the authoritative
+        conversion already reported, with the derived counts above them.  It is
+        read-only, keyboard reachable, and hidden while there is nothing to
+        show.  No modal step and no extra confirmation is introduced, so
+        warnings keep their existing non-blocking semantics.
+
+        Args:
+            parent: Parent widget for the container.
+
+        Returns:
+            QWidget: The document-quality container.
+        """
+        area = QWidget(parent)
+        area.setObjectName("preflightArea")
+        layout = QVBoxLayout(area)
+        layout.setObjectName("preflightLayout")
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(6)
+
+        caption_row = QHBoxLayout()
+        caption_row.setObjectName("preflightCaptionRow")
+        caption = QLabel(PREFLIGHT_CAPTION_TEXT, area)
+        caption.setObjectName("preflightCaptionLabel")
+        self.preflight_summary_label = QLabel("", area)
+        self.preflight_summary_label.setObjectName("preflightSummaryLabel")
+        self.preflight_summary_label.setWordWrap(True)
+        caption_row.addWidget(caption)
+        caption_row.addStretch(1)
+        caption_row.addWidget(self.preflight_summary_label)
+        layout.addLayout(caption_row)
+
+        self.preflight_list = QListWidget(area)
+        self.preflight_list.setObjectName("preflightList")
+        self.preflight_list.setMinimumHeight(PREFLIGHT_LIST_MINIMUM_HEIGHT)
+        self.preflight_list.setToolTip(PREFLIGHT_TOOLTIP)
+        self.preflight_list.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+        layout.addWidget(self.preflight_list)
         return area
 
     def _on_batch_selection_changed(self) -> None:
