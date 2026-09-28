@@ -1,24 +1,25 @@
-"""Standard GUI dialogs for MD_Converter (WP-P12-04-04/06).
+"""Standard GUI dialogs for MD_Converter (WP-P12-04-04/06, SBC-02).
 
 Implements the standard Qt dialogs plus GUI-boundary validation:
 
-* Markdown file selection (WP-P12-04-04);
+* Markdown file selection, including the authorized multi-file selection of
+  Serial Batch Conversion (WP-P12-04-04 / SBC-02);
 * output-folder selection (WP-P12-04-06).
 
 The dialogs decide *what the user selected*; they do not parse frontmatter,
 inspect the AST, derive DOCX file names, or call the conversion core
 (WP-P12-04-04 §8, WP-P12-04-06 §5).
 
-The validated path is handed to ``MainWindow.set_source`` so that source
-selection always flows through the single GUI state-model path
-(WP-P12-04-03 §7).  Drag & drop (WP-P12-04-05) reuses
-:func:`validate_markdown_source` instead of duplicating validation.
+The chosen paths are handed to ``MainWindow.add_source_files``, which applies
+the single validation and state path (WP-P12-04-03 §7): the picker reports the
+raw selection and drag & drop (WP-P12-04-05) reuses
+:func:`validate_markdown_source`, so the two entry points cannot diverge.
 """
 
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional, Union
+from typing import List, Optional, Tuple, Union
 
 from PySide6.QtWidgets import QFileDialog, QWidget
 
@@ -27,7 +28,7 @@ __all__ = [
     "DIRECTORY_DIALOG_TITLE",
     "MARKDOWN_EXTENSIONS",
     "MARKDOWN_FILTER",
-    "ask_for_markdown_source",
+    "ask_for_markdown_sources",
     "ask_for_output_directory",
     "validate_markdown_source",
     "validate_output_directory",
@@ -74,11 +75,16 @@ def validate_markdown_source(path: Optional[Union[str, Path]]) -> Optional[Path]
     return candidate
 
 
-def ask_for_markdown_source(
+def ask_for_markdown_sources(
     parent: Optional[QWidget] = None,
     directory: Optional[Union[str, Path]] = None,
-) -> Optional[str]:
-    """Open the standard file dialog and return the chosen path.
+) -> Tuple[str, ...]:
+    """Open the standard file dialog and return the chosen paths.
+
+    The dialog supports the authorized multi-file selection (SBC-02), so one
+    session can add several Markdown files.  The returned values are raw
+    dialog selections: validation, duplicate filtering and the state
+    transition happen in the shared selection path.
 
     Args:
         parent: Optional parent widget for the dialog.
@@ -87,11 +93,11 @@ def ask_for_markdown_source(
             of scope for P12-04).
 
     Returns:
-        Optional[str]: The selected path, or ``None`` when the user cancelled.
-        Cancelling is not an error (WP-P12-04-04 §5).
+        Tuple[str, ...]: The selected paths in dialog order; empty when the
+        user cancelled.  Cancelling is not an error (WP-P12-04-04 §5).
     """
     start_dir = str(directory) if directory is not None else str(Path.home())
-    return _open_dialog(parent, DIALOG_TITLE, start_dir, MARKDOWN_FILTER) or None
+    return tuple(_open_dialog_many(parent, DIALOG_TITLE, start_dir, MARKDOWN_FILTER))
 
 
 def validate_output_directory(path: Optional[Union[str, Path]]) -> Optional[Path]:
@@ -137,13 +143,13 @@ def ask_for_output_directory(
     return _open_directory_dialog(parent, DIRECTORY_DIALOG_TITLE, start_dir) or None
 
 
-def _open_dialog(
+def _open_dialog_many(
     parent: Optional[QWidget],
     title: str,
     directory: str,
     file_filter: str,
-) -> str:
-    """Call Qt's standard open dialog and return its raw selection.
+) -> List[str]:
+    """Call Qt's standard multi-file open dialog and return its raw selection.
 
     Args:
         parent: Optional parent widget for the dialog.
@@ -152,11 +158,11 @@ def _open_dialog(
         file_filter: File filter string.
 
     Returns:
-        str: Selected path, or ``""`` when the dialog was cancelled.  The
-        public :func:`ask_for_markdown_source` normalizes that to ``None``.
+        List[str]: Selected paths, or an empty list when the dialog was
+        cancelled.
     """
-    selected, _ = QFileDialog.getOpenFileName(parent, title, directory, file_filter)
-    return selected
+    selected, _ = QFileDialog.getOpenFileNames(parent, title, directory, file_filter)
+    return list(selected)
 
 
 def _open_directory_dialog(

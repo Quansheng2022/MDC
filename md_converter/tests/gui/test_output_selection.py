@@ -67,7 +67,11 @@ def _write_markdown(path: Path) -> Path:
 
 def _patch_file_dialog(monkeypatch: pytest.MonkeyPatch, result: Optional[str]) -> None:
     """Point the Markdown file dialog at a fixed result."""
-    monkeypatch.setattr(file_picker, "ask_for_markdown_source", lambda *a, **k: result)
+    monkeypatch.setattr(
+        file_picker,
+        "ask_for_markdown_sources",
+        lambda *a, **k: (result,) if result else (),
+    )
 
 
 def _patch_directory_dialog(monkeypatch: pytest.MonkeyPatch, result: Optional[str]) -> None:

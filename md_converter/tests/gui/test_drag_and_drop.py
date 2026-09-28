@@ -1,12 +1,15 @@
-"""Focused verification for single-file drag & drop (WP-P12-04-05 §8).
+"""Focused verification for Markdown drag & drop (WP-P12-04-05 §8, SBC-02).
 
 The tests drive the real Qt drag/drop event types (``QDragEnterEvent``,
 ``QDragMoveEvent``, ``QDragLeaveEvent``, ``QDropEvent``) into the drop area and
 verify acceptance, the shared source-selection path and the GUI state.  No
 native drag session is started.
 
-Rejected payloads are checked for all four required cases: unsupported file,
-folder, multiple files and drop while ``CONVERTING``.
+Rejected payloads are checked for the retained cases: unsupported file, folder,
+non-local URL, payload without URLs and drop while ``CONVERTING``.  SBC-02
+supersedes the old multi-file rejection guard: the frozen product decision is
+that a multi-file payload *is* accepted and adds every valid unique source to
+the batch.
 """
 
 from __future__ import annotations
@@ -177,7 +180,7 @@ def test_drop_uses_shared_selection_logic(monkeypatch: pytest.MonkeyPatch, tmp_p
 
         monkeypatch.setattr(file_picker, "validate_markdown_source", recording)
         monkeypatch.setattr(
-            file_picker, "ask_for_markdown_source", lambda *args, **kwargs: str(markdown)
+            file_picker, "ask_for_markdown_sources", lambda *args, **kwargs: (str(markdown),)
         )
 
         # Picker path
@@ -262,17 +265,53 @@ def test_folder_drop_is_rejected(tmp_path: Path) -> None:
         window.close()
 
 
-@pytest.mark.parametrize("extra", ["notes.md", "notes.txt"])
-def test_multiple_files_are_rejected(tmp_path: Path, extra: str) -> None:
-    """WP §5: multi-file payloads are rejected, never first-file selected."""
+def test_multiple_markdown_files_are_added_as_a_batch(tmp_path: Path) -> None:
+    """SBC-02: a multi-file payload becomes the ordered batch selection."""
     first = _write_markdown(tmp_path / "first.md")
-    second = _write_markdown(tmp_path / extra)
+    second = _write_markdown(tmp_path / "second.md")
+    third = _write_markdown(tmp_path / "third.md")
     window = _make_window()
     try:
-        assert _drag_enter(window.drop_zone, [first, second]) is False
-        assert _drop(window.drop_zone, [first, second]) is False
-        assert window.state is GuiState.EMPTY
-        assert window.state_model.source is None
+        window.show()
+        _process_events()
+        assert _drag_enter(window.drop_zone, [first, second, third]) is True
+        assert _drop(window.drop_zone, [first, second, third]) is True
+
+        assert window.state is GuiState.READY
+        assert window.batch_selection.sources == (first, second, third)
+        assert window.batch_list.count() == 3
+        assert window.batch_area.isVisible() is True
+        assert window.convert_button.text() == "Convert 3 Files"
+    finally:
+        window.close()
+
+
+def test_mixed_payload_keeps_the_valid_files(tmp_path: Path) -> None:
+    """SBC-02: a non-Markdown item is skipped without disturbing the batch."""
+    markdown = _write_markdown(tmp_path / "notes.md")
+    other = _write_markdown(tmp_path / "notes.txt")
+    window = _make_window()
+    try:
+        assert _drop(window.drop_zone, [markdown, other]) is True
+
+        assert window.state is GuiState.READY
+        assert window.batch_selection.sources == (markdown,)
+        assert "Skipped 1 item" in window.notice_label.text()
+    finally:
+        window.close()
+
+
+def test_second_drop_adds_to_the_existing_batch(tmp_path: Path) -> None:
+    """SBC-02: dropping more files adds valid unique sources to the list."""
+    first = _write_markdown(tmp_path / "first.md")
+    second = _write_markdown(tmp_path / "second.md")
+    window = _make_window()
+    try:
+        assert _drop(window.drop_zone, [first]) is True
+        assert _drop(window.drop_zone, [second, first]) is True
+
+        assert window.batch_selection.sources == (first, second)
+        assert "already in the list" in window.notice_label.text()
     finally:
         window.close()
 
@@ -354,19 +393,19 @@ def test_drop_during_converting_does_not_change_state(tmp_path: Path) -> None:
 
 
 def test_drop_acceptance_returns_after_completion(tmp_path: Path) -> None:
-    """Completion states allow a new source again (WP-P12-04-03 §4)."""
+    """Completion states allow input again (WP-P12-04-03 §4, SBC-02)."""
     first = _write_markdown(tmp_path / "first.md")
     second = _write_markdown(tmp_path / "second.md")
     window = _make_window()
     try:
-        window.set_source(str(first))
+        window.set_source_file(str(first))
         window.request_convert()
         window.simulate_success()
         assert window.drop_zone.acceptDrops() is True
 
-        _drop(window.drop_zone, [second])
+        assert _drop(window.drop_zone, [second]) is True
 
         assert window.state is GuiState.READY
-        assert window.state_model.source == str(second)
+        assert window.batch_selection.sources == (first, second)
     finally:
         window.close()

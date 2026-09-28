@@ -214,8 +214,8 @@ def test_shortcut_opens_the_picker_through_the_existing_action(
     calls: List[object] = []
     monkeypatch.setattr(
         module.file_picker,
-        "ask_for_markdown_source",
-        lambda parent, directory=None: calls.append(directory) or None,
+        "ask_for_markdown_sources",
+        lambda parent, directory=None: calls.append(directory) or (),
     )
 
     window.select_file_action.trigger()

@@ -248,6 +248,45 @@ def test_worker_is_reusable_after_completion(worker: "GuiWorker") -> None:
     assert worker.thread is None
 
 
+def test_idle_is_emitted_after_the_references_are_released(worker: "GuiWorker") -> None:
+    """SBC-04: the boundary reports the moment the next job may start.
+
+    ``finished`` marks the job outcome while the thread is still cleaning up
+    (a second start is refused there); ``idle`` is the reusable point, so a
+    caller that chains jobs never depends on a timing assumption.
+    """
+    order: List[object] = []
+    worker.succeeded.connect(lambda payload: order.append("succeeded"))
+    worker.finished.connect(lambda: order.append(("finished", worker.is_running)))
+    worker.idle.connect(lambda: order.append(("idle", worker.is_running, worker.thread)))
+
+    assert worker.start(lambda: "ok") is True
+    assert _wait_until(lambda: len(order) >= 3)
+
+    assert order[0] == "succeeded"
+    assert order[1] == ("finished", True)
+    assert order[2] == ("idle", False, None)
+
+
+def test_the_next_job_may_start_from_idle(worker: "GuiWorker") -> None:
+    """SBC-04: the idle signal is a usable serial-chaining point."""
+    started: List[bool] = []
+    results: List[str] = []
+    worker.succeeded.connect(lambda payload: results.append(payload))
+
+    def chain() -> None:
+        if not started:
+            started.append(worker.start(lambda: "second"))
+
+    worker.idle.connect(chain)
+
+    assert worker.start(lambda: "first") is True
+    assert _wait_until(lambda: bool(started))
+    assert started == [True]
+    assert _wait_until(lambda: "second" in results)
+    assert _wait_idle(worker)
+
+
 def test_repeated_jobs_release_every_thread(worker: "GuiWorker") -> None:
     """WP §8: repeated job cycles release each thread and its references.
 

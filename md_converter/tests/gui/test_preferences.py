@@ -544,8 +544,8 @@ def test_choosers_start_in_the_remembered_folders(
     seen: List[object] = []
     monkeypatch.setattr(
         main_window_module.file_picker,
-        "ask_for_markdown_source",
-        lambda parent, directory=None: seen.append(directory) or None,
+        "ask_for_markdown_sources",
+        lambda parent, directory=None: seen.append(directory) or (),
     )
     monkeypatch.setattr(
         main_window_module.file_picker,

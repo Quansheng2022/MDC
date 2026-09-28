@@ -277,6 +277,12 @@ def test_only_one_report_surface_exists() -> None:
     About).  Neither renders retained conversion evidence, so the guard pins the
     complete set of dialog modules: a new unbounded dialog still fails it, and
     the report surface itself stays exactly one module.
+
+    SBC-05 adds one further bounded surface, ``batch_report.py``, which renders
+    the *aggregate* batch summary (and opens the single report surface for a
+    selected row).  It builds no second result taxonomy and no second wording:
+    it reuses :mod:`md_converter.gui.batch` and
+    :func:`md_converter.gui.result_details.show_result_details`.
     """
     from PySide6.QtWidgets import QDialog
 
@@ -293,7 +299,12 @@ def test_only_one_report_surface_exists() -> None:
             if "QDialog" in bases:
                 dialog_modules.add(module.name)
 
-    assert dialog_modules == {"about_dialog.py", "result_details.py", "settings_dialog.py"}
+    assert dialog_modules == {
+        "about_dialog.py",
+        "batch_report.py",
+        "result_details.py",
+        "settings_dialog.py",
+    }
     assert result_details.ResultDetailsDialog.__mro__[1] is QDialog
     # The WP-P12-06-02 module is a pure alias: no implementation, no classes.
     alias_tree = ast.parse((GUI_DIR / "failure_details.py").read_text(encoding="utf-8"))

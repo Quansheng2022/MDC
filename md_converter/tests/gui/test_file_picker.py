@@ -1,4 +1,4 @@
-"""Focused verification for Markdown file selection (WP-P12-04-04 §9).
+"""Focused verification for Markdown file selection (WP-P12-04-04 §9, SBC-02).
 
 Three layers are verified:
 
@@ -6,6 +6,12 @@ Three layers are verified:
 * the standard-dialog seam (filter, title, cancel handling);
 * the window binding - clicking Select File moves EMPTY -> READY through the
   shared state model, displays the source, and never starts conversion.
+
+SBC-02 supersedes the single-file stage guard on the picker: the dialog is the
+standard multi-selection dialog and every chosen file enters the ordered batch
+selection (duplicates and unusable paths are filtered by the shared selection
+path).  A one-file selection still behaves exactly like the accepted
+single-file workflow.
 
 The dialog itself is replaced through the ``file_picker`` module seam, so no
 native dialog is ever opened during tests.
@@ -60,7 +66,11 @@ def _write_markdown(path: Path, body: str = "# Notes\n\nBody text.\n") -> Path:
 
 def _patch_dialog(monkeypatch: pytest.MonkeyPatch, result: Optional[str]) -> None:
     """Point the picker dialog at a fixed result."""
-    monkeypatch.setattr(file_picker, "ask_for_markdown_source", lambda *args, **kwargs: result)
+    monkeypatch.setattr(
+        file_picker,
+        "ask_for_markdown_sources",
+        lambda *args, **kwargs: (result,) if result else (),
+    )
 
 
 # ============================================================
@@ -127,16 +137,27 @@ def test_dialog_uses_markdown_filter(monkeypatch: pytest.MonkeyPatch) -> None:
 
     def fake_open(parent, title, directory, file_filter):
         captured.update(parent=parent, title=title, directory=directory, file_filter=file_filter)
-        return "/tmp/notes.md"
+        return ["/tmp/notes.md"]
 
-    monkeypatch.setattr(file_picker, "_open_dialog", fake_open)
+    monkeypatch.setattr(file_picker, "_open_dialog_many", fake_open)
 
-    selected = file_picker.ask_for_markdown_source(None, directory="C:/docs")
+    selected = file_picker.ask_for_markdown_sources(None, directory="C:/docs")
 
-    assert selected == "/tmp/notes.md"
+    assert selected == ("/tmp/notes.md",)
     assert captured["file_filter"] == file_picker.MARKDOWN_FILTER
     assert captured["title"] == file_picker.DIALOG_TITLE
     assert captured["directory"] == "C:/docs"
+
+
+def test_dialog_returns_every_selected_file(monkeypatch: pytest.MonkeyPatch) -> None:
+    """SBC-02: the standard dialog answers with the whole multi-selection."""
+    monkeypatch.setattr(
+        file_picker,
+        "_open_dialog_many",
+        lambda *args, **kwargs: ["/tmp/a.md", "/tmp/b.md"],
+    )
+
+    assert file_picker.ask_for_markdown_sources(None) == ("/tmp/a.md", "/tmp/b.md")
 
 
 def test_dialog_defaults_to_home_directory(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -145,19 +166,19 @@ def test_dialog_defaults_to_home_directory(monkeypatch: pytest.MonkeyPatch) -> N
 
     def fake_open(parent, title, directory, file_filter):
         captured["directory"] = directory
-        return ""
+        return []
 
-    monkeypatch.setattr(file_picker, "_open_dialog", fake_open)
+    monkeypatch.setattr(file_picker, "_open_dialog_many", fake_open)
 
-    assert file_picker.ask_for_markdown_source() is None
+    assert file_picker.ask_for_markdown_sources() == ()
     assert captured["directory"] == str(Path.home())
 
 
 def test_cancelled_dialog_returns_none(monkeypatch: pytest.MonkeyPatch) -> None:
     """Cancel is not an error (WP §5)."""
-    monkeypatch.setattr(file_picker, "_open_dialog", lambda *args, **kwargs: "")
+    monkeypatch.setattr(file_picker, "_open_dialog_many", lambda *args, **kwargs: [])
 
-    assert file_picker.ask_for_markdown_source() is None
+    assert file_picker.ask_for_markdown_sources() == ()
 
 
 # ============================================================
@@ -256,8 +277,16 @@ def test_invalid_selection_does_not_enter_ready(
         window.close()
 
 
-def test_reselect_updates_source(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
-    """Selecting another valid file replaces the displayed source."""
+def test_reselect_adds_the_file_to_the_batch(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """SBC-02: a second picker session adds to the ordered selection.
+
+    Supersedes the single-file guard, which required the second selection to
+    replace the first.  The frozen product decision is multi-file selection with
+    duplicate filtering and an explicit Remove/Clear, so the picker accumulates
+    and the window shows the resulting batch.
+    """
     first = _write_markdown(tmp_path / "first.md")
     second = _write_markdown(tmp_path / "second.md")
     window = _make_window()
@@ -270,8 +299,29 @@ def test_reselect_updates_source(monkeypatch: pytest.MonkeyPatch, tmp_path: Path
         window.select_file_button.click()
 
         assert window.state is GuiState.READY
-        assert window.source_label.text() == "second.md"
-        assert window.state_model.source == str(second)
+        assert window.batch_selection.sources == (first, second)
+        assert window.source_label.text() == "2 files selected"
+        assert window.convert_button.text() == "Convert 2 Files"
+        assert window.batch_list.count() == 2
+    finally:
+        window.close()
+
+
+def test_duplicate_picker_selection_is_added_once(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """SBC-02: the same absolute source never enters the batch twice."""
+    markdown = _write_markdown(tmp_path / "notes.md")
+    window = _make_window()
+    try:
+        _patch_dialog(monkeypatch, str(markdown))
+        window.select_file_button.click()
+        _patch_dialog(monkeypatch, str(markdown))
+        window.select_file_button.click()
+
+        assert window.batch_selection.sources == (markdown,)
+        assert window.batch_list.count() == 1
+        assert "already in the list" in window.notice_label.text()
     finally:
         window.close()
 
@@ -305,7 +355,7 @@ def test_selection_is_ignored_while_converting(
     calls = []
     monkeypatch.setattr(
         file_picker,
-        "ask_for_markdown_source",
+        "ask_for_markdown_sources",
         lambda *args, **kwargs: calls.append(1),
     )
     window = _make_window()

@@ -98,20 +98,33 @@ class _JobRunner(QObject):
 class GuiWorker(QObject):
     """Run one callable outside the GUI thread and report its outcome.
 
-    Signals:
-        succeeded: Emitted with the job's return value, on the GUI thread.
-        failed: Emitted with :class:`JobFailure` evidence, on the GUI thread.
-        finished: Emitted exactly once per started job, on the GUI thread,
-            after ``succeeded`` or ``failed``.
+        Signals:
+            succeeded: Emitted with the job's return value, on the GUI thread.
+            failed: Emitted with :class:`JobFailure` evidence, on the GUI thread.
+            finished: Emitted exactly once per started job, on the GUI thread,
+                after ``succeeded`` or ``failed``.
 
-    One job runs at a time.  ``is_running`` stays ``True`` until the job's
-    thread has exited and the internal references are released, so a second
-    start cannot overlap with cleanup (WP-P12-05-01 §8).
+        One job runs at a time.  ``is_running`` stays ``True`` until the job's
+        thread has exited and the internal references are released, so a second
+        start cannot overlap with cleanup (WP-P12-05-01 §8).
+
+    Two completion signals exist, and the difference matters to a caller that
+    chains jobs:
+
+    * ``finished`` reports that *this job* produced its outcome (the thread may
+      still be finishing and the reference cleanup may still be pending, so a
+      second ``start`` is still refused at that moment);
+    * ``idle`` reports that the thread has exited and the job references were
+      released, i.e. the boundary accepts the next job again.
+
+    Serial batch conversion chains its next source from ``idle``, so the
+    one-active-conversion invariant never depends on a timing assumption.
     """
 
     succeeded = Signal(object)
     failed = Signal(object)
     finished = Signal()
+    idle = Signal()
 
     def __init__(self, parent: Optional[QObject] = None) -> None:
         """Create an idle worker.
@@ -183,7 +196,13 @@ class GuiWorker(QObject):
 
     @Slot()
     def _on_thread_finished(self) -> None:
-        """Release job references after the thread has exited."""
+        """Release job references after the thread has exited.
+
+        ``idle`` is emitted last, after ``is_running`` is ``False`` and both
+        references are gone, so a caller that starts the next job from this
+        signal can never overlap with the previous job's cleanup.
+        """
         self._thread = None
         self._runner = None
         self._running = False
+        self.idle.emit()

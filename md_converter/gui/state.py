@@ -275,3 +275,21 @@ class GuiStateModel:
         if self._state is GuiState.CONVERTING:
             self._state = state
         return self._state
+
+    def complete_batch(self) -> GuiState:
+        """Move ``CONVERTING`` -> ``READY`` after a multi-file batch finished.
+
+        A serial batch aggregates several independent results, so no single
+        completion state applies to it.  The batch layer keeps its own summary
+        presentation, and the workflow returns to ``READY`` with the same
+        effects: the selection is still shown, Convert is available again and
+        the next batch can start.  No new GUI state is introduced for batch
+        mode (``V2_GUI_UX_SPEC`` §4 freezes the state list).
+
+        Returns:
+            GuiState: The state after the request (unchanged when the model is
+            not ``CONVERTING``).
+        """
+        if self._state is GuiState.CONVERTING:
+            self._state = GuiState.READY
+        return self._state
