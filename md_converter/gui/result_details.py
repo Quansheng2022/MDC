@@ -24,6 +24,14 @@ History: WP-P12-06-02 introduced a bounded failure-only details surface;
 WP-P12-06-03 generalized it to warnings; WP-P12-06-04 completed it into the
 unified diagnostics/report view.  The former ``failure_details`` module remains
 as a thin compatibility alias and contains no implementation.
+
+WP-DI-04 (Document Intelligence) strengthens the report information
+architecture without adding a second authority: the same retained evidence now
+renders as Status / Summary / Output path, then the grouped quality findings,
+the degraded-or-unsupported items and the bounded review guidance, with the
+retained quality-gate evidence and the raw technical detail last.  Every
+finding comes from :mod:`md_converter.gui.preflight_model`, so the report and
+the preflight panel phrase the same diagnostics identically.
 """
 
 from __future__ import annotations
@@ -45,6 +53,7 @@ from PySide6.QtWidgets import (
 
 from ..application.conversion_result import ConversionResult
 from ..application.diagnostics_adapter import ApplicationDiagnostic, DiagnosticSummary
+from .preflight_model import PreflightSummary, preflight_from_result
 from .presentation_model import Presentation, PresentationOutcome
 
 __all__ = [
@@ -133,12 +142,24 @@ def _outcome_fields(presentation: Presentation) -> List[str]:
 
 
 def _result_report(presentation: Presentation, result: ConversionResult) -> str:
-    """Return the report text for a retained application result."""
+    """Return the report text for a retained application result.
+
+    The strengthened information architecture (WP-DI-04) answers the product
+    questions in order: did the conversion succeed, where is the artifact, what
+    was reported, what was degraded, and what should be reviewed.  Every
+    finding comes from the retained authoritative diagnostics through
+    :mod:`md_converter.gui.preflight_model`; nothing is recomputed, and the
+    technical evidence stays last so a traceback is never the primary UX.
+    """
     fields = _outcome_fields(presentation)
     if result.output_path is not None:
         fields.append(f"Output path: {result.output_path}")
 
+    preflight = preflight_from_result(result)
+    degraded = preflight.degradations()
     sections: List[Tuple[str, List[str]]] = []
+    if preflight.items:
+        sections.append((f"Quality findings ({preflight.total})", _finding_lines(preflight)))
     if result.warnings:
         sections.append(
             (f"Warnings ({len(result.warnings)})", _record_lines(result.warnings, severity=False))
@@ -147,15 +168,20 @@ def _result_report(presentation: Presentation, result: ConversionResult) -> str:
         sections.append(
             (f"Errors ({len(result.errors)})", _record_lines(result.errors, severity=False))
         )
-    if result.diagnostics:
+    if preflight.items:
+        sections.append((f"Diagnostics ({preflight.total})", _diagnostic_lines(preflight)))
+    if degraded:
         sections.append(
             (
-                f"Diagnostics ({len(result.diagnostics)})",
-                _record_lines(result.diagnostics, severity=True),
+                f"Degraded or unsupported items ({len(degraded)})",
+                [item.row_text() for item in degraded],
             )
         )
     if result.diagnostic_summary is not None:
         sections.append(("Diagnostic summary", _summary_lines(result.diagnostic_summary)))
+    review = _suggested_review_lines(result, degraded)
+    if review:
+        sections.append(("Suggested review", review))
     if result.quality_gate_report:
         sections.append(("Quality gate report", _quality_gate_lines(result.quality_gate_report)))
     detail = (result.technical_detail or "").strip()
@@ -207,6 +233,53 @@ def _record_lines(
     for record in records:
         prefix = f"[{record.severity}] " if severity else ""
         lines.append(f"{prefix}{record.code}: {record.user_message}")
+    return lines
+
+
+def _finding_lines(summary: PreflightSummary) -> List[str]:
+    """Return one display line per presented quality finding.
+
+    The line is the preflight model's row text, so the severity word always
+    accompanies the marker (no colour-only meaning) and the diagnostic code
+    stays traceable.
+    """
+    return [item.row_text() for item in summary.items]
+
+
+def _diagnostic_lines(summary: PreflightSummary) -> List[str]:
+    """Return one ``[SEVERITY] CODE: wording`` line per retained diagnostic.
+
+    The lines are rendered from the preflight model's normalised items, so the
+    traceability list keeps the canonical severity, code and display wording
+    even when an unexpected presentation record reaches the surface.
+    """
+    return [f"[{item.severity}] {item.code}: {item.display_title}" for item in summary.items]
+
+
+def _suggested_review_lines(
+    result: ConversionResult,
+    degraded: Sequence[object],
+) -> List[str]:
+    """Return bounded review guidance derived from the retained evidence.
+
+    The guidance only points at findings the report already renders; it adds no
+    finding, no severity and no quality judgement of its own.
+    """
+    lines: List[str] = []
+    if result.errors:
+        lines.append(
+            "Review the error findings above before using or converting this document again."
+        )
+    elif result.warnings:
+        lines.append(
+            "Review the warnings above; the document was generated and may need a "
+            "quick check in Word."
+        )
+    if degraded:
+        lines.append(
+            "The items listed under degraded or unsupported items were replaced by "
+            "a fallback or left out of the document."
+        )
     return lines
 
 
