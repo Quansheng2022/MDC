@@ -1,0 +1,131 @@
+{
+  "normal_table": {
+    "artifact": "samples/normal_table.docx",
+    "profile": "professional_report (default)",
+    "section_content_widths_cm": [
+      15.9209
+    ],
+    "effective_content_width_cm": 15.9209,
+    "column_count": 4,
+    "column_widths_cm": [
+      3.0039,
+      8.1104,
+      2.4024,
+      2.4024
+    ],
+    "total_width_cm": 15.9191,
+    "within_effective_content_width": true,
+    "table_font_size_pt": 9.5,
+    "row_count": 3,
+    "cell_text_sha256": "3026f6e5ec623a19f7b01bab9839adaf3e68b2d044b03bc1c3b7b8a00f141ae0",
+    "diagnostic_codes": [],
+    "rendered_qa_status": "PASS",
+    "rendered_qa_table_overflow": 0,
+    "rendered_qa_font_violations": 0,
+    "final_artifact_qa_status": "PASS"
+  },
+  "wide_table": {
+    "artifact": "samples/wide_table.docx",
+    "profile": "professional_report (default)",
+    "section_content_widths_cm": [
+      15.9209
+    ],
+    "effective_content_width_cm": 15.9209,
+    "column_count": 8,
+    "column_widths_cm": [
+      1.9897,
+      1.9897,
+      1.9897,
+      1.9897,
+      1.9897,
+      1.9897,
+      1.9897,
+      1.9897
+    ],
+    "total_width_cm": 15.9173,
+    "within_effective_content_width": true,
+    "table_font_size_pt": 9.5,
+    "row_count": 2,
+    "cell_text_sha256": "51d06dac251b0f2bf59ab6a506a78b9775117ba0134d691fa1db38671c3d83f0",
+    "diagnostic_codes": [],
+    "rendered_qa_status": "PASS",
+    "rendered_qa_table_overflow": 0,
+    "rendered_qa_font_violations": 0,
+    "final_artifact_qa_status": "PASS"
+  },
+  "long_text_table": {
+    "artifact": "samples/long_text_table.docx",
+    "profile": "professional_report (default)",
+    "section_content_widths_cm": [
+      15.9209
+    ],
+    "effective_content_width_cm": 15.9209,
+    "column_count": 2,
+    "column_widths_cm": [
+      1.8521,
+      14.0688
+    ],
+    "total_width_cm": 15.9209,
+    "within_effective_content_width": true,
+    "table_font_size_pt": 9.5,
+    "row_count": 3,
+    "cell_text_sha256": "7e346190897c14233ebbebe10bfae11217c7ded7e4cee35e3fe59bd3ca358aa2",
+    "diagnostic_codes": [],
+    "rendered_qa_status": "PASS",
+    "rendered_qa_table_overflow": 0,
+    "rendered_qa_font_violations": 0,
+    "final_artifact_qa_status": "PASS"
+  },
+  "irreducible_table": {
+    "artifact": "samples/irreducible_table.docx",
+    "profile": "professional_report (default)",
+    "section_content_widths_cm": [
+      15.9209,
+      24.6204,
+      15.9209
+    ],
+    "effective_content_width_cm": 24.6204,
+    "column_count": 25,
+    "column_widths_cm": [
+      1.1994,
+      1.1994,
+      1.1994,
+      1.1994,
+      1.1994,
+      1.1994,
+      1.1994,
+      1.1994,
+      1.1994,
+      1.1994,
+      1.1994,
+      1.1994,
+      1.1994,
+      1.1994,
+      1.1994,
+      1.1994,
+      1.1994,
+      1.1994,
+      1.1994,
+      1.1994,
+      1.1994,
+      1.1994,
+      1.1994,
+      1.1994,
+      1.1994
+    ],
+    "total_width_cm": 29.9861,
+    "within_effective_content_width": false,
+    "table_font_size_pt": 9.0,
+    "row_count": 2,
+    "cell_text_sha256": "857e488da2aa95618e2d171ffc24c7434d49c3e77ca89c23f6e123093e28113c",
+    "diagnostic_codes": [
+      "RENDER006",
+      "QA_RENDERED_WARN",
+      "QA_FINAL_WARN"
+    ],
+    "rendered_qa_status": "PASS_WITH_WARN",
+    "rendered_qa_table_overflow": 1,
+    "rendered_qa_font_violations": 0,
+    "final_artifact_qa_status": "PASS_WITH_WARN"
+  }
+}

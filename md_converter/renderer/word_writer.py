@@ -7,7 +7,7 @@ import os
 import tempfile
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional, Sequence, Union
 
 from docx import Document
 from docx.enum.section import WD_ORIENT
@@ -22,6 +22,9 @@ from docx.table import Table
 from docx.text.paragraph import Paragraph
 
 from .layout.figure_sizing import FigureFit, fit_figure_size
+
+#: 1 厘米 = 1/2.54 英寸 = 1440/2.54 twips（OOXML ``w:tblW`` / ``w:tcW`` 单位）
+TWIPS_PER_CM = 1440.0 / 2.54
 
 
 @dataclass(frozen=True)
@@ -526,6 +529,61 @@ class WordWriter:
     def set_table_alignment(self, alignment: int) -> None:
         if self.current_table:
             self.current_table.alignment = alignment
+
+    def apply_table_column_widths(self, column_widths_cm: Sequence[float]) -> None:
+        """
+        应用确定的表格列宽（Program D / WP-D03）。
+
+        由 :func:`md_converter.renderer.layout.table_fitting.plan_table_fit` 的决策驱动：
+        本方法只做原子写入，不做任何适配决策（``SPEC-ARCH-009``：Renderer/Writer 只执行）。
+
+        写入内容:
+            - ``w:tblLayout type="fixed"``（固定列宽，Word 不再重新分配）；
+            - ``w:tblW`` = 决策总宽（dxa），使表格宽度确定而不依赖 Word autofit；
+            - ``w:tblGrid/w:gridCol`` 每列宽度；
+            - 每个 ``w:tc`` 的 ``w:tcW``（与 gridCol 一致，保证 Word 一致解释）。
+
+        文本、行/列结构、合并、样式与顺序均不被修改。
+
+        参数:
+            column_widths_cm: 每列宽度（厘米，按可见列顺序）；空序列时不做任何写入。
+        """
+        table = self.current_table
+        if table is None or not column_widths_cm:
+            return
+
+        widths = [float(width) for width in column_widths_cm]
+        table.autofit = False
+
+        tbl_pr = table._tbl.tblPr
+        tbl_w = tbl_pr.find(qn("w:tblW"))
+        if tbl_w is None:
+            tbl_w = OxmlElement("w:tblW")
+            layout = tbl_pr.find(qn("w:tblLayout"))
+            if layout is not None:
+                layout.addprevious(tbl_w)
+            else:
+                tbl_pr.append(tbl_w)
+        tbl_w.set(qn("w:type"), "dxa")
+        tbl_w.set(qn("w:w"), str(int(round(sum(widths) * TWIPS_PER_CM))))
+
+        for index, width_cm in enumerate(widths):
+            if index < len(table.columns):
+                table.columns[index].width = Cm(width_cm)
+
+        for row in table.rows:
+            for index, cell in enumerate(row.cells):
+                if index < len(widths):
+                    cell.width = Cm(widths[index])
+
+    def apply_table_fit(self, plan: Any) -> None:
+        """
+        应用表格适配决策（Program D / WP-D03）。
+
+        参数:
+            plan: ``table_fitting.TableFitPlan``（仅使用其列宽序列）。
+        """
+        self.apply_table_column_widths(getattr(plan, "column_widths_cm", ()))
 
     def set_table_style(self, style_name: str) -> None:
         if self.current_table:

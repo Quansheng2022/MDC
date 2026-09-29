@@ -45,10 +45,16 @@ from ..ast.nodes import (
 from .inline_state import InlineState
 from .layout.content_analyzer import infer_table_column_types
 from .layout.decision_engine import DecisionEngine
-from .layout.figure_sizing import CM_PER_INCH
+from .layout.figure_sizing import CM_PER_INCH, parse_length_cm
 from .layout.language_detection import segment_text
 from .layout.layout_plan import LayoutPlan
 from .layout.section_manager import PageGeometry
+from .layout.table_fitting import (
+    DEFAULT_MIN_COLUMN_WIDTH_CM,
+    DEFAULT_READABILITY_FLOOR_PT,
+    TableFitPlan,
+    plan_table_fit,
+)
 from .render_context import RenderContext
 from .style_resolver import StyleResolver
 from .word_writer import FigureBounds, WordWriter, set_run_font, set_style_font
@@ -95,6 +101,7 @@ class WordRenderer(NodeVisitor):
         self._current_list_depth = 0
         self._table_cell_align: Optional[str] = None
         self._table_column_types: List[str] = []
+        self._table_font_size_override: Optional[float] = None
         self._block_font_kind = "body"
         self.layout_plan: Optional[LayoutPlan] = None
         self._plan_by_node: Dict[int, object] = {}
@@ -363,7 +370,12 @@ class WordRenderer(NodeVisitor):
                 self.visit(child)
 
     def visit_Table(self, node: Table) -> None:
-        """渲染表格节点 - 重复表头 + 按数据类型对齐。"""
+        """渲染表格节点 - 列宽适配 + 重复表头 + 按数据类型对齐。
+
+        Program D（WP-D03）：在表格创建后、写入单元格前应用
+        :func:`plan_table_fit` 的确定性列宽决策（有效内容宽度来自实际 section 几何）。
+        单元格文本、行/列结构、样式、边框与顺序均不被修改。
+        """
         if not node.rows:
             return
 
@@ -380,17 +392,97 @@ class WordRenderer(NodeVisitor):
         self.writer.start_table(rows=len(node.rows), cols=max_cols)
         self.writer.current_table.style = self.ctx.theme.table_style or "Table Grid"
 
+        self._apply_table_fit(node)
+
         # 按列推断数据类型（第九章 9.2）
         self._table_column_types = infer_table_column_types(node)
 
-        for row in node.rows:
-            self.visit(row)
+        try:
+            for row in node.rows:
+                self.visit(row)
+        finally:
+            self.writer.end_table()
+            self._table_font_size_override = None
+            if landscape:
+                self.writer.add_section()
+                self.writer.set_section_orientation("portrait")
 
-        self.writer.end_table()
+    def _apply_table_fit(self, node: Table) -> Optional[TableFitPlan]:
+        """计算并应用表格适配决策（Program D / WP-D03）。
 
-        if landscape:
-            self.writer.add_section()
-            self.writer.set_section_orientation("portrait")
+        有效内容宽度取自当前 section 几何（``_effective_content_size_cm``），最小列宽与
+        字号下限取自解析后的主题值。任何无法计算的情况都降级为「保持原有表格」并产生
+        结构化 WARNING，绝不静默修改文档内容。
+
+        参数:
+            node: 表格 AST 节点（只读取其单元格文本作为宽度信号）。
+
+        返回:
+            Optional[TableFitPlan]: 已应用的决策；未应用时为 ``None``。
+        """
+        try:
+            content_width_cm, _ = self._effective_content_size_cm()
+            min_column_width_cm, readability_floor_pt = self._table_fitting_limits()
+            rows = [[cell.to_plain_text() for cell in row.cells] for row in node.rows]
+            fit = plan_table_fit(
+                rows,
+                content_width_cm=content_width_cm,
+                base_font_size_pt=float(self._theme_value("table_font_size", 9.5)),
+                min_column_width_cm=min_column_width_cm,
+                readability_floor_pt=readability_floor_pt,
+            )
+        except Exception as e:  # noqa: BLE001 - 降级必须可见且不致命（SPEC-INV-006）
+            self.ctx.diag.warning(
+                f"Table fitting skipped, keeping the original table: {e}",
+                code="RENDER007",
+                location=node.span,
+                suggestion=(
+                    "Check the effective page geometry and the theme table constraints "
+                    "if this table should be fitted"
+                ),
+            )
+            return None
+
+        self.writer.apply_table_fit(fit)
+        self._table_font_size_override = fit.font_size_pt
+
+        if fit.squeezed:
+            self.ctx.diag.warning(
+                "Table cannot fit the effective content width at the minimum column width; "
+                "content is preserved and text wraps",
+                code="RENDER006",
+                location=node.span,
+                suggestion=(
+                    "Reduce the number of columns, shorten the table, or use a wider output "
+                    "profile if the table is unreadable"
+                ),
+                data=fit.to_dict(),
+            )
+        return fit
+
+    def _table_fitting_limits(self) -> tuple[float, float]:
+        """读取解析后的表格适配下限（最小列宽 / 字号可读性下限）。
+
+        返回:
+            tuple[float, float]: ``(min_column_width_cm, readability_floor_pt)``；主题未声明
+            时退回冻结主题的默认值。
+        """
+        min_column_width_cm = DEFAULT_MIN_COLUMN_WIDTH_CM
+        data = getattr(self.ctx.theme, "data", None)
+        if isinstance(data, dict):
+            table_block = data.get("table", {})
+            constraints = (
+                table_block.get("constraints", {}) if isinstance(table_block, dict) else {}
+            )
+            parsed = parse_length_cm(constraints.get("min_width"), None)
+            if parsed:
+                min_column_width_cm = float(parsed)
+
+        readability_floor_pt = DEFAULT_READABILITY_FLOOR_PT
+        minimums = getattr(self.ctx.theme, "readability_minimums", None) or {}
+        if minimums.get("table_font"):
+            readability_floor_pt = float(minimums["table_font"])
+        return min_column_width_cm, readability_floor_pt
 
     def visit_TableRow(self, node: TableRow) -> None:
         """渲染表格行节点。"""
@@ -553,27 +645,7 @@ class WordRenderer(NodeVisitor):
             FigureBounds: 目标宽度与有效内容区宽高（厘米）。
         """
         policy = self.style_resolver.figure_size_policy()
-        try:
-            section = self.writer.doc.sections[-1]
-            available_width = (
-                section.page_width.cm - section.left_margin.cm - section.right_margin.cm
-            )
-            available_height = (
-                section.page_height.cm - section.top_margin.cm - section.bottom_margin.cm
-            )
-        except Exception:
-            geometry = PageGeometry()
-            margins = self._theme_value("page_margins_cm", None) or {}
-            available_width = (
-                geometry.portrait_width_cm
-                - float(margins.get("left", 2.54))
-                - float(margins.get("right", 2.54))
-            )
-            available_height = (
-                geometry.portrait_height_cm
-                - float(margins.get("top", 2.54))
-                - float(margins.get("bottom", 2.54))
-            )
+        available_width, available_height = self._effective_content_size_cm()
 
         max_width = policy.max_width_cm or available_width
         max_height = policy.max_height_cm or available_height
@@ -585,6 +657,42 @@ class WordRenderer(NodeVisitor):
             max_width_cm=float(max_width),
             max_height_cm=float(max_height),
             min_width_cm=policy.min_width_cm,
+        )
+
+    def _effective_content_size_cm(self) -> tuple[float, float]:
+        """
+        返回有效内容区尺寸（厘米）——Program D 的**唯一**页面几何取值点。
+
+        优先使用当前（最后）section 的实际几何：``页宽 − 左右页边距`` 与
+        ``页高 − 上下页边距``；section 几何不可用或非正时退回冻结主题的参考 A4 几何
+        （``PageGeometry`` + 解析后的主题页边距）。表格适配与图形适配共用本方法，
+        因此两者看到的有效宽度始终一致（``SPEC-FUNC-023`` / ``Program D`` §9）。
+
+        返回:
+            tuple[float, float]: ``(content_width_cm, content_height_cm)``。
+        """
+        try:
+            section = self.writer.doc.sections[-1]
+            available_width = (
+                section.page_width.cm - section.left_margin.cm - section.right_margin.cm
+            )
+            available_height = (
+                section.page_height.cm - section.top_margin.cm - section.bottom_margin.cm
+            )
+            if available_width > 0 and available_height > 0:
+                return float(available_width), float(available_height)
+        except Exception:
+            pass
+
+        geometry = PageGeometry()
+        margins = self._theme_value("page_margins_cm", None) or {}
+        return (
+            geometry.portrait_width_cm
+            - float(margins.get("left", 2.54))
+            - float(margins.get("right", 2.54)),
+            geometry.portrait_height_cm
+            - float(margins.get("top", 2.54))
+            - float(margins.get("bottom", 2.54)),
         )
 
     def visit_HorizontalRule(self, node: HorizontalRule) -> None:
@@ -647,6 +755,8 @@ class WordRenderer(NodeVisitor):
 
     def _size_for(self, font_kind: str) -> float:
         if font_kind == "table":
+            if self._table_font_size_override is not None:
+                return self._table_font_size_override
             return self._theme_value("table_font_size", 9.5)
         if font_kind == "code":
             return self._theme_value("code_size", 10)
