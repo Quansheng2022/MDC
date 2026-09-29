@@ -1,0 +1,125 @@
+{
+  "document": "wide table (6 columns) + figure (400x100 px)",
+  "profiles": {
+    "professional_report": {
+      "artifact": "samples/cross_profile_professional_report.docx",
+      "status": "SUCCESS",
+      "content_width_cm": 15.9209,
+      "table": {
+        "column_count": 6,
+        "total_width_cm": 15.9226,
+        "min_column_width_cm": 1.33,
+        "inside_content_width": true,
+        "filled_content_width": true
+      },
+      "figure": {
+        "width_cm": 12.7,
+        "height_cm": 3.175,
+        "aspect_ratio": 4.0,
+        "inside_content_width": true
+      },
+      "quality_gate": {
+        "static_qa": "PASS",
+        "rendered_qa": "PASS",
+        "post_processor": "PASS",
+        "final_artifact_qa": "PASS"
+      }
+    },
+    "business_report": {
+      "artifact": "samples/cross_profile_business_report.docx",
+      "status": "SUCCESS",
+      "content_width_cm": 17.0004,
+      "table": {
+        "column_count": 6,
+        "total_width_cm": 16.9986,
+        "min_column_width_cm": 1.4199,
+        "inside_content_width": true,
+        "filled_content_width": true
+      },
+      "figure": {
+        "width_cm": 12.7,
+        "height_cm": 3.175,
+        "aspect_ratio": 4.0,
+        "inside_content_width": true
+      },
+      "quality_gate": {
+        "static_qa": "PASS",
+        "rendered_qa": "PASS",
+        "post_processor": "PASS",
+        "final_artifact_qa": "PASS"
+      }
+    },
+    "academic": {
+      "artifact": "samples/cross_profile_academic.docx",
+      "status": "SUCCESS",
+      "content_width_cm": 15.0001,
+      "table": {
+        "column_count": 6,
+        "total_width_cm": 15.0001,
+        "min_column_width_cm": 1.2524,
+        "inside_content_width": true,
+        "filled_content_width": true
+      },
+      "figure": {
+        "width_cm": 12.7,
+        "height_cm": 3.175,
+        "aspect_ratio": 4.0,
+        "inside_content_width": true
+      },
+      "quality_gate": {
+        "static_qa": "PASS",
+        "rendered_qa": "PASS",
+        "post_processor": "PASS",
+        "final_artifact_qa": "PASS"
+      }
+    },
+    "technical": {
+      "artifact": "samples/cross_profile_technical.docx",
+      "status": "SUCCESS",
+      "content_width_cm": 16.6017,
+      "table": {
+        "column_count": 6,
+        "total_width_cm": 16.6017,
+        "min_column_width_cm": 1.3864,
+        "inside_content_width": true,
+        "filled_content_width": true
+      },
+      "figure": {
+        "width_cm": 12.7,
+        "height_cm": 3.175,
+        "aspect_ratio": 4.0,
+        "inside_content_width": true
+      },
+      "quality_gate": {
+        "static_qa": "PASS",
+        "rendered_qa": "PASS",
+        "post_processor": "PASS",
+        "final_artifact_qa": "PASS"
+      }
+    },
+    "clean_minimal": {
+      "artifact": "samples/cross_profile_clean_minimal.docx",
+      "status": "SUCCESS",
+      "content_width_cm": 15.9209,
+      "table": {
+        "column_count": 6,
+        "total_width_cm": 15.9226,
+        "min_column_width_cm": 1.33,
+        "inside_content_width": true,
+        "filled_content_width": true
+      },
+      "figure": {
+        "width_cm": 12.7,
+        "height_cm": 3.175,
+        "aspect_ratio": 4.0,
+        "inside_content_width": true
+      },
+      "quality_gate": {
+        "static_qa": "PASS",
+        "rendered_qa": "PASS",
+        "post_processor": "PASS",
+        "final_artifact_qa": "PASS"
+      }
+    }
+  }
+}
