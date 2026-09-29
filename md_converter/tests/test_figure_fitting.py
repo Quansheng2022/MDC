@@ -120,9 +120,7 @@ def test_exact_boundary_figure_is_not_shrunk() -> None:
     ("px_width", "px_height"),
     [(100, 100), (1, 1), (3000, 100), (100, 3000), (777, 333)],
 )
-def test_aspect_ratio_is_preserved_within_rounding_tolerance(
-    px_width: int, px_height: int
-) -> None:
+def test_aspect_ratio_is_preserved_within_rounding_tolerance(px_width: int, px_height: int) -> None:
     """任何固有尺寸下宽高比都严格保持（仅受浮点/EMU 舍入影响）。"""
     plan = _plan(px_width, px_height)
 
