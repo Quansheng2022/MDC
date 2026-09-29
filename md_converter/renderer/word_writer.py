@@ -21,7 +21,7 @@ from docx.shared import Cm, Inches, Pt, RGBColor
 from docx.table import Table
 from docx.text.paragraph import Paragraph
 
-from .layout.figure_sizing import FigureFit, fit_figure_size
+from .layout.figure_sizing import FigureFitPlan, plan_figure_fit
 
 #: 1 厘米 = 1/2.54 英寸 = 1440/2.54 twips（OOXML ``w:tblW`` / ``w:tcW`` 单位）
 TWIPS_PER_CM = 1440.0 / 2.54
@@ -48,7 +48,7 @@ class FigureBounds:
 @dataclass(frozen=True)
 class ImagePlacement:
     """
-    图形插入结果（P12-CAND-002）。
+    图形插入结果（P12-CAND-002；Program D / WP-D05 扩展）。
 
     属性:
         width_cm: 实际插入宽度（厘米）。
@@ -56,6 +56,9 @@ class ImagePlacement:
         scaled: 是否发生了缩小。
         below_min_width: 是否低于主题声明的最小宽度下限。
         measured: 固有尺寸是否测量成功。
+        aspect_ratio: 固有宽高比（``None`` 表示未测量）。
+        height_limited: 是否因有效内容区高度而收缩。
+        width_limited: 目标宽度是否被有效内容区宽度收敛。
     """
 
     width_cm: float
@@ -63,6 +66,9 @@ class ImagePlacement:
     scaled: bool
     below_min_width: bool
     measured: bool
+    aspect_ratio: Optional[float] = None
+    height_limited: bool = False
+    width_limited: bool = False
 
 
 def set_style_font(
@@ -740,10 +746,13 @@ class WordWriter:
         bounds: FigureBounds,
     ) -> ImagePlacement:
         """
-        按有效内容区适配插入图片（P12-CAND-002）。
+        按有效内容区适配插入图片（P12-CAND-002；Program D / WP-D05）。
 
         保持宽高比、永不放大、永不超出内容区宽高；固有尺寸不可测量时，
         退化为按目标宽度插入（仍不超出内容区宽度）。
+
+        适配决策来自**唯一**权威 ``figure_sizing.plan_figure_fit``（Program D / WP-D04）；
+        本方法只负责测量与原子写入（renderer/writer 不重复实现适配算术）。
 
         参数:
             run: 目标 run。
@@ -752,26 +761,26 @@ class WordWriter:
             bounds: 有效内容区适配边界。
 
         返回:
-            ImagePlacement: 实际插入尺寸与标记。
+            ImagePlacement: 实际插入尺寸、标记与缩小原因。
         """
-        fit: Optional[FigureFit] = None
+        plan: Optional[FigureFitPlan] = None
         try:
             if image_bytes is not None:
                 measured = DocxImage.from_blob(image_bytes)
             else:
                 measured = DocxImage.from_file(picture_source)
-            fit = fit_figure_size(
-                px_width=int(measured.px_width),
-                px_height=int(measured.px_height),
+            plan = plan_figure_fit(
+                intrinsic_width_px=int(measured.px_width),
+                intrinsic_height_px=int(measured.px_height),
                 target_width_cm=bounds.target_width_cm,
-                max_width_cm=bounds.max_width_cm,
-                max_height_cm=bounds.max_height_cm,
+                content_width_cm=bounds.max_width_cm,
+                content_height_cm=bounds.max_height_cm,
                 min_width_cm=bounds.min_width_cm,
             )
         except Exception:
-            fit = None
+            plan = None
 
-        if fit is None:
+        if plan is None:
             run.add_picture(picture_source, width=Cm(bounds.target_width_cm))
             return ImagePlacement(
                 width_cm=bounds.target_width_cm,
@@ -783,15 +792,18 @@ class WordWriter:
 
         run.add_picture(
             picture_source,
-            width=Cm(fit.width_cm),
-            height=Cm(fit.height_cm),
+            width=Cm(plan.width_cm),
+            height=Cm(plan.height_cm),
         )
         return ImagePlacement(
-            width_cm=fit.width_cm,
-            height_cm=fit.height_cm,
-            scaled=fit.scaled,
-            below_min_width=fit.below_min_width,
+            width_cm=plan.width_cm,
+            height_cm=plan.height_cm,
+            scaled=plan.scaled,
+            below_min_width=plan.below_min_width,
             measured=True,
+            aspect_ratio=plan.aspect_ratio,
+            height_limited=plan.height_limited,
+            width_limited=plan.width_limited,
         )
 
     # ============================================================

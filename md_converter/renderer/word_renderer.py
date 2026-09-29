@@ -594,7 +594,11 @@ class WordRenderer(NodeVisitor):
         self.writer.add_run(f"[Diagram: {len(lines)} lines]")
 
     def visit_Image(self, node: Image) -> None:
-        """渲染图片节点 - 按有效内容区适配（P12-CAND-002）。"""
+        """渲染图片节点 - 按有效内容区适配（P12-CAND-002；Program D / WP-D05）。
+
+        适配决策由 ``figure_sizing.plan_figure_fit`` 唯一给出；本方法与
+        ``WordWriter._add_fitted_picture`` 只做集成（无重复适配算术）。
+        """
         try:
             bounds = self._figure_bounds_cm()
             self.writer.add_paragraph()
@@ -616,6 +620,13 @@ class WordRenderer(NodeVisitor):
                             if placement.height_cm is not None
                             else None
                         ),
+                        "aspect_ratio": (
+                            round(placement.aspect_ratio, 6)
+                            if placement.aspect_ratio is not None
+                            else None
+                        ),
+                        "height_limited": placement.height_limited,
+                        "width_limited": placement.width_limited,
                         "min_width_cm": bounds.min_width_cm,
                     },
                 )

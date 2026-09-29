@@ -1,0 +1,296 @@
+{
+  "figures": {
+    "figure_small": {
+      "artifact": "samples/figure_small.docx",
+      "profile": "professional_report (default)",
+      "content_width_cm": 15.9209,
+      "content_height_cm": 24.6204,
+      "intrinsic_px": [
+        82,
+        41
+      ],
+      "inline_shape_count": 1,
+      "rendered": {
+        "width_cm": 12.7,
+        "height_cm": 6.35,
+        "aspect_ratio": 2.0
+      },
+      "within_content_box": true,
+      "intrinsic_aspect_ratio": 2.0,
+      "aspect_ratio_preserved": true,
+      "diagnostic_codes": [],
+      "rendered_qa": {
+        "status": "PASS",
+        "figure_overflow": 0,
+        "figure_below_min_width": 0
+      },
+      "final_artifact_qa_status": "PASS"
+    },
+    "figure_wide": {
+      "artifact": "samples/figure_wide.docx",
+      "profile": "professional_report (default)",
+      "content_width_cm": 15.9209,
+      "content_height_cm": 24.6204,
+      "intrinsic_px": [
+        400,
+        100
+      ],
+      "inline_shape_count": 1,
+      "rendered": {
+        "width_cm": 12.7,
+        "height_cm": 3.175,
+        "aspect_ratio": 4.0
+      },
+      "within_content_box": true,
+      "intrinsic_aspect_ratio": 4.0,
+      "aspect_ratio_preserved": true,
+      "diagnostic_codes": [],
+      "rendered_qa": {
+        "status": "PASS",
+        "figure_overflow": 0,
+        "figure_below_min_width": 0
+      },
+      "final_artifact_qa_status": "PASS"
+    },
+    "figure_tall": {
+      "artifact": "samples/figure_tall.docx",
+      "profile": "professional_report (default)",
+      "content_width_cm": 15.9209,
+      "content_height_cm": 24.6204,
+      "intrinsic_px": [
+        30,
+        70
+      ],
+      "inline_shape_count": 1,
+      "rendered": {
+        "width_cm": 10.5516,
+        "height_cm": 24.6204,
+        "aspect_ratio": 0.428571
+      },
+      "within_content_box": true,
+      "intrinsic_aspect_ratio": 0.428571,
+      "aspect_ratio_preserved": true,
+      "diagnostic_codes": [],
+      "rendered_qa": {
+        "status": "PASS",
+        "figure_overflow": 0,
+        "figure_below_min_width": 0
+      },
+      "final_artifact_qa_status": "PASS"
+    },
+    "figure_landscape": {
+      "artifact": "samples/figure_landscape.docx",
+      "profile": "professional_report (default)",
+      "content_width_cm": 15.9209,
+      "content_height_cm": 24.6204,
+      "intrinsic_px": [
+        200,
+        80
+      ],
+      "inline_shape_count": 1,
+      "rendered": {
+        "width_cm": 12.7,
+        "height_cm": 5.08,
+        "aspect_ratio": 2.5
+      },
+      "within_content_box": true,
+      "intrinsic_aspect_ratio": 2.5,
+      "aspect_ratio_preserved": true,
+      "diagnostic_codes": [],
+      "rendered_qa": {
+        "status": "PASS",
+        "figure_overflow": 0,
+        "figure_below_min_width": 0
+      },
+      "final_artifact_qa_status": "PASS"
+    },
+    "figure_diagram": {
+      "artifact": "samples/figure_diagram.docx",
+      "profile": "professional_report (default)",
+      "content_width_cm": 15.9209,
+      "content_height_cm": 24.6204,
+      "intrinsic_px": [
+        600,
+        100
+      ],
+      "inline_shape_count": 1,
+      "rendered": {
+        "width_cm": 12.7,
+        "height_cm": 2.1167,
+        "aspect_ratio": 6.0
+      },
+      "within_content_box": true,
+      "intrinsic_aspect_ratio": 6.0,
+      "aspect_ratio_preserved": true,
+      "diagnostic_codes": [
+        "ASCI004",
+        "ASCI001",
+        "DIAG002"
+      ],
+      "rendered_qa": {
+        "status": "PASS",
+        "figure_overflow": 0,
+        "figure_below_min_width": 0
+      },
+      "final_artifact_qa_status": "PASS"
+    },
+    "figure_wide_narrow_box": {
+      "artifact": "samples/figure_wide_narrow_box.docx",
+      "profile": "professional_report (default)",
+      "content_width_cm": 10.9996,
+      "content_height_cm": 24.6204,
+      "intrinsic_px": [
+        400,
+        100
+      ],
+      "inline_shape_count": 1,
+      "rendered": {
+        "width_cm": 10.9996,
+        "height_cm": 2.7499,
+        "aspect_ratio": 4.0
+      },
+      "within_content_box": true,
+      "intrinsic_aspect_ratio": 4.0,
+      "aspect_ratio_preserved": true,
+      "diagnostic_codes": [],
+      "rendered_qa": {
+        "status": "PASS",
+        "figure_overflow": 0,
+        "figure_below_min_width": 0
+      },
+      "final_artifact_qa_status": "PASS"
+    }
+  },
+  "profile_matrix": {
+    "professional_report": {
+      "artifact": "samples/figure_wide_professional_report.docx",
+      "profile": "professional_report",
+      "content_width_cm": 15.9209,
+      "content_height_cm": 24.6204,
+      "intrinsic_px": [
+        400,
+        100
+      ],
+      "inline_shape_count": 1,
+      "rendered": {
+        "width_cm": 12.7,
+        "height_cm": 3.175,
+        "aspect_ratio": 4.0
+      },
+      "within_content_box": true,
+      "intrinsic_aspect_ratio": 4.0,
+      "aspect_ratio_preserved": true,
+      "diagnostic_codes": [],
+      "rendered_qa": {
+        "status": "PASS",
+        "figure_overflow": 0,
+        "figure_below_min_width": 0
+      },
+      "final_artifact_qa_status": "PASS"
+    },
+    "business_report": {
+      "artifact": "samples/figure_wide_business_report.docx",
+      "profile": "business_report",
+      "content_width_cm": 17.0004,
+      "content_height_cm": 25.6999,
+      "intrinsic_px": [
+        400,
+        100
+      ],
+      "inline_shape_count": 1,
+      "rendered": {
+        "width_cm": 12.7,
+        "height_cm": 3.175,
+        "aspect_ratio": 4.0
+      },
+      "within_content_box": true,
+      "intrinsic_aspect_ratio": 4.0,
+      "aspect_ratio_preserved": true,
+      "diagnostic_codes": [],
+      "rendered_qa": {
+        "status": "PASS",
+        "figure_overflow": 0,
+        "figure_below_min_width": 0
+      },
+      "final_artifact_qa_status": "PASS"
+    },
+    "academic": {
+      "artifact": "samples/figure_wide_academic.docx",
+      "profile": "academic",
+      "content_width_cm": 15.0001,
+      "content_height_cm": 24.6204,
+      "intrinsic_px": [
+        400,
+        100
+      ],
+      "inline_shape_count": 1,
+      "rendered": {
+        "width_cm": 12.7,
+        "height_cm": 3.175,
+        "aspect_ratio": 4.0
+      },
+      "within_content_box": true,
+      "intrinsic_aspect_ratio": 4.0,
+      "aspect_ratio_preserved": true,
+      "diagnostic_codes": [],
+      "rendered_qa": {
+        "status": "PASS",
+        "figure_overflow": 0,
+        "figure_below_min_width": 0
+      },
+      "final_artifact_qa_status": "PASS"
+    },
+    "technical": {
+      "artifact": "samples/figure_wide_technical.docx",
+      "profile": "technical",
+      "content_width_cm": 16.6017,
+      "content_height_cm": 25.3012,
+      "intrinsic_px": [
+        400,
+        100
+      ],
+      "inline_shape_count": 1,
+      "rendered": {
+        "width_cm": 12.7,
+        "height_cm": 3.175,
+        "aspect_ratio": 4.0
+      },
+      "within_content_box": true,
+      "intrinsic_aspect_ratio": 4.0,
+      "aspect_ratio_preserved": true,
+      "diagnostic_codes": [],
+      "rendered_qa": {
+        "status": "PASS",
+        "figure_overflow": 0,
+        "figure_below_min_width": 0
+      },
+      "final_artifact_qa_status": "PASS"
+    },
+    "clean_minimal": {
+      "artifact": "samples/figure_wide_clean_minimal.docx",
+      "profile": "clean_minimal",
+      "content_width_cm": 15.9209,
+      "content_height_cm": 24.6204,
+      "intrinsic_px": [
+        400,
+        100
+      ],
+      "inline_shape_count": 1,
+      "rendered": {
+        "width_cm": 12.7,
+        "height_cm": 3.175,
+        "aspect_ratio": 4.0
+      },
+      "within_content_box": true,
+      "intrinsic_aspect_ratio": 4.0,
+      "aspect_ratio_preserved": true,
+      "diagnostic_codes": [],
+      "rendered_qa": {
+        "status": "PASS",
+        "figure_overflow": 0,
+        "figure_below_min_width": 0
+      },
+      "final_artifact_qa_status": "PASS"
+    }
+  }
+}
