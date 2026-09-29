@@ -1,0 +1,257 @@
+{
+  "program": "TOC Heading Localization (THL)",
+  "word_com": false,
+  "cases": {
+    "english": {
+      "opens_successfully": true,
+      "toc_title": "Table of Contents",
+      "toc_title_style": "TOC Heading",
+      "toc_title_centered": true,
+      "toc_title_bold": true,
+      "toc_title_size_pt": 18.0,
+      "toc_field_instruction_present": true,
+      "field_dirty_flag_absent": true,
+      "update_fields_absent": true,
+      "toc_entries": [
+        "Guide"
+      ],
+      "page_break_after_toc": true,
+      "page_number_tab_positions_twips": [
+        "9026"
+      ],
+      "toc_block_sha256": "7c0970ee3c4da4019c093abf2c7e8aa634e4640e8c5d124f24b8ed82467a0dab",
+      "toc_block_localization_sha256": "35864fae1e7ace58af346feefb916672a671cf00072880e255956b58d3060a71",
+      "artifact": "Doc/V2/Implementation/TOC_Heading_Localization/evidence/samples/english.docx",
+      "expected_title": "Table of Contents",
+      "title_matches_expected": true
+    },
+    "chinese": {
+      "opens_successfully": true,
+      "toc_title": "目录",
+      "toc_title_style": "TOC Heading",
+      "toc_title_centered": true,
+      "toc_title_bold": true,
+      "toc_title_size_pt": 18.0,
+      "toc_field_instruction_present": true,
+      "field_dirty_flag_absent": true,
+      "update_fields_absent": true,
+      "toc_entries": [
+        "使用手册"
+      ],
+      "page_break_after_toc": true,
+      "page_number_tab_positions_twips": [
+        "9026"
+      ],
+      "toc_block_sha256": "227ebed7065c2d534fea621f762b076a8845a6e513671700937876573887af46",
+      "toc_block_localization_sha256": "9dccb8960a5f54563e086f3ea76432e76fc50f32e06fb2e2e0e23bc44a276212",
+      "artifact": "Doc/V2/Implementation/TOC_Heading_Localization/evidence/samples/chinese.docx",
+      "expected_title": "目录",
+      "title_matches_expected": true
+    },
+    "mixed": {
+      "opens_successfully": true,
+      "toc_title": "目录",
+      "toc_title_style": "TOC Heading",
+      "toc_title_centered": true,
+      "toc_title_bold": true,
+      "toc_title_size_pt": 18.0,
+      "toc_field_instruction_present": true,
+      "field_dirty_flag_absent": true,
+      "update_fields_absent": true,
+      "toc_entries": [
+        "Guide 使用手册"
+      ],
+      "page_break_after_toc": true,
+      "page_number_tab_positions_twips": [
+        "9026"
+      ],
+      "toc_block_sha256": "39109be147cfe7f89a0e6cafcea69b50bd811247fbd6f9730beef56b115be9cf",
+      "toc_block_localization_sha256": "9f5032282cadc550377ef8e8ece8643b923ae8f4e2287bf7e9af56896de88456",
+      "artifact": "Doc/V2/Implementation/TOC_Heading_Localization/evidence/samples/mixed.docx",
+      "expected_title": "目录",
+      "title_matches_expected": true
+    },
+    "unknown": {
+      "opens_successfully": true,
+      "toc_title": "Table of Contents",
+      "toc_title_style": "TOC Heading",
+      "toc_title_centered": true,
+      "toc_title_bold": true,
+      "toc_title_size_pt": 18.0,
+      "toc_field_instruction_present": true,
+      "field_dirty_flag_absent": true,
+      "update_fields_absent": true,
+      "toc_entries": [
+        "2026"
+      ],
+      "page_break_after_toc": true,
+      "page_number_tab_positions_twips": [
+        "9026"
+      ],
+      "toc_block_sha256": "1c9a7026ed7ad8b4623e356aa9ff3ccc0e9a9f94642ddc4e52bca9cf2ac4329a",
+      "toc_block_localization_sha256": "7fe7f9c2c7b908d03dedabcc85f3f27d87431d197648dc919956c60cce55ceb1",
+      "artifact": "Doc/V2/Implementation/TOC_Heading_Localization/evidence/samples/unknown.docx",
+      "expected_title": "Table of Contents",
+      "title_matches_expected": true
+    }
+  },
+  "profiles": {
+    "english": {
+      "professional_report": {
+        "toc_title": "Table of Contents",
+        "toc_entries": [
+          "Guide"
+        ],
+        "toc_block_localization_sha256": "35864fae1e7ace58af346feefb916672a671cf00072880e255956b58d3060a71",
+        "toc_block_sha256": "7c0970ee3c4da4019c093abf2c7e8aa634e4640e8c5d124f24b8ed82467a0dab",
+        "page_number_tab_positions_twips": [
+          "9026"
+        ]
+      },
+      "business_report": {
+        "toc_title": "Table of Contents",
+        "toc_entries": [
+          "Guide"
+        ],
+        "toc_block_localization_sha256": "35864fae1e7ace58af346feefb916672a671cf00072880e255956b58d3060a71",
+        "toc_block_sha256": "dac9b2b9a7345751e9274680ec7f2e685d5fefde9f310d1f35d8d3c980f5bdfb",
+        "page_number_tab_positions_twips": [
+          "9638"
+        ]
+      },
+      "academic": {
+        "toc_title": "Table of Contents",
+        "toc_entries": [
+          "Guide"
+        ],
+        "toc_block_localization_sha256": "35864fae1e7ace58af346feefb916672a671cf00072880e255956b58d3060a71",
+        "toc_block_sha256": "8139f7580b0ffdd84fa24445a17eeeb1b3c8445e563163a8f1d1900283e3d95f",
+        "page_number_tab_positions_twips": [
+          "8504"
+        ]
+      },
+      "technical": {
+        "toc_title": "Table of Contents",
+        "toc_entries": [
+          "Guide"
+        ],
+        "toc_block_localization_sha256": "35864fae1e7ace58af346feefb916672a671cf00072880e255956b58d3060a71",
+        "toc_block_sha256": "0b4add66a8a175b992239bc3c225ec59d0c1afd4d6925894425dd65d8f9bded0",
+        "page_number_tab_positions_twips": [
+          "9412"
+        ]
+      },
+      "clean_minimal": {
+        "toc_title": "Table of Contents",
+        "toc_entries": [
+          "Guide"
+        ],
+        "toc_block_localization_sha256": "35864fae1e7ace58af346feefb916672a671cf00072880e255956b58d3060a71",
+        "toc_block_sha256": "7c0970ee3c4da4019c093abf2c7e8aa634e4640e8c5d124f24b8ed82467a0dab",
+        "page_number_tab_positions_twips": [
+          "9026"
+        ]
+      },
+      "_conclusion": {
+        "titles_identical_across_profiles": true,
+        "title": "Table of Contents",
+        "localization_relevant_toc_block_identical": true,
+        "cross_profile_difference": "Only the TOC page-number tab stop differs across profiles: the post-processor derives it from the effective content width, so it follows the profile's page margins. That behaviour predates THL (the tab code is untouched by this fix)."
+      }
+    },
+    "chinese": {
+      "professional_report": {
+        "toc_title": "目录",
+        "toc_entries": [
+          "使用手册"
+        ],
+        "toc_block_localization_sha256": "9dccb8960a5f54563e086f3ea76432e76fc50f32e06fb2e2e0e23bc44a276212",
+        "toc_block_sha256": "227ebed7065c2d534fea621f762b076a8845a6e513671700937876573887af46",
+        "page_number_tab_positions_twips": [
+          "9026"
+        ]
+      },
+      "business_report": {
+        "toc_title": "目录",
+        "toc_entries": [
+          "使用手册"
+        ],
+        "toc_block_localization_sha256": "9dccb8960a5f54563e086f3ea76432e76fc50f32e06fb2e2e0e23bc44a276212",
+        "toc_block_sha256": "e7635b9a11fc5da8b0175425cb63d2a624a1672fbc787f3d7948db5efb013c28",
+        "page_number_tab_positions_twips": [
+          "9638"
+        ]
+      },
+      "academic": {
+        "toc_title": "目录",
+        "toc_entries": [
+          "使用手册"
+        ],
+        "toc_block_localization_sha256": "9dccb8960a5f54563e086f3ea76432e76fc50f32e06fb2e2e0e23bc44a276212",
+        "toc_block_sha256": "86ab4968d22ab8a6cde4c3c920f2a4aa80094d896f86eb0b1da5d95658a6a311",
+        "page_number_tab_positions_twips": [
+          "8504"
+        ]
+      },
+      "technical": {
+        "toc_title": "目录",
+        "toc_entries": [
+          "使用手册"
+        ],
+        "toc_block_localization_sha256": "9dccb8960a5f54563e086f3ea76432e76fc50f32e06fb2e2e0e23bc44a276212",
+        "toc_block_sha256": "0c6625d6ead7292b2677ff1db1e1bd01a0c1201e8f4c6cf83b4e57c257443888",
+        "page_number_tab_positions_twips": [
+          "9412"
+        ]
+      },
+      "clean_minimal": {
+        "toc_title": "目录",
+        "toc_entries": [
+          "使用手册"
+        ],
+        "toc_block_localization_sha256": "9dccb8960a5f54563e086f3ea76432e76fc50f32e06fb2e2e0e23bc44a276212",
+        "toc_block_sha256": "227ebed7065c2d534fea621f762b076a8845a6e513671700937876573887af46",
+        "page_number_tab_positions_twips": [
+          "9026"
+        ]
+      },
+      "_conclusion": {
+        "titles_identical_across_profiles": true,
+        "title": "目录",
+        "localization_relevant_toc_block_identical": true,
+        "cross_profile_difference": "Only the TOC page-number tab stop differs across profiles: the post-processor derives it from the effective content width, so it follows the profile's page margins. That behaviour predates THL (the tab code is untouched by this fix)."
+      }
+    }
+  },
+  "batch": [
+    {
+      "source": "english.md",
+      "status": "SUCCESS",
+      "toc_title": "Table of Contents",
+      "expected_title": "Table of Contents"
+    },
+    {
+      "source": "chinese.md",
+      "status": "SUCCESS",
+      "toc_title": "目录",
+      "expected_title": "目录"
+    },
+    {
+      "source": "mixed.md",
+      "status": "SUCCESS",
+      "toc_title": "目录",
+      "expected_title": "目录"
+    },
+    {
+      "source": "unknown.md",
+      "status": "SUCCESS",
+      "toc_title": "Table of Contents",
+      "expected_title": "Table of Contents"
+    }
+  ],
+  "batch_conclusion": {
+    "one_service_instance": true,
+    "per_document_localization_correct": true,
+    "note": "Batch artifacts were measured during the evidence run and are not retained; the canonical four artifacts live in evidence/samples."
+  }
+}
