@@ -49,6 +49,11 @@ except Exception as exc:  # 可选 COM 能力边界：记录原因后降级，�
     WIN32_AVAILABLE = False
     WIN32_UNAVAILABLE_REASON = f"{type(exc).__name__}: {exc}"
 
+from .layout.toc_localization import (
+    CHINESE_TOC_HEADING,
+    DEFAULT_TOC_HEADING,
+    toc_heading_for_document_text,
+)
 from .word_writer import set_run_font, set_style_font
 
 
@@ -343,9 +348,14 @@ class DocxPostProcessor:
         """
         原生插入 Word TOC 域（不依赖 win32com）。
 
-        在封面分页符之后插入“目录”标题、TOC 域代码、目录条目与分页符。
+        在封面分页符之后插入目录标题、TOC 域代码、目录条目与分页符。
         TOC 域的缓存结果会写入真实的标题条目（超链接到标题书签），
         因此打开文档即可看到目录。
+
+        目录标题按文档语言本地化（THL，单一权威
+        :mod:`md_converter.renderer.layout.toc_localization`）：仅当可见文档
+        文本中正向检测到汉字时使用“目录”，否则使用 "Table of Contents"。
+        TOC 域、条目、样式、书签与分页符语义完全不变。
 
         注意：域起始标记不带 w:dirty，且 settings.xml 不写入 updateFields，
         避免 Word 打开文档时弹出“更新域”对话框；页码由 Word 按 F9 更新，
@@ -353,6 +363,9 @@ class DocxPostProcessor:
         """
         # 收集 Heading 1-3 标题（需在插入目录段落前完成）
         headings = cls._collect_headings(doc, max_level=3)
+
+        # 目录标题文本：在插入任何目录段落之前，基于可见文档文本判定语言
+        toc_heading = toc_heading_for_document_text(cls._visible_document_text(doc))
 
         # 定位封面页后的分页符段落（无封面时回退到文档开头）
         anchor = None
@@ -368,7 +381,7 @@ class DocxPostProcessor:
             title_p.style = doc.styles["TOC Heading"]
         except Exception:
             pass
-        title_run = title_p.add_run("目录")
+        title_run = title_p.add_run(toc_heading)
         title_run.font.bold = True
         title_run.font.size = Pt(18)
         set_run_font(title_run, font_name="Microsoft YaHei", east_asia="Microsoft YaHei")
@@ -429,6 +442,28 @@ class DocxPostProcessor:
             else:
                 for elem in elements:
                     body.append(elem)
+
+    @staticmethod
+    def _visible_document_text(doc: Document) -> str:
+        """返回文档的可见文本（正文段落 + 表格单元格）。
+
+        仅用于目录标题本地化（THL）的语言判定：使用当前架构已持有的
+        python-docx 文档对象，成本最低且确定性（不重新解析 Markdown、不引入
+        额外依赖）。已知局限：代码块/元数据等不可见内容也会被计入，见 THL
+        关闭证据中的 limitation 记录。
+
+        参数:
+            doc: python-docx 文档对象
+
+        返回:
+            str: 段落与表格单元格文本，以换行连接
+        """
+        parts: List[str] = [para.text for para in doc.paragraphs]
+        for table in doc.tables:
+            for row in table.rows:
+                for cell in row.cells:
+                    parts.append(cell.text)
+        return "\n".join(parts)
 
     @staticmethod
     def _collect_headings(
@@ -673,7 +708,7 @@ class DocxPostProcessor:
                 if not toc_title_found:
                     for paragraph in doc.Paragraphs:
                         text = paragraph.Range.Text.strip()
-                        if text in ("目录", "Table of Contents", "TOC"):
+                        if text in (CHINESE_TOC_HEADING, DEFAULT_TOC_HEADING, "TOC"):
                             paragraph.Alignment = 1
                             paragraph.Range.Font.Bold = True
                             paragraph.Range.Font.Size = 18

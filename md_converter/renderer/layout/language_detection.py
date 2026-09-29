@@ -48,6 +48,27 @@ def classify_char(ch: str) -> TextScript:
     return TextScript.OTHER
 
 
+#: 汉字（Han ideograph）单独识别：CJK 统一表意文字基本区 + 扩展 A 区。
+#: 刻意比 :data:`_CJK_RE` 更窄——后者还包含假名、谚文与 CJK 标点，
+#: 因此不能直接用于“正向检测到中文内容”的判断（例如全角标点不应算中文）。
+_HAN_RE = re.compile("[\u4e00-\u9fff\u3400-\u4dbf]")
+
+
+def contains_han_ideograph(text: str) -> bool:
+    """判断文本是否包含至少一个汉字。
+
+    参数:
+        text: 待检测文本（``None`` 或空文本返回 ``False``）
+
+    返回:
+        bool: 是否包含汉字（CJK 统一表意文字基本区或扩展 A 区）。
+            纯数字、纯标点（含全角标点）、纯拉丁文本均返回 ``False``。
+    """
+    if not text:
+        return False
+    return _HAN_RE.search(text) is not None
+
+
 # ============================================================
 # 原子序列（10.3 run_segmentation.atomic_sequences）
 # ============================================================
