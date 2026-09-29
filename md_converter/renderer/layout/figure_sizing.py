@@ -13,7 +13,7 @@ Figure Sizing - 图形尺寸策略（P12-CAND-002）
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Mapping, Optional
+from typing import Any, Dict, Mapping, Optional
 
 #: 1 英寸 = 2.54 厘米
 CM_PER_INCH = 2.54
@@ -163,8 +163,134 @@ class FigureFit:
     below_min_width: bool
 
 
+@dataclass(frozen=True)
+class FigureFitPlan:
+    """
+    图形适配决策（Program D / WP-D04：图形适配的**唯一**决策产物）。
+
+    记录最终尺寸以及缩小的**原因**，便于渲染层与验证层观测：
+    由有效内容宽度导致的收敛（``width_limited``）与由有效内容高度导致的
+    收缩（``height_limited``）是互相独立的事实。
+
+    属性:
+        width_cm: 最终宽度（厘米）。
+        height_cm: 最终高度（厘米）。
+        aspect_ratio: 宽高比（px_width / px_height）；恒等于固有宽高比。
+        target_width_cm: 目标宽度（``min(配置 image_width, 有效宽度)``，SPEC-FUNC-023）。
+        content_width_cm: 有效内容区宽度（厘米）。
+        content_height_cm: 有效内容区高度（厘米）。
+        scaled: 是否发生了缩小。
+        height_limited: 是否因有效内容高度而收缩。
+        width_limited: 目标宽度是否被有效内容宽度收敛。
+        below_min_width: 最终宽度是否低于主题声明的最小宽度下限。
+    """
+
+    width_cm: float
+    height_cm: float
+    aspect_ratio: float
+    target_width_cm: float
+    content_width_cm: float
+    content_height_cm: float
+    scaled: bool
+    height_limited: bool
+    width_limited: bool
+    below_min_width: bool
+
+    def to_dict(self) -> Dict[str, Any]:
+        """导出可序列化字典（证据/审计用，带稳定舍入）。"""
+        return {
+            "width_cm": round(self.width_cm, 4),
+            "height_cm": round(self.height_cm, 4),
+            "aspect_ratio": round(self.aspect_ratio, 6),
+            "target_width_cm": round(self.target_width_cm, 4),
+            "content_width_cm": round(self.content_width_cm, 4),
+            "content_height_cm": round(self.content_height_cm, 4),
+            "scaled": self.scaled,
+            "height_limited": self.height_limited,
+            "width_limited": self.width_limited,
+            "below_min_width": self.below_min_width,
+        }
+
+
 class FigureMeasurementError(ValueError):
     """图形固有尺寸不可用（不可测量）时抛出。"""
+
+
+def plan_figure_fit(
+    *,
+    intrinsic_width_px: int,
+    intrinsic_height_px: int,
+    target_width_cm: float,
+    content_width_cm: float,
+    content_height_cm: float,
+    min_width_cm: Optional[float] = None,
+    tolerance_cm: float = 1e-6,
+) -> FigureFitPlan:
+    """
+    计算确定性的图形适配决策（Program D / WP-D04）。
+
+    规则（保持冻结的 SPEC-FUNC-023 语义，不引入任何新的放大幅度）:
+        1. 目标宽度 ``target_width_cm`` 由调用方按 ``min(配置 image_width, 有效宽度)`` 解析；
+           交付宽度取 ``min(target, 有效宽度)``——既不超过目标宽度，也不超出有效内容区宽度。
+        2. 若按该宽度计算的高度超过有效内容区高度，则按高度收缩（保持宽高比）；
+        3. 结果永不裁剪、永不拉伸（宽高比恒为固有宽高比）、永不超出有效内容区；
+        4. 收缩后宽度低于 ``min_width_cm`` 时标记 ``below_min_width``（仍按适配尺寸交付，
+           由调用方产生结构化 WARNING）。
+
+    参数:
+        intrinsic_width_px: 图形固有像素宽（> 0）。
+        intrinsic_height_px: 图形固有像素高（> 0）。
+        target_width_cm: 目标宽度（厘米）。
+        content_width_cm: 有效内容区宽度（厘米）。
+        content_height_cm: 有效内容区高度（厘米）。
+        min_width_cm: 主题声明的最小宽度下限（厘米，可选）。
+        tolerance_cm: 浮点比较容差。
+
+    返回:
+        FigureFitPlan: 最终尺寸、宽高比与缩小原因。
+
+    异常:
+        FigureMeasurementError: 固有尺寸非法（<= 0）或边界非法（<= 0）。
+    """
+    if intrinsic_width_px <= 0 or intrinsic_height_px <= 0:
+        raise FigureMeasurementError(
+            f"Invalid intrinsic size: {intrinsic_width_px}x{intrinsic_height_px} px"
+        )
+    if target_width_cm <= 0 or content_width_cm <= 0 or content_height_cm <= 0:
+        raise FigureMeasurementError(
+            "Invalid figure bounds: "
+            f"target={target_width_cm}cm max_width={content_width_cm}cm "
+            f"max_height={content_height_cm}cm"
+        )
+
+    aspect = intrinsic_width_px / intrinsic_height_px
+
+    width_limited = float(target_width_cm) > float(content_width_cm) + tolerance_cm
+    width_cm = min(float(target_width_cm), float(content_width_cm))
+    height_cm = width_cm / aspect
+    height_limited = False
+    scaled = width_limited
+
+    if height_cm > content_height_cm + tolerance_cm:
+        height_cm = float(content_height_cm)
+        width_cm = height_cm * aspect
+        height_limited = True
+        scaled = True
+
+    below_min_width = min_width_cm is not None and width_cm < min_width_cm - tolerance_cm
+
+    return FigureFitPlan(
+        width_cm=width_cm,
+        height_cm=height_cm,
+        aspect_ratio=aspect,
+        target_width_cm=float(target_width_cm),
+        content_width_cm=float(content_width_cm),
+        content_height_cm=float(content_height_cm),
+        scaled=scaled,
+        height_limited=height_limited,
+        width_limited=width_limited,
+        below_min_width=below_min_width,
+    )
 
 
 def fit_figure_size(
@@ -200,30 +326,18 @@ def fit_figure_size(
     异常:
         FigureMeasurementError: 固有尺寸非法（<= 0）或边界非法（<= 0）。
     """
-    if px_width <= 0 or px_height <= 0:
-        raise FigureMeasurementError(f"Invalid intrinsic size: {px_width}x{px_height} px")
-    if target_width_cm <= 0 or max_width_cm <= 0 or max_height_cm <= 0:
-        raise FigureMeasurementError(
-            "Invalid figure bounds: "
-            f"target={target_width_cm}cm max_width={max_width_cm}cm max_height={max_height_cm}cm"
-        )
-
-    aspect = px_width / px_height
-
-    width_cm = min(float(target_width_cm), float(max_width_cm))
-    height_cm = width_cm / aspect
-    scaled = False
-
-    if height_cm > max_height_cm + tolerance_cm:
-        height_cm = float(max_height_cm)
-        width_cm = height_cm * aspect
-        scaled = True
-
-    below_min_width = min_width_cm is not None and width_cm < min_width_cm - tolerance_cm
-
+    plan = plan_figure_fit(
+        intrinsic_width_px=px_width,
+        intrinsic_height_px=px_height,
+        target_width_cm=target_width_cm,
+        content_width_cm=max_width_cm,
+        content_height_cm=max_height_cm,
+        min_width_cm=min_width_cm,
+        tolerance_cm=tolerance_cm,
+    )
     return FigureFit(
-        width_cm=width_cm,
-        height_cm=height_cm,
-        scaled=scaled,
-        below_min_width=below_min_width,
+        width_cm=plan.width_cm,
+        height_cm=plan.height_cm,
+        scaled=plan.scaled,
+        below_min_width=plan.below_min_width,
     )
