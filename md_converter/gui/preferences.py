@@ -5,6 +5,7 @@ The desktop GUI owns a very small, user-understandable set of preferences:
     window geometry  ->  restored window size/position
     last source directory / last output directory
     one "remember folders" toggle
+    one output-profile selection (Program C - the profile *identifier* only)
     reset to the GUI-owned defaults
 
 Persistence boundary (WP-P12-07-01 "Preferred"):
@@ -29,6 +30,11 @@ Robustness rules:
   (:meth:`GuiPreferences.for_file`) or a process-local one
   (:meth:`GuiPreferences.session`), so no test ever reads or writes the real
   user settings.
+
+The stored output profile is an identifier only.  The authoritative profile
+registry (:mod:`md_converter.profiles`) stays the single profile authority, and
+an unknown or deprecated stored identifier is resolved (never trusted) by the
+caller, so this store can never become a second profile definition.
 """
 
 from __future__ import annotations
@@ -46,6 +52,7 @@ __all__ = [
     "LAST_OUTPUT_DIRECTORY_KEY",
     "LAST_SOURCE_DIRECTORY_KEY",
     "MINIMUM_VISIBLE_PIXELS",
+    "OUTPUT_PROFILE_KEY",
     "REMEMBER_FOLDERS_KEY",
     "GuiPreferences",
     "available_screen_rects",
@@ -62,6 +69,9 @@ REMEMBER_FOLDERS_KEY = "folders/remember"
 LAST_SOURCE_DIRECTORY_KEY = "folders/last_source_directory"
 LAST_OUTPUT_DIRECTORY_KEY = "folders/last_output_directory"
 
+#: Last-used output profile identifier (Program C).  Stores the identifier only.
+OUTPUT_PROFILE_KEY = "output/profile"
+
 #: Every key this GUI owns.  Declaring the set keeps :meth:`GuiPreferences.reset`
 #: and the "GUI preferences only" rule explicit and auditable.
 GUI_SETTING_KEYS = (
@@ -69,6 +79,7 @@ GUI_SETTING_KEYS = (
     REMEMBER_FOLDERS_KEY,
     LAST_SOURCE_DIRECTORY_KEY,
     LAST_OUTPUT_DIRECTORY_KEY,
+    OUTPUT_PROFILE_KEY,
 )
 
 #: Default of the "remember folders" toggle.  Remembering folders is the
@@ -298,6 +309,47 @@ class GuiPreferences:
             enabled: New toggle value.
         """
         self._backend.setValue(REMEMBER_FOLDERS_KEY, bool(enabled))
+
+    # ------------------------------------------------------------------
+    # Output profile (Program C: the identifier only)
+    # ------------------------------------------------------------------
+
+    @property
+    def output_profile(self) -> Optional[str]:
+        """Return the remembered output-profile identifier, or ``None``.
+
+        The value is an identifier only; it is deliberately *not* validated
+        here.  The caller resolves it through the authoritative profile
+        registry (``md_converter.profiles``), so an unknown or deprecated
+        identifier falls back safely instead of failing.  ``None`` means "no
+        stored preference", which is the documented default selection.
+        """
+        raw = self._backend.value(OUTPUT_PROFILE_KEY, None)
+        if raw is None:
+            return None
+        text = str(raw).strip()
+        return text or None
+
+    def set_output_profile(self, profile_id: Optional[str]) -> Optional[str]:
+        """Remember ``profile_id`` as the last-used output profile.
+
+        Args:
+            profile_id: Profile identifier, or ``None``/blank to forget it.
+
+        Returns:
+            Optional[str]: The stored identifier, or ``None`` when the stored
+            preference was cleared.
+        """
+        text = "" if profile_id is None else str(profile_id).strip()
+        if not text:
+            self.clear_output_profile()
+            return None
+        self._backend.setValue(OUTPUT_PROFILE_KEY, text)
+        return text
+
+    def clear_output_profile(self) -> None:
+        """Forget the remembered output profile without touching anything else."""
+        self._backend.remove(OUTPUT_PROFILE_KEY)
 
     # ------------------------------------------------------------------
     # Remembered folders (GUI convenience only)

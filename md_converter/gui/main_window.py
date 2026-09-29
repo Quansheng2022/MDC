@@ -82,6 +82,7 @@ from typing import Callable, List, Optional, Sequence, Union
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QAction, QCloseEvent, QKeySequence
 from PySide6.QtWidgets import (
+    QComboBox,
     QDialog,
     QHBoxLayout,
     QLabel,
@@ -95,6 +96,12 @@ from PySide6.QtWidgets import (
 
 from ..application.conversion_result import ConversionResult
 from ..application.conversion_service import ConversionService
+from ..profiles import (
+    DEFAULT_PROFILE_ID,
+    all_profiles,
+    is_known_profile_id,
+    resolve_profile_id,
+)
 from . import file_picker
 from .about_dialog import AboutDialog
 from .batch import (
@@ -165,6 +172,9 @@ __all__ = [
     "OPEN_FOLDER_TEXT",
     "OPEN_FOLDER_TOOLTIP",
     "OUTPUT_CAPTION_TEXT",
+    "OUTPUT_PROFILE_ACCESSIBLE_NAME",
+    "OUTPUT_PROFILE_CAPTION_TEXT",
+    "OUTPUT_PROFILE_TOOLTIP",
     "OUTPUT_PATH_MAX_CHARS",
     "OUTPUT_VALUE_TEXT",
     "PREFLIGHT_CAPTION_TEXT",
@@ -207,6 +217,8 @@ DROP_SUB_HINT_TEXT = "Markdown files (.md) are converted on this computer."
 DROP_RELEASE_HINT_TEXT = "Release to add these files"
 SELECT_FILE_TEXT = "Select File"
 OUTPUT_CAPTION_TEXT = "Output folder:"
+#: Output-profile selector caption (Program C).  Plain product language only.
+OUTPUT_PROFILE_CAPTION_TEXT = "Output Profile:"
 #: Default output presentation.  The service resolves the actual location, so
 #: the wording does not promise a source-directory default (WP-P12-05-03).
 OUTPUT_VALUE_TEXT = "Default location"
@@ -279,6 +291,7 @@ LAYOUT_SPACING = 16
 DROP_ZONE_TOOLTIP = "Drop Markdown files (.md) here"
 SELECT_FILE_TOOLTIP = "Choose the Markdown files (.md) to convert"
 CHANGE_OUTPUT_TOOLTIP = "Choose where the Word document is saved"
+OUTPUT_PROFILE_TOOLTIP = "Choose the presentation style for the Word document"
 CONVERT_TOOLTIP = "Convert the selected Markdown file to a Word document"
 CONVERT_MANY_TOOLTIP = "Convert every file in the list, one after another"
 DETAILS_TOOLTIP = "Show the conversion report"
@@ -295,6 +308,7 @@ DROP_ZONE_ACCESSIBLE_NAME = "Markdown file drop area"
 DROP_ZONE_ACCESSIBLE_DESCRIPTION = "Drop one or more Markdown files here, or choose Select File"
 STATUS_ACCESSIBLE_NAME = "Status"
 CHANGE_OUTPUT_ACCESSIBLE_NAME = "Change output folder"
+OUTPUT_PROFILE_ACCESSIBLE_NAME = "Output profile"
 BATCH_LIST_ACCESSIBLE_NAME = "Markdown files in this batch"
 BATCH_LIST_TOOLTIP = "Files are converted in this order"
 
@@ -376,6 +390,9 @@ class MainWindow(QMainWindow):
         state: Current GUI state (read-only convenience accessor).
         output_directory: Session output-folder preference (``None`` means
             the default location).
+        output_profile: Selected output-profile identifier (Program C).  It is
+            always a registered identifier and is captured once per
+            conversion/batch.
         service: Application conversion service (GUI -> service boundary).
         worker: Worker boundary that runs the service off the GUI thread.
         batch_selection: Ordered, duplicate-free selection of Markdown sources
@@ -414,6 +431,8 @@ class MainWindow(QMainWindow):
         select_file_button: Placeholder for the file picker.
         output_value_label: Output destination display.
         change_output_button: Opens the output-folder chooser.
+        profile_combo: Output-profile selector (Program C); it carries
+            identifiers from the single profile authority.
         convert_button: Primary action placeholder.
         status_label: Status area text.
         result_area: Container of the bounded outcome presentation.
@@ -450,6 +469,11 @@ class MainWindow(QMainWindow):
         self._batch: Optional[BatchRun] = None
         self._notice_text = ""
         self.preferences = preferences if preferences is not None else GuiPreferences.session()
+        # Program C: the selected profile identifier is resolved through the
+        # single profile authority, so a stale or unknown stored value falls
+        # back to the documented default instead of failing.
+        self._profile_id: str = resolve_profile_id(self.preferences.output_profile)
+        self._batch_profile_id: Optional[str] = None
         self.service = ConversionService()
         self.worker = GuiWorker(self)
         self.worker.succeeded.connect(self._on_conversion_result)
@@ -479,6 +503,7 @@ class MainWindow(QMainWindow):
         self.batch_area = self._create_batch_area(central)
         layout.addWidget(self.batch_area)
         layout.addLayout(self._create_output_row(central))
+        layout.addLayout(self._create_output_profile_row(central))
         layout.addLayout(self._create_convert_row(central))
         self.status_label = self._create_status_label(central)
         layout.addWidget(self.status_label)
@@ -495,6 +520,7 @@ class MainWindow(QMainWindow):
         layout.addLayout(self._create_footer_row(central))
 
         self.setCentralWidget(central)
+        self._load_output_profile_selection()
         self._configure_accessibility()
         self._configure_shortcuts()
         self._configure_tab_order()
@@ -513,6 +539,17 @@ class MainWindow(QMainWindow):
         (WP-P12-05-03): the GUI does not compute a DOCX path from it.
         """
         return self._output_directory
+
+    @property
+    def output_profile(self) -> str:
+        """Return the selected output-profile identifier (Program C).
+
+        The value is always a registered identifier: it was resolved through
+        :mod:`md_converter.profiles` when the window was created and whenever
+        the user changed the selection, so the GUI never carries an unknown
+        identifier of its own making.
+        """
+        return self._profile_id
 
     @property
     def latest_result(self) -> Optional[ConversionResult]:
@@ -875,6 +912,64 @@ class MainWindow(QMainWindow):
             return self._output_directory
         return self.set_output_directory(chosen)
 
+    def set_output_profile(self, profile_id: Optional[str]) -> str:
+        """Select an output profile and remember it for the next conversion.
+
+        Only an identifier the single profile authority knows is accepted; an
+        unknown, blank or non-text candidate leaves the current selection
+        unchanged (mirroring :meth:`set_output_directory`).  The selection is
+        refused while a conversion is active, because a profile is captured once
+        per conversion/batch (WP-POP-05) and a running job must not have its
+        presentation changed underneath it.
+
+        Args:
+            profile_id: Candidate profile identifier.
+
+        Returns:
+            str: The selected identifier after the request.
+        """
+        if not self.state_model.effect.profile_enabled:
+            return self._profile_id
+        if not is_known_profile_id(profile_id):
+            return self._profile_id
+        self._profile_id = resolve_profile_id(profile_id)
+        self.preferences.set_output_profile(self._profile_id)
+        self.preferences.sync()
+        self._sync_profile_widget()
+        return self._profile_id
+
+    def _load_output_profile_selection(self) -> None:
+        """Show the resolved profile selection without persisting anything.
+
+        Signal blocking keeps window construction side-effect free: opening the
+        window never writes a preference, only an explicit user selection does.
+        """
+        index = self.profile_combo.findData(self._profile_id)
+        if index < 0:
+            index = self.profile_combo.findData(DEFAULT_PROFILE_ID)
+        blocked = self.profile_combo.blockSignals(True)
+        try:
+            self.profile_combo.setCurrentIndex(max(index, 0))
+        finally:
+            self.profile_combo.blockSignals(blocked)
+        selected = self.profile_combo.currentData()
+        self._profile_id = resolve_profile_id(selected if selected is not None else None)
+
+    def _sync_profile_widget(self) -> None:
+        """Bring the selector in step with the selected identifier."""
+        index = self.profile_combo.findData(self._profile_id)
+        if index < 0 or index == self.profile_combo.currentIndex():
+            return
+        blocked = self.profile_combo.blockSignals(True)
+        try:
+            self.profile_combo.setCurrentIndex(index)
+        finally:
+            self.profile_combo.blockSignals(blocked)
+
+    def _on_profile_selection_changed(self, index: int) -> None:
+        """Apply a user profile choice (the only writer of the preference)."""
+        self.set_output_profile(self.profile_combo.itemData(index))
+
     def _set_drop_hover(self, active: bool) -> None:
         """Show transient drag-over feedback in the drop area hint.
 
@@ -898,6 +993,7 @@ class MainWindow(QMainWindow):
         self.source_path_label.setAccessibleName("Selected file folder")
         self.output_value_label.setAccessibleName("Output folder")
         self.change_output_button.setAccessibleName(CHANGE_OUTPUT_ACCESSIBLE_NAME)
+        self.profile_combo.setAccessibleName(OUTPUT_PROFILE_ACCESSIBLE_NAME)
         self.convert_button.setAccessibleName(CONVERT_TEXT)
         self.status_label.setAccessibleName(STATUS_ACCESSIBLE_NAME)
         self.notice_label.setAccessibleName("Selection notice")
@@ -950,6 +1046,7 @@ class MainWindow(QMainWindow):
             self.batch_remove_button,
             self.batch_clear_button,
             self.change_output_button,
+            self.profile_combo,
             self.convert_button,
             self.preflight_list,
             self.details_button,
@@ -1030,7 +1127,11 @@ class MainWindow(QMainWindow):
         if first is None:
             return self.state
 
-        request = build_conversion_request(str(first), self.output_directory)
+        # One profile per conversion/batch: the selection is captured here and
+        # reused for every item of this run (WP-POP-05).  The selector is locked
+        # by the CONVERTING state while the run is active.
+        profile_id = self.output_profile
+        request = build_conversion_request(str(first), self.output_directory, profile_id)
         if request is None:
             # A validated source always yields a request; never fabricate one.
             return self.state
@@ -1042,6 +1143,7 @@ class MainWindow(QMainWindow):
             return self.state
 
         self._batch = run
+        self._batch_profile_id = profile_id
         self._notice_text = ""
         return self.request_convert()
 
@@ -1141,7 +1243,9 @@ class MainWindow(QMainWindow):
         Returns:
             bool: ``True`` when the job started.
         """
-        request = build_conversion_request(str(source), self.output_directory)
+        request = build_conversion_request(
+            str(source), self.output_directory, self._batch_profile_id
+        )
         if request is None:
             return False
         return bool(self.worker.start(partial(self.service.convert, request)))
@@ -1184,6 +1288,9 @@ class MainWindow(QMainWindow):
             # reports instead of presenting one file's findings as the batch's.
             self._preflight = None
             self.state_model.complete_batch()
+        # The batch released its captured profile: the next conversion uses the
+        # selection current at that moment, and no profile leaks across runs.
+        self._batch_profile_id = None
         self._apply_state()
 
     def show_details(self) -> bool:
@@ -1366,6 +1473,7 @@ class MainWindow(QMainWindow):
         self.drop_zone.setEnabled(effect.drop_enabled)
         self.drop_zone.setAcceptDrops(effect.drop_enabled)
         self.change_output_button.setEnabled(effect.change_output_enabled)
+        self.profile_combo.setEnabled(effect.profile_enabled)
         self._apply_selection_surface(effect.select_enabled)
         source = self.state_model.source
         self.source_label.setText(_source_display_name(source))
@@ -1805,6 +1913,43 @@ class MainWindow(QMainWindow):
         row.addWidget(self.output_value_label)
         row.addStretch(1)
         row.addWidget(self.change_output_button)
+        return row
+
+    def _create_output_profile_row(self, parent: QWidget) -> QHBoxLayout:
+        """Create the output-profile selector row (Program C: WP-POP-03).
+
+        The smallest compatible UX: one labelled combo box beside the existing
+        output-folder row, so the choice is visible while the user converts and
+        needs no settings dialog.  The window knows profile identifiers and
+        display names only - it never builds a theme, a font or a style, and no
+        renderer value is duplicated here.
+
+        Args:
+            parent: Parent widget for the label and selector.
+
+        Returns:
+            QHBoxLayout: The output-profile row.
+        """
+        row = QHBoxLayout()
+        row.setObjectName("outputProfileRow")
+        row.setSpacing(8)
+
+        caption = QLabel(OUTPUT_PROFILE_CAPTION_TEXT, parent)
+        caption.setObjectName("outputProfileCaptionLabel")
+
+        self.profile_combo = QComboBox(parent)
+        self.profile_combo.setObjectName("outputProfileCombo")
+        self.profile_combo.setToolTip(OUTPUT_PROFILE_TOOLTIP)
+        self.profile_combo.setMinimumWidth(SECONDARY_BUTTON_MINIMUM_WIDTH)
+        for profile in all_profiles():
+            index = self.profile_combo.count()
+            self.profile_combo.addItem(profile.display_name, profile.id)
+            self.profile_combo.setItemData(index, profile.description, Qt.ItemDataRole.ToolTipRole)
+        self.profile_combo.currentIndexChanged.connect(self._on_profile_selection_changed)
+
+        row.addWidget(caption)
+        row.addWidget(self.profile_combo)
+        row.addStretch(1)
         return row
 
     def _create_convert_row(self, parent: QWidget) -> QHBoxLayout:

@@ -10,6 +10,8 @@ from typing import Any, Dict, Optional, Union
 
 import yaml
 
+from .profiles.model import DEFAULT_PROFILE_ID
+
 # ============================================================
 # 默认配置
 # ============================================================
@@ -30,6 +32,9 @@ DEFAULT_CONFIG: Dict[str, Any] = {
         "enabled": True,
     },
     "theme": "default",
+    # Program C：专业输出档案（仅呈现配置；默认档案等同冻结 V1.5 基线）。
+    # 唯一权威为 md_converter.profiles.registry；未知标识安全回退到默认档案。
+    "output_profile": DEFAULT_PROFILE_ID,
     "toc": True,
     "toc_depth": 3,
     "enable_cover": True,
@@ -109,6 +114,7 @@ class CompilerConfig:
     normalize: bool = True
     diagram: bool = True
     theme: str = "default"
+    output_profile: str = DEFAULT_PROFILE_ID
     toc: bool = DEFAULT_CONFIG["toc"]
     toc_depth: int = 3
     enable_cover: bool = DEFAULT_CONFIG["enable_cover"]
@@ -138,6 +144,7 @@ class CompilerConfig:
             "normalize",
             "diagram",
             "theme",
+            "output_profile",
             "toc",
             "toc_depth",
             "enable_cover",
@@ -161,6 +168,7 @@ class CompilerConfig:
             normalize=data.get("normalize", True),
             diagram=data.get("diagram", True),
             theme=data.get("theme", "default"),
+            output_profile=data.get("output_profile", DEFAULT_PROFILE_ID),
             toc=data.get("toc", DEFAULT_CONFIG["toc"]),
             toc_depth=data.get("toc_depth", 3),
             enable_cover=data.get("enable_cover", DEFAULT_CONFIG["enable_cover"]),
@@ -184,6 +192,7 @@ class CompilerConfig:
             "normalize": self.normalize,
             "diagram": self.diagram,
             "theme": self.theme,
+            "output_profile": self.output_profile,
             "toc": self.toc,
             "toc_depth": self.toc_depth,
             "enable_cover": self.enable_cover,
@@ -496,6 +505,12 @@ def validate_config(config: Dict[str, Any]) -> list:
     table_style = config.get("table_style", "Table Grid")
     if table_style and table_style not in valid_styles:
         errors.append(f"table_style must be one of: {', '.join(valid_styles)}")
+
+    # 验证 output_profile（Program C）：只校验类型/形状；未知标识由
+    # profiles.registry 安全回退到默认档案，因此不构成配置错误。
+    output_profile = config.get("output_profile", DEFAULT_PROFILE_ID)
+    if not isinstance(output_profile, str) or not output_profile.strip():
+        errors.append("output_profile must be a non-empty string")
 
     # 验证 quality_gate
     quality_gate = config.get("quality_gate", {})

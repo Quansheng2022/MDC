@@ -80,6 +80,10 @@ class StateEffect:
         select_enabled: Whether the Select File control is available.
         drop_enabled: Whether the input (drop) area is available for input.
         change_output_enabled: Whether the output folder may be changed.
+        profile_enabled: Whether the output-profile selection may be changed.
+            A profile is captured once per conversion/batch, so the selection is
+            locked exactly while a conversion runs and the frozen choice cannot
+            be changed underneath the running job (Program C: WP-POP-05).
         source_visible: Whether the selected source is displayed.
 
     The ``drop_enabled`` flag governs input *availability*.  Drag & drop
@@ -92,6 +96,7 @@ class StateEffect:
     drop_enabled: bool
     change_output_enabled: bool
     source_visible: bool
+    profile_enabled: bool = True
 
 
 #: Single source of truth for widget state per GUI state (WP-P12-04-03 §6/§7).
@@ -103,6 +108,7 @@ STATE_EFFECTS: Dict[GuiState, StateEffect] = {
         drop_enabled=True,
         change_output_enabled=True,
         source_visible=False,
+        profile_enabled=True,
     ),
     GuiState.READY: StateEffect(
         status_text=STATUS_READY,
@@ -111,6 +117,7 @@ STATE_EFFECTS: Dict[GuiState, StateEffect] = {
         drop_enabled=True,
         change_output_enabled=True,
         source_visible=True,
+        profile_enabled=True,
     ),
     GuiState.CONVERTING: StateEffect(
         status_text=STATUS_CONVERTING,
@@ -119,6 +126,7 @@ STATE_EFFECTS: Dict[GuiState, StateEffect] = {
         drop_enabled=False,
         change_output_enabled=False,
         source_visible=True,
+        profile_enabled=False,
     ),
     GuiState.SUCCESS: StateEffect(
         status_text=STATUS_SUCCESS,
@@ -127,6 +135,7 @@ STATE_EFFECTS: Dict[GuiState, StateEffect] = {
         drop_enabled=True,
         change_output_enabled=True,
         source_visible=True,
+        profile_enabled=True,
     ),
     GuiState.SUCCESS_WITH_WARNING: StateEffect(
         status_text=STATUS_SUCCESS_WITH_WARNING,
@@ -135,6 +144,7 @@ STATE_EFFECTS: Dict[GuiState, StateEffect] = {
         drop_enabled=True,
         change_output_enabled=True,
         source_visible=True,
+        profile_enabled=True,
     ),
     GuiState.FAILED: StateEffect(
         status_text=STATUS_FAILED,
@@ -143,6 +153,7 @@ STATE_EFFECTS: Dict[GuiState, StateEffect] = {
         drop_enabled=True,
         change_output_enabled=True,
         source_visible=True,
+        profile_enabled=True,
     ),
 }
 

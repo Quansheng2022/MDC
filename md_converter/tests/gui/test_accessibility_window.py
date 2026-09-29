@@ -134,6 +134,10 @@ def test_tab_order_follows_the_workflow(window: "MainWindow", tmp_path: Path) ->
 
     A source is selected first so Convert is enabled: a disabled control is
     correctly skipped by Tab, which is the accepted state-model behaviour.
+
+    Program C (WP-POP-03) adds the authorized output-profile selector to the
+    workflow, so the frozen chain now visits it directly after the output
+    folder control and before Convert.
     """
     assert window.set_source_file(str(_markdown(tmp_path))) is GuiState.READY
     window.show()
@@ -142,6 +146,7 @@ def test_tab_order_follows_the_workflow(window: "MainWindow", tmp_path: Path) ->
     expected = [
         window.select_file_button,
         window.change_output_button,
+        window.profile_combo,
         window.convert_button,
         window.settings_button,
         window.about_button,

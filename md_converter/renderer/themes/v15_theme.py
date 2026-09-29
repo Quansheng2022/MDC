@@ -67,6 +67,21 @@ def parse_cm(value: Union[str, int, float]) -> float:
     return float(parse_length(value).cm)
 
 
+def _deep_merge(target: Dict[str, Any], overlay: Dict[str, Any]) -> None:
+    """
+    递归合并 ``overlay`` 到 ``target``（原地修改 ``target``）。
+
+    仅映射节点递归；其余（字符串/数字/列表等）整体覆盖。用于把有界呈现配置
+    叠加到冻结主题数据上，缺失的键保持冻结值不变。
+    """
+    for key, value in overlay.items():
+        current = target.get(key)
+        if isinstance(current, dict) and isinstance(value, dict):
+            _deep_merge(current, value)
+        else:
+            target[key] = deepcopy(value)
+
+
 # ============================================================
 # 默认颜色（V1.5 未冻结颜色，沿用项目既有视觉体系）
 # ============================================================
@@ -121,6 +136,26 @@ class V15Theme:
     def load_default(cls) -> "V15Theme":
         """加载包内冻结的默认 V1.5 主题。"""
         return cls.load()
+
+    def with_presentation_overrides(self, overrides: Optional[Dict[str, Any]]) -> "V15Theme":
+        """
+        返回叠加了有界呈现配置的**新**主题实例。
+
+        本方法只了解自身冻结的数据结构（YAML 形状），不了解任何 profile 概念，
+        因此 Presentation Profile 的集成点保持单一且不引入渲染层分支。
+
+        参数:
+            overrides: 嵌套覆盖字典（映射节点递归合并，其余整体覆盖）。
+                ``None`` 或空字典时原样返回 ``self``，保证无覆盖时零变化。
+
+        返回:
+            V15Theme: 新的主题实例（未变更时为同一实例）。
+        """
+        if not overrides:
+            return self
+        data = deepcopy(self.data)
+        _deep_merge(data, overrides)
+        return V15Theme(data)
 
     # ============================================================
     # 主题标识

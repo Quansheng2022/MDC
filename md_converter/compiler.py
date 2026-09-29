@@ -23,6 +23,13 @@ from .pipeline.passes.diagram_pass import DiagramPass
 from .pipeline.passes.normalize_pass import NormalizePass
 from .pipeline.passes.simple_table_pass import SimpleTablePass
 from .pipeline.pipeline import Pipeline
+from .profiles import (
+    DEFAULT_PROFILE_ID,
+    is_known_profile_id,
+    profile_ids,
+    resolve_profile,
+    theme_presentation_overrides,
+)
 from .quality_gate import (
     QualityGateDecision,
     QualityGateError,
@@ -45,6 +52,16 @@ from .renderer.word_renderer import WordRenderer
 from .renderer.word_writer import WordWriter
 
 logger = logging.getLogger(__name__)
+
+
+def _is_unresolved_profile_request(value: Any) -> bool:
+    """Return whether ``value`` is a non-empty profile identifier that is unknown.
+
+    The registry resolves an unknown identifier safely; this helper only decides
+    whether the fallback deserves a diagnostic, so the compiler never silently
+    ignores an unsupported request (``AGENTS.md``: no silent failures).
+    """
+    return isinstance(value, str) and bool(value.strip()) and not is_known_profile_id(value)
 
 
 @dataclass
@@ -99,6 +116,33 @@ class CompilerContext:
             theme = V15Theme.load_default()
         elif isinstance(theme, str):
             theme = create_theme(theme)
+
+        # Program C：专业输出档案（有界呈现配置，单一集成点）
+        #
+        # 唯一权威是 md_converter.profiles.registry；GUI 只传递标识符。渲染器
+        # 不含任何 profile 分支，只消费叠加后的既有主题数据。
+        requested_profile = config.get("output_profile")
+        profile = resolve_profile(requested_profile)
+        if _is_unresolved_profile_request(requested_profile):
+            diag.warning(
+                f"Unknown output profile {requested_profile!r}; falling back to {profile.id!r}",
+                code="PROFILE001",
+                source="compiler",
+                suggestion="Supported profiles: " + ", ".join(profile_ids()),
+            )
+        # 默认档案无需覆盖：编译器默认主题本身就是默认档案的呈现，因此主题对象
+        # 保持不动（最强“不静默改版”保证，同时保留调用方自定义主题）。
+        if profile.id != DEFAULT_PROFILE_ID:
+            if hasattr(theme, "with_presentation_overrides"):
+                theme = theme.with_presentation_overrides(theme_presentation_overrides(profile))
+            else:
+                diag.warning(
+                    f"Output profile {profile.id!r} was ignored: theme "
+                    f"{type(theme).__name__} does not accept presentation overrides",
+                    code="PROFILE002",
+                    source="compiler",
+                    suggestion="Use the default V1.5 theme to apply an output profile",
+                )
 
         # 解析器上下文
         parser_ctx = ParserContext(

@@ -1,0 +1,486 @@
+{
+  "program": "Program C - Professional Output Profiles",
+  "generated_by": "WP-POP-06/07 presentation evidence run",
+  "word_com": false,
+  "representative_document": "headings + paragraphs + lists + table + code block",
+  "profiles": {
+    "baseline": {
+      "artifact": "samples/baseline.docx",
+      "package_digest": "d4a6068001f567c8af4479054409deece0180277dd62466a48e7e8a17991cab3",
+      "presentation": {
+        "page_margins_cm": {
+          "top": 2.54,
+          "bottom": 2.54,
+          "left": 2.54,
+          "right": 2.54
+        },
+        "body_font": {
+          "ascii": "Calibri",
+          "hAnsi": "Calibri",
+          "eastAsia": "DengXian",
+          "cs": "Arial"
+        },
+        "heading_font": {
+          "ascii": "Arial",
+          "hAnsi": "Arial",
+          "eastAsia": "Microsoft YaHei",
+          "cs": "Arial"
+        },
+        "body_size_pt": 10.5,
+        "heading_sizes_pt": {
+          "H1": 20.0,
+          "H2": 16.0,
+          "H3": 14.0,
+          "H4": 14.0
+        },
+        "line_spacing": 1.15,
+        "paragraph_space_after_pt": 6.0,
+        "code_font": "Consolas",
+        "code_size_pt": 10.0,
+        "table_style": "Table Grid",
+        "table_font_size_pt": 9.5
+      },
+      "artifact_measurements": {
+        "section_margins_cm": [
+          2.54,
+          2.54,
+          2.54,
+          2.54
+        ],
+        "normal_font_size_pt": 10.5,
+        "heading_1_size_pt": 20.0,
+        "heading_1_space_before_pt": 12.0,
+        "body_run_sizes_pt": [
+          10.5
+        ],
+        "body_line_spacing": 1.15,
+        "body_space_after_pt": 6.0,
+        "code_run_sizes_pt": [
+          10.0
+        ],
+        "table_style": "Table Grid",
+        "table_cell_run_sizes_pt": [
+          9.5
+        ],
+        "paragraphs": 22,
+        "tables": 1,
+        "inline_shapes": 0,
+        "has_toc_field": true,
+        "paragraph_text_sha256": "28382f43bfa4609674b3dd07f276d4b4b72eb9663bb305fc6c98ccfef6fe8b77"
+      },
+      "quality_gates": {
+        "static_qa": "PASS",
+        "rendered_qa": "PASS",
+        "post_processor": "PASS",
+        "final_artifact_qa": "PASS"
+      },
+      "diagnostics": []
+    },
+    "professional_report": {
+      "artifact": "samples/professional_report.docx",
+      "package_digest": "d4a6068001f567c8af4479054409deece0180277dd62466a48e7e8a17991cab3",
+      "presentation": {
+        "page_margins_cm": {
+          "top": 2.54,
+          "bottom": 2.54,
+          "left": 2.54,
+          "right": 2.54
+        },
+        "body_font": {
+          "ascii": "Calibri",
+          "hAnsi": "Calibri",
+          "eastAsia": "DengXian",
+          "cs": "Arial"
+        },
+        "heading_font": {
+          "ascii": "Arial",
+          "hAnsi": "Arial",
+          "eastAsia": "Microsoft YaHei",
+          "cs": "Arial"
+        },
+        "body_size_pt": 10.5,
+        "heading_sizes_pt": {
+          "H1": 20.0,
+          "H2": 16.0,
+          "H3": 14.0,
+          "H4": 14.0
+        },
+        "line_spacing": 1.15,
+        "paragraph_space_after_pt": 6.0,
+        "code_font": "Consolas",
+        "code_size_pt": 10.0,
+        "table_style": "Table Grid",
+        "table_font_size_pt": 9.5
+      },
+      "artifact_measurements": {
+        "section_margins_cm": [
+          2.54,
+          2.54,
+          2.54,
+          2.54
+        ],
+        "normal_font_size_pt": 10.5,
+        "heading_1_size_pt": 20.0,
+        "heading_1_space_before_pt": 12.0,
+        "body_run_sizes_pt": [
+          10.5
+        ],
+        "body_line_spacing": 1.15,
+        "body_space_after_pt": 6.0,
+        "code_run_sizes_pt": [
+          10.0
+        ],
+        "table_style": "Table Grid",
+        "table_cell_run_sizes_pt": [
+          9.5
+        ],
+        "paragraphs": 22,
+        "tables": 1,
+        "inline_shapes": 0,
+        "has_toc_field": true,
+        "paragraph_text_sha256": "28382f43bfa4609674b3dd07f276d4b4b72eb9663bb305fc6c98ccfef6fe8b77"
+      },
+      "quality_gates": {
+        "static_qa": "PASS",
+        "rendered_qa": "PASS",
+        "post_processor": "PASS",
+        "final_artifact_qa": "PASS"
+      },
+      "diagnostics": [],
+      "presentation_differences_vs_baseline": [],
+      "document_meaning_unchanged": true
+    },
+    "business_report": {
+      "artifact": "samples/business_report.docx",
+      "package_digest": "8742be24995e9b904d61a8b79a063fd087a930182e7bb5c1df485c687645a7f0",
+      "presentation": {
+        "page_margins_cm": {
+          "top": 2.0,
+          "bottom": 2.0,
+          "left": 2.0,
+          "right": 2.0
+        },
+        "body_font": {
+          "ascii": "Calibri",
+          "hAnsi": "Calibri",
+          "eastAsia": "DengXian",
+          "cs": "Arial"
+        },
+        "heading_font": {
+          "ascii": "Calibri",
+          "hAnsi": "Calibri",
+          "eastAsia": "Microsoft YaHei",
+          "cs": "Arial"
+        },
+        "body_size_pt": 10.0,
+        "heading_sizes_pt": {
+          "H1": 16.0,
+          "H2": 14.0,
+          "H3": 12.5,
+          "H4": 11.5
+        },
+        "line_spacing": 1.08,
+        "paragraph_space_after_pt": 4.0,
+        "code_font": "Consolas",
+        "code_size_pt": 9.0,
+        "table_style": "Light Grid",
+        "table_font_size_pt": 9.0
+      },
+      "artifact_measurements": {
+        "section_margins_cm": [
+          2.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "normal_font_size_pt": 10.0,
+        "heading_1_size_pt": 16.0,
+        "heading_1_space_before_pt": 10.0,
+        "body_run_sizes_pt": [
+          10.0
+        ],
+        "body_line_spacing": 1.0791666666666666,
+        "body_space_after_pt": 4.0,
+        "code_run_sizes_pt": [
+          9.0
+        ],
+        "table_style": "Light Grid",
+        "table_cell_run_sizes_pt": [
+          9.0
+        ],
+        "paragraphs": 22,
+        "tables": 1,
+        "inline_shapes": 0,
+        "has_toc_field": true,
+        "paragraph_text_sha256": "28382f43bfa4609674b3dd07f276d4b4b72eb9663bb305fc6c98ccfef6fe8b77"
+      },
+      "quality_gates": {
+        "static_qa": "PASS",
+        "rendered_qa": "PASS",
+        "post_processor": "PASS",
+        "final_artifact_qa": "PASS"
+      },
+      "diagnostics": [],
+      "presentation_differences_vs_baseline": [
+        "body_size_pt",
+        "code_size_pt",
+        "heading_font",
+        "heading_sizes_pt",
+        "line_spacing",
+        "page_margins_cm",
+        "paragraph_space_after_pt",
+        "table_font_size_pt",
+        "table_style"
+      ],
+      "document_meaning_unchanged": true
+    },
+    "academic": {
+      "artifact": "samples/academic.docx",
+      "package_digest": "6c652ec4c0839c345b5aa7f76cc321a461368478d93359174ad1fab10eae7e48",
+      "presentation": {
+        "page_margins_cm": {
+          "top": 2.54,
+          "bottom": 2.54,
+          "left": 3.0,
+          "right": 3.0
+        },
+        "body_font": {
+          "ascii": "Times New Roman",
+          "hAnsi": "Times New Roman",
+          "eastAsia": "SimSun",
+          "cs": "Times New Roman"
+        },
+        "heading_font": {
+          "ascii": "Times New Roman",
+          "hAnsi": "Times New Roman",
+          "eastAsia": "SimSun",
+          "cs": "Times New Roman"
+        },
+        "body_size_pt": 11.5,
+        "heading_sizes_pt": {
+          "H1": 16.0,
+          "H2": 14.0,
+          "H3": 12.0,
+          "H4": 11.0
+        },
+        "line_spacing": 1.5,
+        "paragraph_space_after_pt": 0.0,
+        "code_font": "Courier New",
+        "code_size_pt": 9.5,
+        "table_style": "Table Grid",
+        "table_font_size_pt": 9.0
+      },
+      "artifact_measurements": {
+        "section_margins_cm": [
+          2.54,
+          2.54,
+          3.0,
+          3.0
+        ],
+        "normal_font_size_pt": 11.5,
+        "heading_1_size_pt": 16.0,
+        "heading_1_space_before_pt": 12.0,
+        "body_run_sizes_pt": [
+          11.5
+        ],
+        "body_line_spacing": 1.5,
+        "body_space_after_pt": 0.0,
+        "code_run_sizes_pt": [
+          9.5
+        ],
+        "table_style": "Table Grid",
+        "table_cell_run_sizes_pt": [
+          9.0
+        ],
+        "paragraphs": 22,
+        "tables": 1,
+        "inline_shapes": 0,
+        "has_toc_field": true,
+        "paragraph_text_sha256": "28382f43bfa4609674b3dd07f276d4b4b72eb9663bb305fc6c98ccfef6fe8b77"
+      },
+      "quality_gates": {
+        "static_qa": "PASS",
+        "rendered_qa": "PASS",
+        "post_processor": "PASS",
+        "final_artifact_qa": "PASS"
+      },
+      "diagnostics": [],
+      "presentation_differences_vs_baseline": [
+        "body_font",
+        "body_size_pt",
+        "code_font",
+        "code_size_pt",
+        "heading_font",
+        "heading_sizes_pt",
+        "line_spacing",
+        "page_margins_cm",
+        "paragraph_space_after_pt",
+        "table_font_size_pt"
+      ],
+      "document_meaning_unchanged": true
+    },
+    "technical": {
+      "artifact": "samples/technical.docx",
+      "package_digest": "0b9037a288f5e567b1e87f3818204e9a5c0f153095d7f6be9e3a5c72982893e5",
+      "presentation": {
+        "page_margins_cm": {
+          "top": 2.2,
+          "bottom": 2.2,
+          "left": 2.2,
+          "right": 2.2
+        },
+        "body_font": {
+          "ascii": "Calibri",
+          "hAnsi": "Calibri",
+          "eastAsia": "DengXian",
+          "cs": "Arial"
+        },
+        "heading_font": {
+          "ascii": "Arial",
+          "hAnsi": "Arial",
+          "eastAsia": "Microsoft YaHei",
+          "cs": "Arial"
+        },
+        "body_size_pt": 10.5,
+        "heading_sizes_pt": {
+          "H1": 18.0,
+          "H2": 15.0,
+          "H3": 13.0,
+          "H4": 11.5
+        },
+        "line_spacing": 1.2,
+        "paragraph_space_after_pt": 6.0,
+        "code_font": "Consolas",
+        "code_size_pt": 9.5,
+        "table_style": "Light Grid Accent 1",
+        "table_font_size_pt": 9.0
+      },
+      "artifact_measurements": {
+        "section_margins_cm": [
+          2.2,
+          2.2,
+          2.2,
+          2.2
+        ],
+        "normal_font_size_pt": 10.5,
+        "heading_1_size_pt": 18.0,
+        "heading_1_space_before_pt": 14.0,
+        "body_run_sizes_pt": [
+          10.5
+        ],
+        "body_line_spacing": 1.2,
+        "body_space_after_pt": 6.0,
+        "code_run_sizes_pt": [
+          9.5
+        ],
+        "table_style": "Light Grid Accent 1",
+        "table_cell_run_sizes_pt": [
+          9.0
+        ],
+        "paragraphs": 22,
+        "tables": 1,
+        "inline_shapes": 0,
+        "has_toc_field": true,
+        "paragraph_text_sha256": "28382f43bfa4609674b3dd07f276d4b4b72eb9663bb305fc6c98ccfef6fe8b77"
+      },
+      "quality_gates": {
+        "static_qa": "PASS",
+        "rendered_qa": "PASS",
+        "post_processor": "PASS",
+        "final_artifact_qa": "PASS"
+      },
+      "diagnostics": [],
+      "presentation_differences_vs_baseline": [
+        "code_size_pt",
+        "heading_sizes_pt",
+        "line_spacing",
+        "page_margins_cm",
+        "table_font_size_pt",
+        "table_style"
+      ],
+      "document_meaning_unchanged": true
+    },
+    "clean_minimal": {
+      "artifact": "samples/clean_minimal.docx",
+      "package_digest": "d6de9a3d72527d3955b7dfd2f596d3002e2827e8199bd8115a7ee379439ad11c",
+      "presentation": {
+        "page_margins_cm": {
+          "top": 2.54,
+          "bottom": 2.54,
+          "left": 2.54,
+          "right": 2.54
+        },
+        "body_font": {
+          "ascii": "Calibri",
+          "hAnsi": "Calibri",
+          "eastAsia": "DengXian",
+          "cs": "Arial"
+        },
+        "heading_font": {
+          "ascii": "Calibri",
+          "hAnsi": "Calibri",
+          "eastAsia": "Microsoft YaHei",
+          "cs": "Arial"
+        },
+        "body_size_pt": 10.5,
+        "heading_sizes_pt": {
+          "H1": 15.0,
+          "H2": 13.0,
+          "H3": 11.5,
+          "H4": 10.5
+        },
+        "line_spacing": 1.25,
+        "paragraph_space_after_pt": 8.0,
+        "code_font": "Consolas",
+        "code_size_pt": 9.5,
+        "table_style": "Light Grid",
+        "table_font_size_pt": 9.5
+      },
+      "artifact_measurements": {
+        "section_margins_cm": [
+          2.54,
+          2.54,
+          2.54,
+          2.54
+        ],
+        "normal_font_size_pt": 10.5,
+        "heading_1_size_pt": 15.0,
+        "heading_1_space_before_pt": 10.0,
+        "body_run_sizes_pt": [
+          10.5
+        ],
+        "body_line_spacing": 1.25,
+        "body_space_after_pt": 8.0,
+        "code_run_sizes_pt": [
+          9.5
+        ],
+        "table_style": "Light Grid",
+        "table_cell_run_sizes_pt": [
+          9.5
+        ],
+        "paragraphs": 22,
+        "tables": 1,
+        "inline_shapes": 0,
+        "has_toc_field": true,
+        "paragraph_text_sha256": "28382f43bfa4609674b3dd07f276d4b4b72eb9663bb305fc6c98ccfef6fe8b77"
+      },
+      "quality_gates": {
+        "static_qa": "PASS",
+        "rendered_qa": "PASS",
+        "post_processor": "PASS",
+        "final_artifact_qa": "PASS"
+      },
+      "diagnostics": [],
+      "presentation_differences_vs_baseline": [
+        "code_size_pt",
+        "heading_font",
+        "heading_sizes_pt",
+        "line_spacing",
+        "paragraph_space_after_pt",
+        "table_style"
+      ],
+      "document_meaning_unchanged": true
+    },
+    "default_profile_content_identical_to_baseline": true
+  }
+}
