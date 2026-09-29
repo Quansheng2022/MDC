@@ -1,0 +1,14 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\Users\Quansheng\Documents\projects\MD_Converter
+configfile: pyproject.toml
+plugins: cov-7.1.0
+collected 88 items
+
+md_converter\tests\test_table_fitting.py .........................       [ 28%]
+md_converter\tests\test_table_fitting_integration.py ............        [ 42%]
+md_converter\tests\test_figure_fitting.py ........................       [ 69%]
+md_converter\tests\test_figure_fitting_integration.py ............       [ 82%]
+md_converter\tests\test_fitting_cross_profile.py ...............         [100%]
+
+============================= 88 passed in 12.93s =============================

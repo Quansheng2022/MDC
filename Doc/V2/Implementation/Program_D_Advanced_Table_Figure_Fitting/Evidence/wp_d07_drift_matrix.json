@@ -1,0 +1,92 @@
+{
+  "program": "Program D — Advanced Table Fitting + Advanced Figure Fitting",
+  "baseline_head": "5f8bf2a26702c069d9190f5aa6aa937886f93eb4",
+  "verification_head": "e26d709",
+  "program_d_changed_files": [
+    "md_converter/renderer/layout/table_fitting.py",
+    "md_converter/renderer/layout/figure_sizing.py",
+    "md_converter/renderer/word_renderer.py",
+    "md_converter/renderer/word_writer.py",
+    "md_converter/tests/test_table_fitting.py",
+    "md_converter/tests/test_table_fitting_integration.py",
+    "md_converter/tests/test_figure_fitting.py",
+    "md_converter/tests/test_figure_fitting_integration.py",
+    "md_converter/tests/test_fitting_cross_profile.py"
+  ],
+  "drift": {
+    "core_drift": {
+      "status": "ZERO",
+      "evidence": "No compiler/core file is in the Program D change set; parser, pipeline, AST, profiles, config, diagnostics, quality_gate.py and release_evidence.py are untouched."
+    },
+    "canonical_drift": {
+      "status": "ZERO",
+      "evidence": "CANONICAL_SPEC.md, md_converter/renderer/themes/default_v1_5.yaml and the frozen theme accessors are untouched. SPEC-FUNC-004 / SPEC-FUNC-023 / SPEC-ARCH-* / SPEC-QA-005 semantics are consumed, not changed."
+    },
+    "qa_semantic_drift": {
+      "status": "ZERO",
+      "evidence": "static_qa.py, rendered_qa.py, final_artifact_qa.py, artifact_contract.py, validity_gate.py and quality_gate.py are untouched; all gates report PASS/PASS/PASS/PASS in the cross-profile matrix."
+    },
+    "conversion_service_semantic_drift": {
+      "status": "ZERO",
+      "evidence": "md_converter/application/** is untouched; the application + GUI workflow suite passes (185 passed)."
+    },
+    "cli_public_api_breaking_drift": {
+      "status": "ZERO",
+      "evidence": "md_converter/cli.py and md_converter/__init__.py are untouched; the CLI smoke test and test_public_api_convert.py pass."
+    },
+    "output_naming_path_drift": {
+      "status": "ZERO",
+      "evidence": "post_processor.py naming logic is untouched; evidence artifacts follow the existing output naming behaviour."
+    },
+    "profile_branching": {
+      "status": "ZERO",
+      "evidence": "test_no_profile_identifier_appears_in_fitting_or_render_paths scans table_fitting.py, figure_sizing.py, word_renderer.py and word_writer.py for 'output_profile' and for each registered profile id (word-boundary regex): no match."
+    },
+    "content_mutation": {
+      "status": "ZERO",
+      "evidence": "Table cell matrices are compared against the source values (test_normal_table_content_and_structure_are_unchanged, D-03 artifact measurements); fitting writes only w:tblLayout/w:tblW/w:gridCol/w:tcW and figure extents."
+    },
+    "aspect_ratio_distortion": {
+      "status": "ZERO",
+      "evidence": "wp_d05_figure_measurements.json: aspect_ratio_preserved = true for every artifact (aspect derived from the embedded PNG IHDR, not from the requested size)."
+    },
+    "readability_floor_violations_introduced": {
+      "status": "ZERO",
+      "evidence": "Table font never below 8.5pt (policy clamps; squeezed evidence shows 9.0pt); figure floor behaviour unchanged (RENDER005 still emitted below 8cm); margins untouched (SPEC-INV-002); RenderedQA font_violations = 0 in every measured artifact."
+    },
+    "semantic_golden_baseline_change": {
+      "status": "ZERO",
+      "evidence": "md_converter/tests/golden/** is untouched; the Golden run in this sandbox is attributed to the fallback backend and refuses to compare across backends before any document comparison."
+    },
+    "introduced_failures": {
+      "status": "ZERO",
+      "evidence": "Full suite: 1122 passed, 4 failed, 2 skipped. All 4 failures are pre-existing and outside the Program D change set (2 Golden environment failures, 2 packaging metadata failures caused by the pre-existing dirty README.md)."
+    },
+    "open_blockers": {
+      "status": "ZERO",
+      "evidence": "No G2 condition was triggered and no work package was left blocked; the deferred intrinsic-size no-upscale item is recorded, not blocking."
+    }
+  },
+  "pre_existing_failures_classification": [
+    {
+      "test": "md_converter/tests/test_golden_environment.py::test_canonical_golden_environment",
+      "classification": "PRE_EXISTING_ENVIRONMENT",
+      "reason": "Chromium cannot launch in this sandbox: 'BrowserType.launch: spawn EPERM'. Program D does not touch the diagram/Mermaid path or the golden environment module."
+    },
+    {
+      "test": "md_converter/tests/test_golden.py::test_golden[sample]",
+      "classification": "PRE_EXISTING_ENVIRONMENT",
+      "reason": "Golden baseline requires renderer_backend='playwright'; the sandbox run is attributed to 'fallback', so the test stops at the environment contract before comparing documents."
+    },
+    {
+      "test": "md_converter/tests/test_packaging_metadata.py::test_pkg_documented_extras_exist_in_metadata",
+      "classification": "PRE_EXISTING_DIRTY_TREE",
+      "reason": "The pre-existing modified README.md (381 insertions / 315 deletions before Program D started) no longer documents the 'windows'/'mermaid' extras; Program D does not touch README.md or pyproject.toml."
+    },
+    {
+      "test": "md_converter/tests/test_packaging_metadata.py::test_pkg_readme_has_no_legacy_packaging_references",
+      "classification": "PRE_EXISTING_DIRTY_TREE",
+      "reason": "The working-tree README.md lacks the '[project.entry-points' documentation block that git HEAD:README.md still contains; the failure is caused by the pre-existing dirty README, explicitly listed as a known pre-existing failure in the Program D product specification §13."
+    }
+  ]
+}

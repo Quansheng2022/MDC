@@ -1,0 +1,61 @@
+{
+  "numeric_table": {
+    "artifact": "samples/numeric_table.docx",
+    "content_width_cm": 15.9209,
+    "column_count": 6,
+    "column_widths_cm": [
+      1.33,
+      1.33,
+      1.1994,
+      1.1994,
+      1.1994,
+      1.1994
+    ],
+    "total_width_cm": 7.4577,
+    "table_font_size_pt": 9.5,
+    "cell_matrix": [
+      [
+        "Quarter",
+        "Revenue",
+        "Cost",
+        "Margin",
+        "Units",
+        "Growth"
+      ],
+      [
+        "Q1",
+        "1250.50",
+        "800.25",
+        "36.0%",
+        "12500",
+        "4.5%"
+      ],
+      [
+        "Q2",
+        "1320.75",
+        "810.00",
+        "38.7%",
+        "13100",
+        "5.6%"
+      ],
+      [
+        "Q3",
+        "1410.00",
+        "820.50",
+        "41.8%",
+        "13950",
+        "6.8%"
+      ]
+    ],
+    "row_count": 4,
+    "diagnostic_codes": [],
+    "rendered_qa_status": "PASS",
+    "final_artifact_qa_status": "PASS"
+  },
+  "merged_cell_probe": {
+    "html_table_nodes": 0,
+    "cells_with_span": [],
+    "supported_by_renderer": false,
+    "note": "Markdown tables produced by markdown-it-py never carry colspan/rowspan, and the current renderer has no merge path (WordWriter.merge_cells is unused). Merged-cell fitting is therefore not reachable through the current parser/renderer; the fitting policy is nevertheless verified against ragged/empty cell rows (WP-D02)."
+  }
+}
