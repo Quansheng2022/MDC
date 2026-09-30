@@ -152,9 +152,17 @@ class CompilerContext:
         )
 
         # 渲染器上下文
+        #
+        # IMG-CFG-01：把已解析配置中的图形目标宽度传入既有 ``RenderContext.config``
+        # 槽（SPEC-FUNC-023：目标宽度 = min(配置 image_width, 有效宽度)）。渲染器在
+        # ``WordRenderer._figure_bounds_cm()`` 中经 ``self.ctx.config`` 读取该键，并交给
+        # ``plan_figure_fit``（唯一尺寸权威）。此处只传播 ``image_width``：整份已解析配置
+        # 传入会顺带激活同槽位上其它此前未在该路径上授权的键（``page_margins`` /
+        # ``page_width`` / ``toc_depth``），构成越界语义变更；因此保持最小、零漂移的传播。
         render_ctx = RenderContext(
             theme=theme,
             diag=diag,
+            config={"image_width": config["image_width"]},
         )
 
         # Pass 注册表

@@ -1,0 +1,142 @@
+{
+  "geometry": {
+    "content_width_cm": 15.92,
+    "content_height_cm": 24.62,
+    "cm_per_inch": 2.54,
+    "content_width_in": 6.2677
+  },
+  "cases": [
+    {
+      "label": "default_none",
+      "intrinsic_px": [
+        400,
+        100
+      ],
+      "requested_image_width_in": null,
+      "resolved_config_image_width_in": 5,
+      "render_ctx_config_is_empty": false,
+      "render_ctx_config_keys": [
+        "image_width"
+      ],
+      "renderer_observed_image_width_in": 5,
+      "effective_content_width_cm": 15.92,
+      "spec_func_023_target_cm": 12.7,
+      "spec_func_023_expected_delivered_width_cm": 12.7,
+      "actual_delivered_width_cm": 12.7,
+      "actual_delivered_height_cm": 3.175,
+      "propagation_honoured": true
+    },
+    {
+      "label": "smaller_2in",
+      "intrinsic_px": [
+        400,
+        100
+      ],
+      "requested_image_width_in": 2,
+      "resolved_config_image_width_in": 2,
+      "render_ctx_config_is_empty": false,
+      "render_ctx_config_keys": [
+        "image_width"
+      ],
+      "renderer_observed_image_width_in": 2,
+      "effective_content_width_cm": 15.92,
+      "spec_func_023_target_cm": 5.08,
+      "spec_func_023_expected_delivered_width_cm": 5.08,
+      "actual_delivered_width_cm": 5.08,
+      "actual_delivered_height_cm": 1.27,
+      "propagation_honoured": true
+    },
+    {
+      "label": "smaller_2in_small_raster",
+      "intrinsic_px": [
+        82,
+        41
+      ],
+      "requested_image_width_in": 2,
+      "resolved_config_image_width_in": 2,
+      "render_ctx_config_is_empty": false,
+      "render_ctx_config_keys": [
+        "image_width"
+      ],
+      "renderer_observed_image_width_in": 2,
+      "effective_content_width_cm": 15.92,
+      "spec_func_023_target_cm": 5.08,
+      "spec_func_023_expected_delivered_width_cm": 5.08,
+      "actual_delivered_width_cm": 5.08,
+      "actual_delivered_height_cm": 2.54,
+      "propagation_honoured": true
+    },
+    {
+      "label": "larger_6in_within_bounds",
+      "intrinsic_px": [
+        400,
+        100
+      ],
+      "requested_image_width_in": 6,
+      "resolved_config_image_width_in": 6,
+      "render_ctx_config_is_empty": false,
+      "render_ctx_config_keys": [
+        "image_width"
+      ],
+      "renderer_observed_image_width_in": 6,
+      "effective_content_width_cm": 15.92,
+      "spec_func_023_target_cm": 15.24,
+      "spec_func_023_expected_delivered_width_cm": 15.24,
+      "actual_delivered_width_cm": 15.24,
+      "actual_delivered_height_cm": 3.81,
+      "propagation_honoured": true
+    },
+    {
+      "label": "larger_8in_above_content_cap",
+      "intrinsic_px": [
+        400,
+        100
+      ],
+      "requested_image_width_in": 8,
+      "resolved_config_image_width_in": 8,
+      "render_ctx_config_is_empty": false,
+      "render_ctx_config_keys": [
+        "image_width"
+      ],
+      "renderer_observed_image_width_in": 8,
+      "effective_content_width_cm": 15.92,
+      "spec_func_023_target_cm": 15.92,
+      "spec_func_023_expected_delivered_width_cm": 15.92,
+      "actual_delivered_width_cm": 15.9209,
+      "actual_delivered_height_cm": 3.9802,
+      "propagation_honoured": true
+    },
+    {
+      "label": "larger_20in_above_content_cap",
+      "intrinsic_px": [
+        400,
+        100
+      ],
+      "requested_image_width_in": 20,
+      "resolved_config_image_width_in": 20,
+      "render_ctx_config_is_empty": false,
+      "render_ctx_config_keys": [
+        "image_width"
+      ],
+      "renderer_observed_image_width_in": 20,
+      "effective_content_width_cm": 15.92,
+      "spec_func_023_target_cm": 15.92,
+      "spec_func_023_expected_delivered_width_cm": 15.92,
+      "actual_delivered_width_cm": 15.9209,
+      "actual_delivered_height_cm": 3.9802,
+      "propagation_honoured": true
+    }
+  ],
+  "receiver_slot_control": [
+    {
+      "injected_image_width_in": 2,
+      "render_ctx_config_get": 2,
+      "slot_carries_value": true
+    },
+    {
+      "injected_image_width_in": 8,
+      "render_ctx_config_get": 8,
+      "slot_carries_value": true
+    }
+  ]
+}
