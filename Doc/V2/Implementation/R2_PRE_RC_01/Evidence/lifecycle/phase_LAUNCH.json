@@ -1,0 +1,25 @@
+﻿{
+    "phase":  "LAUNCH",
+    "captured_at":  "2026-09-30T23:46:45+08:00",
+    "installed_exe":  "C:\\Users\\Quansheng\\AppData\\Local\\Programs\\MD_Converter\\MD_Converter.exe",
+    "installed_exe_sha256":  "68524527CDC5718CE31A1F0454EAFB0FF64C52D5C838716AC1277445DE0E3021",
+    "process_id":  21756,
+    "working_directory":  "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_r2prerc01_20260930\\cwd_representative",
+    "window_title":  null,
+    "child_pythonpath":  "",
+    "child_path_entries":  49,
+    "module_count":  132,
+    "repository_or_venv_module_hits":  [
+
+                                       ],
+    "module_enumeration_error":  null,
+    "checks":  {
+                   "main_window_visible":  true,
+                   "pythonpath_empty":  true,
+                   "repository_absent_from_child_path":  true,
+                   "dotvenv_absent_from_child_path":  true,
+                   "no_repository_or_venv_modules_loaded":  true,
+                   "clean_close":  true
+               },
+    "status":  "PASS"
+}

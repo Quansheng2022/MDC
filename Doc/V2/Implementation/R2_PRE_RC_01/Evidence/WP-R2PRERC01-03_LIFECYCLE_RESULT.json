@@ -1,0 +1,84 @@
+﻿{
+    "phase":  "FINAL",
+    "captured_at":  "2026-10-01T00:01:46+08:00",
+    "work_root":  "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_r2prerc01_20260930",
+    "installer_sha256":  "4B56FC989BAB7FF7E648CC29DFE5A6D944B2B8EFC420F11DE8D0ECF8294FFDE9",
+    "installed_exe_sha256":  "68524527CDC5718CE31A1F0454EAFB0FF64C52D5C838716AC1277445DE0E3021",
+    "expected_payload_exe_sha256":  "68524527CDC5718CE31A1F0454EAFB0FF64C52D5C838716AC1277445DE0E3021",
+    "phase_status":  {
+                         "PRE":  "OBSERVED",
+                         "INSTALL":  "PASS",
+                         "LAUNCH":  "PASS",
+                         "CONVERT":  "PASS",
+                         "UNINSTALL":  "PASS",
+                         "REINSTALL":  "PASS",
+                         "CONVERT2":  "PASS"
+                     },
+    "clean_install":  "PASS",
+    "launch":  "PASS",
+    "first_conversion":  "PASS",
+    "uninstall":  "PASS",
+    "reinstall":  "PASS",
+    "post_reinstall_smoke":  "PASS",
+    "introduced_installer_failures":  0,
+    "failed_phases":  [
+
+                      ],
+    "unresolved_installer_blockers":  0,
+    "product_source_drift_observed":  1,
+    "product_source_drift_files":  [
+                                       {
+                                           "file":  "md_converter/cli.py",
+                                           "added":  "2",
+                                           "removed":  "2"
+                                       }
+                                   ],
+    "pre_existing_drift_files":  [
+                                     "md_converter/cli.py"
+                                 ],
+    "introduced_product_source_drift":  0,
+    "introduced_product_source_drift_files":  [
+
+                                              ],
+    "golden_baseline_path":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\md_converter\\tests\\golden\\sample.expected.json",
+    "golden_baseline_sha256":  "6D589013B8024C158DE5D29B93BDFEF68F2F406045C805DAB61F8E513725829A",
+    "golden_baseline_unchanged":  true,
+    "converted_documents":  [
+                                {
+                                    "path":  "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_r2prerc01_20260930\\cwd_representative\\output\\MD_Converter_R2_Pre-RC_Installer_Verification.docx",
+                                    "bytes":  31396,
+                                    "sha256":  "C3827F128D686DD6EBEB3EABC3848757EA332302795F0CEF2AAB97BB1EE28530",
+                                    "last_write":  "2026-09-30T23:49:58.4495423+08:00"
+                                },
+                                {
+                                    "path":  "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_r2prerc01_20260930\\cwd_short\\output\\short.docx",
+                                    "bytes":  29496,
+                                    "sha256":  "629DBBD1DA2A0ED628E61B03CFB24BB40AF7C681E578B43044F62DD0BA4AE6E5",
+                                    "last_write":  "2026-10-01T00:00:50.3260986+08:00"
+                                }
+                            ],
+    "r2_rc_branches":  [
+
+                       ],
+    "r2_rc_tags":  [
+
+                   ],
+    "r2_rc_started":  false,
+    "evidence_files_copied":  [
+                                  "phase_PRE.json",
+                                  "phase_INSTALL.json",
+                                  "phase_LAUNCH.json",
+                                  "phase_CONVERT.json",
+                                  "phase_UNINSTALL.json",
+                                  "phase_REINSTALL.json",
+                                  "phase_CONVERT2.json",
+                                  "gui_smoke_convert.json",
+                                  "gui_smoke_convert2.json"
+                              ],
+    "installed_state_after_gate":  {
+                                       "install_root_exists":  true,
+                                       "installed_exe_exists":  true,
+                                       "uninstall_registered":  true
+                                   },
+    "result":  "PASS"
+}

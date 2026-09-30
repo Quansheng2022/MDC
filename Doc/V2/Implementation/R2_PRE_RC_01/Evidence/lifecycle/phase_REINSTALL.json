@@ -1,0 +1,52 @@
+﻿{
+    "phase":  "REINSTALL",
+    "captured_at":  "2026-10-01T00:00:28+08:00",
+    "installer_sha256":  "4B56FC989BAB7FF7E648CC29DFE5A6D944B2B8EFC420F11DE8D0ECF8294FFDE9",
+    "setup":  {
+                  "exit_code":  0,
+                  "log":  "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_r2prerc01_20260930\\logs\\install_2.log"
+              },
+    "snapshot":  {
+                     "install_root":  "C:\\Users\\Quansheng\\AppData\\Local\\Programs\\MD_Converter",
+                     "install_root_exists":  true,
+                     "installed_exe_exists":  true,
+                     "installed_exe_sha256":  "68524527CDC5718CE31A1F0454EAFB0FF64C52D5C838716AC1277445DE0E3021",
+                     "installed_exe_matches_payload":  true,
+                     "internal_file_count":  267,
+                     "eula_present":  true,
+                     "third_party_notices_present":  true,
+                     "start_menu_group_present":  true,
+                     "start_menu_shortcuts":  [
+                                                  "MD Converter - Input Folder.lnk",
+                                                  "MD Converter - Output Folder.lnk",
+                                                  "MD Converter.lnk",
+                                                  "Uninstall MD Converter.lnk"
+                                              ],
+                     "desktop_shortcut_present":  false,
+                     "uninstaller_present":  true,
+                     "uninstall_entries":  [
+                                               {
+                                                   "display_name":  "MD Converter 1.1.0",
+                                                   "display_version":  "1.1.0",
+                                                   "publisher":  "Quansheng2022",
+                                                   "install_location":  "C:\\Users\\Quansheng\\AppData\\Local\\Programs\\MD_Converter\\",
+                                                   "uninstall_string":  "\"C:\\Users\\Quansheng\\AppData\\Local\\Programs\\MD_Converter\\unins000.exe\"",
+                                                   "display_icon":  "C:\\Users\\Quansheng\\AppData\\Local\\Programs\\MD_Converter\\MD_Converter.exe"
+                                               }
+                                           ],
+                     "user_path_contains_app":  true,
+                     "user_path_marker":  null,
+                     "user_workspace_input_present":  true,
+                     "user_workspace_output_present":  true
+                 },
+    "checks":  {
+                   "setup_exit_code_zero":  true,
+                   "install_root_exists":  true,
+                   "installed_exe_matches":  true,
+                   "internal_payload_present":  true,
+                   "uninstall_registered":  true,
+                   "uninstaller_present":  true,
+                   "user_path_entry_present":  true
+               },
+    "status":  "PASS"
+}

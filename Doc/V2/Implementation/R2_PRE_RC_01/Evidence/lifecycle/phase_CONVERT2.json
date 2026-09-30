@@ -1,0 +1,49 @@
+﻿{
+    "phase":  "CONVERT2",
+    "captured_at":  "2026-10-01T00:01:37+08:00",
+    "installed_exe":  "C:\\Users\\Quansheng\\AppData\\Local\\Programs\\MD_Converter\\MD_Converter.exe",
+    "fixture":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\Doc\\V2\\Implementation\\R2_PRE_RC_01\\Verification\\fixtures\\short.md",
+    "work_directory":  "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_r2prerc01_20260930\\cwd_short",
+    "expected_docx":  "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_r2prerc01_20260930\\cwd_short\\output\\short.docx",
+    "expected_output_name":  "short.docx",
+    "output_directory":  "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_r2prerc01_20260930\\cwd_short\\output",
+    "output_dir_artifacts":  [
+                                 "short.docx"
+                             ],
+    "docx":  {
+                 "path":  "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_r2prerc01_20260930\\cwd_short\\output\\short.docx",
+                 "bytes":  29496,
+                 "sha256":  "629DBBD1DA2A0ED628E61B03CFB24BB40AF7C681E578B43044F62DD0BA4AE6E5",
+                 "last_write":  "2026-10-01T00:00:50.3260986+08:00"
+             },
+    "smoke_evidence":  "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_r2prerc01_20260930\\logs\\gui_smoke_convert2.json",
+    "smoke_summary":  {
+                          "status":  "PASS",
+                          "conversion":  {
+                                             "outcome":  "SUCCESS",
+                                             "seconds":  4.8,
+                                             "detail":  "Open Document / Open Folder enabled"
+                                         },
+                          "artifacts":  [
+                                            "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_r2prerc01_20260930\\cwd_short\\output\\short.docx"
+                                        ],
+                          "valid_artifacts":  [
+                                                  "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_r2prerc01_20260930\\cwd_short\\output\\short.docx"
+                                              ],
+                          "failed_checks":  [
+
+                                            ]
+                      },
+    "checks":  {
+                   "smoke_harness_exit_zero":  true,
+                   "smoke_harness_status_pass":  true,
+                   "file_selected":  true,
+                   "convert_enabled":  true,
+                   "conversion_reached_success":  true,
+                   "docx_valid":  true,
+                   "expected_output_name_present":  true,
+                   "single_output_artifact":  true,
+                   "clean_close":  true
+               },
+    "status":  "PASS"
+}

@@ -1,0 +1,40 @@
+﻿{
+    "phase":  "PRE",
+    "captured_at":  "2026-09-30T23:39:31+08:00",
+    "repository_root":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter",
+    "work_root":  "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_r2prerc01_20260930",
+    "installer_path":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\dist_installer\\MD_Converter_v1.1.0_Setup.exe",
+    "installer_exists":  true,
+    "installer_sha256":  "4B56FC989BAB7FF7E648CC29DFE5A6D944B2B8EFC420F11DE8D0ECF8294FFDE9",
+    "expected_installer_sha256":  "4B56FC989BAB7FF7E648CC29DFE5A6D944B2B8EFC420F11DE8D0ECF8294FFDE9",
+    "expected_payload_exe_sha256":  "68524527CDC5718CE31A1F0454EAFB0FF64C52D5C838716AC1277445DE0E3021",
+    "fixture_representative":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\Doc\\V2\\Implementation\\R2_PRE_RC_01\\Verification\\fixtures\\representative.md",
+    "fixture_short":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\Doc\\V2\\Implementation\\R2_PRE_RC_01\\Verification\\fixtures\\short.md",
+    "running_app_processes":  [
+
+                              ],
+    "pre_install":  {
+                        "install_root":  "C:\\Users\\Quansheng\\AppData\\Local\\Programs\\MD_Converter",
+                        "install_root_exists":  true,
+                        "installed_exe_exists":  true,
+                        "installed_exe_sha256":  "68524527CDC5718CE31A1F0454EAFB0FF64C52D5C838716AC1277445DE0E3021",
+                        "installed_exe_matches_payload":  true,
+                        "internal_file_count":  267,
+                        "eula_present":  true,
+                        "third_party_notices_present":  true,
+                        "start_menu_group_present":  false,
+                        "start_menu_shortcuts":  [
+
+                                                 ],
+                        "desktop_shortcut_present":  false,
+                        "uninstaller_present":  false,
+                        "uninstall_entries":  [
+
+                                              ],
+                        "user_path_contains_app":  true,
+                        "user_path_marker":  null,
+                        "user_workspace_input_present":  true,
+                        "user_workspace_output_present":  true
+                    },
+    "user_path_value":  "C:\\Users\\Quansheng\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Program Files\\Azure Data Studio\\bin;C:\\Users\\Quansheng\\AppData\\Local\\GitHubDesktop\\bin;C:\\Users\\Quansheng\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin;\"C:\\windows\\system32;C:\\windows;C:\\windows\\System32\\Wbem;C:\\windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Program Files (x86)\\M\";C:\\Users\\Quansheng\\AppData\\Local\\GitHubDesktop\\app-3.5.8\\resources\\app\\git\\mingw64\\bin;C:\\Users\\Quansheng\\AppData\\Roaming\\npm;C:\\Users\\Quansheng\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\sqlite;C:\\Users\\Quansheng\\AppData\\Local\\Pandoc\\;C:\\Users\\Quansheng\\AppData\\Local\\GitHubDesktop\\app-3.6.4\\resources\\app\\git\\cmd;C:\\Users\\Quansheng\\AppData\\Local\\Programs\\MD_Converter;C:\\Users\\Quansheng\\AppData\\Local\\GitHubDesktop\\app-3.6.6\\resources\\app\\git\\cmd"
+}
