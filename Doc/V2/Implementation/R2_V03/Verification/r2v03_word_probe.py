@@ -508,6 +508,11 @@ def main() -> int:
 
     pythoncom.CoInitialize()
     word = get_word()
+    try:
+        if not word.Visible:
+            word.Visible = True
+    except Exception:  # noqa: BLE001 - a visible window is required to activate
+        pass
     result: Dict[str, Any] = {"command": args.command, "pythoncom": "initialised"}
 
     if args.command == "pass":

@@ -1,0 +1,709 @@
+{
+    "program": "R2-V03",
+    "work_package": "R2V03-02",
+    "method": "Pixel measurements of the page images rasterised from the native Microsoft Word print-layout PDF rendering of the acceptance set.",
+    "figure_fixture_rgb": [
+        47,
+        84,
+        150
+    ],
+    "artifact_count": 3,
+    "page_count": 11,
+    "blank_pages": [],
+    "pages_outside_body": [],
+    "artifacts": [
+        {
+            "role": "profile:professional_report",
+            "name": "Matrix_Professional_Report.docx",
+            "stem": "Matrix_Professional_Report",
+            "margins_cm": {
+                "left_cm": 2.54,
+                "right_cm": 2.54,
+                "top_cm": 2.54,
+                "bottom_cm": 2.54
+            },
+            "page_count": 5,
+            "blank_pages": [],
+            "pages_outside_body": [],
+            "pages": [
+                {
+                    "image": "Matrix_Professional_Report-1.png",
+                    "width_px": 910,
+                    "height_px": 1287,
+                    "dpi": 110.0,
+                    "page_width_cm": 21.013,
+                    "page_height_cm": 29.718,
+                    "ink_fraction": 0.007704,
+                    "blank": false,
+                    "ink_bbox_px": {
+                        "x0": 167,
+                        "x1": 742,
+                        "y0": 128,
+                        "y1": 173,
+                        "pixels": 9023
+                    },
+                    "ink_bbox_cm": {
+                        "x0": 3.856,
+                        "x1": 17.133,
+                        "y0": 2.956,
+                        "y1": 3.995
+                    },
+                    "text_body_cm": {
+                        "left_cm": 2.54,
+                        "right_cm": 18.473,
+                        "top_cm": 2.54,
+                        "bottom_cm": 27.178
+                    },
+                    "body_overflow_cm": {
+                        "left_cm": -1.316,
+                        "right_cm": -1.34,
+                        "top_cm": -0.416,
+                        "bottom_cm": -23.183
+                    },
+                    "ink_within_text_body": true,
+                    "solid_figure_blocks": []
+                },
+                {
+                    "image": "Matrix_Professional_Report-2.png",
+                    "width_px": 910,
+                    "height_px": 1287,
+                    "dpi": 110.0,
+                    "page_width_cm": 21.013,
+                    "page_height_cm": 29.718,
+                    "ink_fraction": 0.011185,
+                    "blank": false,
+                    "ink_bbox_px": {
+                        "x0": 110,
+                        "x1": 797,
+                        "y0": 121,
+                        "y1": 390,
+                        "pixels": 13099
+                    },
+                    "ink_bbox_cm": {
+                        "x0": 2.54,
+                        "x1": 18.403,
+                        "y0": 2.794,
+                        "y1": 9.005
+                    },
+                    "text_body_cm": {
+                        "left_cm": 2.54,
+                        "right_cm": 18.473,
+                        "top_cm": 2.54,
+                        "bottom_cm": 27.178
+                    },
+                    "body_overflow_cm": {
+                        "left_cm": 0.0,
+                        "right_cm": -0.07,
+                        "top_cm": -0.254,
+                        "bottom_cm": -18.173
+                    },
+                    "ink_within_text_body": true,
+                    "solid_figure_blocks": []
+                },
+                {
+                    "image": "Matrix_Professional_Report-3.png",
+                    "width_px": 910,
+                    "height_px": 1287,
+                    "dpi": 110.0,
+                    "page_width_cm": 21.013,
+                    "page_height_cm": 29.718,
+                    "ink_fraction": 0.112746,
+                    "blank": false,
+                    "ink_bbox_px": {
+                        "x0": 101,
+                        "x1": 791,
+                        "y0": 115,
+                        "y1": 933,
+                        "pixels": 132045
+                    },
+                    "ink_bbox_cm": {
+                        "x0": 2.332,
+                        "x1": 18.265,
+                        "y0": 2.655,
+                        "y1": 21.544
+                    },
+                    "text_body_cm": {
+                        "left_cm": 2.54,
+                        "right_cm": 18.473,
+                        "top_cm": 2.54,
+                        "bottom_cm": 27.178
+                    },
+                    "body_overflow_cm": {
+                        "left_cm": 0.208,
+                        "right_cm": -0.208,
+                        "top_cm": -0.115,
+                        "bottom_cm": -5.634
+                    },
+                    "ink_within_text_body": true,
+                    "figure": {
+                        "bbox_px": {
+                            "x0": 102,
+                            "x1": 790,
+                            "y0": 243,
+                            "y1": 883,
+                            "pixels": 101614
+                        },
+                        "bbox_cm": {
+                            "x0": 2.355,
+                            "x1": 18.242,
+                            "y0": 5.611,
+                            "y1": 20.389
+                        },
+                        "width_cm": 15.887,
+                        "height_cm": 14.778,
+                        "aspect_ratio": 1.075,
+                        "fill_ratio": 0.2301
+                    },
+                    "solid_figure_blocks": [
+                        {
+                            "image": "Matrix_Professional_Report-3.png",
+                            "left_cm": 4.156,
+                            "top_cm": 17.226,
+                            "right_cm": 16.833,
+                            "bottom_cm": 20.412,
+                            "width_cm": 12.677,
+                            "height_cm": 3.187,
+                            "fill_fraction": 1.0,
+                            "area_cm2": 40.396,
+                            "aspect_ratio": 3.9777,
+                            "closest_declared_ratio": 4.0,
+                            "closest_declared_size_cm": [
+                                12.7,
+                                3.175
+                            ],
+                            "ratio_delta_percent": 0.557,
+                            "block_index": 1
+                        }
+                    ]
+                },
+                {
+                    "image": "Matrix_Professional_Report-4.png",
+                    "width_px": 910,
+                    "height_px": 1287,
+                    "dpi": 110.0,
+                    "page_width_cm": 21.013,
+                    "page_height_cm": 29.718,
+                    "ink_fraction": 0.098302,
+                    "blank": false,
+                    "ink_bbox_px": {
+                        "x0": 401,
+                        "x1": 508,
+                        "y0": 110,
+                        "y1": 1175,
+                        "pixels": 115128
+                    },
+                    "ink_bbox_cm": {
+                        "x0": 9.259,
+                        "x1": 11.73,
+                        "y0": 2.54,
+                        "y1": 27.132
+                    },
+                    "text_body_cm": {
+                        "left_cm": 2.54,
+                        "right_cm": 18.473,
+                        "top_cm": 2.54,
+                        "bottom_cm": 27.178
+                    },
+                    "body_overflow_cm": {
+                        "left_cm": -6.719,
+                        "right_cm": -6.743,
+                        "top_cm": 0.0,
+                        "bottom_cm": -0.046
+                    },
+                    "ink_within_text_body": true,
+                    "figure": {
+                        "bbox_px": {
+                            "x0": 402,
+                            "x1": 507,
+                            "y0": 110,
+                            "y1": 1175,
+                            "pixels": 112996
+                        },
+                        "bbox_cm": {
+                            "x0": 9.283,
+                            "x1": 11.707,
+                            "y0": 2.54,
+                            "y1": 27.132
+                        },
+                        "width_cm": 2.424,
+                        "height_cm": 24.592,
+                        "aspect_ratio": 0.0986,
+                        "fill_ratio": 1.0
+                    },
+                    "solid_figure_blocks": [
+                        {
+                            "image": "Matrix_Professional_Report-4.png",
+                            "left_cm": 9.283,
+                            "top_cm": 2.54,
+                            "right_cm": 11.73,
+                            "bottom_cm": 27.155,
+                            "width_cm": 2.448,
+                            "height_cm": 24.615,
+                            "fill_fraction": 1.0,
+                            "area_cm2": 60.248,
+                            "aspect_ratio": 0.0995,
+                            "closest_declared_ratio": 0.1,
+                            "closest_declared_size_cm": [
+                                2.462,
+                                24.6204
+                            ],
+                            "ratio_delta_percent": 0.5,
+                            "block_index": 1
+                        }
+                    ]
+                },
+                {
+                    "image": "Matrix_Professional_Report-5.png",
+                    "width_px": 910,
+                    "height_px": 1287,
+                    "dpi": 110.0,
+                    "page_width_cm": 21.013,
+                    "page_height_cm": 29.718,
+                    "ink_fraction": 0.001656,
+                    "blank": false,
+                    "ink_bbox_px": {
+                        "x0": 111,
+                        "x1": 374,
+                        "y0": 114,
+                        "y1": 164,
+                        "pixels": 1939
+                    },
+                    "ink_bbox_cm": {
+                        "x0": 2.563,
+                        "x1": 8.636,
+                        "y0": 2.632,
+                        "y1": 3.787
+                    },
+                    "text_body_cm": {
+                        "left_cm": 2.54,
+                        "right_cm": 18.473,
+                        "top_cm": 2.54,
+                        "bottom_cm": 27.178
+                    },
+                    "body_overflow_cm": {
+                        "left_cm": -0.023,
+                        "right_cm": -9.837,
+                        "top_cm": -0.092,
+                        "bottom_cm": -23.391
+                    },
+                    "ink_within_text_body": true,
+                    "solid_figure_blocks": []
+                }
+            ],
+            "solid_figure_blocks": [
+                {
+                    "image": "Matrix_Professional_Report-3.png",
+                    "left_cm": 4.156,
+                    "top_cm": 17.226,
+                    "right_cm": 16.833,
+                    "bottom_cm": 20.412,
+                    "width_cm": 12.677,
+                    "height_cm": 3.187,
+                    "fill_fraction": 1.0,
+                    "area_cm2": 40.396,
+                    "aspect_ratio": 3.9777,
+                    "closest_declared_ratio": 4.0,
+                    "closest_declared_size_cm": [
+                        12.7,
+                        3.175
+                    ],
+                    "ratio_delta_percent": 0.557,
+                    "block_index": 1
+                },
+                {
+                    "image": "Matrix_Professional_Report-4.png",
+                    "left_cm": 9.283,
+                    "top_cm": 2.54,
+                    "right_cm": 11.73,
+                    "bottom_cm": 27.155,
+                    "width_cm": 2.448,
+                    "height_cm": 24.615,
+                    "fill_fraction": 1.0,
+                    "area_cm2": 60.248,
+                    "aspect_ratio": 0.0995,
+                    "closest_declared_ratio": 0.1,
+                    "closest_declared_size_cm": [
+                        2.462,
+                        24.6204
+                    ],
+                    "ratio_delta_percent": 0.5,
+                    "block_index": 1
+                }
+            ]
+        },
+        {
+            "role": "toc:chinese_mixed",
+            "name": "竞争基础集成验证.docx",
+            "stem": "竞争基础集成验证",
+            "margins_cm": {
+                "left_cm": 2.54,
+                "right_cm": 2.54,
+                "top_cm": 2.54,
+                "bottom_cm": 2.54
+            },
+            "page_count": 3,
+            "blank_pages": [],
+            "pages_outside_body": [],
+            "pages": [
+                {
+                    "image": "竞争基础集成验证-1.png",
+                    "width_px": 910,
+                    "height_px": 1287,
+                    "dpi": 110.0,
+                    "page_width_cm": 21.013,
+                    "page_height_cm": 29.718,
+                    "ink_fraction": 0.00577,
+                    "blank": false,
+                    "ink_bbox_px": {
+                        "x0": 285,
+                        "x1": 623,
+                        "y0": 117,
+                        "y1": 157,
+                        "pixels": 6758
+                    },
+                    "ink_bbox_cm": {
+                        "x0": 6.581,
+                        "x1": 14.386,
+                        "y0": 2.702,
+                        "y1": 3.625
+                    },
+                    "text_body_cm": {
+                        "left_cm": 2.54,
+                        "right_cm": 18.473,
+                        "top_cm": 2.54,
+                        "bottom_cm": 27.178
+                    },
+                    "body_overflow_cm": {
+                        "left_cm": -4.041,
+                        "right_cm": -4.087,
+                        "top_cm": -0.162,
+                        "bottom_cm": -23.553
+                    },
+                    "ink_within_text_body": true,
+                    "solid_figure_blocks": []
+                },
+                {
+                    "image": "竞争基础集成验证-2.png",
+                    "width_px": 910,
+                    "height_px": 1287,
+                    "dpi": 110.0,
+                    "page_width_cm": 21.013,
+                    "page_height_cm": 29.718,
+                    "ink_fraction": 0.006441,
+                    "blank": false,
+                    "ink_bbox_px": {
+                        "x0": 110,
+                        "x1": 798,
+                        "y0": 122,
+                        "y1": 312,
+                        "pixels": 7544
+                    },
+                    "ink_bbox_cm": {
+                        "x0": 2.54,
+                        "x1": 18.427,
+                        "y0": 2.817,
+                        "y1": 7.204
+                    },
+                    "text_body_cm": {
+                        "left_cm": 2.54,
+                        "right_cm": 18.473,
+                        "top_cm": 2.54,
+                        "bottom_cm": 27.178
+                    },
+                    "body_overflow_cm": {
+                        "left_cm": 0.0,
+                        "right_cm": -0.046,
+                        "top_cm": -0.277,
+                        "bottom_cm": -19.974
+                    },
+                    "ink_within_text_body": true,
+                    "solid_figure_blocks": []
+                },
+                {
+                    "image": "竞争基础集成验证-3.png",
+                    "width_px": 910,
+                    "height_px": 1287,
+                    "dpi": 110.0,
+                    "page_width_cm": 21.013,
+                    "page_height_cm": 29.718,
+                    "ink_fraction": 0.082025,
+                    "blank": false,
+                    "ink_bbox_px": {
+                        "x0": 101,
+                        "x1": 729,
+                        "y0": 123,
+                        "y1": 825,
+                        "pixels": 96065
+                    },
+                    "ink_bbox_cm": {
+                        "x0": 2.332,
+                        "x1": 16.833,
+                        "y0": 2.84,
+                        "y1": 19.05
+                    },
+                    "text_body_cm": {
+                        "left_cm": 2.54,
+                        "right_cm": 18.473,
+                        "top_cm": 2.54,
+                        "bottom_cm": 27.178
+                    },
+                    "body_overflow_cm": {
+                        "left_cm": 0.208,
+                        "right_cm": -1.64,
+                        "top_cm": -0.3,
+                        "bottom_cm": -8.128
+                    },
+                    "ink_within_text_body": true,
+                    "figure": {
+                        "bbox_px": {
+                            "x0": 102,
+                            "x1": 728,
+                            "y0": 282,
+                            "y1": 734,
+                            "pixels": 80654
+                        },
+                        "bbox_cm": {
+                            "x0": 2.355,
+                            "x1": 16.81,
+                            "y0": 6.512,
+                            "y1": 16.949
+                        },
+                        "width_cm": 14.455,
+                        "height_cm": 10.437,
+                        "aspect_ratio": 1.385,
+                        "fill_ratio": 0.284
+                    },
+                    "solid_figure_blocks": [
+                        {
+                            "image": "竞争基础集成验证-3.png",
+                            "left_cm": 4.156,
+                            "top_cm": 13.785,
+                            "right_cm": 16.833,
+                            "bottom_cm": 16.972,
+                            "width_cm": 12.677,
+                            "height_cm": 3.187,
+                            "fill_fraction": 1.0,
+                            "area_cm2": 40.396,
+                            "aspect_ratio": 3.9777,
+                            "closest_declared_ratio": 4.0,
+                            "closest_declared_size_cm": [
+                                12.7,
+                                3.175
+                            ],
+                            "ratio_delta_percent": 0.557,
+                            "block_index": 1
+                        }
+                    ]
+                }
+            ],
+            "solid_figure_blocks": [
+                {
+                    "image": "竞争基础集成验证-3.png",
+                    "left_cm": 4.156,
+                    "top_cm": 13.785,
+                    "right_cm": 16.833,
+                    "bottom_cm": 16.972,
+                    "width_cm": 12.677,
+                    "height_cm": 3.187,
+                    "fill_fraction": 1.0,
+                    "area_cm2": 40.396,
+                    "aspect_ratio": 3.9777,
+                    "closest_declared_ratio": 4.0,
+                    "closest_declared_size_cm": [
+                        12.7,
+                        3.175
+                    ],
+                    "ratio_delta_percent": 0.557,
+                    "block_index": 1
+                }
+            ]
+        },
+        {
+            "role": "batch:wide_table_figure",
+            "name": "Wide_Table_Report.docx",
+            "stem": "Wide_Table_Report",
+            "margins_cm": {
+                "left_cm": 2.54,
+                "right_cm": 2.54,
+                "top_cm": 2.54,
+                "bottom_cm": 2.54
+            },
+            "page_count": 3,
+            "blank_pages": [],
+            "pages_outside_body": [],
+            "pages": [
+                {
+                    "image": "Wide_Table_Report-1.png",
+                    "width_px": 910,
+                    "height_px": 1287,
+                    "dpi": 110.0,
+                    "page_width_cm": 21.013,
+                    "page_height_cm": 29.718,
+                    "ink_fraction": 0.0055,
+                    "blank": false,
+                    "ink_bbox_px": {
+                        "x0": 253,
+                        "x1": 654,
+                        "y0": 128,
+                        "y1": 173,
+                        "pixels": 6442
+                    },
+                    "ink_bbox_cm": {
+                        "x0": 5.842,
+                        "x1": 15.101,
+                        "y0": 2.956,
+                        "y1": 3.995
+                    },
+                    "text_body_cm": {
+                        "left_cm": 2.54,
+                        "right_cm": 18.473,
+                        "top_cm": 2.54,
+                        "bottom_cm": 27.178
+                    },
+                    "body_overflow_cm": {
+                        "left_cm": -3.302,
+                        "right_cm": -3.372,
+                        "top_cm": -0.416,
+                        "bottom_cm": -23.183
+                    },
+                    "ink_within_text_body": true,
+                    "solid_figure_blocks": []
+                },
+                {
+                    "image": "Wide_Table_Report-2.png",
+                    "width_px": 910,
+                    "height_px": 1287,
+                    "dpi": 110.0,
+                    "page_width_cm": 21.013,
+                    "page_height_cm": 29.718,
+                    "ink_fraction": 0.006003,
+                    "blank": false,
+                    "ink_bbox_px": {
+                        "x0": 110,
+                        "x1": 798,
+                        "y0": 121,
+                        "y1": 275,
+                        "pixels": 7031
+                    },
+                    "ink_bbox_cm": {
+                        "x0": 2.54,
+                        "x1": 18.427,
+                        "y0": 2.794,
+                        "y1": 6.35
+                    },
+                    "text_body_cm": {
+                        "left_cm": 2.54,
+                        "right_cm": 18.473,
+                        "top_cm": 2.54,
+                        "bottom_cm": 27.178
+                    },
+                    "body_overflow_cm": {
+                        "left_cm": 0.0,
+                        "right_cm": -0.046,
+                        "top_cm": -0.254,
+                        "bottom_cm": -20.828
+                    },
+                    "ink_within_text_body": true,
+                    "solid_figure_blocks": []
+                },
+                {
+                    "image": "Wide_Table_Report-3.png",
+                    "width_px": 910,
+                    "height_px": 1287,
+                    "dpi": 110.0,
+                    "page_width_cm": 21.013,
+                    "page_height_cm": 29.718,
+                    "ink_fraction": 0.092781,
+                    "blank": false,
+                    "ink_bbox_px": {
+                        "x0": 101,
+                        "x1": 791,
+                        "y0": 117,
+                        "y1": 609,
+                        "pixels": 108662
+                    },
+                    "ink_bbox_cm": {
+                        "x0": 2.332,
+                        "x1": 18.265,
+                        "y0": 2.702,
+                        "y1": 14.062
+                    },
+                    "text_body_cm": {
+                        "left_cm": 2.54,
+                        "right_cm": 18.473,
+                        "top_cm": 2.54,
+                        "bottom_cm": 27.178
+                    },
+                    "body_overflow_cm": {
+                        "left_cm": 0.208,
+                        "right_cm": -0.208,
+                        "top_cm": -0.162,
+                        "bottom_cm": -13.116
+                    },
+                    "ink_within_text_body": true,
+                    "figure": {
+                        "bbox_px": {
+                            "x0": 102,
+                            "x1": 790,
+                            "y0": 211,
+                            "y1": 609,
+                            "pixels": 92770
+                        },
+                        "bbox_cm": {
+                            "x0": 2.355,
+                            "x1": 18.242,
+                            "y0": 4.872,
+                            "y1": 14.062
+                        },
+                        "width_cm": 15.887,
+                        "height_cm": 9.19,
+                        "aspect_ratio": 1.7287,
+                        "fill_ratio": 0.3375
+                    },
+                    "solid_figure_blocks": [
+                        {
+                            "image": "Wide_Table_Report-3.png",
+                            "left_cm": 4.156,
+                            "top_cm": 10.899,
+                            "right_cm": 16.833,
+                            "bottom_cm": 14.085,
+                            "width_cm": 12.677,
+                            "height_cm": 3.187,
+                            "fill_fraction": 1.0,
+                            "area_cm2": 40.396,
+                            "aspect_ratio": 3.9777,
+                            "closest_declared_ratio": 4.0,
+                            "closest_declared_size_cm": [
+                                12.7,
+                                3.175
+                            ],
+                            "ratio_delta_percent": 0.557,
+                            "block_index": 1
+                        }
+                    ]
+                }
+            ],
+            "solid_figure_blocks": [
+                {
+                    "image": "Wide_Table_Report-3.png",
+                    "left_cm": 4.156,
+                    "top_cm": 10.899,
+                    "right_cm": 16.833,
+                    "bottom_cm": 14.085,
+                    "width_cm": 12.677,
+                    "height_cm": 3.187,
+                    "fill_fraction": 1.0,
+                    "area_cm2": 40.396,
+                    "aspect_ratio": 3.9777,
+                    "closest_declared_ratio": 4.0,
+                    "closest_declared_size_cm": [
+                        12.7,
+                        3.175
+                    ],
+                    "ratio_delta_percent": 0.557,
+                    "block_index": 1
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,90 @@
+{
+    "program": "R2-V03",
+    "work_package": "R2V03-03",
+    "method": "Full Word exit, normal relaunch, reopen of one profile document, one TOC document and one table/figure document, then the same measurements repeated.",
+    "float_tolerance": 0.02,
+    "non_material_key_policy": {
+        "rendered_characters": "Word-generated TOC dot leaders",
+        "extra_characters": "Word-generated TOC dot leaders",
+        "leader_dots": "Word-generated TOC dot leaders"
+    },
+    "roles": [
+        "profile:professional_report",
+        "toc:chinese_mixed",
+        "batch:wide_table_figure"
+    ],
+    "all_stable": true,
+    "comparisons": [
+        {
+            "role": "profile:professional_report",
+            "word_differences": [],
+            "render_differences": [
+                {
+                    "key": "extra_characters",
+                    "before": "{\".\": 837}",
+                    "after": "{\".\": 835}",
+                    "material": false,
+                    "non_material_reason": "Word-generated TOC dot leaders"
+                },
+                {
+                    "key": "leader_dots",
+                    "before": 837,
+                    "after": 835,
+                    "material": false,
+                    "non_material_reason": "Word-generated TOC dot leaders"
+                },
+                {
+                    "key": "rendered_characters",
+                    "before": 1410,
+                    "after": 1408,
+                    "material": false,
+                    "non_material_reason": "Word-generated TOC dot leaders"
+                }
+            ],
+            "pixel_differences": [],
+            "material_differences": [],
+            "non_material_differences": [
+                {
+                    "key": "extra_characters",
+                    "before": "{\".\": 837}",
+                    "after": "{\".\": 835}",
+                    "material": false,
+                    "non_material_reason": "Word-generated TOC dot leaders"
+                },
+                {
+                    "key": "leader_dots",
+                    "before": 837,
+                    "after": 835,
+                    "material": false,
+                    "non_material_reason": "Word-generated TOC dot leaders"
+                },
+                {
+                    "key": "rendered_characters",
+                    "before": 1410,
+                    "after": 1408,
+                    "material": false,
+                    "non_material_reason": "Word-generated TOC dot leaders"
+                }
+            ],
+            "stable": true
+        },
+        {
+            "role": "toc:chinese_mixed",
+            "word_differences": [],
+            "render_differences": [],
+            "pixel_differences": [],
+            "material_differences": [],
+            "non_material_differences": [],
+            "stable": true
+        },
+        {
+            "role": "batch:wide_table_figure",
+            "word_differences": [],
+            "render_differences": [],
+            "pixel_differences": [],
+            "material_differences": [],
+            "non_material_differences": [],
+            "stable": true
+        }
+    ]
+}

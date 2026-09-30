@@ -1,0 +1,597 @@
+{
+    "program": "R2-V03",
+    "work_package": "R2V03-02",
+    "method": "Native Microsoft Word print-layout rendering exported to PDF (Document.ExportAsFixedFormat) and measured page by page.",
+    "tolerance_cm": 0.3,
+    "artifact_count": 3,
+    "failures": [],
+    "artifacts": [
+        {
+            "role": "profile:professional_report",
+            "name": "Matrix_Professional_Report.docx",
+            "pdf_path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\pdf_wp03\\Matrix_Professional_Report.pdf",
+            "pdf_pages": 5,
+            "declared_margins_cm": {
+                "left_cm": 2.54,
+                "right_cm": 2.54,
+                "top_cm": 2.54,
+                "bottom_cm": 2.54
+            },
+            "declared_figure_count": 2,
+            "rendered_image_count": 2,
+            "character_integrity": {
+                "docx_visible_chars": 573,
+                "rendered_chars": 1408,
+                "dropped_characters": {},
+                "dropped_character_count": 0,
+                "extra_characters": {
+                    ".": 835
+                },
+                "extra_character_count": 835,
+                "content_lossless": true
+            },
+            "images": [
+                {
+                    "x0": 117.65,
+                    "x1": 477.65,
+                    "top": 488.4,
+                    "bottom": 578.4,
+                    "width_pt": 360.0,
+                    "height_pt": 90.0,
+                    "srcsize": [
+                        400,
+                        100
+                    ],
+                    "rendered_ratio": 4.0,
+                    "intrinsic_ratio": 4.0,
+                    "ratio_delta_percent": 0.0
+                },
+                {
+                    "x0": 262.77,
+                    "x1": 332.52,
+                    "top": 72.0,
+                    "bottom": 769.5,
+                    "width_pt": 69.75,
+                    "height_pt": 697.5,
+                    "srcsize": [
+                        20,
+                        200
+                    ],
+                    "rendered_ratio": 0.1,
+                    "intrinsic_ratio": 0.1,
+                    "ratio_delta_percent": 0.0
+                }
+            ],
+            "toc_heading_expected": "Table of Contents",
+            "toc_heading_rendered": true,
+            "toc_entries_expected": 6,
+            "toc_entries_rendered": 6,
+            "wide_table_headers": [
+                {
+                    "columns": 8,
+                    "header_count": 0,
+                    "headers_present": 0,
+                    "missing_headers": []
+                }
+            ],
+            "pages": [
+                {
+                    "page_width_pt": 595.32,
+                    "page_height_pt": 841.92,
+                    "page_width_cm": 21.002,
+                    "page_height_cm": 29.701,
+                    "word_count": 3,
+                    "text_box_count": 3,
+                    "content_bbox_pt": {
+                        "x0": 107.9,
+                        "x1": 487.094,
+                        "top": 86.294,
+                        "bottom": 114.254
+                    },
+                    "text_body_pt": {
+                        "left_pt": 72.0,
+                        "right_pt": 523.32,
+                        "top_pt": 72.0,
+                        "bottom_pt": 769.92
+                    },
+                    "body_overflow_pt": {
+                        "left_pt": -35.9,
+                        "right_pt": -36.226,
+                        "top_pt": -14.294,
+                        "bottom_pt": -655.666
+                    },
+                    "content_within_text_body": true,
+                    "content_within_page": true,
+                    "images": [],
+                    "image_count": 0,
+                    "page": 1
+                },
+                {
+                    "page_width_pt": 595.32,
+                    "page_height_pt": 841.92,
+                    "page_width_cm": 21.002,
+                    "page_height_cm": 29.701,
+                    "word_count": 26,
+                    "text_box_count": 26,
+                    "content_bbox_pt": {
+                        "x0": 72.024,
+                        "x1": 523.008,
+                        "top": 81.134,
+                        "bottom": 257.962
+                    },
+                    "text_body_pt": {
+                        "left_pt": 72.0,
+                        "right_pt": 523.32,
+                        "top_pt": 72.0,
+                        "bottom_pt": 769.92
+                    },
+                    "body_overflow_pt": {
+                        "left_pt": -0.024,
+                        "right_pt": -0.312,
+                        "top_pt": -9.134,
+                        "bottom_pt": -511.958
+                    },
+                    "content_within_text_body": true,
+                    "content_within_page": true,
+                    "images": [],
+                    "image_count": 0,
+                    "page": 2
+                },
+                {
+                    "page_width_pt": 595.32,
+                    "page_height_pt": 841.92,
+                    "page_width_cm": 21.002,
+                    "page_height_cm": 29.701,
+                    "word_count": 77,
+                    "text_box_count": 77,
+                    "content_bbox_pt": {
+                        "x0": 72.024,
+                        "x1": 493.805,
+                        "top": 74.908,
+                        "bottom": 610.772
+                    },
+                    "text_body_pt": {
+                        "left_pt": 72.0,
+                        "right_pt": 523.32,
+                        "top_pt": 72.0,
+                        "bottom_pt": 769.92
+                    },
+                    "body_overflow_pt": {
+                        "left_pt": -0.024,
+                        "right_pt": -29.515,
+                        "top_pt": -2.908,
+                        "bottom_pt": -159.148
+                    },
+                    "content_within_text_body": true,
+                    "content_within_page": true,
+                    "images": [
+                        {
+                            "x0": 117.65,
+                            "x1": 477.65,
+                            "top": 488.4,
+                            "bottom": 578.4,
+                            "width_pt": 360.0,
+                            "height_pt": 90.0,
+                            "srcsize": [
+                                400,
+                                100
+                            ],
+                            "rendered_ratio": 4.0,
+                            "intrinsic_ratio": 4.0,
+                            "ratio_delta_percent": 0.0
+                        }
+                    ],
+                    "image_count": 1,
+                    "page": 3
+                },
+                {
+                    "page_width_pt": 595.32,
+                    "page_height_pt": 841.92,
+                    "page_width_cm": 21.002,
+                    "page_height_cm": 29.701,
+                    "word_count": 0,
+                    "text_box_count": 0,
+                    "content_bbox_pt": {
+                        "x0": 262.77,
+                        "x1": 332.52,
+                        "top": 72.0,
+                        "bottom": 769.5
+                    },
+                    "text_body_pt": {
+                        "left_pt": 72.0,
+                        "right_pt": 523.32,
+                        "top_pt": 72.0,
+                        "bottom_pt": 769.92
+                    },
+                    "body_overflow_pt": {
+                        "left_pt": -190.77,
+                        "right_pt": -190.8,
+                        "top_pt": 0.0,
+                        "bottom_pt": -0.42
+                    },
+                    "content_within_text_body": true,
+                    "content_within_page": true,
+                    "images": [
+                        {
+                            "x0": 262.77,
+                            "x1": 332.52,
+                            "top": 72.0,
+                            "bottom": 769.5,
+                            "width_pt": 69.75,
+                            "height_pt": 697.5,
+                            "srcsize": [
+                                20,
+                                200
+                            ],
+                            "rendered_ratio": 0.1,
+                            "intrinsic_ratio": 0.1,
+                            "ratio_delta_percent": 0.0
+                        }
+                    ],
+                    "image_count": 1,
+                    "page": 4
+                },
+                {
+                    "page_width_pt": 595.32,
+                    "page_height_pt": 841.92,
+                    "page_width_cm": 21.002,
+                    "page_height_cm": 29.701,
+                    "word_count": 5,
+                    "text_box_count": 5,
+                    "content_bbox_pt": {
+                        "x0": 72.024,
+                        "x1": 245.989,
+                        "top": 74.008,
+                        "bottom": 109.22
+                    },
+                    "text_body_pt": {
+                        "left_pt": 72.0,
+                        "right_pt": 523.32,
+                        "top_pt": 72.0,
+                        "bottom_pt": 769.92
+                    },
+                    "body_overflow_pt": {
+                        "left_pt": -0.024,
+                        "right_pt": -277.331,
+                        "top_pt": -2.008,
+                        "bottom_pt": -660.7
+                    },
+                    "content_within_text_body": true,
+                    "content_within_page": true,
+                    "images": [],
+                    "image_count": 0,
+                    "page": 5
+                }
+            ],
+            "pages_with_content_outside_body": [],
+            "pages_with_content_outside_page": []
+        },
+        {
+            "role": "toc:chinese_mixed",
+            "name": "竞争基础集成验证.docx",
+            "pdf_path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\pdf_wp03\\竞争基础集成验证.pdf",
+            "pdf_pages": 3,
+            "declared_margins_cm": {
+                "left_cm": 2.54,
+                "right_cm": 2.54,
+                "top_cm": 2.54,
+                "bottom_cm": 2.54
+            },
+            "declared_figure_count": 1,
+            "rendered_image_count": 1,
+            "character_integrity": {
+                "docx_visible_chars": 122,
+                "rendered_chars": 753,
+                "dropped_characters": {},
+                "dropped_character_count": 0,
+                "extra_characters": {
+                    ".": 631
+                },
+                "extra_character_count": 631,
+                "content_lossless": true
+            },
+            "images": [
+                {
+                    "x0": 117.65,
+                    "x1": 477.65,
+                    "top": 390.99,
+                    "bottom": 480.99,
+                    "width_pt": 360.0,
+                    "height_pt": 90.0,
+                    "srcsize": [
+                        400,
+                        100
+                    ],
+                    "rendered_ratio": 4.0,
+                    "intrinsic_ratio": 4.0,
+                    "ratio_delta_percent": 0.0
+                }
+            ],
+            "toc_heading_expected": "目录",
+            "toc_heading_rendered": true,
+            "toc_entries_expected": 4,
+            "toc_entries_rendered": 4,
+            "wide_table_headers": [],
+            "pages": [
+                {
+                    "page_width_pt": 595.5,
+                    "page_height_pt": 842.0,
+                    "page_width_cm": 21.008,
+                    "page_height_cm": 29.704,
+                    "word_count": 1,
+                    "text_box_count": 1,
+                    "content_bbox_pt": {
+                        "x0": 185.65,
+                        "x1": 409.85,
+                        "top": 77.527,
+                        "bottom": 105.552
+                    },
+                    "text_body_pt": {
+                        "left_pt": 72.0,
+                        "right_pt": 523.5,
+                        "top_pt": 72.0,
+                        "bottom_pt": 770.0
+                    },
+                    "body_overflow_pt": {
+                        "left_pt": -113.65,
+                        "right_pt": -113.65,
+                        "top_pt": -5.527,
+                        "bottom_pt": -664.448
+                    },
+                    "content_within_text_body": true,
+                    "content_within_page": true,
+                    "images": [],
+                    "image_count": 0,
+                    "page": 1
+                },
+                {
+                    "page_width_pt": 595.5,
+                    "page_height_pt": 842.0,
+                    "page_width_cm": 21.008,
+                    "page_height_cm": 29.704,
+                    "word_count": 13,
+                    "text_box_count": 13,
+                    "content_bbox_pt": {
+                        "x0": 72.05,
+                        "x1": 523.573,
+                        "top": 81.104,
+                        "bottom": 206.277
+                    },
+                    "text_body_pt": {
+                        "left_pt": 72.0,
+                        "right_pt": 523.5,
+                        "top_pt": 72.0,
+                        "bottom_pt": 770.0
+                    },
+                    "body_overflow_pt": {
+                        "left_pt": -0.05,
+                        "right_pt": 0.073,
+                        "top_pt": -9.104,
+                        "bottom_pt": -563.723
+                    },
+                    "content_within_text_body": true,
+                    "content_within_page": true,
+                    "images": [],
+                    "image_count": 0,
+                    "page": 2
+                },
+                {
+                    "page_width_pt": 595.5,
+                    "page_height_pt": 842.0,
+                    "page_width_cm": 21.008,
+                    "page_height_cm": 29.704,
+                    "word_count": 22,
+                    "text_box_count": 22,
+                    "content_bbox_pt": {
+                        "x0": 72.05,
+                        "x1": 477.65,
+                        "top": 82.591,
+                        "bottom": 541.766
+                    },
+                    "text_body_pt": {
+                        "left_pt": 72.0,
+                        "right_pt": 523.5,
+                        "top_pt": 72.0,
+                        "bottom_pt": 770.0
+                    },
+                    "body_overflow_pt": {
+                        "left_pt": -0.05,
+                        "right_pt": -45.85,
+                        "top_pt": -10.591,
+                        "bottom_pt": -228.234
+                    },
+                    "content_within_text_body": true,
+                    "content_within_page": true,
+                    "images": [
+                        {
+                            "x0": 117.65,
+                            "x1": 477.65,
+                            "top": 390.99,
+                            "bottom": 480.99,
+                            "width_pt": 360.0,
+                            "height_pt": 90.0,
+                            "srcsize": [
+                                400,
+                                100
+                            ],
+                            "rendered_ratio": 4.0,
+                            "intrinsic_ratio": 4.0,
+                            "ratio_delta_percent": 0.0
+                        }
+                    ],
+                    "image_count": 1,
+                    "page": 3
+                }
+            ],
+            "pages_with_content_outside_body": [],
+            "pages_with_content_outside_page": []
+        },
+        {
+            "role": "batch:wide_table_figure",
+            "name": "Wide_Table_Report.docx",
+            "pdf_path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\pdf_wp03\\Wide_Table_Report.pdf",
+            "pdf_pages": 3,
+            "declared_margins_cm": {
+                "left_cm": 2.54,
+                "right_cm": 2.54,
+                "top_cm": 2.54,
+                "bottom_cm": 2.54
+            },
+            "declared_figure_count": 1,
+            "rendered_image_count": 1,
+            "character_integrity": {
+                "docx_visible_chars": 253,
+                "rendered_chars": 720,
+                "dropped_characters": {},
+                "dropped_character_count": 0,
+                "extra_characters": {
+                    ".": 467
+                },
+                "extra_character_count": 467,
+                "content_lossless": true
+            },
+            "images": [
+                {
+                    "x0": 117.65,
+                    "x1": 477.65,
+                    "top": 309.23,
+                    "bottom": 399.23,
+                    "width_pt": 360.0,
+                    "height_pt": 90.0,
+                    "srcsize": [
+                        400,
+                        100
+                    ],
+                    "rendered_ratio": 4.0,
+                    "intrinsic_ratio": 4.0,
+                    "ratio_delta_percent": 0.0
+                }
+            ],
+            "toc_heading_expected": "Table of Contents",
+            "toc_heading_rendered": true,
+            "toc_entries_expected": 3,
+            "toc_entries_rendered": 3,
+            "wide_table_headers": [
+                {
+                    "columns": 8,
+                    "header_count": 0,
+                    "headers_present": 0,
+                    "missing_headers": []
+                }
+            ],
+            "pages": [
+                {
+                    "page_width_pt": 595.5,
+                    "page_height_pt": 842.0,
+                    "page_width_cm": 21.008,
+                    "page_height_cm": 29.704,
+                    "word_count": 3,
+                    "text_box_count": 3,
+                    "content_bbox_pt": {
+                        "x0": 166.13,
+                        "x1": 429.733,
+                        "top": 86.145,
+                        "bottom": 114.17
+                    },
+                    "text_body_pt": {
+                        "left_pt": 72.0,
+                        "right_pt": 523.5,
+                        "top_pt": 72.0,
+                        "bottom_pt": 770.0
+                    },
+                    "body_overflow_pt": {
+                        "left_pt": -94.13,
+                        "right_pt": -93.767,
+                        "top_pt": -14.145,
+                        "bottom_pt": -655.83
+                    },
+                    "content_within_text_body": true,
+                    "content_within_page": true,
+                    "images": [],
+                    "image_count": 0,
+                    "page": 1
+                },
+                {
+                    "page_width_pt": 595.5,
+                    "page_height_pt": 842.0,
+                    "page_width_cm": 21.008,
+                    "page_height_cm": 29.704,
+                    "word_count": 13,
+                    "text_box_count": 13,
+                    "content_bbox_pt": {
+                        "x0": 72.05,
+                        "x1": 523.573,
+                        "top": 81.104,
+                        "bottom": 180.757
+                    },
+                    "text_body_pt": {
+                        "left_pt": 72.0,
+                        "right_pt": 523.5,
+                        "top_pt": 72.0,
+                        "bottom_pt": 770.0
+                    },
+                    "body_overflow_pt": {
+                        "left_pt": -0.05,
+                        "right_pt": 0.073,
+                        "top_pt": -9.104,
+                        "bottom_pt": -589.243
+                    },
+                    "content_within_text_body": true,
+                    "content_within_page": true,
+                    "images": [],
+                    "image_count": 0,
+                    "page": 2
+                },
+                {
+                    "page_width_pt": 595.5,
+                    "page_height_pt": 842.0,
+                    "page_width_cm": 21.008,
+                    "page_height_cm": 29.704,
+                    "word_count": 49,
+                    "text_box_count": 49,
+                    "content_bbox_pt": {
+                        "x0": 72.05,
+                        "x1": 493.375,
+                        "top": 75.23,
+                        "bottom": 399.23
+                    },
+                    "text_body_pt": {
+                        "left_pt": 72.0,
+                        "right_pt": 523.5,
+                        "top_pt": 72.0,
+                        "bottom_pt": 770.0
+                    },
+                    "body_overflow_pt": {
+                        "left_pt": -0.05,
+                        "right_pt": -30.125,
+                        "top_pt": -3.23,
+                        "bottom_pt": -370.77
+                    },
+                    "content_within_text_body": true,
+                    "content_within_page": true,
+                    "images": [
+                        {
+                            "x0": 117.65,
+                            "x1": 477.65,
+                            "top": 309.23,
+                            "bottom": 399.23,
+                            "width_pt": 360.0,
+                            "height_pt": 90.0,
+                            "srcsize": [
+                                400,
+                                100
+                            ],
+                            "rendered_ratio": 4.0,
+                            "intrinsic_ratio": 4.0,
+                            "ratio_delta_percent": 0.0
+                        }
+                    ],
+                    "image_count": 1,
+                    "page": 3
+                }
+            ],
+            "pages_with_content_outside_body": [],
+            "pages_with_content_outside_page": []
+        }
+    ]
+}
