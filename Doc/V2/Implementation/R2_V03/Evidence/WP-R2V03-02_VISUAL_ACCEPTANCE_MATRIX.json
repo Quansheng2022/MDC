@@ -1,0 +1,1076 @@
+{
+    "program": "R2-V03",
+    "work_package": "R2V03-02",
+    "classification_vocabulary": [
+        "PASS",
+        "KNOWN_ACCEPTED_LIMITATION",
+        "VISUAL_PRODUCT_DEFECT",
+        "ENVIRONMENT_FAILURE",
+        "LATER_GATE_DEBT"
+    ],
+    "method": "Native Microsoft Word observation: normal document-open path, Print Layout at 100% zoom, Word object-model layout measurements, Word print-layout PDF rendering, and pixel measurements of the rendered pages.",
+    "summary": {
+        "artifact_count": 10,
+        "check_count": 187,
+        "failed_check_count": 4,
+        "visual_product_defects": 0
+    },
+    "artifacts": [
+        {
+            "role": "profile:professional_report",
+            "name": "Matrix_Professional_Report.docx",
+            "packaged_output": true,
+            "exercises_accepted_irreducible_limitation": false,
+            "profile": "professional_report",
+            "checks": [
+                {
+                    "label": "no rendered text character is lost",
+                    "result": "PASS",
+                    "detail": "document text characters 573, rendered characters 1410, dropped 0 ({})"
+                },
+                {
+                    "label": "no rendered content outside the page",
+                    "result": "PASS",
+                    "detail": "pages with content outside the page: []"
+                },
+                {
+                    "label": "no rendered content outside the usable text body",
+                    "result": "PASS",
+                    "detail": "pages with content outside the text body: []"
+                },
+                {
+                    "label": "every page renders content",
+                    "result": "PASS",
+                    "detail": "pages 5, blank pages []"
+                },
+                {
+                    "label": "TOC heading is present and rendered",
+                    "result": "PASS",
+                    "detail": "heading 'Table of Contents' rendered=True"
+                },
+                {
+                    "label": "TOC entries are rendered",
+                    "result": "PASS",
+                    "detail": "6/6 cached entries found in the rendered pages"
+                },
+                {
+                    "label": "TOC field is a live field with page numbers and navigation",
+                    "result": "PASS",
+                    "detail": "Word field count=1, entries=6, hyperlinks=True, hyperlink runs=6"
+                },
+                {
+                    "label": "TOC entries carry page numbers",
+                    "result": "PASS",
+                    "detail": "Word entries ['Competitive Foundation Report\\t3', 'Architecture\\t3', 'Financial Overview\\t3', 'Projected Growth\\t3', 'Page Capped Figure\\t3', 'Notes\\t5']"
+                },
+                {
+                    "label": "table 1: rendered width inside the usable page body",
+                    "result": "PASS",
+                    "detail": "3 columns, rendered 5.1893 cm, left 2.5259 cm, right edge 7.7152 cm vs text body 2.54-18.461 cm"
+                },
+                {
+                    "label": "table 1: header cells rendered",
+                    "result": "PASS",
+                    "detail": "header cells ['Component', 'Authority', 'Status']"
+                },
+                {
+                    "label": "table 2: rendered width inside the usable page body",
+                    "result": "PASS",
+                    "detail": "8 columns, rendered 15.921 cm, left 2.5259 cm, right edge 18.4469 cm vs text body 2.54-18.461 cm"
+                },
+                {
+                    "label": "table 2: header cells rendered",
+                    "result": "PASS",
+                    "detail": "header cells ['Region', 'Q1', 'Q2', 'Q3', 'Q4', 'Notes', 'Owner', 'Status']"
+                },
+                {
+                    "label": "every declared figure appears in the rendered pages",
+                    "result": "PASS",
+                    "detail": "declared 2, rendered images 2"
+                },
+                {
+                    "label": "rendered figure keeps its aspect ratio (no distortion or crop)",
+                    "result": "PASS",
+                    "detail": "360.0x90.0 pt, ratio 4.0 vs intrinsic 4.0 (0.0%)"
+                },
+                {
+                    "label": "rendered figure keeps its aspect ratio (no distortion or crop)",
+                    "result": "PASS",
+                    "detail": "69.75x697.5 pt, ratio 0.1 vs intrinsic 0.1 (0.0%)"
+                },
+                {
+                    "label": "figure block rendered solid inside the page body",
+                    "result": "PASS",
+                    "detail": "12.677x3.187 cm at (4.156,17.226) fill 1.0, ratio delta 0.557%"
+                },
+                {
+                    "label": "figure block rendered solid inside the page body",
+                    "result": "PASS",
+                    "detail": "2.448x24.615 cm at (9.283,2.54) fill 1.0, ratio delta 0.5%"
+                },
+                {
+                    "label": "page margins match the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 2.54/2.54/2.54/2.54 cm vs frozen 2.54/2.54/2.54/2.54 cm"
+                },
+                {
+                    "label": "body font matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word body run 'Calibri' vs frozen 'Calibri'"
+                },
+                {
+                    "label": "body size matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 10.5 pt vs frozen 10.5 pt"
+                },
+                {
+                    "label": "heading 1 font/size match the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 'Arial' 20.0 pt vs frozen 'Arial' 20.0 pt"
+                },
+                {
+                    "label": "heading 2 font/size match the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 'Arial' 16.0 pt vs frozen 'Arial' 16.0 pt"
+                },
+                {
+                    "label": "heading 3 font/size match the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 'Arial' 14.0 pt vs frozen 'Arial' 14.0 pt"
+                },
+                {
+                    "label": "paragraph line spacing matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 13.800000190734863 pt vs frozen multiple 1.15 (= 13.8 pt)"
+                },
+                {
+                    "label": "paragraph space-after matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 6.0 pt vs frozen 6.0 pt"
+                },
+                {
+                    "label": "table style matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "declared 'Table Grid' vs frozen 'Table Grid'"
+                },
+                {
+                    "label": "table font size matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word [9.5, 9.5] pt vs frozen 9.5 pt"
+                }
+            ],
+            "failed_checks": []
+        },
+        {
+            "role": "profile:business_report",
+            "name": "Matrix_Business_Report.docx",
+            "packaged_output": true,
+            "exercises_accepted_irreducible_limitation": false,
+            "profile": "business_report",
+            "checks": [
+                {
+                    "label": "no rendered text character is lost",
+                    "result": "PASS",
+                    "detail": "document text characters 569, rendered characters 1506, dropped 0 ({})"
+                },
+                {
+                    "label": "no rendered content outside the page",
+                    "result": "PASS",
+                    "detail": "pages with content outside the page: []"
+                },
+                {
+                    "label": "no rendered content outside the usable text body",
+                    "result": "PASS",
+                    "detail": "pages with content outside the text body: []"
+                },
+                {
+                    "label": "every page renders content",
+                    "result": "PASS",
+                    "detail": "pages 5, blank pages []"
+                },
+                {
+                    "label": "TOC heading is present and rendered",
+                    "result": "PASS",
+                    "detail": "heading 'Table of Contents' rendered=True"
+                },
+                {
+                    "label": "TOC entries are rendered",
+                    "result": "PASS",
+                    "detail": "6/6 cached entries found in the rendered pages"
+                },
+                {
+                    "label": "TOC field is a live field with page numbers and navigation",
+                    "result": "PASS",
+                    "detail": "Word field count=1, entries=6, hyperlinks=True, hyperlink runs=6"
+                },
+                {
+                    "label": "TOC entries carry page numbers",
+                    "result": "PASS",
+                    "detail": "Word entries ['Competitive Foundation Report\\t3', 'Architecture\\t3', 'Financial Overview\\t3', 'Projected Growth\\t3', 'Page Capped Figure\\t3', 'Notes\\t5']"
+                },
+                {
+                    "label": "table 1: rendered width inside the usable page body",
+                    "result": "PASS",
+                    "detail": "3 columns, rendered 5.1893 cm, left 1.9967 cm, right edge 7.186 cm vs text body 2.0-19.001 cm"
+                },
+                {
+                    "label": "table 1: header cells rendered",
+                    "result": "PASS",
+                    "detail": "header cells ['Component', 'Authority', 'Status']"
+                },
+                {
+                    "label": "table 2: rendered width inside the usable page body",
+                    "result": "PASS",
+                    "detail": "8 columns, rendered 17.0004 cm, left 1.9967 cm, right edge 18.9971 cm vs text body 2.0-19.001 cm"
+                },
+                {
+                    "label": "table 2: header cells rendered",
+                    "result": "PASS",
+                    "detail": "header cells ['Region', 'Q1', 'Q2', 'Q3', 'Q4', 'Notes', 'Owner', 'Status']"
+                },
+                {
+                    "label": "every declared figure appears in the rendered pages",
+                    "result": "PASS",
+                    "detail": "declared 2, rendered images 2"
+                },
+                {
+                    "label": "rendered figure keeps its aspect ratio (no distortion or crop)",
+                    "result": "PASS",
+                    "detail": "360.0x90.0 pt, ratio 4.0 vs intrinsic 4.0 (0.0%)"
+                },
+                {
+                    "label": "rendered figure keeps its aspect ratio (no distortion or crop)",
+                    "result": "PASS",
+                    "detail": "72.845x728.45 pt, ratio 0.1 vs intrinsic 0.1 (0.0%)"
+                },
+                {
+                    "label": "figure block rendered solid inside the page body",
+                    "result": "PASS",
+                    "detail": "12.677x3.187 cm at (4.156,15.171) fill 1.0, ratio delta 0.557%"
+                },
+                {
+                    "label": "figure block rendered solid inside the page body",
+                    "result": "PASS",
+                    "detail": "2.563x25.723 cm at (9.213,1.986) fill 1.0, ratio delta 0.4%"
+                },
+                {
+                    "label": "page margins match the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 2.0003/2.0003/2.0003/2.0003 cm vs frozen 2.0/2.0/2.0/2.0 cm"
+                },
+                {
+                    "label": "body font matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word body run 'Calibri' vs frozen 'Calibri'"
+                },
+                {
+                    "label": "body size matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 10.0 pt vs frozen 10.0 pt"
+                },
+                {
+                    "label": "heading 1 font/size match the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 'Calibri' 16.0 pt vs frozen 'Calibri' 16.0 pt"
+                },
+                {
+                    "label": "heading 2 font/size match the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 'Calibri' 14.0 pt vs frozen 'Calibri' 14.0 pt"
+                },
+                {
+                    "label": "heading 3 font/size match the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 'Calibri' 12.5 pt vs frozen 'Calibri' 12.5 pt"
+                },
+                {
+                    "label": "paragraph line spacing matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 12.949999809265137 pt vs frozen multiple 1.08 (= 12.96 pt)"
+                },
+                {
+                    "label": "paragraph space-after matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 4.0 pt vs frozen 4.0 pt"
+                },
+                {
+                    "label": "table style matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "declared 'Light Grid' vs frozen 'Light Grid'"
+                },
+                {
+                    "label": "table font size matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word [9.0, 9.0] pt vs frozen 9.0 pt"
+                }
+            ],
+            "failed_checks": []
+        },
+        {
+            "role": "profile:academic",
+            "name": "Matrix_Academic.docx",
+            "packaged_output": true,
+            "exercises_accepted_irreducible_limitation": false,
+            "profile": "academic",
+            "checks": [
+                {
+                    "label": "no rendered text character is lost",
+                    "result": "PASS",
+                    "detail": "document text characters 563, rendered characters 1203, dropped 0 ({})"
+                },
+                {
+                    "label": "no rendered content outside the page",
+                    "result": "PASS",
+                    "detail": "pages with content outside the page: []"
+                },
+                {
+                    "label": "no rendered content outside the usable text body",
+                    "result": "PASS",
+                    "detail": "pages with content outside the text body: []"
+                },
+                {
+                    "label": "every page renders content",
+                    "result": "PASS",
+                    "detail": "pages 5, blank pages []"
+                },
+                {
+                    "label": "TOC heading is present and rendered",
+                    "result": "PASS",
+                    "detail": "heading 'Table of Contents' rendered=True"
+                },
+                {
+                    "label": "TOC entries are rendered",
+                    "result": "PASS",
+                    "detail": "6/6 cached entries found in the rendered pages"
+                },
+                {
+                    "label": "TOC field is a live field with page numbers and navigation",
+                    "result": "PASS",
+                    "detail": "Word field count=1, entries=6, hyperlinks=True, hyperlink runs=6"
+                },
+                {
+                    "label": "TOC entries carry page numbers",
+                    "result": "PASS",
+                    "detail": "Word entries ['Competitive Foundation Report\\t3', 'Architecture\\t3', 'Financial Overview\\t3', 'Projected Growth\\t3', 'Page Capped Figure\\t3', 'Notes\\t5']"
+                },
+                {
+                    "label": "table 1: rendered width inside the usable page body",
+                    "result": "PASS",
+                    "detail": "3 columns, rendered 5.1893 cm, left 2.981 cm, right edge 8.1703 cm vs text body 3.0-18.001 cm"
+                },
+                {
+                    "label": "table 1: header cells rendered",
+                    "result": "PASS",
+                    "detail": "header cells ['Component', 'Authority', 'Status']"
+                },
+                {
+                    "label": "table 2: rendered width inside the usable page body",
+                    "result": "PASS",
+                    "detail": "8 columns, rendered 15.0002 cm, left 2.981 cm, right edge 17.9812 cm vs text body 3.0-18.001 cm"
+                },
+                {
+                    "label": "table 2: header cells rendered",
+                    "result": "PASS",
+                    "detail": "header cells ['Region', 'Q1', 'Q2', 'Q3', 'Q4', 'Notes', 'Owner', 'Status']"
+                },
+                {
+                    "label": "every declared figure appears in the rendered pages",
+                    "result": "PASS",
+                    "detail": "declared 2, rendered images 2"
+                },
+                {
+                    "label": "rendered figure keeps its aspect ratio (no distortion or crop)",
+                    "result": "PASS",
+                    "detail": "360.0x90.0 pt, ratio 4.0 vs intrinsic 4.0 (0.0%)"
+                },
+                {
+                    "label": "rendered figure keeps its aspect ratio (no distortion or crop)",
+                    "result": "PASS",
+                    "detail": "69.75x697.5 pt, ratio 0.1 vs intrinsic 0.1 (0.0%)"
+                },
+                {
+                    "label": "figure block rendered solid inside the page body",
+                    "result": "PASS",
+                    "detail": "12.677x3.187 cm at (4.156,15.956) fill 1.0, ratio delta 0.557%"
+                },
+                {
+                    "label": "figure block rendered solid inside the page body",
+                    "result": "PASS",
+                    "detail": "2.448x24.615 cm at (9.283,2.54) fill 1.0, ratio delta 0.5%"
+                },
+                {
+                    "label": "page margins match the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 2.54/2.54/3.0004/3.0004 cm vs frozen 2.54/2.54/3.0/3.0 cm"
+                },
+                {
+                    "label": "body font matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word body run 'Times New Roman' vs frozen 'Times New Roman'"
+                },
+                {
+                    "label": "body size matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 11.5 pt vs frozen 11.5 pt"
+                },
+                {
+                    "label": "heading 1 font/size match the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 'Times New Roman' 16.0 pt vs frozen 'Times New Roman' 16.0 pt"
+                },
+                {
+                    "label": "heading 2 font/size match the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 'Times New Roman' 14.0 pt vs frozen 'Times New Roman' 14.0 pt"
+                },
+                {
+                    "label": "heading 3 font/size match the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 'Times New Roman' 12.0 pt vs frozen 'Times New Roman' 12.0 pt"
+                },
+                {
+                    "label": "paragraph line spacing matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 18.0 pt vs frozen multiple 1.5 (= 18.0 pt)"
+                },
+                {
+                    "label": "paragraph space-after matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 0.0 pt vs frozen 0.0 pt"
+                },
+                {
+                    "label": "table style matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "declared 'Table Grid' vs frozen 'Table Grid'"
+                },
+                {
+                    "label": "table font size matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word [9.0, 9.0] pt vs frozen 9.0 pt"
+                }
+            ],
+            "failed_checks": []
+        },
+        {
+            "role": "profile:technical",
+            "name": "Matrix_Technical.docx",
+            "packaged_output": true,
+            "exercises_accepted_irreducible_limitation": false,
+            "profile": "technical",
+            "checks": [
+                {
+                    "label": "no rendered text character is lost",
+                    "result": "PASS",
+                    "detail": "document text characters 564, rendered characters 1448, dropped 0 ({})"
+                },
+                {
+                    "label": "no rendered content outside the page",
+                    "result": "PASS",
+                    "detail": "pages with content outside the page: []"
+                },
+                {
+                    "label": "no rendered content outside the usable text body",
+                    "result": "PASS",
+                    "detail": "pages with content outside the text body: []"
+                },
+                {
+                    "label": "every page renders content",
+                    "result": "PASS",
+                    "detail": "pages 5, blank pages []"
+                },
+                {
+                    "label": "TOC heading is present and rendered",
+                    "result": "PASS",
+                    "detail": "heading 'Table of Contents' rendered=True"
+                },
+                {
+                    "label": "TOC entries are rendered",
+                    "result": "PASS",
+                    "detail": "6/6 cached entries found in the rendered pages"
+                },
+                {
+                    "label": "TOC field is a live field with page numbers and navigation",
+                    "result": "PASS",
+                    "detail": "Word field count=1, entries=6, hyperlinks=True, hyperlink runs=6"
+                },
+                {
+                    "label": "TOC entries carry page numbers",
+                    "result": "PASS",
+                    "detail": "Word entries ['Competitive Foundation Report\\t3', 'Architecture\\t3', 'Financial Overview\\t3', 'Projected Growth\\t3', 'Page Capped Figure\\t3', 'Notes\\t5']"
+                },
+                {
+                    "label": "table 1: rendered width inside the usable page body",
+                    "result": "PASS",
+                    "detail": "3 columns, rendered 5.1893 cm, left 2.2031 cm, right edge 7.3924 cm vs text body 2.2-18.801 cm"
+                },
+                {
+                    "label": "table 1: header cells rendered",
+                    "result": "PASS",
+                    "detail": "header cells ['Component', 'Authority', 'Status']"
+                },
+                {
+                    "label": "table 2: rendered width inside the usable page body",
+                    "result": "PASS",
+                    "detail": "8 columns, rendered 16.6018 cm, left 2.2031 cm, right edge 18.8049 cm vs text body 2.2-18.801 cm"
+                },
+                {
+                    "label": "table 2: header cells rendered",
+                    "result": "PASS",
+                    "detail": "header cells ['Region', 'Q1', 'Q2', 'Q3', 'Q4', 'Notes', 'Owner', 'Status']"
+                },
+                {
+                    "label": "every declared figure appears in the rendered pages",
+                    "result": "PASS",
+                    "detail": "declared 2, rendered images 2"
+                },
+                {
+                    "label": "rendered figure keeps its aspect ratio (no distortion or crop)",
+                    "result": "PASS",
+                    "detail": "360.0x90.0 pt, ratio 4.0 vs intrinsic 4.0 (0.0%)"
+                },
+                {
+                    "label": "rendered figure keeps its aspect ratio (no distortion or crop)",
+                    "result": "PASS",
+                    "detail": "71.7x717.0 pt, ratio 0.1 vs intrinsic 0.1 (0.0%)"
+                },
+                {
+                    "label": "figure block rendered solid inside the page body",
+                    "result": "PASS",
+                    "detail": "12.677x3.21 cm at (4.156,18.057) fill 1.0, ratio delta 1.27%"
+                },
+                {
+                    "label": "figure block rendered solid inside the page body",
+                    "result": "PASS",
+                    "detail": "2.517x25.308 cm at (9.236,2.194) fill 1.0, ratio delta 0.5%"
+                },
+                {
+                    "label": "page margins match the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 2.1996/2.1996/2.1996/2.1996 cm vs frozen 2.2/2.2/2.2/2.2 cm"
+                },
+                {
+                    "label": "body font matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word body run 'Calibri' vs frozen 'Calibri'"
+                },
+                {
+                    "label": "body size matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 10.5 pt vs frozen 10.5 pt"
+                },
+                {
+                    "label": "heading 1 font/size match the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 'Arial' 18.0 pt vs frozen 'Arial' 18.0 pt"
+                },
+                {
+                    "label": "heading 2 font/size match the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 'Arial' 15.0 pt vs frozen 'Arial' 15.0 pt"
+                },
+                {
+                    "label": "heading 3 font/size match the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 'Arial' 13.0 pt vs frozen 'Arial' 13.0 pt"
+                },
+                {
+                    "label": "paragraph line spacing matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 14.399999618530273 pt vs frozen multiple 1.2 (= 14.4 pt)"
+                },
+                {
+                    "label": "paragraph space-after matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 6.0 pt vs frozen 6.0 pt"
+                },
+                {
+                    "label": "table style matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "declared 'Light Grid Accent 1' vs frozen 'Light Grid Accent 1'"
+                },
+                {
+                    "label": "table font size matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word [9.0, 9.0] pt vs frozen 9.0 pt"
+                }
+            ],
+            "failed_checks": []
+        },
+        {
+            "role": "profile:clean_minimal",
+            "name": "Matrix_Clean_Minimal.docx",
+            "packaged_output": true,
+            "exercises_accepted_irreducible_limitation": false,
+            "profile": "clean_minimal",
+            "checks": [
+                {
+                    "label": "no rendered text character is lost",
+                    "result": "PASS",
+                    "detail": "document text characters 567, rendered characters 1420, dropped 0 ({})"
+                },
+                {
+                    "label": "no rendered content outside the page",
+                    "result": "PASS",
+                    "detail": "pages with content outside the page: []"
+                },
+                {
+                    "label": "no rendered content outside the usable text body",
+                    "result": "PASS",
+                    "detail": "pages with content outside the text body: []"
+                },
+                {
+                    "label": "every page renders content",
+                    "result": "PASS",
+                    "detail": "pages 5, blank pages []"
+                },
+                {
+                    "label": "TOC heading is present and rendered",
+                    "result": "PASS",
+                    "detail": "heading 'Table of Contents' rendered=True"
+                },
+                {
+                    "label": "TOC entries are rendered",
+                    "result": "PASS",
+                    "detail": "6/6 cached entries found in the rendered pages"
+                },
+                {
+                    "label": "TOC field is a live field with page numbers and navigation",
+                    "result": "PASS",
+                    "detail": "Word field count=1, entries=6, hyperlinks=True, hyperlink runs=6"
+                },
+                {
+                    "label": "TOC entries carry page numbers",
+                    "result": "PASS",
+                    "detail": "Word entries ['Competitive Foundation Report\\t3', 'Architecture\\t3', 'Financial Overview\\t3', 'Projected Growth\\t3', 'Page Capped Figure\\t3', 'Notes\\t5']"
+                },
+                {
+                    "label": "table 1: rendered width inside the usable page body",
+                    "result": "PASS",
+                    "detail": "3 columns, rendered 5.1893 cm, left 2.54 cm, right edge 7.7293 cm vs text body 2.54-18.461 cm"
+                },
+                {
+                    "label": "table 1: header cells rendered",
+                    "result": "PASS",
+                    "detail": "header cells ['Component', 'Authority', 'Status']"
+                },
+                {
+                    "label": "table 2: rendered width inside the usable page body",
+                    "result": "PASS",
+                    "detail": "8 columns, rendered 15.921 cm, left 2.54 cm, right edge 18.461 cm vs text body 2.54-18.461 cm"
+                },
+                {
+                    "label": "table 2: header cells rendered",
+                    "result": "PASS",
+                    "detail": "header cells ['Region', 'Q1', 'Q2', 'Q3', 'Q4', 'Notes', 'Owner', 'Status']"
+                },
+                {
+                    "label": "every declared figure appears in the rendered pages",
+                    "result": "PASS",
+                    "detail": "declared 2, rendered images 2"
+                },
+                {
+                    "label": "rendered figure keeps its aspect ratio (no distortion or crop)",
+                    "result": "PASS",
+                    "detail": "360.0x90.0 pt, ratio 4.0 vs intrinsic 4.0 (0.0%)"
+                },
+                {
+                    "label": "rendered figure keeps its aspect ratio (no distortion or crop)",
+                    "result": "PASS",
+                    "detail": "69.75x697.5 pt, ratio 0.1 vs intrinsic 0.1 (0.0%)"
+                },
+                {
+                    "label": "figure block rendered solid inside the page body",
+                    "result": "PASS",
+                    "detail": "12.677x3.21 cm at (4.156,19.258) fill 1.0, ratio delta 1.27%"
+                },
+                {
+                    "label": "figure block rendered solid inside the page body",
+                    "result": "PASS",
+                    "detail": "2.448x24.615 cm at (9.283,2.54) fill 1.0, ratio delta 0.5%"
+                },
+                {
+                    "label": "page margins match the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 2.54/2.54/2.54/2.54 cm vs frozen 2.54/2.54/2.54/2.54 cm"
+                },
+                {
+                    "label": "body font matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word body run 'Calibri' vs frozen 'Calibri'"
+                },
+                {
+                    "label": "body size matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 10.5 pt vs frozen 10.5 pt"
+                },
+                {
+                    "label": "heading 1 font/size match the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 'Calibri' 15.0 pt vs frozen 'Calibri' 15.0 pt"
+                },
+                {
+                    "label": "heading 2 font/size match the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 'Calibri' 13.0 pt vs frozen 'Calibri' 13.0 pt"
+                },
+                {
+                    "label": "heading 3 font/size match the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 'Calibri' 11.5 pt vs frozen 'Calibri' 11.5 pt"
+                },
+                {
+                    "label": "paragraph line spacing matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 15.0 pt vs frozen multiple 1.25 (= 15.0 pt)"
+                },
+                {
+                    "label": "paragraph space-after matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word 8.0 pt vs frozen 8.0 pt"
+                },
+                {
+                    "label": "table style matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "declared 'Light Grid' vs frozen 'Light Grid'"
+                },
+                {
+                    "label": "table font size matches the frozen profile",
+                    "result": "PASS",
+                    "detail": "Word [9.5, 9.5] pt vs frozen 9.5 pt"
+                }
+            ],
+            "failed_checks": []
+        },
+        {
+            "role": "toc:chinese_mixed",
+            "name": "竞争基础集成验证.docx",
+            "packaged_output": true,
+            "exercises_accepted_irreducible_limitation": false,
+            "profile": null,
+            "checks": [
+                {
+                    "label": "no rendered text character is lost",
+                    "result": "PASS",
+                    "detail": "document text characters 122, rendered characters 753, dropped 0 ({})"
+                },
+                {
+                    "label": "no rendered content outside the page",
+                    "result": "PASS",
+                    "detail": "pages with content outside the page: []"
+                },
+                {
+                    "label": "no rendered content outside the usable text body",
+                    "result": "PASS",
+                    "detail": "pages with content outside the text body: []"
+                },
+                {
+                    "label": "every page renders content",
+                    "result": "PASS",
+                    "detail": "pages 3, blank pages []"
+                },
+                {
+                    "label": "TOC heading is present and rendered",
+                    "result": "PASS",
+                    "detail": "heading '目录' rendered=True"
+                },
+                {
+                    "label": "TOC entries are rendered",
+                    "result": "PASS",
+                    "detail": "4/4 cached entries found in the rendered pages"
+                },
+                {
+                    "label": "TOC field is a live field with page numbers and navigation",
+                    "result": "PASS",
+                    "detail": "Word field count=1, entries=4, hyperlinks=True, hyperlink runs=4"
+                },
+                {
+                    "label": "TOC entries carry page numbers",
+                    "result": "PASS",
+                    "detail": "Word entries ['竞争基础集成验证\\t3', '架构\\t3', '图形\\t3', '备注\\t3']"
+                },
+                {
+                    "label": "table 1: rendered width inside the usable page body",
+                    "result": "PASS",
+                    "detail": "3 columns, rendered 4.6795 cm, left 2.5259 cm, right edge 7.2054 cm vs text body 2.54-18.461 cm"
+                },
+                {
+                    "label": "table 1: header cells rendered",
+                    "result": "PASS",
+                    "detail": "header cells ['组件', '权威', '状态']"
+                },
+                {
+                    "label": "every declared figure appears in the rendered pages",
+                    "result": "PASS",
+                    "detail": "declared 1, rendered images 1"
+                },
+                {
+                    "label": "rendered figure keeps its aspect ratio (no distortion or crop)",
+                    "result": "PASS",
+                    "detail": "360.0x90.0 pt, ratio 4.0 vs intrinsic 4.0 (0.0%)"
+                },
+                {
+                    "label": "figure block rendered solid inside the page body",
+                    "result": "PASS",
+                    "detail": "12.677x3.187 cm at (4.156,13.785) fill 1.0, ratio delta 0.557%"
+                }
+            ],
+            "failed_checks": []
+        },
+        {
+            "role": "batch:english_single",
+            "name": "01_english.docx",
+            "packaged_output": true,
+            "exercises_accepted_irreducible_limitation": false,
+            "profile": null,
+            "checks": [
+                {
+                    "label": "no rendered text character is lost",
+                    "result": "PASS",
+                    "detail": "document text characters 145, rendered characters 288, dropped 0 ({})"
+                },
+                {
+                    "label": "no rendered content outside the page",
+                    "result": "PASS",
+                    "detail": "pages with content outside the page: []"
+                },
+                {
+                    "label": "no rendered content outside the usable text body",
+                    "result": "PASS",
+                    "detail": "pages with content outside the text body: []"
+                },
+                {
+                    "label": "every page renders content",
+                    "result": "PASS",
+                    "detail": "pages 3, blank pages []"
+                },
+                {
+                    "label": "TOC heading is present and rendered",
+                    "result": "PASS",
+                    "detail": "heading 'Table of Contents' rendered=True"
+                },
+                {
+                    "label": "TOC entries are rendered",
+                    "result": "PASS",
+                    "detail": "1/1 cached entries found in the rendered pages"
+                },
+                {
+                    "label": "TOC field is a live field with page numbers and navigation",
+                    "result": "PASS",
+                    "detail": "Word field count=1, entries=1, hyperlinks=True, hyperlink runs=1"
+                },
+                {
+                    "label": "TOC entries carry page numbers",
+                    "result": "PASS",
+                    "detail": "Word entries ['English Document\\t3']"
+                },
+                {
+                    "label": "every declared figure appears in the rendered pages",
+                    "result": "PASS",
+                    "detail": "declared 0, rendered images 0"
+                }
+            ],
+            "failed_checks": []
+        },
+        {
+            "role": "batch:wide_table_figure",
+            "name": "Wide_Table_Report.docx",
+            "packaged_output": true,
+            "exercises_accepted_irreducible_limitation": false,
+            "profile": null,
+            "checks": [
+                {
+                    "label": "no rendered text character is lost",
+                    "result": "PASS",
+                    "detail": "document text characters 253, rendered characters 720, dropped 0 ({})"
+                },
+                {
+                    "label": "no rendered content outside the page",
+                    "result": "PASS",
+                    "detail": "pages with content outside the page: []"
+                },
+                {
+                    "label": "no rendered content outside the usable text body",
+                    "result": "PASS",
+                    "detail": "pages with content outside the text body: []"
+                },
+                {
+                    "label": "every page renders content",
+                    "result": "PASS",
+                    "detail": "pages 3, blank pages []"
+                },
+                {
+                    "label": "TOC heading is present and rendered",
+                    "result": "PASS",
+                    "detail": "heading 'Table of Contents' rendered=True"
+                },
+                {
+                    "label": "TOC entries are rendered",
+                    "result": "PASS",
+                    "detail": "3/3 cached entries found in the rendered pages"
+                },
+                {
+                    "label": "TOC field is a live field with page numbers and navigation",
+                    "result": "PASS",
+                    "detail": "Word field count=1, entries=3, hyperlinks=True, hyperlink runs=3"
+                },
+                {
+                    "label": "TOC entries carry page numbers",
+                    "result": "PASS",
+                    "detail": "Word entries ['Wide Table Report\\t3', 'Data\\t3', 'Figure\\t3']"
+                },
+                {
+                    "label": "table 1: rendered width inside the usable page body",
+                    "result": "PASS",
+                    "detail": "8 columns, rendered 15.921 cm, left 2.5259 cm, right edge 18.4469 cm vs text body 2.54-18.461 cm"
+                },
+                {
+                    "label": "table 1: header cells rendered",
+                    "result": "PASS",
+                    "detail": "header cells ['Region', 'Q1', 'Q2', 'Q3', 'Q4', 'Notes', 'Owner', 'Status']"
+                },
+                {
+                    "label": "every declared figure appears in the rendered pages",
+                    "result": "PASS",
+                    "detail": "declared 1, rendered images 1"
+                },
+                {
+                    "label": "rendered figure keeps its aspect ratio (no distortion or crop)",
+                    "result": "PASS",
+                    "detail": "360.0x90.0 pt, ratio 4.0 vs intrinsic 4.0 (0.0%)"
+                },
+                {
+                    "label": "figure block rendered solid inside the page body",
+                    "result": "PASS",
+                    "detail": "12.677x3.187 cm at (4.156,10.899) fill 1.0, ratio delta 0.557%"
+                }
+            ],
+            "failed_checks": []
+        },
+        {
+            "role": "batch:after_failure",
+            "name": "04_after_failure.docx",
+            "packaged_output": true,
+            "exercises_accepted_irreducible_limitation": false,
+            "profile": null,
+            "checks": [
+                {
+                    "label": "no rendered text character is lost",
+                    "result": "PASS",
+                    "detail": "document text characters 111, rendered characters 265, dropped 0 ({})"
+                },
+                {
+                    "label": "no rendered content outside the page",
+                    "result": "PASS",
+                    "detail": "pages with content outside the page: []"
+                },
+                {
+                    "label": "no rendered content outside the usable text body",
+                    "result": "PASS",
+                    "detail": "pages with content outside the text body: []"
+                },
+                {
+                    "label": "every page renders content",
+                    "result": "PASS",
+                    "detail": "pages 3, blank pages []"
+                },
+                {
+                    "label": "TOC heading is present and rendered",
+                    "result": "PASS",
+                    "detail": "heading 'Table of Contents' rendered=True"
+                },
+                {
+                    "label": "TOC entries are rendered",
+                    "result": "PASS",
+                    "detail": "1/1 cached entries found in the rendered pages"
+                },
+                {
+                    "label": "TOC field is a live field with page numbers and navigation",
+                    "result": "PASS",
+                    "detail": "Word field count=1, entries=1, hyperlinks=True, hyperlink runs=1"
+                },
+                {
+                    "label": "TOC entries carry page numbers",
+                    "result": "PASS",
+                    "detail": "Word entries ['After Failure\\t3']"
+                },
+                {
+                    "label": "every declared figure appears in the rendered pages",
+                    "result": "PASS",
+                    "detail": "declared 0, rendered images 0"
+                }
+            ],
+            "failed_checks": []
+        },
+        {
+            "role": "table:irreducible_wide_program_d",
+            "name": "irreducible_table.docx",
+            "packaged_output": false,
+            "exercises_accepted_irreducible_limitation": true,
+            "profile": null,
+            "checks": [
+                {
+                    "label": "no rendered text character is lost",
+                    "result": "KNOWN_ACCEPTED_LIMITATION",
+                    "detail": "document text characters 94, rendered characters 86, dropped 8 ({'H': 2, '2': 2, '3': 1, '4': 1, 'a': 2}); the table is wider than the printable page, so the trailing columns cannot be printed on one page - the limitation accepted by Program D (RENDER006, PASS_WITH_WARN)"
+                },
+                {
+                    "label": "no rendered content outside the page",
+                    "result": "PASS",
+                    "detail": "pages with content outside the page: []"
+                },
+                {
+                    "label": "no rendered content outside the usable text body",
+                    "result": "KNOWN_ACCEPTED_LIMITATION",
+                    "detail": "pages with content outside the text body: [2]"
+                },
+                {
+                    "label": "every page renders content",
+                    "result": "KNOWN_ACCEPTED_LIMITATION",
+                    "detail": "pages 3, blank pages ['irreducible_table-3.png']; the Program D fixture's trailing empty section renders an empty page"
+                },
+                {
+                    "label": "TOC coverage",
+                    "result": "PASS",
+                    "detail": "not applicable: this artifact declares no table of contents"
+                },
+                {
+                    "label": "table 1: rendered width inside the usable page body",
+                    "result": "KNOWN_ACCEPTED_LIMITATION",
+                    "detail": "25 columns, rendered 29.9994 cm, left 2.5259 cm, right edge 32.5253 cm vs text body 2.54-18.461 cm"
+                },
+                {
+                    "label": "table 1: header cells rendered",
+                    "result": "PASS",
+                    "detail": "header cells ['H0', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'H7']"
+                },
+                {
+                    "label": "every declared figure appears in the rendered pages",
+                    "result": "PASS",
+                    "detail": "declared 0, rendered images 0"
+                }
+            ],
+            "failed_checks": [
+                {
+                    "label": "no rendered text character is lost",
+                    "result": "KNOWN_ACCEPTED_LIMITATION",
+                    "detail": "document text characters 94, rendered characters 86, dropped 8 ({'H': 2, '2': 2, '3': 1, '4': 1, 'a': 2}); the table is wider than the printable page, so the trailing columns cannot be printed on one page - the limitation accepted by Program D (RENDER006, PASS_WITH_WARN)"
+                },
+                {
+                    "label": "no rendered content outside the usable text body",
+                    "result": "KNOWN_ACCEPTED_LIMITATION",
+                    "detail": "pages with content outside the text body: [2]"
+                },
+                {
+                    "label": "every page renders content",
+                    "result": "KNOWN_ACCEPTED_LIMITATION",
+                    "detail": "pages 3, blank pages ['irreducible_table-3.png']; the Program D fixture's trailing empty section renders an empty page"
+                },
+                {
+                    "label": "table 1: rendered width inside the usable page body",
+                    "result": "KNOWN_ACCEPTED_LIMITATION",
+                    "detail": "25 columns, rendered 29.9994 cm, left 2.5259 cm, right edge 32.5253 cm vs text body 2.54-18.461 cm"
+                }
+            ]
+        }
+    ]
+}
