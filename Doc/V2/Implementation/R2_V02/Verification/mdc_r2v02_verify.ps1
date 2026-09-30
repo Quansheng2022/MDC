@@ -23,7 +23,7 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true)]
-    [ValidateSet('WP01', 'WP02', 'WP03', 'WP04')]
+    [ValidateSet('WP01', 'WP02', 'WP03', 'WP04', 'DIAG03')]
     [string]$Phase,
     [string]$WorkRoot,
     [string]$EvidenceDir,
@@ -382,15 +382,87 @@ function Get-ProfileName {
     return $value
 }
 
-function Set-ProfileByName {
+function Wait-QueueRows {
     <#
-        Select an output profile through the real selector.  UI Automation
-        SelectionItemPattern is used first; a coordinate click inside the
-        combo popup is the bounded fallback.  The produced value is always
-        read back, so a silent mismatch can never pass.
+        Return the batch-list rows once the expected count is visible.  The Qt
+        list is re-rendered after every selection change, so the count is polled
+        instead of read once.
     #>
     param(
         [System.Windows.Automation.AutomationElement]$Window,
+        [int]$Expected,
+        [int]$TimeoutSeconds = 15
+    )
+    $deadline = (Get-Date).AddSeconds($TimeoutSeconds)
+    $rows = @()
+    while ((Get-Date) -lt $deadline) {
+        $rows = @((Get-UiSnapshot -Window $Window).list_rows)
+        if ($rows.Count -eq $Expected) { return $rows }
+        Start-Sleep -Milliseconds 300
+    }
+    return $rows
+}
+
+function Ensure-SingleSource {
+    <#
+        Leave the window in the accepted *single-file* selection state for
+        ``FilePath``.
+
+        The frozen GUI shows its batch surface (ordered file list, Clear button)
+        only for a selection of two or more files, so a one-file selection has no
+        visible list at all.  The robust discriminator is therefore "the batch
+        surface is not shown": if it is, a stale multi-file selection is still in
+        place, and it is cleared and the source re-selected.
+    #>
+    param(
+        [System.Windows.Automation.AutomationElement]$Window,
+        [int]$ProcessId,
+        [Parameter(Mandatory = $true)][string]$FilePath,
+        [int]$Attempts = 4
+    )
+    $rows = @()
+    $selected = @()
+    for ($attempt = 1; $attempt -le $Attempts; $attempt++) {
+        for ($clear = 1; $clear -le 4; $clear++) {
+            $rows = @((Get-UiSnapshot -Window $Window).list_rows)
+            if ($rows.Count -lt 2) { break }
+            [void](Invoke-ButtonByName -Window $Window -NamePattern '^Clear$' -TimeoutSeconds 10)
+            Start-Sleep -Milliseconds 700
+        }
+        $selected = Select-Sources -Window $Window -ProcessId $ProcessId -Paths @($FilePath)
+        Start-Sleep -Milliseconds 600
+        $rows = @((Get-UiSnapshot -Window $Window).list_rows)
+        $dialogClosed = [bool](($selected | Select-Object -First 1).dialog_closed)
+        if ($rows.Count -lt 2 -and $dialogClosed) {
+            return [ordered]@{
+                ok             = $true
+                attempts       = $attempt
+                batch_rows     = $rows
+                batch_surface  = ($rows.Count -ge 2)
+                dialog_closed  = $dialogClosed
+            }
+        }
+    }
+    return [ordered]@{
+        ok            = $false
+        attempts      = $Attempts
+        batch_rows    = $rows
+        batch_surface = ($rows.Count -ge 2)
+        dialog_closed = [bool](($selected | Select-Object -First 1).dialog_closed)
+    }
+}
+
+function Set-ProfileByName {
+    <#
+        Select an output profile through the real selector.  UI Automation
+        SelectionItemPattern is offered by Qt's popup list items but is a no-op
+        here, so the selector is driven with a real mouse click delivered to the
+        combo popup's own window.  The produced value is always read back, so a
+        silent mismatch can never pass.
+    #>
+    param(
+        [System.Windows.Automation.AutomationElement]$Window,
+        [int]$ProcessId,
         [Parameter(Mandatory = $true)][string]$DisplayName
     )
     $before = Get-ProfileName -Window $Window
@@ -415,37 +487,56 @@ function Set-ProfileByName {
         }
         if (-not $item) { Start-Sleep -Milliseconds 250 }
     }
+    $after = $before
     if ($item) {
+        # 1. UI Automation selection (Qt accepts the pattern but does not apply it).
         try {
             $select = $item.GetCurrentPattern([System.Windows.Automation.SelectionItemPattern]::Pattern)
             $select.Select()
             $method = 'uia-selection-item'
+            Start-Sleep -Milliseconds 400
+            $after = Get-ProfileName -Window $Window
         } catch {
+            $after = $before
+        }
+
+        # 2. Real mouse click inside the combo popup window itself.
+        if ($after -ne $DisplayName) {
+            $popup = [IntPtr]::Zero
+            foreach ($handle in [MdcWindows]::Handles([uint32]$ProcessId)) {
+                if ([MdcWindows]::ClassName($handle) -match 'QWindowPopup') { $popup = $handle; break }
+            }
             $rect = $item.Current.BoundingRectangle
-            if ($rect.Width -gt 0 -and $rect.Height -gt 0) {
+            if ($popup -ne [IntPtr]::Zero -and $rect.Width -gt 0 -and $rect.Height -gt 0) {
                 $point = New-Object MdcInput+POINT
                 $point.X = [int]($rect.X + $rect.Width / 2)
                 $point.Y = [int]($rect.Y + $rect.Height / 2)
-                [void][MdcInput]::ScreenToClient($mainHandle, [ref]$point)
+                [void][MdcInput]::ScreenToClient($popup, [ref]$point)
                 $lparam = [IntPtr](($point.Y -shl 16) -bor ($point.X -band 0xFFFF))
-                [void][MdcInput]::SendMessage($mainHandle, 0x0200, [IntPtr]::Zero, $lparam)
-                Start-Sleep -Milliseconds 60
-                [void][MdcInput]::SendMessage($mainHandle, 0x0201, [IntPtr]1, $lparam)
-                Start-Sleep -Milliseconds 90
-                [void][MdcInput]::SendMessage($mainHandle, 0x0202, [IntPtr]::Zero, $lparam)
-                $method = 'popup-click'
+                [void][MdcInput]::SendMessage($popup, 0x0200, [IntPtr]::Zero, $lparam)
+                Start-Sleep -Milliseconds 80
+                [void][MdcInput]::SendMessage($popup, 0x0201, [IntPtr]1, $lparam)
+                Start-Sleep -Milliseconds 120
+                [void][MdcInput]::SendMessage($popup, 0x0202, [IntPtr]::Zero, $lparam)
+                $method = 'popup-window-click'
+                Start-Sleep -Milliseconds 700
+                $after = Get-ProfileName -Window $Window
+            } elseif ($popup -eq [IntPtr]::Zero) {
+                $method = "$method+popup-window-not-found"
             }
         }
     }
-    Start-Sleep -Milliseconds 500
-    try { $expand.Collapse() } catch { }
+    if ($expand.Current.ExpandCollapseState -eq [System.Windows.Automation.ExpandCollapseState]::Expanded) {
+        try { $expand.Collapse() } catch { }
+    }
     Start-Sleep -Milliseconds 500
 
-    $after = Get-ProfileName -Window $Window
+    $final = Get-ProfileName -Window $Window
     return [ordered]@{
-        ok     = ($after -eq $DisplayName)
+        ok     = ($final -eq $DisplayName)
         before = $before
-        after  = $after
+        after  = $final
+        after_select_pattern = $after
         method = $method
     }
 }
@@ -591,8 +682,16 @@ function Get-DocxInventory {
 
 function Invoke-PythonStep {
     param([string[]]$Arguments, [string]$Label)
-    $output = & $PythonExe @Arguments 2>&1
-    $code = $LASTEXITCODE
+    # Native stderr must be captured as text, not promoted to a terminating
+    # error by the strict preference in force for the rest of the run.
+    $previous = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try {
+        $output = & $PythonExe @Arguments 2>&1
+        $code = $LASTEXITCODE
+    } finally {
+        $ErrorActionPreference = $previous
+    }
     Write-Step ("python {0} exit={1}" -f $Label, $code)
     foreach ($line in $output) { Write-Host ("    {0}" -f $line) }
     return [ordered]@{ exit_code = $code; output = @($output) }
@@ -602,7 +701,10 @@ function Save-EvidenceJson {
     param([string]$Name, [hashtable]$Payload)
     New-Item -ItemType Directory -Force -Path $EvidenceDir | Out-Null
     $path = Join-Path $EvidenceDir $Name
-    $Payload | ConvertTo-Json -Depth 10 | Set-Content -LiteralPath $path -Encoding UTF8
+    # BOM-less UTF-8: the raw record is consumed by tooling (and read back here),
+    # and Windows PowerShell 5.1's -Encoding UTF8 would prepend a BOM.
+    $json = $Payload | ConvertTo-Json -Depth 10
+    [System.IO.File]::WriteAllText($path, $json, [System.Text.UTF8Encoding]::new($false))
     return $path
 }
 
@@ -788,13 +890,12 @@ try {
             $fixture = Invoke-PythonStep -Label 'fixtures' -Arguments @(
                 (Join-Path $PSScriptRoot 'make_fixtures.py'), '--work', $WorkDir, '--set', 'wp02')
             $Result['fixtures'] = $fixture
-            $sources = @(
-                (Join-Path $WorkDir '01_english.md'),
-                (Join-Path $WorkDir '02_wide_table_figure.md'),
-                (Join-Path $WorkDir '03_failure.md'),
-                (Join-Path $WorkDir '04_after_failure.md')
-            )
+            $manifest = Get-Content -LiteralPath (Join-Path $WorkDir 'fixture_manifest.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+            $sources = @($manifest.sources | ForEach-Object { Join-Path $WorkDir $_.file })
+            $expectedNames = @($manifest.sources | Where-Object { $_.expected_output } |
+                ForEach-Object { $_.expected_output }) | Sort-Object
             $Result['sources'] = $sources
+            $Result['expected_outputs'] = $expectedNames
 
             $app = Start-PackagedAppDetached -Directory $WorkDir -Sanitize
             $Result['process_id'] = $app.Id
@@ -810,6 +911,7 @@ try {
                 ("{0} of 4 file dialogs accepted a source" -f (($selected | Where-Object { $_.dialog_closed }).Count))
 
             $before = Get-UiSnapshot -Window $window
+            $before.list_rows = @(Wait-QueueRows -Window $window -Expected 4 -TimeoutSeconds 20)
             $Result['pre_run_snapshot'] = $before
             $expectedOrder = @('01_english.md', '02_wide_table_figure.md', '03_failure.md', '04_after_failure.md')
             $orderOk = ($before.list_rows.Count -eq 4)
@@ -902,7 +1004,6 @@ try {
             $inventory = Get-DocxInventory -Since $script:StartedAt
             $Result['docx_inventory'] = $inventory
             $names = @($inventory | ForEach-Object { $_.name } | Sort-Object)
-            $expectedNames = @('01_english.docx', '04_after_failure.docx', 'Wide_Table_Report.docx') | Sort-Object
             Add-Check 'output-count-and-naming' (($names -join ',') -eq ($expectedNames -join ',')) `
                 ("produced={0}" -f ($names -join ', '))
             Add-Check 'failed-item-produces-no-output' (-not ($names -contains '03_failure.docx')) `
@@ -922,14 +1023,11 @@ try {
             $fixture = Invoke-PythonStep -Label 'fixtures' -Arguments @(
                 (Join-Path $PSScriptRoot 'make_fixtures.py'), '--work', $WorkDir, '--set', 'wp03')
             $Result['fixtures'] = $fixture
-            $matrix = @(
-                [ordered]@{ name = 'matrix_professional_report'; profile = 'Professional Report'; id = 'professional_report'; file = 'matrix_professional_report.md'; expected = 'Matrix_Professional_Report.docx' },
-                [ordered]@{ name = 'matrix_business_report'; profile = 'Business Report'; id = 'business_report'; file = 'matrix_business_report.md'; expected = 'Matrix_Business_Report.docx' },
-                [ordered]@{ name = 'matrix_academic'; profile = 'Academic'; id = 'academic'; file = 'matrix_academic.md'; expected = 'Matrix_Academic.docx' },
-                [ordered]@{ name = 'matrix_technical'; profile = 'Technical'; id = 'technical'; file = 'matrix_technical.md'; expected = 'Matrix_Technical.docx' },
-                [ordered]@{ name = 'matrix_clean_minimal'; profile = 'Clean / Minimal'; id = 'clean_minimal'; file = 'matrix_clean_minimal.md'; expected = 'Matrix_Clean_Minimal.docx' },
-                [ordered]@{ name = 'toc_cn'; profile = 'Professional Report'; id = 'professional_report'; file = 'toc_cn.md'; expected = '竞争基础集成验证.docx'; kind = 'toc_control' }
-            )
+            $manifest = Get-Content -LiteralPath (Join-Path $WorkDir 'fixture_manifest.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+            $matrix = @($manifest.runs)
+            $Result['plan'] = @($matrix | ForEach-Object {
+                    [ordered]@{ name = $_.name; profile_id = $_.profile_id; expected_output = $_.expected_output }
+                })
 
             $app = Start-PackagedAppDetached -Directory $WorkDir -Sanitize
             $Result['process_id'] = $app.Id
@@ -941,36 +1039,61 @@ try {
             $runs = @()
             $profileObserved = @{}
             foreach ($entry in $matrix) {
-                if (-not (Clear-Selection -Window $window)) { }
-                $selected = Select-Sources -Window $window -ProcessId $app.Id -Paths @((Join-Path $WorkDir $entry.file))
-                $profileResult = Set-ProfileByName -Window $window -DisplayName $entry.profile
+                # 1. Leave exactly the one fixture source queued (a stale queue
+                #    would silently turn this run into a multi-file batch).
+                Write-Step ("{0}: prepare single-source selection" -f $entry.name)
+                $prepared = Ensure-SingleSource -Window $window -ProcessId $app.Id `
+                    -FilePath (Join-Path $WorkDir $entry.file)
+                Add-Check ("{0}: single-file selection state" -f $entry.name) $prepared.ok `
+                    ("attempts={0}; dialog accepted={1}; batch surface shown={2}; batch rows={3}" -f
+                        $prepared.attempts, $prepared.dialog_closed, $prepared.batch_surface,
+                        ($prepared.batch_rows -join ' | '))
+
+                # 3. Profile selection, verified by read-back (one bounded retry).
+                Write-Step ("{0}: set profile '{1}'" -f $entry.name, $entry.profile)
+                $profileResult = Set-ProfileByName -Window $window -ProcessId $app.Id -DisplayName $entry.profile
+                if (-not $profileResult.ok) {
+                    $profileResult = Set-ProfileByName -Window $window -ProcessId $app.Id -DisplayName $entry.profile
+                }
                 $profileObserved[$entry.name] = $profileResult
+                Write-Step ("{0}: profile before='{1}' after='{2}' method={3}" -f
+                    $entry.name, $profileResult.before, $profileResult.after, $profileResult.method)
+
+                # 4. Convert and wait for the single-file terminal surface.
+                Write-Step ("{0}: convert" -f $entry.name)
                 $converted = Invoke-Convert -Window $window
-                $outcome = Wait-SingleOutcome -Window $window -TimeoutSeconds $ConversionTimeoutSeconds
-                $expectedPath = Join-Path $OutputDir $entry.expected
+                $outcome = Wait-SingleOutcome -Window $window -TimeoutSeconds 180
+                Write-Step ("{0}: outcome={1} after {2}s" -f $entry.name, $outcome.outcome, $outcome.seconds)
+
+                # 5. Collect the produced document.
+                $expectedPath = Join-Path $OutputDir $entry.expected_output
                 $exists = Test-Path -LiteralPath $expectedPath
                 $collected = $null
                 if ($exists) {
-                    $collected = Join-Path $CollectDir $entry.expected
+                    $collected = Join-Path $CollectDir $entry.expected_output
                     Copy-Item -LiteralPath $expectedPath -Destination $collected -Force
                 }
+                $samples = @($outcome.samples)
                 $runs += [ordered]@{
                     name            = $entry.name
-                    profile         = $entry.id
+                    profile         = $entry.profile_id
                     profile_display = $entry.profile
                     kind            = $entry.kind
                     source          = (Join-Path $WorkDir $entry.file)
                     docx            = $collected
-                    expected_name   = $entry.expected
+                    expected_name   = $entry.expected_output
                     produced        = $exists
                     outcome         = $outcome.outcome
                     seconds         = $outcome.seconds
                     convert_started = $converted
-                    dialog_closed   = ($selected | Select-Object -First 1).dialog_closed
+                    dialog_closed   = $prepared.dialog_closed
+                    prepare         = $prepared
+                    first_sample    = $(if ($samples.Count -gt 0) { $samples[0] } else { $null })
+                    last_sample     = $(if ($samples.Count -gt 0) { $samples[$samples.Count - 1] } else { $null })
                 }
                 Add-Check ("{0}: packaged conversion succeeds" -f $entry.name) `
                     (($outcome.outcome -eq 'SUCCESS') -and $exists -and $converted) `
-                    ("outcome={0} after {1}s; produced {2}" -f $outcome.outcome, $outcome.seconds, $entry.expected)
+                    ("outcome={0} after {1}s; produced {2}" -f $outcome.outcome, $outcome.seconds, $entry.expected_output)
                 Add-Check ("{0}: profile selector set to {1}" -f $entry.name, $entry.profile) `
                     ([bool]$profileResult.ok) `
                     ("before='{0}' after='{1}' method={2}" -f $profileResult.before, $profileResult.after, $profileResult.method)
@@ -992,12 +1115,16 @@ try {
                     }
                 }
             }
-            $payload | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $runsPath -Encoding UTF8
-            $parity = Invoke-PythonStep -Label 'parity' -Arguments @(
+            [System.IO.File]::WriteAllText(
+                $runsPath,
+                ($payload | ConvertTo-Json -Depth 5),
+                [System.Text.UTF8Encoding]::new($false))
+            $parityArguments = @(
                 (Join-Path $PSScriptRoot 'verify_packaged_parity.py'),
                 '--runs', $runsPath,
                 '--output', $reportPath,
                 '--repo-root', $RepoRoot)
+            $parity = Invoke-PythonStep -Label 'parity' -Arguments $parityArguments
             $Result['parity_run'] = $parity
             $Result['parity_report_path'] = $reportPath
             if (Test-Path -LiteralPath $reportPath) {
@@ -1011,6 +1138,111 @@ try {
             } else {
                 Add-Check 'packaged-profile-and-feature-parity' $false 'parity report was not produced'
             }
+        }
+
+        'DIAG03' {
+            $fixture = Invoke-PythonStep -Label 'fixtures' -Arguments @(
+                (Join-Path $PSScriptRoot 'make_fixtures.py'), '--work', $WorkDir, '--set', 'wp03')
+            $Result['fixtures'] = $fixture
+
+            function Get-TreeDump {
+                param([System.Windows.Automation.AutomationElement]$Root)
+                $items = @()
+                foreach ($element in (Get-DescendantsSafe -Root $Root)) {
+                    $items += ("{0}|{1}|enabled={2}|offscreen={3}" -f
+                        $element.Current.ControlType.ProgrammaticName.Split('.')[-1],
+                        $element.Current.Name,
+                        $element.Current.IsEnabled,
+                        $element.Current.IsOffscreen)
+                }
+                return $items
+            }
+
+            $app = Start-PackagedAppDetached -Directory $WorkDir -Sanitize
+            $Result['process_id'] = $app.Id
+            $Result['child_environment'] = $script:ChildEnvironment
+            $window = Wait-MainWindow -ProcessId $app.Id -TimeoutSeconds $StartupTimeoutSeconds
+            Add-Check 'diag-launch' ([bool]$window) "pid $($app.Id)"
+            if (-not $window) { throw 'the packaged GUI did not start' }
+
+            $diag = [ordered]@{}
+            $diag['combo_value_initial'] = Get-ProfileName -Window $window
+            $diag['tree_initial'] = Get-TreeDump -Root $window
+
+            $selected = Select-Sources -Window $window -ProcessId $app.Id `
+                -Paths @((Join-Path $WorkDir 'matrix_business_report.md'))
+            $diag['selection'] = $selected
+            $diag['combo_value_after_select'] = Get-ProfileName -Window $window
+            $diag['tree_after_select'] = Get-TreeDump -Root $window
+
+            $combo = Find-Element -Root $window -NamePattern '^Output profile$' -TimeoutSeconds 10
+            $diag['combo_found'] = [bool]$combo
+            if ($combo) {
+                $diag['combo_patterns'] = @($combo.GetSupportedPatterns() | ForEach-Object { $_.ProgrammaticName })
+                $expand = $combo.GetCurrentPattern([System.Windows.Automation.ExpandCollapsePattern]::Pattern)
+                $expand.Expand()
+                Start-Sleep -Milliseconds 1200
+                $diag['expanded_state'] = $expand.Current.ExpandCollapseState.ToString()
+                $itemInfo = @()
+                $targetItem = $null
+                foreach ($element in (Get-DescendantsSafe -Root $window)) {
+                    if ($element.Current.ControlType -ne $ControlType::ListItem) { continue }
+                    $rect = $element.Current.BoundingRectangle
+                    $itemInfo += ("{0}|rect={1},{2},{3}x{4}|handle={5}|patterns={6}" -f
+                        $element.Current.Name, [int]$rect.X, [int]$rect.Y, [int]$rect.Width, [int]$rect.Height,
+                        $element.Current.NativeWindowHandle,
+                        (@($element.GetSupportedPatterns() | ForEach-Object { $_.ProgrammaticName }) -join '+'))
+                    if ($element.Current.Name -eq 'Business Report') { $targetItem = $element }
+                }
+                $diag['popup_items'] = $itemInfo
+                $diag['process_window_classes'] = @([MdcWindows]::Handles([uint32]$app.Id) | ForEach-Object {
+                        "{0}|{1}|{2}" -f [MdcWindows]::ClassName($_), [MdcWindows]::Title($_), $_
+                    })
+                if ($targetItem) {
+                    $diag['target_handle'] = $targetItem.Current.NativeWindowHandle
+                    try {
+                        $select = $targetItem.GetCurrentPattern([System.Windows.Automation.SelectionItemPattern]::Pattern)
+                        $select.Select()
+                        $diag['select_method'] = 'uia-selection-item'
+                    } catch {
+                        $diag['select_exception'] = $_.Exception.Message
+                    }
+                    Start-Sleep -Milliseconds 800
+                    $diag['combo_value_after_select_pattern'] = Get-ProfileName -Window $window
+                    $diag['expanded_state_after'] = $expand.Current.ExpandCollapseState.ToString()
+                } else {
+                    $diag['target_handle'] = 'not found'
+                }
+                try { $expand.Collapse() } catch { }
+                Start-Sleep -Milliseconds 600
+                $diag['combo_value_after_collapse'] = Get-ProfileName -Window $window
+            }
+
+            $diag['convert_clicked'] = (Invoke-Convert -Window $window)
+            $timeline = @()
+            for ($tick = 0; $tick -lt 25; $tick++) {
+                $snapshot = Get-UiSnapshot -Window $window
+                $entry = [ordered]@{
+                    tick              = $tick
+                    convert_enabled   = $snapshot.convert_enabled
+                    open_document     = $snapshot.open_document
+                    details           = $snapshot.details
+                    summary_visible   = $snapshot.summary_visible
+                    list_rows         = $snapshot.list_rows
+                    buttons           = @((Get-DescendantsSafe -Root $window) |
+                        Where-Object { $_.Current.ControlType -eq $ControlType::Button } |
+                        ForEach-Object { "{0}:{1}" -f $_.Current.Name, $_.Current.IsEnabled })
+                    docx              = @(Get-ChildItem -LiteralPath $OutputDir -Filter '*.docx' -File -ErrorAction SilentlyContinue |
+                        ForEach-Object { $_.Name })
+                }
+                $timeline += $entry
+                if ($snapshot.open_document -or $snapshot.details) { break }
+                Start-Sleep -Seconds 2
+            }
+            $diag['timeline'] = $timeline
+            $diag['tree_final'] = Get-TreeDump -Root $window
+            $Result['diag'] = $diag
+            Add-Check 'diag-complete' $true ("timeline ticks={0}" -f $timeline.Count)
         }
 
         'WP04' {
@@ -1099,3 +1331,4 @@ Write-Host ''
 Write-Host ("RESULT: {0} ({1} failing check(s))" -f $Result['status'], $script:Failures.Count)
 if ($script:Failures.Count -gt 0) { exit 1 }
 exit 0
+

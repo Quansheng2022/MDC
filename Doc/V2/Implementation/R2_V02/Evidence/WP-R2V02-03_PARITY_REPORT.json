@@ -1,0 +1,1222 @@
+{
+  "checks": [
+    {
+      "label": "matrix_professional_report: packaged DOCX opens",
+      "passed": true,
+      "detail": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\collected\\Matrix_Professional_Report.docx"
+    },
+    {
+      "label": "professional_report: profile margins reach the packaged artifact",
+      "passed": true,
+      "detail": "margins(L,R,T,B)=(2.54, 2.54, 2.54, 2.54)"
+    },
+    {
+      "label": "professional_report: effective content box matches R2-V01",
+      "passed": true,
+      "detail": "content=15.921x24.62 expected=15.921x24.62"
+    },
+    {
+      "label": "professional_report: TOC heading is the English title",
+      "passed": true,
+      "detail": "heading='Table of Contents'"
+    },
+    {
+      "label": "professional_report: canonical TOC field present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "professional_report: TOC caches the document headings",
+      "passed": true,
+      "detail": "entries=['Competitive Foundation Report', 'Architecture', 'Financial Overview', 'Projected Growth', 'Page Capped Figure', 'Notes', '']"
+    },
+    {
+      "label": "professional_report: normal table cells unchanged",
+      "passed": true,
+      "detail": "cells=[['Component', 'Authority', 'Status'], ['Parser', 'markdown-it', 'frozen'], ['Renderer', 'WordRenderer', 'frozen'], ['QA', 'compiler', 'frozen']]"
+    },
+    {
+      "label": "professional_report: wide table fits the profile content width",
+      "passed": true,
+      "detail": "columns=8 total=15.921 content=15.921"
+    },
+    {
+      "label": "professional_report: wide table respects the 1.2 cm column floor",
+      "passed": true,
+      "detail": "min_column=1.7974"
+    },
+    {
+      "label": "professional_report: wide table keeps every cell (no mutation)",
+      "passed": true,
+      "detail": "rows=5 columns=8 first='North'"
+    },
+    {
+      "label": "professional_report: both figures rendered",
+      "passed": true,
+      "detail": "figures=[{'width_cm': 12.7, 'height_cm': 3.175, 'ratio': 4.0}, {'width_cm': 2.462, 'height_cm': 24.6204, 'ratio': 0.1}]"
+    },
+    {
+      "label": "professional_report: image_width target respected (5 in default, capped by content)",
+      "passed": true,
+      "detail": "width=12.7 target=12.7"
+    },
+    {
+      "label": "professional_report: wide figure aspect ratio preserved (4:1)",
+      "passed": true,
+      "detail": "ratio=4.0"
+    },
+    {
+      "label": "professional_report: page-height cap exercised on the tall figure",
+      "passed": true,
+      "detail": "height=24.6204 content_height=24.62"
+    },
+    {
+      "label": "professional_report: tall figure aspect ratio preserved (1:10)",
+      "passed": true,
+      "detail": "ratio=0.1"
+    },
+    {
+      "label": "professional_report: figures stay inside the content box",
+      "passed": true,
+      "detail": "figures=[{'width_cm': 12.7, 'height_cm': 3.175, 'ratio': 4.0}, {'width_cm': 2.462, 'height_cm': 24.6204, 'ratio': 0.1}] box=15.921x24.62"
+    },
+    {
+      "label": "matrix_business_report: packaged DOCX opens",
+      "passed": true,
+      "detail": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\collected\\Matrix_Business_Report.docx"
+    },
+    {
+      "label": "business_report: profile margins reach the packaged artifact",
+      "passed": true,
+      "detail": "margins(L,R,T,B)=(2.0, 2.0, 2.0, 2.0)"
+    },
+    {
+      "label": "business_report: effective content box matches R2-V01",
+      "passed": true,
+      "detail": "content=17.001x25.7 expected=17.0x25.7"
+    },
+    {
+      "label": "business_report: TOC heading is the English title",
+      "passed": true,
+      "detail": "heading='Table of Contents'"
+    },
+    {
+      "label": "business_report: canonical TOC field present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "business_report: TOC caches the document headings",
+      "passed": true,
+      "detail": "entries=['Competitive Foundation Report', 'Architecture', 'Financial Overview', 'Projected Growth', 'Page Capped Figure', 'Notes', '']"
+    },
+    {
+      "label": "business_report: normal table cells unchanged",
+      "passed": true,
+      "detail": "cells=[['Component', 'Authority', 'Status'], ['Parser', 'markdown-it', 'frozen'], ['Renderer', 'WordRenderer', 'frozen'], ['QA', 'compiler', 'frozen']]"
+    },
+    {
+      "label": "business_report: wide table fits the profile content width",
+      "passed": true,
+      "detail": "columns=8 total=17.0004 content=17.001"
+    },
+    {
+      "label": "business_report: wide table respects the 1.2 cm column floor",
+      "passed": true,
+      "detail": "min_column=1.9209"
+    },
+    {
+      "label": "business_report: wide table keeps every cell (no mutation)",
+      "passed": true,
+      "detail": "rows=5 columns=8 first='North'"
+    },
+    {
+      "label": "business_report: both figures rendered",
+      "passed": true,
+      "detail": "figures=[{'width_cm': 12.7, 'height_cm': 3.175, 'ratio': 4.0}, {'width_cm': 2.57, 'height_cm': 25.6999, 'ratio': 0.1}]"
+    },
+    {
+      "label": "business_report: image_width target respected (5 in default, capped by content)",
+      "passed": true,
+      "detail": "width=12.7 target=12.7"
+    },
+    {
+      "label": "business_report: wide figure aspect ratio preserved (4:1)",
+      "passed": true,
+      "detail": "ratio=4.0"
+    },
+    {
+      "label": "business_report: page-height cap exercised on the tall figure",
+      "passed": true,
+      "detail": "height=25.6999 content_height=25.7"
+    },
+    {
+      "label": "business_report: tall figure aspect ratio preserved (1:10)",
+      "passed": true,
+      "detail": "ratio=0.1"
+    },
+    {
+      "label": "business_report: figures stay inside the content box",
+      "passed": true,
+      "detail": "figures=[{'width_cm': 12.7, 'height_cm': 3.175, 'ratio': 4.0}, {'width_cm': 2.57, 'height_cm': 25.6999, 'ratio': 0.1}] box=17.001x25.7"
+    },
+    {
+      "label": "matrix_academic: packaged DOCX opens",
+      "passed": true,
+      "detail": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\collected\\Matrix_Academic.docx"
+    },
+    {
+      "label": "academic: profile margins reach the packaged artifact",
+      "passed": true,
+      "detail": "margins(L,R,T,B)=(3.0, 3.0, 2.54, 2.54)"
+    },
+    {
+      "label": "academic: effective content box matches R2-V01",
+      "passed": true,
+      "detail": "content=15.001x24.62 expected=15.0x24.62"
+    },
+    {
+      "label": "academic: TOC heading is the English title",
+      "passed": true,
+      "detail": "heading='Table of Contents'"
+    },
+    {
+      "label": "academic: canonical TOC field present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "academic: TOC caches the document headings",
+      "passed": true,
+      "detail": "entries=['Competitive Foundation Report', 'Architecture', 'Financial Overview', 'Projected Growth', 'Page Capped Figure', 'Notes', '']"
+    },
+    {
+      "label": "academic: normal table cells unchanged",
+      "passed": true,
+      "detail": "cells=[['Component', 'Authority', 'Status'], ['Parser', 'markdown-it', 'frozen'], ['Renderer', 'WordRenderer', 'frozen'], ['QA', 'compiler', 'frozen']]"
+    },
+    {
+      "label": "academic: wide table fits the profile content width",
+      "passed": true,
+      "detail": "columns=8 total=15.0002 content=15.001"
+    },
+    {
+      "label": "academic: wide table respects the 1.2 cm column floor",
+      "passed": true,
+      "detail": "min_column=1.6951"
+    },
+    {
+      "label": "academic: wide table keeps every cell (no mutation)",
+      "passed": true,
+      "detail": "rows=5 columns=8 first='North'"
+    },
+    {
+      "label": "academic: both figures rendered",
+      "passed": true,
+      "detail": "figures=[{'width_cm': 12.7, 'height_cm': 3.175, 'ratio': 4.0}, {'width_cm': 2.462, 'height_cm': 24.6204, 'ratio': 0.1}]"
+    },
+    {
+      "label": "academic: image_width target respected (5 in default, capped by content)",
+      "passed": true,
+      "detail": "width=12.7 target=12.7"
+    },
+    {
+      "label": "academic: wide figure aspect ratio preserved (4:1)",
+      "passed": true,
+      "detail": "ratio=4.0"
+    },
+    {
+      "label": "academic: page-height cap exercised on the tall figure",
+      "passed": true,
+      "detail": "height=24.6204 content_height=24.62"
+    },
+    {
+      "label": "academic: tall figure aspect ratio preserved (1:10)",
+      "passed": true,
+      "detail": "ratio=0.1"
+    },
+    {
+      "label": "academic: figures stay inside the content box",
+      "passed": true,
+      "detail": "figures=[{'width_cm': 12.7, 'height_cm': 3.175, 'ratio': 4.0}, {'width_cm': 2.462, 'height_cm': 24.6204, 'ratio': 0.1}] box=15.001x24.62"
+    },
+    {
+      "label": "matrix_technical: packaged DOCX opens",
+      "passed": true,
+      "detail": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\collected\\Matrix_Technical.docx"
+    },
+    {
+      "label": "technical: profile margins reach the packaged artifact",
+      "passed": true,
+      "detail": "margins(L,R,T,B)=(2.2, 2.2, 2.2, 2.2)"
+    },
+    {
+      "label": "technical: effective content box matches R2-V01",
+      "passed": true,
+      "detail": "content=16.601x25.3 expected=16.602x25.301"
+    },
+    {
+      "label": "technical: TOC heading is the English title",
+      "passed": true,
+      "detail": "heading='Table of Contents'"
+    },
+    {
+      "label": "technical: canonical TOC field present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "technical: TOC caches the document headings",
+      "passed": true,
+      "detail": "entries=['Competitive Foundation Report', 'Architecture', 'Financial Overview', 'Projected Growth', 'Page Capped Figure', 'Notes', '']"
+    },
+    {
+      "label": "technical: normal table cells unchanged",
+      "passed": true,
+      "detail": "cells=[['Component', 'Authority', 'Status'], ['Parser', 'markdown-it', 'frozen'], ['Renderer', 'WordRenderer', 'frozen'], ['QA', 'compiler', 'frozen']]"
+    },
+    {
+      "label": "technical: wide table fits the profile content width",
+      "passed": true,
+      "detail": "columns=8 total=16.6018 content=16.601"
+    },
+    {
+      "label": "technical: wide table respects the 1.2 cm column floor",
+      "passed": true,
+      "detail": "min_column=1.875"
+    },
+    {
+      "label": "technical: wide table keeps every cell (no mutation)",
+      "passed": true,
+      "detail": "rows=5 columns=8 first='North'"
+    },
+    {
+      "label": "technical: both figures rendered",
+      "passed": true,
+      "detail": "figures=[{'width_cm': 12.7, 'height_cm': 3.175, 'ratio': 4.0}, {'width_cm': 2.5301, 'height_cm': 25.3012, 'ratio': 0.1}]"
+    },
+    {
+      "label": "technical: image_width target respected (5 in default, capped by content)",
+      "passed": true,
+      "detail": "width=12.7 target=12.7"
+    },
+    {
+      "label": "technical: wide figure aspect ratio preserved (4:1)",
+      "passed": true,
+      "detail": "ratio=4.0"
+    },
+    {
+      "label": "technical: page-height cap exercised on the tall figure",
+      "passed": true,
+      "detail": "height=25.3012 content_height=25.3"
+    },
+    {
+      "label": "technical: tall figure aspect ratio preserved (1:10)",
+      "passed": true,
+      "detail": "ratio=0.1"
+    },
+    {
+      "label": "technical: figures stay inside the content box",
+      "passed": true,
+      "detail": "figures=[{'width_cm': 12.7, 'height_cm': 3.175, 'ratio': 4.0}, {'width_cm': 2.5301, 'height_cm': 25.3012, 'ratio': 0.1}] box=16.601x25.3"
+    },
+    {
+      "label": "matrix_clean_minimal: packaged DOCX opens",
+      "passed": true,
+      "detail": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\collected\\Matrix_Clean_Minimal.docx"
+    },
+    {
+      "label": "clean_minimal: profile margins reach the packaged artifact",
+      "passed": true,
+      "detail": "margins(L,R,T,B)=(2.54, 2.54, 2.54, 2.54)"
+    },
+    {
+      "label": "clean_minimal: effective content box matches R2-V01",
+      "passed": true,
+      "detail": "content=15.921x24.62 expected=15.921x24.62"
+    },
+    {
+      "label": "clean_minimal: TOC heading is the English title",
+      "passed": true,
+      "detail": "heading='Table of Contents'"
+    },
+    {
+      "label": "clean_minimal: canonical TOC field present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "clean_minimal: TOC caches the document headings",
+      "passed": true,
+      "detail": "entries=['Competitive Foundation Report', 'Architecture', 'Financial Overview', 'Projected Growth', 'Page Capped Figure', 'Notes', '']"
+    },
+    {
+      "label": "clean_minimal: normal table cells unchanged",
+      "passed": true,
+      "detail": "cells=[['Component', 'Authority', 'Status'], ['Parser', 'markdown-it', 'frozen'], ['Renderer', 'WordRenderer', 'frozen'], ['QA', 'compiler', 'frozen']]"
+    },
+    {
+      "label": "clean_minimal: wide table fits the profile content width",
+      "passed": true,
+      "detail": "columns=8 total=15.921 content=15.921"
+    },
+    {
+      "label": "clean_minimal: wide table respects the 1.2 cm column floor",
+      "passed": true,
+      "detail": "min_column=1.7974"
+    },
+    {
+      "label": "clean_minimal: wide table keeps every cell (no mutation)",
+      "passed": true,
+      "detail": "rows=5 columns=8 first='North'"
+    },
+    {
+      "label": "clean_minimal: both figures rendered",
+      "passed": true,
+      "detail": "figures=[{'width_cm': 12.7, 'height_cm': 3.175, 'ratio': 4.0}, {'width_cm': 2.462, 'height_cm': 24.6204, 'ratio': 0.1}]"
+    },
+    {
+      "label": "clean_minimal: image_width target respected (5 in default, capped by content)",
+      "passed": true,
+      "detail": "width=12.7 target=12.7"
+    },
+    {
+      "label": "clean_minimal: wide figure aspect ratio preserved (4:1)",
+      "passed": true,
+      "detail": "ratio=4.0"
+    },
+    {
+      "label": "clean_minimal: page-height cap exercised on the tall figure",
+      "passed": true,
+      "detail": "height=24.6204 content_height=24.62"
+    },
+    {
+      "label": "clean_minimal: tall figure aspect ratio preserved (1:10)",
+      "passed": true,
+      "detail": "ratio=0.1"
+    },
+    {
+      "label": "clean_minimal: figures stay inside the content box",
+      "passed": true,
+      "detail": "figures=[{'width_cm': 12.7, 'height_cm': 3.175, 'ratio': 4.0}, {'width_cm': 2.462, 'height_cm': 24.6204, 'ratio': 0.1}] box=15.921x24.62"
+    },
+    {
+      "label": "toc_cn: packaged DOCX opens",
+      "passed": true,
+      "detail": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\collected\\竞争基础集成验证.docx"
+    },
+    {
+      "label": "toc_cn: localized TOC heading",
+      "passed": true,
+      "detail": "heading='目录'"
+    },
+    {
+      "label": "toc_cn: canonical TOC field present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "toc_cn: profile geometry still applied",
+      "passed": true,
+      "detail": "margins(L,R)=(2.54,2.54)"
+    },
+    {
+      "label": "toc_cn: table and figure rendered",
+      "passed": true,
+      "detail": "tables=1 figures=1"
+    },
+    {
+      "label": "toc_cn: figure aspect ratio preserved (4:1)",
+      "passed": true,
+      "detail": "figures=[{'width_cm': 12.7, 'height_cm': 3.175, 'ratio': 4.0}]"
+    }
+  ],
+  "measurements": {
+    "matrix_professional_report": {
+      "path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\collected\\Matrix_Professional_Report.docx",
+      "document_xml_present": true,
+      "sections": [
+        {
+          "left": 2.54,
+          "right": 2.54,
+          "top": 2.54,
+          "bottom": 2.54,
+          "page_width": 21.001,
+          "page_height": 29.7
+        }
+      ],
+      "toc_heading": "Table of Contents",
+      "toc_entries": [
+        "Competitive Foundation Report",
+        "Architecture",
+        "Financial Overview",
+        "Projected Growth",
+        "Page Capped Figure",
+        "Notes",
+        ""
+      ],
+      "toc_entries_python_docx": [
+        ""
+      ],
+      "toc_field_present": true,
+      "tables": [
+        {
+          "rows": 4,
+          "columns": 3,
+          "widths_cm": [
+            1.7092,
+            2.2807,
+            1.1994
+          ],
+          "total_cm": 5.1893,
+          "min_cm": 1.1994,
+          "cells": [
+            [
+              "Component",
+              "Authority",
+              "Status"
+            ],
+            [
+              "Parser",
+              "markdown-it",
+              "frozen"
+            ],
+            [
+              "Renderer",
+              "WordRenderer",
+              "frozen"
+            ],
+            [
+              "QA",
+              "compiler",
+              "frozen"
+            ]
+          ]
+        },
+        {
+          "rows": 5,
+          "columns": 8,
+          "widths_cm": [
+            1.7974,
+            1.7992,
+            1.7992,
+            1.7992,
+            1.7992,
+            2.8487,
+            1.7992,
+            2.2789
+          ],
+          "total_cm": 15.921,
+          "min_cm": 1.7974,
+          "cells": [
+            [
+              "Region",
+              "Q1",
+              "Q2",
+              "Q3",
+              "Q4",
+              "Notes",
+              "Owner",
+              "Status"
+            ],
+            [
+              "North",
+              "120",
+              "130",
+              "140",
+              "150",
+              "steady",
+              "A. Lee",
+              "accepted"
+            ],
+            [
+              "South",
+              "98",
+              "105",
+              "111",
+              "118",
+              "recovering",
+              "B. Ng",
+              "accepted"
+            ],
+            [
+              "East",
+              "210",
+              "214",
+              "219",
+              "225",
+              "expanding",
+              "C. Tan",
+              "accepted"
+            ],
+            [
+              "West",
+              "64",
+              "70",
+              "75",
+              "81",
+              "new",
+              "D. Rao",
+              "accepted"
+            ]
+          ]
+        }
+      ],
+      "figures": [
+        {
+          "width_cm": 12.7,
+          "height_cm": 3.175,
+          "ratio": 4.0
+        },
+        {
+          "width_cm": 2.462,
+          "height_cm": 24.6204,
+          "ratio": 0.1
+        }
+      ]
+    },
+    "matrix_business_report": {
+      "path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\collected\\Matrix_Business_Report.docx",
+      "document_xml_present": true,
+      "sections": [
+        {
+          "left": 2.0,
+          "right": 2.0,
+          "top": 2.0,
+          "bottom": 2.0,
+          "page_width": 21.001,
+          "page_height": 29.7
+        }
+      ],
+      "toc_heading": "Table of Contents",
+      "toc_entries": [
+        "Competitive Foundation Report",
+        "Architecture",
+        "Financial Overview",
+        "Projected Growth",
+        "Page Capped Figure",
+        "Notes",
+        ""
+      ],
+      "toc_entries_python_docx": [
+        ""
+      ],
+      "toc_field_present": true,
+      "tables": [
+        {
+          "rows": 4,
+          "columns": 3,
+          "widths_cm": [
+            1.7092,
+            2.2807,
+            1.1994
+          ],
+          "total_cm": 5.1893,
+          "min_cm": 1.1994,
+          "cells": [
+            [
+              "Component",
+              "Authority",
+              "Status"
+            ],
+            [
+              "Parser",
+              "markdown-it",
+              "frozen"
+            ],
+            [
+              "Renderer",
+              "WordRenderer",
+              "frozen"
+            ],
+            [
+              "QA",
+              "compiler",
+              "frozen"
+            ]
+          ]
+        },
+        {
+          "rows": 5,
+          "columns": 8,
+          "widths_cm": [
+            1.9226,
+            1.9209,
+            1.9209,
+            1.9209,
+            1.9209,
+            3.0409,
+            1.9209,
+            2.4324
+          ],
+          "total_cm": 17.0004,
+          "min_cm": 1.9209,
+          "cells": [
+            [
+              "Region",
+              "Q1",
+              "Q2",
+              "Q3",
+              "Q4",
+              "Notes",
+              "Owner",
+              "Status"
+            ],
+            [
+              "North",
+              "120",
+              "130",
+              "140",
+              "150",
+              "steady",
+              "A. Lee",
+              "accepted"
+            ],
+            [
+              "South",
+              "98",
+              "105",
+              "111",
+              "118",
+              "recovering",
+              "B. Ng",
+              "accepted"
+            ],
+            [
+              "East",
+              "210",
+              "214",
+              "219",
+              "225",
+              "expanding",
+              "C. Tan",
+              "accepted"
+            ],
+            [
+              "West",
+              "64",
+              "70",
+              "75",
+              "81",
+              "new",
+              "D. Rao",
+              "accepted"
+            ]
+          ]
+        }
+      ],
+      "figures": [
+        {
+          "width_cm": 12.7,
+          "height_cm": 3.175,
+          "ratio": 4.0
+        },
+        {
+          "width_cm": 2.57,
+          "height_cm": 25.6999,
+          "ratio": 0.1
+        }
+      ]
+    },
+    "matrix_academic": {
+      "path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\collected\\Matrix_Academic.docx",
+      "document_xml_present": true,
+      "sections": [
+        {
+          "left": 3.0,
+          "right": 3.0,
+          "top": 2.54,
+          "bottom": 2.54,
+          "page_width": 21.001,
+          "page_height": 29.7
+        }
+      ],
+      "toc_heading": "Table of Contents",
+      "toc_entries": [
+        "Competitive Foundation Report",
+        "Architecture",
+        "Financial Overview",
+        "Projected Growth",
+        "Page Capped Figure",
+        "Notes",
+        ""
+      ],
+      "toc_entries_python_docx": [
+        ""
+      ],
+      "toc_field_present": true,
+      "tables": [
+        {
+          "rows": 4,
+          "columns": 3,
+          "widths_cm": [
+            1.7092,
+            2.2807,
+            1.1994
+          ],
+          "total_cm": 5.1893,
+          "min_cm": 1.1994,
+          "cells": [
+            [
+              "Component",
+              "Authority",
+              "Status"
+            ],
+            [
+              "Parser",
+              "markdown-it",
+              "frozen"
+            ],
+            [
+              "Renderer",
+              "WordRenderer",
+              "frozen"
+            ],
+            [
+              "QA",
+              "compiler",
+              "frozen"
+            ]
+          ]
+        },
+        {
+          "rows": 5,
+          "columns": 8,
+          "widths_cm": [
+            1.6951,
+            1.6951,
+            1.6951,
+            1.6951,
+            1.6951,
+            2.6829,
+            1.6951,
+            2.1467
+          ],
+          "total_cm": 15.0002,
+          "min_cm": 1.6951,
+          "cells": [
+            [
+              "Region",
+              "Q1",
+              "Q2",
+              "Q3",
+              "Q4",
+              "Notes",
+              "Owner",
+              "Status"
+            ],
+            [
+              "North",
+              "120",
+              "130",
+              "140",
+              "150",
+              "steady",
+              "A. Lee",
+              "accepted"
+            ],
+            [
+              "South",
+              "98",
+              "105",
+              "111",
+              "118",
+              "recovering",
+              "B. Ng",
+              "accepted"
+            ],
+            [
+              "East",
+              "210",
+              "214",
+              "219",
+              "225",
+              "expanding",
+              "C. Tan",
+              "accepted"
+            ],
+            [
+              "West",
+              "64",
+              "70",
+              "75",
+              "81",
+              "new",
+              "D. Rao",
+              "accepted"
+            ]
+          ]
+        }
+      ],
+      "figures": [
+        {
+          "width_cm": 12.7,
+          "height_cm": 3.175,
+          "ratio": 4.0
+        },
+        {
+          "width_cm": 2.462,
+          "height_cm": 24.6204,
+          "ratio": 0.1
+        }
+      ]
+    },
+    "matrix_technical": {
+      "path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\collected\\Matrix_Technical.docx",
+      "document_xml_present": true,
+      "sections": [
+        {
+          "left": 2.2,
+          "right": 2.2,
+          "top": 2.2,
+          "bottom": 2.2,
+          "page_width": 21.001,
+          "page_height": 29.7
+        }
+      ],
+      "toc_heading": "Table of Contents",
+      "toc_entries": [
+        "Competitive Foundation Report",
+        "Architecture",
+        "Financial Overview",
+        "Projected Growth",
+        "Page Capped Figure",
+        "Notes",
+        ""
+      ],
+      "toc_entries_python_docx": [
+        ""
+      ],
+      "toc_field_present": true,
+      "tables": [
+        {
+          "rows": 4,
+          "columns": 3,
+          "widths_cm": [
+            1.7092,
+            2.2807,
+            1.1994
+          ],
+          "total_cm": 5.1893,
+          "min_cm": 1.1994,
+          "cells": [
+            [
+              "Component",
+              "Authority",
+              "Status"
+            ],
+            [
+              "Parser",
+              "markdown-it",
+              "frozen"
+            ],
+            [
+              "Renderer",
+              "WordRenderer",
+              "frozen"
+            ],
+            [
+              "QA",
+              "compiler",
+              "frozen"
+            ]
+          ]
+        },
+        {
+          "rows": 5,
+          "columns": 8,
+          "widths_cm": [
+            1.875,
+            1.875,
+            1.8768,
+            1.8768,
+            1.8768,
+            2.9686,
+            1.8768,
+            2.376
+          ],
+          "total_cm": 16.6018,
+          "min_cm": 1.875,
+          "cells": [
+            [
+              "Region",
+              "Q1",
+              "Q2",
+              "Q3",
+              "Q4",
+              "Notes",
+              "Owner",
+              "Status"
+            ],
+            [
+              "North",
+              "120",
+              "130",
+              "140",
+              "150",
+              "steady",
+              "A. Lee",
+              "accepted"
+            ],
+            [
+              "South",
+              "98",
+              "105",
+              "111",
+              "118",
+              "recovering",
+              "B. Ng",
+              "accepted"
+            ],
+            [
+              "East",
+              "210",
+              "214",
+              "219",
+              "225",
+              "expanding",
+              "C. Tan",
+              "accepted"
+            ],
+            [
+              "West",
+              "64",
+              "70",
+              "75",
+              "81",
+              "new",
+              "D. Rao",
+              "accepted"
+            ]
+          ]
+        }
+      ],
+      "figures": [
+        {
+          "width_cm": 12.7,
+          "height_cm": 3.175,
+          "ratio": 4.0
+        },
+        {
+          "width_cm": 2.5301,
+          "height_cm": 25.3012,
+          "ratio": 0.1
+        }
+      ]
+    },
+    "matrix_clean_minimal": {
+      "path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\collected\\Matrix_Clean_Minimal.docx",
+      "document_xml_present": true,
+      "sections": [
+        {
+          "left": 2.54,
+          "right": 2.54,
+          "top": 2.54,
+          "bottom": 2.54,
+          "page_width": 21.001,
+          "page_height": 29.7
+        }
+      ],
+      "toc_heading": "Table of Contents",
+      "toc_entries": [
+        "Competitive Foundation Report",
+        "Architecture",
+        "Financial Overview",
+        "Projected Growth",
+        "Page Capped Figure",
+        "Notes",
+        ""
+      ],
+      "toc_entries_python_docx": [
+        ""
+      ],
+      "toc_field_present": true,
+      "tables": [
+        {
+          "rows": 4,
+          "columns": 3,
+          "widths_cm": [
+            1.7092,
+            2.2807,
+            1.1994
+          ],
+          "total_cm": 5.1893,
+          "min_cm": 1.1994,
+          "cells": [
+            [
+              "Component",
+              "Authority",
+              "Status"
+            ],
+            [
+              "Parser",
+              "markdown-it",
+              "frozen"
+            ],
+            [
+              "Renderer",
+              "WordRenderer",
+              "frozen"
+            ],
+            [
+              "QA",
+              "compiler",
+              "frozen"
+            ]
+          ]
+        },
+        {
+          "rows": 5,
+          "columns": 8,
+          "widths_cm": [
+            1.7974,
+            1.7992,
+            1.7992,
+            1.7992,
+            1.7992,
+            2.8487,
+            1.7992,
+            2.2789
+          ],
+          "total_cm": 15.921,
+          "min_cm": 1.7974,
+          "cells": [
+            [
+              "Region",
+              "Q1",
+              "Q2",
+              "Q3",
+              "Q4",
+              "Notes",
+              "Owner",
+              "Status"
+            ],
+            [
+              "North",
+              "120",
+              "130",
+              "140",
+              "150",
+              "steady",
+              "A. Lee",
+              "accepted"
+            ],
+            [
+              "South",
+              "98",
+              "105",
+              "111",
+              "118",
+              "recovering",
+              "B. Ng",
+              "accepted"
+            ],
+            [
+              "East",
+              "210",
+              "214",
+              "219",
+              "225",
+              "expanding",
+              "C. Tan",
+              "accepted"
+            ],
+            [
+              "West",
+              "64",
+              "70",
+              "75",
+              "81",
+              "new",
+              "D. Rao",
+              "accepted"
+            ]
+          ]
+        }
+      ],
+      "figures": [
+        {
+          "width_cm": 12.7,
+          "height_cm": 3.175,
+          "ratio": 4.0
+        },
+        {
+          "width_cm": 2.462,
+          "height_cm": 24.6204,
+          "ratio": 0.1
+        }
+      ]
+    },
+    "toc_cn": {
+      "path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\collected\\竞争基础集成验证.docx",
+      "document_xml_present": true,
+      "sections": [
+        {
+          "left": 2.54,
+          "right": 2.54,
+          "top": 2.54,
+          "bottom": 2.54,
+          "page_width": 21.001,
+          "page_height": 29.7
+        }
+      ],
+      "toc_heading": "目录",
+      "toc_entries": [
+        "竞争基础集成验证",
+        "架构",
+        "图形",
+        "备注",
+        ""
+      ],
+      "toc_entries_python_docx": [
+        ""
+      ],
+      "toc_field_present": true,
+      "tables": [
+        {
+          "rows": 4,
+          "columns": 3,
+          "widths_cm": [
+            1.1994,
+            2.2807,
+            1.1994
+          ],
+          "total_cm": 4.6795,
+          "min_cm": 1.1994,
+          "cells": [
+            [
+              "组件",
+              "权威",
+              "状态"
+            ],
+            [
+              "解析器",
+              "markdown-it",
+              "冻结"
+            ],
+            [
+              "渲染器",
+              "WordRenderer",
+              "冻结"
+            ],
+            [
+              "质量门",
+              "compiler",
+              "冻结"
+            ]
+          ]
+        }
+      ],
+      "figures": [
+        {
+          "width_cm": 12.7,
+          "height_cm": 3.175,
+          "ratio": 4.0
+        }
+      ]
+    }
+  },
+  "total": 86,
+  "failed": 0,
+  "status": "PASS"
+}

@@ -14,6 +14,7 @@ Usage::
 from __future__ import annotations
 
 import argparse
+import json
 import struct
 import zlib
 from pathlib import Path
@@ -153,6 +154,15 @@ MATRIX_PROFILES = (
     ("clean_minimal", "matrix_clean_minimal", "Matrix Clean Minimal"),
 )
 
+#: Profile selector display names (the labels the packaged GUI shows).
+PROFILE_DISPLAY = {
+    "professional_report": "Professional Report",
+    "business_report": "Business Report",
+    "academic": "Academic",
+    "technical": "Technical",
+    "clean_minimal": "Clean / Minimal",
+}
+
 
 def fixture_set_wp03(work: Path) -> None:
     """Write the integrated five-profile matrix fixtures plus one TOC control."""
@@ -199,12 +209,53 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="R2-V02 verification fixtures")
     parser.add_argument("--work", required=True, type=Path)
     parser.add_argument("--set", required=True, choices=("wp02", "wp03"))
+    parser.add_argument("--manifest", type=Path)
     args = parser.parse_args()
     args.work.mkdir(parents=True, exist_ok=True)
     if args.set == "wp02":
         fixture_set_wp02(args.work)
+        manifest = {
+            "set": "wp02",
+            "sources": [
+                {"file": "01_english.md", "expected_output": "01_english.docx"},
+                {"file": "02_wide_table_figure.md", "expected_output": "Wide_Table_Report.docx"},
+                {"file": "03_failure.md", "expected_output": None},
+                {"file": "04_after_failure.md", "expected_output": "04_after_failure.docx"},
+            ],
+        }
     else:
         fixture_set_wp03(args.work)
+        manifest = {
+            "set": "wp03",
+            "runs": [
+                {
+                    "name": stem,
+                    "file": f"{stem}.md",
+                    "profile": PROFILE_DISPLAY[profile_id],
+                    "profile_id": profile_id,
+                    "title": title,
+                    "expected_output": f"{title.replace(' ', '_')}.docx",
+                    "kind": "matrix",
+                }
+                for profile_id, stem, title in MATRIX_PROFILES
+            ]
+            + [
+                {
+                    "name": "toc_cn",
+                    "file": "toc_cn.md",
+                    "profile": "Professional Report",
+                    "profile_id": "professional_report",
+                    "title": "竞争基础集成验证",
+                    "expected_output": "竞争基础集成验证.docx",
+                    "kind": "toc_control",
+                }
+            ],
+        }
+    manifest_path = args.manifest or (args.work / "fixture_manifest.json")
+    # Written with a BOM: the Windows PowerShell 5.1 harness reads this file
+    # without an explicit encoding and would otherwise mis-decode non-ASCII
+    # document titles (the localized TOC control fixture).
+    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8-sig")
     print(f"fixtures={args.set} work={args.work}")
     return 0
 

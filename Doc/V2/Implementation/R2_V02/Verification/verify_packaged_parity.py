@@ -27,10 +27,12 @@ import argparse
 import importlib.util
 import json
 import sys
+import zipfile
 from pathlib import Path
 from typing import Any, Dict, List
 
 from docx import Document
+from lxml import etree
 
 __all__ = ["main"]
 
@@ -105,6 +107,14 @@ CM_PER_INCH = 2.54
 TABLE_MIN_COLUMN_CM = 1.2
 MEASURE_TOL_CM = 1e-3
 
+_W = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+_W_P = f"{{{_W}}}p"
+_W_PPR = f"{{{_W}}}pPr"
+_W_PSTYLE = f"{{{_W}}}pStyle"
+_W_VAL = f"{{{_W}}}val"
+_W_T = f"{{{_W}}}t"
+_W_TAB = f"{{{_W}}}tab"
+
 NORMAL_TABLE_CELLS = [
     ["Component", "Authority", "Status"],
     ["Parser", "markdown-it", "frozen"],
@@ -163,11 +173,51 @@ def measure(doc: Any, module: Any, path: Path) -> Dict[str, Any]:
         "document_xml_present": module.doc_xml(path) != "",
         "sections": sections,
         "toc_heading": module.toc_heading(doc),
-        "toc_entries": module.toc_entry_texts(doc),
+        "toc_entries": toc_entry_texts_from_xml(path),
+        "toc_entries_python_docx": module.toc_entry_texts(doc),
         "toc_field_present": module.toc_field_present(path),
         "tables": tables,
         "figures": shapes,
     }
+
+
+def toc_entry_texts_from_xml(path: Path) -> List[str]:
+    """Return the cached TOC entry texts read from ``word/document.xml``.
+
+    When Word is installed, the packaged product refreshes the inserted TOC
+    through Word, and Word rewrites every cached entry as a hyperlink.  Those
+    runs are invisible to ``python-docx``'s ``Paragraph.text``, so the entry
+    text is read from the paragraph XML instead, up to the tab that precedes
+    Word's page number.  The entry content is the same in both the
+    renderer-written and the Word-refreshed form.
+    """
+    with zipfile.ZipFile(path) as archive:
+        root = etree.fromstring(archive.read("word/document.xml"))
+    entries: List[str] = []
+    for paragraph in root.iter(_W_P):
+        properties = paragraph.find(_W_PPR)
+        style = properties.find(_W_PSTYLE) if properties is not None else None
+        style_id = (style.get(_W_VAL) or "").strip().lower() if style is not None else ""
+        if not style_id.startswith("toc") or style_id == "tocheading":
+            continue
+        # The paragraph-properties subtree holds the tab-stop definition
+        # (``w:pPr/w:tabs/w:tab``), which must not be mistaken for the tab that
+        # precedes Word's page number in the entry body.
+        parts: List[str] = []
+        stop = False
+        for child in paragraph:
+            if child.tag == _W_PPR:
+                continue
+            for element in child.iter():
+                if element.tag == _W_TAB:
+                    stop = True
+                    break
+                if element.tag == _W_T:
+                    parts.append(element.text or "")
+            if stop:
+                break
+        entries.append("".join(parts).strip())
+    return entries
 
 
 def check_matrix_run(run: Dict[str, Any], measurements: Dict[str, Any], report: ParityReport) -> None:
@@ -317,7 +367,8 @@ def main() -> int:
     args = parser.parse_args()
 
     module = _load_r2v01_measurement_module(args.repo_root)
-    runs = json.loads(args.runs.read_text(encoding="utf-8"))
+    # ``utf-8-sig``: the Windows PowerShell harness writes BOM-prefixed JSON.
+    runs = json.loads(args.runs.read_text(encoding="utf-8-sig"))
     report = ParityReport()
     measurements: Dict[str, Any] = {}
 

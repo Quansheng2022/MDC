@@ -1,0 +1,559 @@
+{
+    "final_snapshot":  {
+                           "at":  "17:12:24.159",
+                           "list_rows":  [
+
+                                         ],
+                           "rows":  [
+
+                                    ],
+                           "convert_text":  "Convert",
+                           "convert_enabled":  false,
+                           "summary_visible":  false,
+                           "open_document":  true,
+                           "details":  false,
+                           "open_batch_folder":  false
+                       },
+    "runs":  [
+                 {
+                     "name":  "matrix_professional_report",
+                     "profile":  "professional_report",
+                     "profile_display":  "Professional Report",
+                     "kind":  "matrix",
+                     "source":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\cwd\\matrix_professional_report.md",
+                     "docx":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\collected\\Matrix_Professional_Report.docx",
+                     "expected_name":  "Matrix_Professional_Report.docx",
+                     "produced":  true,
+                     "outcome":  "SUCCESS",
+                     "seconds":  3.6,
+                     "convert_started":  true,
+                     "dialog_closed":  true,
+                     "prepare":  {
+                                     "ok":  true,
+                                     "attempts":  1,
+                                     "batch_rows":  [
+
+                                                    ],
+                                     "batch_surface":  false,
+                                     "dialog_closed":  true
+                                 },
+                     "first_sample":  {
+                                          "at":  "17:11:20.164",
+                                          "list_rows":  [
+
+                                                        ],
+                                          "rows":  [
+
+                                                   ],
+                                          "convert_text":  "Convert",
+                                          "convert_enabled":  false,
+                                          "summary_visible":  false,
+                                          "open_document":  false,
+                                          "details":  false,
+                                          "open_batch_folder":  false
+                                      },
+                     "last_sample":  {
+                                         "at":  "17:11:23.487",
+                                         "list_rows":  [
+
+                                                       ],
+                                         "rows":  [
+
+                                                  ],
+                                         "convert_text":  "Convert",
+                                         "convert_enabled":  false,
+                                         "summary_visible":  false,
+                                         "open_document":  true,
+                                         "details":  true,
+                                         "open_batch_folder":  false
+                                     }
+                 },
+                 {
+                     "name":  "matrix_business_report",
+                     "profile":  "business_report",
+                     "profile_display":  "Business Report",
+                     "kind":  "matrix",
+                     "source":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\cwd\\matrix_business_report.md",
+                     "docx":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\collected\\Matrix_Business_Report.docx",
+                     "expected_name":  "Matrix_Business_Report.docx",
+                     "produced":  true,
+                     "outcome":  "SUCCESS",
+                     "seconds":  3.4,
+                     "convert_started":  true,
+                     "dialog_closed":  true,
+                     "prepare":  {
+                                     "ok":  true,
+                                     "attempts":  2,
+                                     "batch_rows":  [
+
+                                                    ],
+                                     "batch_surface":  false,
+                                     "dialog_closed":  true
+                                 },
+                     "first_sample":  {
+                                          "at":  "17:11:32.068",
+                                          "list_rows":  [
+
+                                                        ],
+                                          "rows":  [
+
+                                                   ],
+                                          "convert_text":  "Convert",
+                                          "convert_enabled":  false,
+                                          "summary_visible":  false,
+                                          "open_document":  false,
+                                          "details":  false,
+                                          "open_batch_folder":  false
+                                      },
+                     "last_sample":  {
+                                         "at":  "17:11:35.401",
+                                         "list_rows":  [
+
+                                                       ],
+                                         "rows":  [
+
+                                                  ],
+                                         "convert_text":  "Convert",
+                                         "convert_enabled":  false,
+                                         "summary_visible":  false,
+                                         "open_document":  true,
+                                         "details":  true,
+                                         "open_batch_folder":  false
+                                     }
+                 },
+                 {
+                     "name":  "matrix_academic",
+                     "profile":  "academic",
+                     "profile_display":  "Academic",
+                     "kind":  "matrix",
+                     "source":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\cwd\\matrix_academic.md",
+                     "docx":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\collected\\Matrix_Academic.docx",
+                     "expected_name":  "Matrix_Academic.docx",
+                     "produced":  true,
+                     "outcome":  "SUCCESS",
+                     "seconds":  4,
+                     "convert_started":  true,
+                     "dialog_closed":  true,
+                     "prepare":  {
+                                     "ok":  true,
+                                     "attempts":  2,
+                                     "batch_rows":  [
+
+                                                    ],
+                                     "batch_surface":  false,
+                                     "dialog_closed":  true
+                                 },
+                     "first_sample":  {
+                                          "at":  "17:11:43.614",
+                                          "list_rows":  [
+
+                                                        ],
+                                          "rows":  [
+
+                                                   ],
+                                          "convert_text":  "Convert",
+                                          "convert_enabled":  false,
+                                          "summary_visible":  false,
+                                          "open_document":  false,
+                                          "details":  false,
+                                          "open_batch_folder":  false
+                                      },
+                     "last_sample":  {
+                                         "at":  "17:11:47.564",
+                                         "list_rows":  [
+
+                                                       ],
+                                         "rows":  [
+
+                                                  ],
+                                         "convert_text":  "Convert",
+                                         "convert_enabled":  false,
+                                         "summary_visible":  false,
+                                         "open_document":  true,
+                                         "details":  true,
+                                         "open_batch_folder":  false
+                                     }
+                 },
+                 {
+                     "name":  "matrix_technical",
+                     "profile":  "technical",
+                     "profile_display":  "Technical",
+                     "kind":  "matrix",
+                     "source":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\cwd\\matrix_technical.md",
+                     "docx":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\collected\\Matrix_Technical.docx",
+                     "expected_name":  "Matrix_Technical.docx",
+                     "produced":  true,
+                     "outcome":  "SUCCESS",
+                     "seconds":  4,
+                     "convert_started":  true,
+                     "dialog_closed":  true,
+                     "prepare":  {
+                                     "ok":  true,
+                                     "attempts":  2,
+                                     "batch_rows":  [
+
+                                                    ],
+                                     "batch_surface":  false,
+                                     "dialog_closed":  true
+                                 },
+                     "first_sample":  {
+                                          "at":  "17:11:55.760",
+                                          "list_rows":  [
+
+                                                        ],
+                                          "rows":  [
+
+                                                   ],
+                                          "convert_text":  "Convert",
+                                          "convert_enabled":  false,
+                                          "summary_visible":  false,
+                                          "open_document":  false,
+                                          "details":  false,
+                                          "open_batch_folder":  false
+                                      },
+                     "last_sample":  {
+                                         "at":  "17:11:59.725",
+                                         "list_rows":  [
+
+                                                       ],
+                                         "rows":  [
+
+                                                  ],
+                                         "convert_text":  "Convert",
+                                         "convert_enabled":  false,
+                                         "summary_visible":  false,
+                                         "open_document":  true,
+                                         "details":  true,
+                                         "open_batch_folder":  false
+                                     }
+                 },
+                 {
+                     "name":  "matrix_clean_minimal",
+                     "profile":  "clean_minimal",
+                     "profile_display":  "Clean / Minimal",
+                     "kind":  "matrix",
+                     "source":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\cwd\\matrix_clean_minimal.md",
+                     "docx":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\collected\\Matrix_Clean_Minimal.docx",
+                     "expected_name":  "Matrix_Clean_Minimal.docx",
+                     "produced":  true,
+                     "outcome":  "SUCCESS",
+                     "seconds":  3.3,
+                     "convert_started":  true,
+                     "dialog_closed":  true,
+                     "prepare":  {
+                                     "ok":  true,
+                                     "attempts":  2,
+                                     "batch_rows":  [
+
+                                                    ],
+                                     "batch_surface":  false,
+                                     "dialog_closed":  true
+                                 },
+                     "first_sample":  {
+                                          "at":  "17:12:07.906",
+                                          "list_rows":  [
+
+                                                        ],
+                                          "rows":  [
+
+                                                   ],
+                                          "convert_text":  "Convert",
+                                          "convert_enabled":  false,
+                                          "summary_visible":  false,
+                                          "open_document":  false,
+                                          "details":  false,
+                                          "open_batch_folder":  false
+                                      },
+                     "last_sample":  {
+                                         "at":  "17:12:11.218",
+                                         "list_rows":  [
+
+                                                       ],
+                                         "rows":  [
+
+                                                  ],
+                                         "convert_text":  "Convert",
+                                         "convert_enabled":  false,
+                                         "summary_visible":  false,
+                                         "open_document":  true,
+                                         "details":  true,
+                                         "open_batch_folder":  false
+                                     }
+                 },
+                 {
+                     "name":  "toc_cn",
+                     "profile":  "professional_report",
+                     "profile_display":  "Professional Report",
+                     "kind":  "toc_control",
+                     "source":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\cwd\\toc_cn.md",
+                     "docx":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\collected\\竞争基础集成验证.docx",
+                     "expected_name":  "竞争基础集成验证.docx",
+                     "produced":  true,
+                     "outcome":  "SUCCESS",
+                     "seconds":  3.3,
+                     "convert_started":  true,
+                     "dialog_closed":  true,
+                     "prepare":  {
+                                     "ok":  true,
+                                     "attempts":  2,
+                                     "batch_rows":  [
+
+                                                    ],
+                                     "batch_surface":  false,
+                                     "dialog_closed":  true
+                                 },
+                     "first_sample":  {
+                                          "at":  "17:12:19.405",
+                                          "list_rows":  [
+
+                                                        ],
+                                          "rows":  [
+
+                                                   ],
+                                          "convert_text":  "Convert",
+                                          "convert_enabled":  false,
+                                          "summary_visible":  false,
+                                          "open_document":  false,
+                                          "details":  false,
+                                          "open_batch_folder":  false
+                                      },
+                     "last_sample":  {
+                                         "at":  "17:12:22.666",
+                                         "list_rows":  [
+
+                                                       ],
+                                         "rows":  [
+
+                                                  ],
+                                         "convert_text":  "Convert",
+                                         "convert_enabled":  false,
+                                         "summary_visible":  false,
+                                         "open_document":  true,
+                                         "details":  false,
+                                         "open_batch_folder":  false
+                                     }
+                 }
+             ],
+    "output_directory":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\cwd\\output",
+    "finished_at":  "2026-09-30T17:12:27.2662629+08:00",
+    "fixtures":  {
+                     "exit_code":  0,
+                     "output":  [
+                                    "fixtures=wp03 work=C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\cwd"
+                                ]
+                 },
+    "plan":  [
+                 {
+                     "name":  "matrix_professional_report",
+                     "profile_id":  "professional_report",
+                     "expected_output":  "Matrix_Professional_Report.docx"
+                 },
+                 {
+                     "name":  "matrix_business_report",
+                     "profile_id":  "business_report",
+                     "expected_output":  "Matrix_Business_Report.docx"
+                 },
+                 {
+                     "name":  "matrix_academic",
+                     "profile_id":  "academic",
+                     "expected_output":  "Matrix_Academic.docx"
+                 },
+                 {
+                     "name":  "matrix_technical",
+                     "profile_id":  "technical",
+                     "expected_output":  "Matrix_Technical.docx"
+                 },
+                 {
+                     "name":  "matrix_clean_minimal",
+                     "profile_id":  "clean_minimal",
+                     "expected_output":  "Matrix_Clean_Minimal.docx"
+                 },
+                 {
+                     "name":  "toc_cn",
+                     "profile_id":  "professional_report",
+                     "expected_output":  "竞争基础集成验证.docx"
+                 }
+             ],
+    "work_directory":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\cwd",
+    "parity_failed":  0,
+    "process_id":  31400,
+    "profiles_observed":  {
+                              "matrix_technical":  {
+                                                       "ok":  true,
+                                                       "before":  "Academic",
+                                                       "after":  "Technical",
+                                                       "after_select_pattern":  "Technical",
+                                                       "method":  "popup-window-click"
+                                                   },
+                              "matrix_clean_minimal":  {
+                                                           "ok":  true,
+                                                           "before":  "Technical",
+                                                           "after":  "Clean / Minimal",
+                                                           "after_select_pattern":  "Clean / Minimal",
+                                                           "method":  "popup-window-click"
+                                                       },
+                              "matrix_business_report":  {
+                                                             "ok":  true,
+                                                             "before":  "Professional Report",
+                                                             "after":  "Business Report",
+                                                             "after_select_pattern":  "Business Report",
+                                                             "method":  "popup-window-click"
+                                                         },
+                              "matrix_academic":  {
+                                                      "ok":  true,
+                                                      "before":  "Business Report",
+                                                      "after":  "Academic",
+                                                      "after_select_pattern":  "Academic",
+                                                      "method":  "popup-window-click"
+                                                  },
+                              "matrix_professional_report":  {
+                                                                 "ok":  true,
+                                                                 "before":  "Professional Report",
+                                                                 "after":  "Professional Report",
+                                                                 "method":  "already-selected"
+                                                             },
+                              "toc_cn":  {
+                                             "ok":  true,
+                                             "before":  "Clean / Minimal",
+                                             "after":  "Professional Report",
+                                             "after_select_pattern":  "Professional Report",
+                                             "method":  "popup-window-click"
+                                         }
+                          },
+    "executable":  "C:\\Users\\Quansheng\\AppData\\Local\\Programs\\MD_Converter\\MD_Converter.exe",
+    "repository_root":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter",
+    "preferences_restored":  "restored from backup (reg exit=0)",
+    "child_environment":  {
+                              "launch_mode":  "CreateProcess detached + sanitized environment",
+                              "working_directory":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\cwd",
+                              "pythonpath":  "",
+                              "path":  "C:\\Users\\Quansheng\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell;C:\\Users\\Quansheng\\.codex\\tmp\\arg0\\codex-arg0G3NFW6;C:\\Users\\Quansheng\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\libheif\\libheif\\bin;C:\\Users\\Quansheng\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\jxrlib\\jxrlib\\bin;C:\\Users\\Quansheng\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\poppler\\Library\\bin;C:\\Users\\Quansheng\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\bin\\override;C:\\Program Files\\ImageMagick-7.1.2-Q16-HDRI;C:\\windows\\system32;C:\\windows;C:\\windows\\System32\\Wbem;C:\\windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Program Files (x86)\\Microsoft SQL Server\\160\\Tools\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\160\\Tools\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\Client SDK\\ODBC\\170\\Tools\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\160\\DTS\\Binn\\;C:\\Program Files (x86)\\Microsoft SQL Server\\160\\DTS\\Binn\\;C:\\Program Files\\Azure Data Studio\\bin;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Users\\Quansheng\\AppData\\Local\\GitHubDesktop\\app-3.5.8\\resources\\app\\git\\usr\\bin;C:\\Users\\Quansheng\\AppData\\Local\\GitHubDesktop\\app-3.5.8\\resources\\app\\git\\mingw64\\bin;C:\\Program Files\\nodejs\\;C:\\Program Files\\Microsoft VS Code\\bin;C:\\sqlite;C:\\Program Files\\GTK3-Runtime Win64\\bin;C:\\Program Files\\GitHub CLI\\;C:\\Users\\Quansheng\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell;C:\\Users\\Quansheng\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Quansheng\\AppData\\Local\\GitHubDesktop\\bin;C:\\Users\\Quansheng\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin;\"C:\\windows\\system32;C:\\Program Files (x86)\\M\";C:\\Users\\Quansheng\\AppData\\Roaming\\npm;C:\\Users\\Quansheng\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Users\\Quansheng\\AppData\\Local\\Pandoc\\;C:\\Users\\Quansheng\\AppData\\Local\\GitHubDesktop\\app-3.6.4\\resources\\app\\git\\cmd;C:\\Users\\Quansheng\\AppData\\Local\\Programs\\MD_Converter;C:\\Users\\Quansheng\\AppData\\Local\\GitHubDesktop\\app-3.6.6\\resources\\app\\git\\cmd;C:\\Users\\Quansheng\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\bin\\fallback;C:\\Users\\Quansheng\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin;C:\\Users\\Quansheng\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\git\\cmd;C:\\Users\\Quansheng\\AppData\\Local\\OpenAI\\Codex\\bin\\0ddb895c950eaeba;C:\\Users\\Quansheng\\AppData\\Local\\OpenAI\\Codex\\bin\\faa963e871dd422c",
+                              "repository_on_path":  false,
+                              "dotvenv_on_path":  false,
+                              "standard_handles":  "none inherited (CREATE_DETACHED_PROCESS, bInheritHandles=FALSE)"
+                          },
+    "parity_run":  {
+                       "exit_code":  0,
+                       "output":  [
+                                      "parity checks=86 failed=0 status=PASS"
+                                  ]
+                   },
+    "parity_report_path":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\parity_report.json",
+    "phase":  "WP03",
+    "notes":  [
+
+              ],
+    "executable_version":  "1.1.0",
+    "status":  "PASS",
+    "checks":  [
+                   {
+                       "name":  "installed-executable-launches",
+                       "passed":  true,
+                       "detail":  "main window visible (pid 31400)"
+                   },
+                   {
+                       "name":  "matrix_professional_report: single-file selection state",
+                       "passed":  true,
+                       "detail":  "attempts=1; dialog accepted=True; batch surface shown=False; batch rows="
+                   },
+                   {
+                       "name":  "matrix_professional_report: packaged conversion succeeds",
+                       "passed":  true,
+                       "detail":  "outcome=SUCCESS after 3.6s; produced Matrix_Professional_Report.docx"
+                   },
+                   {
+                       "name":  "matrix_professional_report: profile selector set to Professional Report",
+                       "passed":  true,
+                       "detail":  "before=\u0027Professional Report\u0027 after=\u0027Professional Report\u0027 method=already-selected"
+                   },
+                   {
+                       "name":  "matrix_business_report: single-file selection state",
+                       "passed":  true,
+                       "detail":  "attempts=2; dialog accepted=True; batch surface shown=False; batch rows="
+                   },
+                   {
+                       "name":  "matrix_business_report: packaged conversion succeeds",
+                       "passed":  true,
+                       "detail":  "outcome=SUCCESS after 3.4s; produced Matrix_Business_Report.docx"
+                   },
+                   {
+                       "name":  "matrix_business_report: profile selector set to Business Report",
+                       "passed":  true,
+                       "detail":  "before=\u0027Professional Report\u0027 after=\u0027Business Report\u0027 method=popup-window-click"
+                   },
+                   {
+                       "name":  "matrix_academic: single-file selection state",
+                       "passed":  true,
+                       "detail":  "attempts=2; dialog accepted=True; batch surface shown=False; batch rows="
+                   },
+                   {
+                       "name":  "matrix_academic: packaged conversion succeeds",
+                       "passed":  true,
+                       "detail":  "outcome=SUCCESS after 4s; produced Matrix_Academic.docx"
+                   },
+                   {
+                       "name":  "matrix_academic: profile selector set to Academic",
+                       "passed":  true,
+                       "detail":  "before=\u0027Business Report\u0027 after=\u0027Academic\u0027 method=popup-window-click"
+                   },
+                   {
+                       "name":  "matrix_technical: single-file selection state",
+                       "passed":  true,
+                       "detail":  "attempts=2; dialog accepted=True; batch surface shown=False; batch rows="
+                   },
+                   {
+                       "name":  "matrix_technical: packaged conversion succeeds",
+                       "passed":  true,
+                       "detail":  "outcome=SUCCESS after 4s; produced Matrix_Technical.docx"
+                   },
+                   {
+                       "name":  "matrix_technical: profile selector set to Technical",
+                       "passed":  true,
+                       "detail":  "before=\u0027Academic\u0027 after=\u0027Technical\u0027 method=popup-window-click"
+                   },
+                   {
+                       "name":  "matrix_clean_minimal: single-file selection state",
+                       "passed":  true,
+                       "detail":  "attempts=2; dialog accepted=True; batch surface shown=False; batch rows="
+                   },
+                   {
+                       "name":  "matrix_clean_minimal: packaged conversion succeeds",
+                       "passed":  true,
+                       "detail":  "outcome=SUCCESS after 3.3s; produced Matrix_Clean_Minimal.docx"
+                   },
+                   {
+                       "name":  "matrix_clean_minimal: profile selector set to Clean / Minimal",
+                       "passed":  true,
+                       "detail":  "before=\u0027Technical\u0027 after=\u0027Clean / Minimal\u0027 method=popup-window-click"
+                   },
+                   {
+                       "name":  "toc_cn: single-file selection state",
+                       "passed":  true,
+                       "detail":  "attempts=2; dialog accepted=True; batch surface shown=False; batch rows="
+                   },
+                   {
+                       "name":  "toc_cn: packaged conversion succeeds",
+                       "passed":  true,
+                       "detail":  "outcome=SUCCESS after 3.3s; produced 竞争基础集成验证.docx"
+                   },
+                   {
+                       "name":  "toc_cn: profile selector set to Professional Report",
+                       "passed":  true,
+                       "detail":  "before=\u0027Clean / Minimal\u0027 after=\u0027Professional Report\u0027 method=popup-window-click"
+                   },
+                   {
+                       "name":  "packaged-profile-and-feature-parity",
+                       "passed":  true,
+                       "detail":  "parity checks=86 failed=0"
+                   }
+               ],
+    "started_at":  "2026-09-30T17:11:08.7687804+08:00",
+    "parity_status":  "PASS",
+    "parity_total":  86,
+    "failed_count":  0,
+    "executable_sha256":  "68524527CDC5718CE31A1F0454EAFB0FF64C52D5C838716AC1277445DE0E3021",
+    "install_root":  "C:\\Users\\Quansheng\\AppData\\Local\\Programs\\MD_Converter",
+    "failed_checks":  [
+
+                      ]
+}
