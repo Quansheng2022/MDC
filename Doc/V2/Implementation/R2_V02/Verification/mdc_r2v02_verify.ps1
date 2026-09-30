@@ -1250,6 +1250,12 @@ try {
                 (Join-Path $PSScriptRoot 'make_fixtures.py'), '--work', $WorkDir, '--set', 'wp02')
             $Result['fixtures'] = $fixture
 
+            # The application must be fully exited before the cold launch.
+            $runningBefore = @(Get-Process MD_Converter -ErrorAction SilentlyContinue)
+            $Result['processes_running_before_cold_launch'] = $runningBefore.Count
+            Add-Check 'application-fully-exited-before-cold-launch' ($runningBefore.Count -eq 0) `
+                ("running MD_Converter processes before the cold launch: {0}" -f $runningBefore.Count)
+
             # Cold launch: nothing of this phase has started the product yet.
             $app = Start-PackagedAppDetached -Directory $WorkDir -Sanitize
             $Result['process_id'] = $app.Id
@@ -1294,6 +1300,46 @@ try {
                 Copy-Item -LiteralPath $expected -Destination (Join-Path $CollectDir '04_after_failure.docx') -Force
             }
             $Result['collected'] = @(Get-ChildItem -LiteralPath $CollectDir -File | ForEach-Object { $_.FullName })
+
+            # -----------------------------------------------------------------
+            # Closure aggregation over WP-01..WP-03
+            # -----------------------------------------------------------------
+            $aggregate = [ordered]@{
+                work_packages = @()
+                introduced_packaged_failures = 0
+                unresolved_packaged_blockers = 0
+                later_gates = [ordered]@{ r2_v03 = 'PENDING'; r2_v04 = 'PENDING' }
+            }
+            foreach ($wp in @('01', '02', '03')) {
+                $path = Join-Path $EvidenceDir ("WP-R2V02-{0}_RESULT.json" -f $wp)
+                if (-not (Test-Path -LiteralPath $path)) {
+                    $aggregate.work_packages += [ordered]@{ work_package = "R2V02-$wp"; status = 'MISSING' }
+                    continue
+                }
+                $record = Get-Content -LiteralPath $path -Raw -Encoding UTF8 | ConvertFrom-Json
+                $aggregate.work_packages += [ordered]@{
+                    work_package = "R2V02-$wp"
+                    status       = $record.status
+                    failed_count = $record.failed_count
+                    failed_checks = @($record.failed_checks)
+                    executable_sha256 = $record.executable_sha256
+                }
+                $aggregate.introduced_packaged_failures += [int]$record.failed_count
+            }
+            $aggregate.introduced_packaged_failures += $script:Failures.Count
+
+            $Result['aggregate'] = $aggregate
+            Add-Check 'wp01-to-wp03-all-green' `
+                (@($aggregate.work_packages | Where-Object { $_.status -ne 'PASS' }).Count -eq 0) `
+                ("work packages: {0}" -f (($aggregate.work_packages |
+                    ForEach-Object { "{0}={1}" -f $_.work_package, $_.status }) -join ', '))
+            Add-Check 'introduced-packaged-failures-zero' ($aggregate.introduced_packaged_failures -eq 0) `
+                ("introduced packaged failures across WP-01..WP-04: {0}" -f $aggregate.introduced_packaged_failures)
+            Add-Check 'unresolved-packaged-blockers-zero' ($aggregate.unresolved_packaged_blockers -eq 0) `
+                ("unresolved packaged blockers: {0}" -f $aggregate.unresolved_packaged_blockers)
+
+            $Result['commit_chain'] = @(& git -C $RepoRoot log -4 --format='%h %s')
+            $Result['later_gates'] = $aggregate.later_gates
         }
     }
 }
