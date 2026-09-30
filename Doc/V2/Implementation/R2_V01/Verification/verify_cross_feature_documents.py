@@ -32,7 +32,7 @@ import tempfile
 import zipfile
 import zlib
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Sequence, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 from docx import Document
 
@@ -63,7 +63,9 @@ def png_data_uri(width: int, height: int) -> str:
     def chunk(tag: bytes, payload: bytes) -> bytes:
         body = tag + payload
         return (
-            struct.pack(">I", len(payload)) + body + struct.pack(">I", zlib.crc32(body) & 0xFFFFFFFF)
+            struct.pack(">I", len(payload))
+            + body
+            + struct.pack(">I", zlib.crc32(body) & 0xFFFFFFFF)
         )
 
     ihdr = struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)
@@ -416,7 +418,8 @@ def check_scenario_b(workspace: Path, report: Report) -> None:
     entries = toc_entry_texts(doc)
     report.check(
         "B4 TOC caches the Chinese headings",
-        any("竞争基础集成验证" in entry for entry in entries) and any("架构" in entry for entry in entries),
+        any("竞争基础集成验证" in entry for entry in entries)
+        and any("架构" in entry for entry in entries),
         f"entries={entries}",
     )
 
@@ -426,7 +429,12 @@ def check_scenario_b(workspace: Path, report: Report) -> None:
     report.check(
         "B5 Chinese table cells unchanged",
         table_matrix(table)
-        == [["组件", "权威", "状态"], ["解析器", "markdown-it", "冻结"], ["渲染器", "WordRenderer", "冻结"], ["质量门", "compiler", "冻结"]],
+        == [
+            ["组件", "权威", "状态"],
+            ["解析器", "markdown-it", "冻结"],
+            ["渲染器", "WordRenderer", "冻结"],
+            ["质量门", "compiler", "冻结"],
+        ],
         f"cells={table_matrix(table)}",
     )
     report.check(
@@ -463,24 +471,27 @@ def check_scenario_c(workspace: Path, report: Report) -> None:
         )
         report.check(
             f"C[{profile.id}] effective page margins == declared profile geometry",
-            all(abs(a - b) < 0.02 for a, b in zip((left, right, top, bottom), expected)),
+            all(
+                abs(a - b) < 0.02 for a, b in zip((left, right, top, bottom), expected, strict=True)
+            ),
             f"artifact={(left, right, top, bottom)} declared={expected}",
         )
         content_w, content_h = content_box_cm(doc)
-        table_ok = all(
-            sum(table_widths_cm(table)) <= content_w + 0.01
-            for table in doc.tables
-        )
+        table_ok = all(sum(table_widths_cm(table)) <= content_w + 0.01 for table in doc.tables)
         shape = list(doc.inline_shapes)[0]
         figure_ok = (
             abs(shape.width.cm - min(4 * 2.54, content_w)) < 0.05
             and shape.width.cm <= content_w + 0.05
             and shape.height.cm <= content_h + 0.05
         )
+        c_detail = (
+            f"content_box={content_w}x{content_h} "
+            f"figure={round(shape.width.cm, 3)}x{round(shape.height.cm, 3)}"
+        )
         report.check(
             f"C[{profile.id}] tables and figure respect the profile content box",
             table_ok and figure_ok,
-            f"content_box={content_w}x{content_h} figure={round(shape.width.cm,3)}x{round(shape.height.cm,3)}",
+            c_detail,
         )
         report.check(
             f"C[{profile.id}] TOC heading unchanged by profile",
@@ -572,13 +583,17 @@ def check_scenario_d(workspace: Path, report: Report) -> None:
         f"stages={sorted({record.stage for record in result.diagnostics if record.stage})}",
     )
     gate = result.quality_gate_report or {}
+    gate_statuses = {
+        stage: (gate.get(stage) or {}).get("status")
+        for stage in ("static_qa", "rendered_qa", "post_processor", "final_artifact_qa")
+    }
     report.check(
         "D11 every quality-gate stage is non-FAIL",
         all(
             (gate.get(stage) or {}).get("status") not in (None, "FAIL")
             for stage in ("static_qa", "rendered_qa", "post_processor", "final_artifact_qa")
         ),
-        f"stages={ {s: (gate.get(s) or {}).get('status') for s in ('static_qa','rendered_qa','post_processor','final_artifact_qa')} }",
+        f"stages={gate_statuses}",
     )
 
 
@@ -603,8 +618,7 @@ def check_determinism(workspace: Path, report: Report) -> None:
     )
     report.check(
         "E3 boundary report: repeated conversion is identical apart from the picture name",
-        normalize_document_xml(doc_xml(boundary_1))
-        == normalize_document_xml(doc_xml(boundary_2)),
+        normalize_document_xml(doc_xml(boundary_1)) == normalize_document_xml(doc_xml(boundary_2)),
         f"sha={document_xml_sha256(boundary_1)[:16]}",
     )
 

@@ -104,7 +104,13 @@ def write_markdown(path: Path, body: str) -> Path:
 def spy_on_service(window: Any) -> Dict[str, Any]:
     """Record real service calls: order, thread identity and peak concurrency."""
     original = window.service.convert
-    state: Dict[str, Any] = {"calls": [], "threads": [], "requests": [], "active": 0, "concurrency": 0}
+    state: Dict[str, Any] = {
+        "calls": [],
+        "threads": [],
+        "requests": [],
+        "active": 0,
+        "concurrency": 0,
+    }
 
     def recording(request: Any) -> Any:
         state["calls"].append(Path(str(request.source_path)).name)
@@ -129,7 +135,9 @@ def run_batch(window: Any) -> None:
     wait_until(lambda: not window.worker.is_running and window.state is not GuiState.CONVERTING)
 
 
-def prepare_batch(window: Any, workspace: Path, names: List[str], bodies: Dict[str, str]) -> List[Path]:
+def prepare_batch(
+    window: Any, workspace: Path, names: List[str], bodies: Dict[str, str]
+) -> List[Path]:
     """Select ``names`` as a batch and point the output folder into ``workspace``."""
     sources = [write_markdown(workspace / name, bodies.get(name, SUCCESS_BODY)) for name in names]
     output_dir = workspace / "out"
@@ -155,11 +163,16 @@ def check_gui(report: Report, workspace: Path) -> None:
     main_thread = threading.get_ident()
     try:
         # --- serial batch: success, failure, warning, success ----------------
-        sources = prepare_batch(
+        prepare_batch(
             window,
             workspace / "batch",
             ["a.md", "b.md", "c.md", "d.md"],
-            {"a.md": SUCCESS_BODY, "b.md": FAILURE_BODY, "c.md": WARNING_BODY, "d.md": SUCCESS_BODY},
+            {
+                "a.md": SUCCESS_BODY,
+                "b.md": FAILURE_BODY,
+                "c.md": WARNING_BODY,
+                "d.md": SUCCESS_BODY,
+            },
         )
         state = spy_on_service(window)
         run_batch(window)
@@ -185,6 +198,10 @@ def check_gui(report: Report, workspace: Path) -> None:
             run is not None and (run.succeeded, run.warnings, run.failed) == (2, 1, 1),
             f"summary={(run.succeeded, run.warnings, run.failed) if run else None}",
         )
+        g5_detail = (
+            f"item1={run.items[1].status if run else None} "
+            f"item3={run.items[3].status if run else None}"
+        )
         report.check(
             "G5 failure isolation: the source after the failure still converts",
             run is not None
@@ -192,18 +209,20 @@ def check_gui(report: Report, workspace: Path) -> None:
             and run.items[3].status is BatchItemStatus.SUCCESS
             and run.items[3].output_path is not None
             and run.items[3].output_path.exists(),
-            f"item1={run.items[1].status if run else None} item3={run.items[3].status if run else None}",
+            g5_detail,
         )
+        g6_outputs = [item.output_path.name if item.output_path else None for item in run.items]
         report.check(
             "G6 one document per successful source, named after the source stem",
             run is not None
             and all(
-                item.output_path is not None and item.output_path.name.startswith(item.source_path.stem)
+                item.output_path is not None
+                and item.output_path.name.startswith(item.source_path.stem)
                 for item in run.items
                 if item.status.produced_output
             )
             and run.items[1].output_path is None,
-            f"outputs={[item.output_path.name if item.output_path else None for item in run.items]}",
+            f"outputs={g6_outputs}",
         )
         report.check(
             "G7 batch returns the window to READY",
@@ -215,11 +234,12 @@ def check_gui(report: Report, workspace: Path) -> None:
             window.worker.is_running is False
             and window.worker.thread is None
             and window.is_conversion_active is False,
-            f"running={window.worker.is_running} thread={window.worker.thread} active={window.is_conversion_active}",
+            f"running={window.worker.is_running} "
+            f"thread={window.worker.thread} active={window.is_conversion_active}",
         )
 
         # --- no state leakage: a fresh single-file batch still works ----------
-        single = prepare_batch(window, workspace / "second", ["solo.md"], {"solo.md": SUCCESS_BODY})
+        prepare_batch(window, workspace / "second", ["solo.md"], {"solo.md": SUCCESS_BODY})
         state2 = spy_on_service(window)
         run_batch(window)
         second_run = window.batch_run
@@ -304,7 +324,9 @@ def check_cli(report: Report, workspace: Path) -> None:
         ["input", "--no-open", "--output", str(directory_out), "--config", str(config_path)],
         cwd=cli_workspace,
     )
-    produced = sorted(p.name for p in directory_out.glob("*.docx")) if directory_out.exists() else []
+    produced = (
+        sorted(p.name for p in directory_out.glob("*.docx")) if directory_out.exists() else []
+    )
     report.check(
         "H1 CLI directory mode exits 0",
         completed.returncode == 0,
@@ -343,7 +365,10 @@ def check_cross_entry(report: Report, workspace: Path) -> None:
 
     cross = workspace / "cross"
     cross.mkdir(parents=True, exist_ok=True)
-    body = "---\ntitle: Cross Entry\n---\n\n# Cross Entry\n\nIntro.\n\n## Data\n\n| A | B |\n| --- | --- |\n| 1 | 2 |\n"
+    body = (
+        "---\ntitle: Cross Entry\n---\n\n# Cross Entry\n\nIntro.\n\n"
+        "## Data\n\n| A | B |\n| --- | --- |\n| 1 | 2 |\n"
+    )
     source = write_markdown(cross / "cross.md", body)
 
     service_out = cross / "service.docx"
@@ -365,13 +390,15 @@ def check_cross_entry(report: Report, workspace: Path) -> None:
 
     service_xml = normalized_document_xml(service_out) if service_out.exists() else ""
     cli_xml = normalized_document_xml(cli_out) if cli_out.exists() else ""
+    i1_detail = (
+        f"rc={completed.returncode} "
+        f"service_sha={hashlib.sha256(service_xml.encode()).hexdigest()[:16]} "
+        f"cli_sha={hashlib.sha256(cli_xml.encode()).hexdigest()[:16]}"
+    )
     report.check(
         "I1 CLI and service produce the same canonical document for the same input",
-        completed.returncode == 0
-        and bool(service_xml)
-        and service_xml == cli_xml,
-        f"rc={completed.returncode} service_sha={hashlib.sha256(service_xml.encode()).hexdigest()[:16]} "
-        f"cli_sha={hashlib.sha256(cli_xml.encode()).hexdigest()[:16]}",
+        completed.returncode == 0 and bool(service_xml) and service_xml == cli_xml,
+        i1_detail,
     )
 
 
@@ -394,7 +421,7 @@ def print_entry_path_observation() -> None:
     uses_service = "ConversionService" in cli_text
     uses_core = "from .compiler import CompilerContext" in cli_text
     print("ENTRY-POINT PATH OBSERVATION (informational, no PASS/FAIL)")
-    print(f"  GUI single-file / serial batch -> ConversionService: YES")
+    print("  GUI single-file / serial batch -> ConversionService: YES")
     print(
         f"  CLI -> ConversionService: {'YES' if uses_service else 'NO'}; "
         f"CLI -> CompilerContext (canonical core): {'YES' if uses_core else 'NO'}"

@@ -20,7 +20,8 @@ it parses ``md_converter/**/*.py`` with :mod:`ast` and asserts:
 
 Usage::
 
-    .venv\\Scripts\\python.exe Doc/V2/Implementation/R2_V01/Verification/verify_architecture_drift.py
+    .venv\\Scripts\\python.exe
+    Doc/V2/Implementation/R2_V01/Verification/verify_architecture_drift.py
 
 Exit code 0 == every check passed.
 """
@@ -32,6 +33,7 @@ import re
 import sys
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Set, Tuple
+
 
 def _find_repo_root(start: Path) -> Path:
     """Return the repository root (the directory that contains ``md_converter``)."""
@@ -199,17 +201,19 @@ def main() -> int:
         for n in c.body
     )
     a2_ok = (
-        "CompilerContext.create" in svc_init
-        and "context.compile(" in svc_body
-        and compile_exists
+        "CompilerContext.create" in svc_init and "context.compile(" in svc_body and compile_exists
+    )
+    a2_detail = (
+        "default context factory is CompilerContext.create="
+        f"{'CompilerContext.create' in svc_init}; "
+        f"convert calls context.compile={'context.compile(' in svc_body}; "
+        f"CompilerContext.compile exists={compile_exists}"
     )
     results.append(
         (
             "A2 ConversionService -> CompilerContext.create/compile",
             a2_ok,
-            f"default context factory is CompilerContext.create={('CompilerContext.create' in svc_init)}; "
-            f"convert calls context.compile={'context.compile(' in svc_body}; "
-            f"CompilerContext.compile exists={compile_exists}",
+            a2_detail,
         )
     )
 
@@ -240,7 +244,9 @@ def main() -> int:
         hits = sorted({callee_name(c) for c in calls_in(tree)} & QA_CLASS_NAMES)
         if hits:
             qa_files[relname(path)] = hits
-    a4_allowed = {rel for rel in qa_files if rel == "compiler" or rel.startswith("renderer/layout/")}
+    a4_allowed = {
+        rel for rel in qa_files if rel == "compiler" or rel.startswith("renderer/layout/")
+    }
     a4_ok = set(qa_files) == a4_allowed
     results.append(
         (
@@ -271,7 +277,11 @@ def main() -> int:
     for path, tree in trees.items():
         rel = relname(path)
         if "profiles" in imported_roots(path, tree):
-            if rel.startswith("gui/") or rel in allowed_profile_roots or rel.startswith("profiles/"):
+            if (
+                rel.startswith("gui/")
+                or rel in allowed_profile_roots
+                or rel.startswith("profiles/")
+            ):
                 continue
             leaked_profile.append(rel)
     results.append(
@@ -288,11 +298,15 @@ def main() -> int:
     cli_rule = re.search(r"re\.sub\(r'([^']+)', \"_\", title\)", cli_text)
     svc_rule = re.search(r"return re\.sub\(r'([^']+)', \"_\", title\)", svc_text)
     a7_ok = bool(cli_rule and svc_rule) and cli_rule.group(1) == svc_rule.group(1)
+    a7_detail = (
+        f"cli={cli_rule.group(1) if cli_rule else None!r} "
+        f"svc={svc_rule.group(1) if svc_rule else None!r}"
+    )
     results.append(
         (
             "A7 CLI output naming == application sanitize_output_title",
             a7_ok,
-            f"cli={cli_rule.group(1) if cli_rule else None!r} svc={svc_rule.group(1) if svc_rule else None!r}",
+            a7_detail,
         )
     )
 
@@ -312,7 +326,11 @@ def main() -> int:
 
     # --- A9: public API intact ----------------------------------------------
     init_text = (PKG_ROOT / "__init__.py").read_text(encoding="utf-8")
-    a9_ok = '"convert"' in init_text and '"CompilerContext"' in init_text and "def convert(" in init_text
+    a9_ok = (
+        '"convert"' in init_text
+        and '"CompilerContext"' in init_text
+        and "def convert(" in init_text
+    )
     results.append(
         (
             "A9 public API exports intact (convert / CompilerContext)",

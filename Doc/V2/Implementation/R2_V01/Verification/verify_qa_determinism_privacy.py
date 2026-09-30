@@ -20,16 +20,13 @@ import base64
 import contextlib
 import io
 import os
-import re
 import struct
 import subprocess
 import sys
 import tempfile
-import time
-import zipfile
 import zlib
 from pathlib import Path
-from typing import Any, Dict, List, Sequence, Set, Tuple
+from typing import Any, Dict, List, Set, Tuple
 
 REPO_ROOT = None
 for _candidate in [Path(__file__).resolve(), *Path(__file__).resolve().parents]:
@@ -86,7 +83,9 @@ def png_data_uri(width: int, height: int) -> str:
     def chunk(tag: bytes, payload: bytes) -> bytes:
         body = tag + payload
         return (
-            struct.pack(">I", len(payload)) + body + struct.pack(">I", zlib.crc32(body) & 0xFFFFFFFF)
+            struct.pack(">I", len(payload))
+            + body
+            + struct.pack(">I", zlib.crc32(body) & 0xFFFFFFFF)
         )
 
     ihdr = struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)
@@ -142,9 +141,7 @@ title: QA Boundary
 """
 
 
-def convert(
-    workspace: Path, name: str, body: str, overrides: Dict[str, Any]
-) -> Tuple[Any, Path]:
+def convert(workspace: Path, name: str, body: str, overrides: Dict[str, Any]) -> Tuple[Any, Path]:
     """Convert ``body`` via the canonical application entry point."""
     from md_converter.application.conversion_request import ConversionRequest
     from md_converter.application.conversion_service import ConversionService
@@ -227,9 +224,11 @@ def check_qa(report: Report, workspace: Path) -> None:
         f"report_keys={sorted(gate)}",
     )
 
-    boundary_result, _ = convert(workspace, "qa_boundary", BOUNDARY_DOC, {"output_profile": "academic"})
-    from md_converter.gui.presentation_model import present_result
+    boundary_result, _ = convert(
+        workspace, "qa_boundary", BOUNDARY_DOC, {"output_profile": "academic"}
+    )
     from md_converter.gui.preflight_model import preflight_from_result
+    from md_converter.gui.presentation_model import present_result
     from md_converter.gui.result_details import build_report_text
 
     presentation = present_result(boundary_result)
@@ -244,10 +243,12 @@ def check_qa(report: Report, workspace: Path) -> None:
         bool(real_message) and real_message in report_text,
         f"message={real_message[:70]!r} in_report={real_message in report_text}",
     )
+    table_index = report_text.find("Table")
+    excerpt = report_text[max(table_index - 20, 0) : table_index + 90]
     report.check(
         "Q4 the irreducible-wide-table warning stays surfaced in the report",
         "RENDER006" in report_text or "Table" in report_text,
-        f"report_excerpt={report_text[report_text.find('Table') - 20: report_text.find('Table') + 90]!r}",
+        f"report_excerpt={excerpt!r}",
     )
     report.check(
         "Q5 the preflight summary counts the real warnings (not fabricated)",
@@ -286,15 +287,17 @@ def check_failure_isolation(report: Report, workspace: Path) -> None:
     )
     report.check(
         "R2 the next conversion on the same service is clean and successful",
-        good_result.is_success
-        and len(good_result.diagnostics) == 0
-        and good_out.exists(),
+        good_result.is_success and len(good_result.diagnostics) == 0 and good_out.exists(),
         f"status={good_result.status} diagnostics={[r.code for r in good_result.diagnostics]}",
     )
     gate = good_result.quality_gate_report or {}
     report.check(
         "R3 no failed-stage evidence leaks into the later conversion",
-        all((gate.get(stage) or {}).get("status") != "FAIL" for stage in gate if isinstance(gate.get(stage), dict)),
+        all(
+            (gate.get(stage) or {}).get("status") != "FAIL"
+            for stage in gate
+            if isinstance(gate.get(stage), dict)
+        ),
         f"stage_statuses={ {k: v.get('status') for k, v in gate.items() if isinstance(v, dict)} }",
     )
 
