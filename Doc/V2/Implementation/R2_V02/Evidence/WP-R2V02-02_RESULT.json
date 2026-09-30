@@ -1,0 +1,285 @@
+﻿{
+    "final_snapshot":  {
+                           "at":  "15:56:30.590",
+                           "list_rows":  [
+                                             "✓ 01_english.md — succeeded",
+                                             "✓ 02_wide_table_figure.md — succeeded",
+                                             "✗ 03_failure.md — failed",
+                                             "✓ 04_after_failure.md — succeeded"
+                                         ],
+                           "rows":  [
+                                        "✓ 01_english.md — succeeded",
+                                        "✓ 02_wide_table_figure.md — succeeded",
+                                        "✗ 03_failure.md — failed",
+                                        "✓ 04_after_failure.md — succeeded"
+                                    ],
+                           "convert_text":  "Convert",
+                           "convert_enabled":  true,
+                           "summary_visible":  true,
+                           "open_document":  false,
+                           "details":  false,
+                           "open_batch_folder":  true
+                       },
+    "pre_run_snapshot":  {
+                             "at":  "15:56:15.735",
+                             "list_rows":  [
+                                               "01_english.md",
+                                               "02_wide_table_figure.md",
+                                               "03_failure.md",
+                                               "04_after_failure.md"
+                                           ],
+                             "rows":  [
+
+                                      ],
+                             "convert_text":  "Convert",
+                             "convert_enabled":  true,
+                             "summary_visible":  false,
+                             "open_document":  false,
+                             "details":  false,
+                             "open_batch_folder":  false
+                         },
+    "output_directory":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp02_20260930_155602\\cwd\\output",
+    "finished_at":  "2026-09-30T15:56:33.7051884+08:00",
+    "fixtures":  {
+                     "exit_code":  0,
+                     "output":  [
+                                    "fixtures=wp02 work=C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp02_20260930_155602\\cwd"
+                                ]
+                 },
+    "checks":  [
+                   {
+                       "name":  "installed-executable-launches",
+                       "passed":  true,
+                       "detail":  "main window visible (pid 3920)"
+                   },
+                   {
+                       "name":  "four-files-selected",
+                       "passed":  true,
+                       "detail":  "4 of 4 file dialogs accepted a source"
+                   },
+                   {
+                       "name":  "queue-order-preserved",
+                       "passed":  true,
+                       "detail":  "list rows before the run: 01_english.md | 02_wide_table_figure.md | 03_failure.md | 04_after_failure.md"
+                   },
+                   {
+                       "name":  "batch-summary-hidden-before-run",
+                       "passed":  true,
+                       "detail":  "batch summary visible before the run: False"
+                   },
+                   {
+                       "name":  "batch-convert-action-available",
+                       "passed":  true,
+                       "detail":  "Convert button text before run: Convert"
+                   },
+                   {
+                       "name":  "batch-completes",
+                       "passed":  true,
+                       "detail":  "outcome=BATCH_COMPLETE after 10.7s from 57 sample(s)"
+                   },
+                   {
+                       "name":  "at-most-one-converting-item",
+                       "passed":  true,
+                       "detail":  "maximum items observed in the \u0027converting\u0027 state in any sample: 1"
+                   },
+                   {
+                       "name":  "strict-serial-prefix-order",
+                       "passed":  true,
+                       "detail":  "samples where a later source was terminal before an earlier one finished: 0"
+                   },
+                   {
+                       "name":  "batch-report-opens",
+                       "passed":  true,
+                       "detail":  "View Batch Report dialog opened"
+                   },
+                   {
+                       "name":  "batch-summary-counts",
+                       "passed":  true,
+                       "detail":  "summary=\u0027Batch complete — 4 files processed · 3 succeeded · 0 warnings · 1 failed\u0027; derived from rows: 3 succeeded, 0 warning, 1 failed"
+                   },
+                   {
+                       "name":  "per-file-results-and-order",
+                       "passed":  true,
+                       "detail":  "rows=✓ 01_english.md — succeeded | ✓ 02_wide_table_figure.md — succeeded | ✗ 03_failure.md — failed | ✓ 04_after_failure.md — succeeded"
+                   },
+                   {
+                       "name":  "failure-isolation",
+                       "passed":  true,
+                       "detail":  "the source after the failure succeeded"
+                   },
+                   {
+                       "name":  "output-count-and-naming",
+                       "passed":  true,
+                       "detail":  "produced=01_english.docx, 04_after_failure.docx, Wide_Table_Report.docx"
+                   },
+                   {
+                       "name":  "failed-item-produces-no-output",
+                       "passed":  true,
+                       "detail":  "produced=01_english.docx, 04_after_failure.docx, Wide_Table_Report.docx"
+                   },
+                   {
+                       "name":  "open-output-folder",
+                       "passed":  true,
+                       "detail":  "explorer window: output - File Explorer"
+                   }
+               ],
+    "status":  "PASS",
+    "profile":  "Professional Report",
+    "work_directory":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp02_20260930_155602\\cwd",
+    "process_id":  3920,
+    "selection":  [
+                      {
+                          "path":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp02_20260930_155602\\cwd\\01_english.md",
+                          "dialog_closed":  true
+                      },
+                      {
+                          "path":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp02_20260930_155602\\cwd\\02_wide_table_figure.md",
+                          "dialog_closed":  true
+                      },
+                      {
+                          "path":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp02_20260930_155602\\cwd\\03_failure.md",
+                          "dialog_closed":  true
+                      },
+                      {
+                          "path":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp02_20260930_155602\\cwd\\04_after_failure.md",
+                          "dialog_closed":  true
+                      }
+                  ],
+    "executable":  "C:\\Users\\Quansheng\\AppData\\Local\\Programs\\MD_Converter\\MD_Converter.exe",
+    "repository_root":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter",
+    "preferences_restored":  "restored from backup (reg exit=0)",
+    "open_output_folder":  {
+                               "clicked":  true,
+                               "window":  "output - File Explorer"
+                           },
+    "child_environment":  {
+                              "launch_mode":  "CreateProcess detached + sanitized environment",
+                              "working_directory":  "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp02_20260930_155602\\cwd",
+                              "pythonpath":  "",
+                              "path":  "C:\\Users\\Quansheng\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell;C:\\Users\\Quansheng\\.codex\\tmp\\arg0\\codex-arg0G3NFW6;C:\\Users\\Quansheng\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\libheif\\libheif\\bin;C:\\Users\\Quansheng\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\jxrlib\\jxrlib\\bin;C:\\Users\\Quansheng\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\poppler\\Library\\bin;C:\\Users\\Quansheng\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\bin\\override;C:\\Program Files\\ImageMagick-7.1.2-Q16-HDRI;C:\\windows\\system32;C:\\windows;C:\\windows\\System32\\Wbem;C:\\windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Program Files (x86)\\Microsoft SQL Server\\160\\Tools\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\160\\Tools\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\Client SDK\\ODBC\\170\\Tools\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\160\\DTS\\Binn\\;C:\\Program Files (x86)\\Microsoft SQL Server\\160\\DTS\\Binn\\;C:\\Program Files\\Azure Data Studio\\bin;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Users\\Quansheng\\AppData\\Local\\GitHubDesktop\\app-3.5.8\\resources\\app\\git\\usr\\bin;C:\\Users\\Quansheng\\AppData\\Local\\GitHubDesktop\\app-3.5.8\\resources\\app\\git\\mingw64\\bin;C:\\Program Files\\nodejs\\;C:\\Program Files\\Microsoft VS Code\\bin;C:\\sqlite;C:\\Program Files\\GTK3-Runtime Win64\\bin;C:\\Program Files\\GitHub CLI\\;C:\\Users\\Quansheng\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell;C:\\Users\\Quansheng\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Quansheng\\AppData\\Local\\GitHubDesktop\\bin;C:\\Users\\Quansheng\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin;\"C:\\windows\\system32;C:\\Program Files (x86)\\M\";C:\\Users\\Quansheng\\AppData\\Roaming\\npm;C:\\Users\\Quansheng\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Users\\Quansheng\\AppData\\Local\\Pandoc\\;C:\\Users\\Quansheng\\AppData\\Local\\GitHubDesktop\\app-3.6.4\\resources\\app\\git\\cmd;C:\\Users\\Quansheng\\AppData\\Local\\Programs\\MD_Converter;C:\\Users\\Quansheng\\AppData\\Local\\GitHubDesktop\\app-3.6.6\\resources\\app\\git\\cmd;C:\\Users\\Quansheng\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\bin\\fallback;C:\\Users\\Quansheng\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin;C:\\Users\\Quansheng\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\git\\cmd;C:\\Users\\Quansheng\\AppData\\Local\\OpenAI\\Codex\\bin\\0ddb895c950eaeba;C:\\Users\\Quansheng\\AppData\\Local\\OpenAI\\Codex\\bin\\faa963e871dd422c",
+                              "repository_on_path":  false,
+                              "dotvenv_on_path":  false,
+                              "standard_handles":  "none inherited (CREATE_DETACHED_PROCESS, bInheritHandles=FALSE)"
+                          },
+    "sources":  [
+                    "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp02_20260930_155602\\cwd\\01_english.md",
+                    "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp02_20260930_155602\\cwd\\02_wide_table_figure.md",
+                    "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp02_20260930_155602\\cwd\\03_failure.md",
+                    "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp02_20260930_155602\\cwd\\04_after_failure.md"
+                ],
+    "phase":  "WP02",
+    "batch_report":  {
+                         "title":  "Batch report - MD Converter",
+                         "summary":  "Batch complete — 4 files processed · 3 succeeded · 0 warnings · 1 failed",
+                         "rows":  [
+                                      "✓ 01_english.md — succeeded",
+                                      "✓ 02_wide_table_figure.md — succeeded",
+                                      "✗ 03_failure.md — failed",
+                                      "✓ 04_after_failure.md — succeeded"
+                                  ],
+                         "texts":  [
+                                       "Batch complete — 4 files processed · 3 succeeded · 0 warnings · 1 failed",
+                                       "Files:",
+                                       "Report:"
+                                   ]
+                     },
+    "docx_inventory":  [
+                           {
+                               "name":  "01_english.docx",
+                               "path":  "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_r2v02_wp02_20260930_155602\\cwd\\output\\01_english.docx",
+                               "bytes":  29442,
+                               "last_write":  "15:56:19",
+                               "sha256":  "8E19BA0ABB45B9E80A491A282989834F459B09E7564A33578EA018A16EA7D7E0",
+                               "valid_docx":  true
+                           },
+                           {
+                               "name":  "04_after_failure.docx",
+                               "path":  "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_r2v02_wp02_20260930_155602\\cwd\\output\\04_after_failure.docx",
+                               "bytes":  29352,
+                               "last_write":  "15:56:26",
+                               "sha256":  "366331D8605B8CD62AB3DBA4056B44F7F60E789EF12961A525D4F03CEE7EB54C",
+                               "valid_docx":  true
+                           },
+                           {
+                               "name":  "Wide_Table_Report.docx",
+                               "path":  "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_r2v02_wp02_20260930_155602\\cwd\\output\\Wide_Table_Report.docx",
+                               "bytes":  31433,
+                               "last_write":  "15:56:23",
+                               "sha256":  "D45FC667CA85041DFE7F8505C3743AF2D72BE09FA7E0AC7E5B076BE5B9053BDB",
+                               "valid_docx":  true
+                           }
+                       ],
+    "executable_version":  "1.1.0",
+    "collected":  [
+                      "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_r2v02_wp02_20260930_155602\\collected\\01_english.docx",
+                      "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_r2v02_wp02_20260930_155602\\collected\\04_after_failure.docx",
+                      "C:\\Users\\Quansheng\\AppData\\Local\\Temp\\mdc_r2v02_wp02_20260930_155602\\collected\\Wide_Table_Report.docx"
+                  ],
+    "batch_outcome":  {
+                          "outcome":  "BATCH_COMPLETE",
+                          "seconds":  10.7
+                      },
+    "started_at":  "2026-09-30T15:56:02.8938897+08:00",
+    "notes":  [
+
+              ],
+    "failed_count":  0,
+    "sampling":  {
+                     "sample_count":  57,
+                     "max_concurrent_converting":  1,
+                     "strict_serial_prefix_violations":  0,
+                     "observed_state_words":  [
+                                                  "converting",
+                                                  "pending",
+                                                  "succeeded",
+                                                  "failed"
+                                              ],
+                     "first":  {
+                                   "at":  "15:56:15.950",
+                                   "list_rows":  [
+                                                     "⏳ 01_english.md — converting",
+                                                     "○ 02_wide_table_figure.md — pending",
+                                                     "○ 03_failure.md — pending",
+                                                     "○ 04_after_failure.md — pending"
+                                                 ],
+                                   "rows":  [
+                                                "⏳ 01_english.md — converting",
+                                                "○ 02_wide_table_figure.md — pending",
+                                                "○ 03_failure.md — pending",
+                                                "○ 04_after_failure.md — pending"
+                                            ],
+                                   "convert_text":  "Convert",
+                                   "convert_enabled":  false,
+                                   "summary_visible":  false,
+                                   "open_document":  false,
+                                   "details":  false,
+                                   "open_batch_folder":  false
+                               },
+                     "last":  {
+                                  "at":  "15:56:26.673",
+                                  "list_rows":  [
+                                                    "✓ 01_english.md — succeeded",
+                                                    "✓ 02_wide_table_figure.md — succeeded",
+                                                    "✗ 03_failure.md — failed",
+                                                    "✓ 04_after_failure.md — succeeded"
+                                                ],
+                                  "rows":  [
+                                               "✓ 01_english.md — succeeded",
+                                               "✓ 02_wide_table_figure.md — succeeded",
+                                               "✗ 03_failure.md — failed",
+                                               "✓ 04_after_failure.md — succeeded"
+                                           ],
+                                  "convert_text":  "Convert",
+                                  "convert_enabled":  true,
+                                  "summary_visible":  true,
+                                  "open_document":  false,
+                                  "details":  false,
+                                  "open_batch_folder":  true
+                              }
+                 },
+    "executable_sha256":  "68524527CDC5718CE31A1F0454EAFB0FF64C52D5C838716AC1277445DE0E3021",
+    "install_root":  "C:\\Users\\Quansheng\\AppData\\Local\\Programs\\MD_Converter",
+    "failed_checks":  [
+
+                      ]
+}

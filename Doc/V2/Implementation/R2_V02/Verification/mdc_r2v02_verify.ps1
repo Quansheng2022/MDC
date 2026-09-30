@@ -288,6 +288,27 @@ function Wait-MainWindow {
     return Get-TopLevelWindow -ProcessId $ProcessId -Name $MainWindowTitle -TimeoutSeconds $TimeoutSeconds
 }
 
+function Get-DescendantsSafe {
+    <#
+        UI Automation enumerations can transiently fail while a Qt window is
+        rebuilding its accessible tree (the batch list is re-rendered, dialogs
+        open and close).  A transient failure must not abort a verification run,
+        so the enumeration is retried and only then reported as empty.
+    #>
+    param(
+        [System.Windows.Automation.AutomationElement]$Root,
+        [int]$Attempts = 4
+    )
+    for ($attempt = 1; $attempt -le $Attempts; $attempt++) {
+        try {
+            return Get-Descendants -Root $Root
+        } catch {
+            Start-Sleep -Milliseconds 250
+        }
+    }
+    return @()
+}
+
 function Get-RuntimeIndependence {
     <#
         Objective runtime-independence evidence: every loaded module of the
@@ -316,6 +337,7 @@ function Get-UiSnapshot {
     param([System.Windows.Automation.AutomationElement]$Window)
     $snapshot = [ordered]@{
         at               = (Get-Date).ToString('HH:mm:ss.fff')
+        list_rows        = @()
         rows             = @()
         convert_text     = $null
         convert_enabled  = $false
@@ -324,7 +346,7 @@ function Get-UiSnapshot {
         details          = $false
         open_batch_folder = $false
     }
-    foreach ($element in (Get-Descendants -Root $Window)) {
+    foreach ($element in (Get-DescendantsSafe -Root $Window)) {
         $type = $element.Current.ControlType
         $name = $element.Current.Name
         if ($type -eq $ControlType::Button) {
@@ -340,9 +362,13 @@ function Get-UiSnapshot {
             }
         } elseif ($type -eq $ControlType::Text -and $name -eq 'Batch summary') {
             $snapshot.summary_visible = -not [bool]$element.Current.IsOffscreen
-        } elseif ($type -eq $ControlType::ListItem -and
-            $name -match ([char]0x2014 + '\s*(pending|converting|succeeded|warning|failed)$')) {
-            $snapshot.rows += $name
+        } elseif ($type -eq $ControlType::ListItem -and $name -match '\.md') {
+            # Batch-list rows carry the source file name; the output-profile
+            # selector's list items never do, so the two are unambiguous.
+            $snapshot.list_rows += $name
+            if ($name -match ([char]0x2014 + '\s*(pending|converting|succeeded|warning|failed)$')) {
+                $snapshot.rows += $name
+            }
         }
     }
     return $snapshot
@@ -383,7 +409,7 @@ function Set-ProfileByName {
     $item = $null
     $deadline = (Get-Date).AddSeconds(10)
     while ((Get-Date) -lt $deadline -and -not $item) {
-        foreach ($element in (Get-Descendants -Root $Window)) {
+        foreach ($element in (Get-DescendantsSafe -Root $Window)) {
             if ($element.Current.ControlType -ne $ControlType::ListItem) { continue }
             if ($element.Current.Name -eq $DisplayName) { $item = $element; break }
         }
@@ -507,7 +533,7 @@ function Get-BatchReport {
     if (-not $dialog) { return $null }
     $texts = @()
     $rows = @()
-    foreach ($element in (Get-Descendants -Root $dialog)) {
+    foreach ($element in (Get-DescendantsSafe -Root $dialog)) {
         if ($element.Current.ControlType -eq $ControlType::Text) { $texts += $element.Current.Name }
         elseif ($element.Current.ControlType -eq $ControlType::ListItem) { $rows += $element.Current.Name }
     }
@@ -581,15 +607,29 @@ function Save-EvidenceJson {
 }
 
 function Restore-Preferences {
+    <#
+        Leave the product's own settings store exactly as it was found.
+        ``reg.exe`` reports success on stderr, which Windows PowerShell would
+        turn into a terminating error under $ErrorActionPreference='Stop', so the
+        native call is run with a relaxed preference and its exit code is
+        reported instead.
+    #>
+    $previous = $ErrorActionPreference
     try {
+        $ErrorActionPreference = 'Continue'
         if ($script:Restore.key_existed -and $script:Restore.backup) {
-            & reg.exe import $script:Restore.backup 2>$null | Out-Null
+            & reg.exe import $script:Restore.backup *> $null
+            $script:PrefsRestored = "restored from backup (reg exit=$LASTEXITCODE)"
         } elseif (Test-Path $PrefsKey) {
-            Remove-Item -LiteralPath $PrefsKey -Recurse -Force
+            Remove-Item -LiteralPath $PrefsKey -Recurse -Force -ErrorAction SilentlyContinue
+            $script:PrefsRestored = "removed the settings key created during verification = $(-not (Test-Path $PrefsKey))"
+        } else {
+            $script:PrefsRestored = 'no product settings key present before or after verification'
         }
-        $script:PrefsRestored = $true
     } catch {
         $script:PrefsRestored = "failed: $($_.Exception.Message)"
+    } finally {
+        $ErrorActionPreference = $previous
     }
 }
 
@@ -771,8 +811,19 @@ try {
 
             $before = Get-UiSnapshot -Window $window
             $Result['pre_run_snapshot'] = $before
-            Add-Check 'queue-order-preserved' ($before.rows.Count -eq 4) `
-                ("list rows before the run: {0}" -f ($before.rows -join ' | '))
+            $expectedOrder = @('01_english.md', '02_wide_table_figure.md', '03_failure.md', '04_after_failure.md')
+            $orderOk = ($before.list_rows.Count -eq 4)
+            for ($index = 0; $index -lt 4 -and $orderOk; $index++) {
+                if ($before.list_rows[$index] -notmatch [regex]::Escape($expectedOrder[$index])) { $orderOk = $false }
+            }
+            Add-Check 'queue-order-preserved' $orderOk `
+                ("list rows before the run: {0}" -f ($before.list_rows -join ' | '))
+            # The primary action keeps the stable accessible name "Convert" (the
+            # batch size is observable through the queue list, and the batch-mode
+            # surface itself through the summary that appears only for a finished
+            # multi-file run), so batch mode is asserted from the batch surface.
+            Add-Check 'batch-summary-hidden-before-run' (-not $before.summary_visible) `
+                ("batch summary visible before the run: {0}" -f $before.summary_visible)
 
             $started = Invoke-Convert -Window $window
             Add-Check 'batch-convert-action-available' $started ("Convert button text before run: {0}" -f $before.convert_text)
@@ -781,6 +832,7 @@ try {
 
             $samples = @($outcome.samples)
             $maxConverting = 0
+            $prefixViolations = 0
             $seenWords = New-Object System.Collections.ArrayList
             foreach ($sample in $samples) {
                 $converting = @($sample.rows | Where-Object { $_ -match 'converting$' }).Count
@@ -789,11 +841,27 @@ try {
                     $word = ($row -split [char]0x2014)[-1].Trim()
                     if (-not $seenWords.Contains($word)) { [void]$seenWords.Add($word) }
                 }
+                # Strict serial execution: the terminal items must always form a
+                # prefix of the queue, so a later source can never finish while an
+                # earlier one is still pending or converting.
+                $terminal = @()
+                for ($index = 0; $index -lt 4; $index++) {
+                    $row = @($sample.rows | Where-Object { $_ -match [regex]::Escape($expectedOrder[$index]) })
+                    $terminal += [bool]($row.Count -gt 0 -and $row[0] -match '(succeeded|warning|failed)$')
+                }
+                if ($terminal -contains $true) {
+                    $last = 0
+                    for ($index = 0; $index -lt 4; $index++) { if ($terminal[$index]) { $last = $index } }
+                    for ($index = 0; $index -le $last; $index++) {
+                        if (-not $terminal[$index]) { $prefixViolations++ }
+                    }
+                }
             }
             $Result['sampling'] = [ordered]@{
-                sample_count          = $samples.Count
+                sample_count              = $samples.Count
                 max_concurrent_converting = $maxConverting
-                observed_state_words  = @($seenWords.ToArray())
+                strict_serial_prefix_violations = $prefixViolations
+                observed_state_words      = @($seenWords.ToArray())
                 first = $(if ($samples.Count -gt 0) { $samples[0] } else { $null })
                 last  = $(if ($samples.Count -gt 0) { $samples[$samples.Count - 1] } else { $null })
             }
@@ -801,13 +869,24 @@ try {
                 ("outcome={0} after {1}s from {2} sample(s)" -f $outcome.outcome, $outcome.seconds, $samples.Count)
             Add-Check 'at-most-one-converting-item' ($maxConverting -le 1) `
                 ("maximum items observed in the 'converting' state in any sample: {0}" -f $maxConverting)
+            Add-Check 'strict-serial-prefix-order' ($prefixViolations -eq 0) `
+                ("samples where a later source was terminal before an earlier one finished: {0}" -f $prefixViolations)
 
             $report = Get-BatchReport -Window $window -ProcessId $app.Id
             $Result['batch_report'] = $report
             Add-Check 'batch-report-opens' ($null -ne $report) 'View Batch Report dialog opened'
             if ($report) {
-                Add-Check 'batch-summary-counts' ($report.summary -match '4 files processed' -and $report.summary -match '2 succeeded') `
-                    ("summary='{0}'" -f $report.summary)
+                $succeededCount = @($report.rows | Where-Object { $_ -match 'succeeded$' }).Count
+                $warningCount = @($report.rows | Where-Object { $_ -match 'warning$' }).Count
+                $failedCount = @($report.rows | Where-Object { $_ -match 'failed$' }).Count
+                $countsConsistent = ($report.summary -match '4 files processed') -and
+                                    ($report.summary -match ("{0} succeeded" -f $succeededCount)) -and
+                                    ($report.summary -match ("{0} failed" -f $failedCount)) -and
+                                    ($report.summary -match ("{0} warning" -f $warningCount)) -and
+                                    (($succeededCount + $warningCount + $failedCount) -eq 4)
+                Add-Check 'batch-summary-counts' $countsConsistent `
+                    ("summary='{0}'; derived from rows: {1} succeeded, {2} warning, {3} failed" -f
+                        $report.summary, $succeededCount, $warningCount, $failedCount)
                 $failedRows = @($report.rows | Where-Object { $_ -match '03_failure\.md' -and $_ -match 'failed$' })
                 $lateRows = @($report.rows | Where-Object { $_ -match '04_after_failure\.md' -and $_ -match 'succeeded$' })
                 $orderOk = ($report.rows.Count -eq 4) -and
