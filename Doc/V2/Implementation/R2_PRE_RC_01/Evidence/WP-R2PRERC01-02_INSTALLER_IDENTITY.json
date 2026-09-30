@@ -1,0 +1,34 @@
+﻿{
+    "phase":  "WP-R2PRERC01-02",
+    "captured_at":  "2026-09-30T23:27:39+08:00",
+    "installer_filename":  "MD_Converter_v1.1.0_Setup.exe",
+    "installer_path":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\dist_installer\\MD_Converter_v1.1.0_Setup.exe",
+    "installer_bytes":  51186717,
+    "installer_sha256":  "4B56FC989BAB7FF7E648CC29DFE5A6D944B2B8EFC420F11DE8D0ECF8294FFDE9",
+    "installer_built_at":  "2026-09-30T23:25:46+08:00",
+    "installer_version_info":  {
+                                   "file_version":  "1.1.0.0             ",
+                                   "product_version":  "1.1.0                                             ",
+                                   "product_name":  "MD Converter                                                ",
+                                   "company_name":  "Quansheng2022                                               ",
+                                   "file_description":  "Markdown to Microsoft Word DOCX Converter                   ",
+                                   "legal_copyright":  "Copyright © 2026 Quansheng2022                                                                      "
+                               },
+    "compiler":  {
+                     "name":  "Inno Setup Command-Line Compiler (ISCC.exe)",
+                     "version":  "Inno Setup 7.1.0",
+                     "path":  "C:\\Users\\Quansheng\\AppData\\Local\\Programs\\Inno Setup 7\\ISCC.exe"
+                 },
+    "packaged_executable_sha256":  "68524527CDC5718CE31A1F0454EAFB0FF64C52D5C838716AC1277445DE0E3021",
+    "golden_baseline_path":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\md_converter\\tests\\golden\\sample.expected.json",
+    "golden_baseline_sha256":  "6D589013B8024C158DE5D29B93BDFEF68F2F406045C805DAB61F8E513725829A",
+    "checks":  {
+                   "installer_exists":  true,
+                   "payload_exe_unchanged":  true,
+                   "golden_baseline_unchanged":  true,
+                   "product_runtime_source_files_modified":  [
+                                                                 "md_converter/cli.py"
+                                                             ]
+               },
+    "result":  "PASS"
+}
