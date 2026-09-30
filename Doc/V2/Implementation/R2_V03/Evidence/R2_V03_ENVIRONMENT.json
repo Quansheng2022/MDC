@@ -1,0 +1,64 @@
+﻿{
+    "generated_at_utc":  "2026-09-30T12:14:29.3005738Z",
+    "generated_at_local":  "2026-09-30T20:14:29.3031465+08:00",
+    "program":  "R2-V03",
+    "note":  "Verification-only environment/identity record. No product or system state was modified.",
+    "installed_runtime":  {
+                              "path":  "C:\\Users\\Quansheng\\AppData\\Local\\Programs\\MD_Converter\\MD_Converter.exe",
+                              "present":  true,
+                              "bytes":  6926650,
+                              "last_write_utc":  "2026-09-30T06:51:33.0741990Z",
+                              "sha256":  "68524527CDC5718CE31A1F0454EAFB0FF64C52D5C838716AC1277445DE0E3021",
+                              "file_version":  "1.1.0",
+                              "product_version":  "1.1.0",
+                              "product_name":  "MD Converter",
+                              "company_name":  "Quansheng2022"
+                          },
+    "built_payload":  {
+                          "path":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\dist\\MD_Converter_Lite\\MD_Converter_Lite.exe",
+                          "present":  true,
+                          "bytes":  6926650,
+                          "last_write_utc":  "2026-09-30T06:51:33.0741990Z",
+                          "sha256":  "68524527CDC5718CE31A1F0454EAFB0FF64C52D5C838716AC1277445DE0E3021",
+                          "file_version":  "1.1.0",
+                          "product_version":  "1.1.0",
+                          "product_name":  "MD Converter",
+                          "company_name":  "Quansheng2022"
+                      },
+    "installed_matches_built_payload":  true,
+    "expected_executable_sha256":  "68524527CDC5718CE31A1F0454EAFB0FF64C52D5C838716AC1277445DE0E3021",
+    "microsoft_word":  {
+                           "present":  true,
+                           "path":  "C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE",
+                           "file_version":  "16.0.20430.20092",
+                           "product_version":  "16.0.20430.20092",
+                           "product_name":  "Microsoft Office"
+                       },
+    "office_click_to_run":  {
+                                "product_release_ids":  "OneNoteFreeRetail,HomeStudentRetail",
+                                "version_to_report":  "16.0.20430.20092",
+                                "platform":  "x64",
+                                "client_version":  "16.0.20430.20092"
+                            },
+    "windows":  {
+                    "product_name":  "Windows 10 Home",
+                    "display_version":  "25H2",
+                    "release_id":  "2009",
+                    "current_build":  "26200",
+                    "ubr":  9457,
+                    "os_architecture":  "AMD64"
+                },
+    "display":  {
+                    "log_pixels":  null,
+                    "scale_percent":  null,
+                    "monitor_dpi_scale":  0,
+                    "screens":  [
+                                    {
+                                        "device_name":  "\\\\.\\DISPLAY1",
+                                        "primary":  true,
+                                        "bounds":  "1280x720",
+                                        "work_area":  "1280x720"
+                                    }
+                                ]
+                }
+}

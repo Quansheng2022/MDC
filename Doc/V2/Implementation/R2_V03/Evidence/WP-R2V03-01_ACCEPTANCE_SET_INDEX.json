@@ -1,0 +1,725 @@
+{
+    "program": "R2-V03",
+    "work_package": "R2V03-01",
+    "purpose": "native Word openability / visual acceptance set",
+    "acceptance_directory": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set",
+    "item_count": 10,
+    "invalid_count": 0,
+    "failures": [],
+    "items": [
+        {
+            "role": "profile:professional_report",
+            "name": "Matrix_Professional_Report.docx",
+            "source_path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\collected\\Matrix_Professional_Report.docx",
+            "acceptance_path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\Matrix_Professional_Report.docx",
+            "bytes": 32407,
+            "sha256": "5F50F483BA5C9A8F90934335D273F783C4360941C3313D277ADE1E194161AE7E",
+            "source_sha256": "5F50F483BA5C9A8F90934335D273F783C4360941C3313D277ADE1E194161AE7E",
+            "valid_docx": true,
+            "structure": {
+                "paragraph_count": 25,
+                "sections": [
+                    {
+                        "left_cm": 2.54,
+                        "right_cm": 2.54,
+                        "top_cm": 2.54,
+                        "bottom_cm": 2.54,
+                        "page_width_cm": 21.001,
+                        "page_height_cm": 29.7,
+                        "orientation": "PORTRAIT (0)"
+                    }
+                ],
+                "primary_content_width_cm": 15.921,
+                "toc": {
+                    "heading": "Table of Contents",
+                    "entry_count": 7,
+                    "entries": [
+                        "Competitive Foundation Report",
+                        "Architecture",
+                        "Financial Overview",
+                        "Projected Growth",
+                        "Page Capped Figure",
+                        "Notes"
+                    ],
+                    "field_instructions": [
+                        "TOC \\o \"1-3\" \\h \\z \\u"
+                    ]
+                },
+                "tables": [
+                    {
+                        "rows": 4,
+                        "columns": 3,
+                        "grid_widths_cm": [
+                            1.7092,
+                            2.2807,
+                            1.1994
+                        ],
+                        "total_width_cm": 5.1893,
+                        "style": "Table Grid"
+                    },
+                    {
+                        "rows": 5,
+                        "columns": 8,
+                        "grid_widths_cm": [
+                            1.7974,
+                            1.7992,
+                            1.7992,
+                            1.7992,
+                            1.7992,
+                            2.8487,
+                            1.7992,
+                            2.2789
+                        ],
+                        "total_width_cm": 15.921,
+                        "style": "Table Grid"
+                    }
+                ],
+                "figures": {
+                    "inline_shapes": [
+                        {
+                            "width_cm": 12.7,
+                            "height_cm": 3.175,
+                            "ratio": 4.0
+                        },
+                        {
+                            "width_cm": 2.462,
+                            "height_cm": 24.6204,
+                            "ratio": 0.1
+                        }
+                    ],
+                    "drawing_elements": 2
+                }
+            }
+        },
+        {
+            "role": "profile:business_report",
+            "name": "Matrix_Business_Report.docx",
+            "source_path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\collected\\Matrix_Business_Report.docx",
+            "acceptance_path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\Matrix_Business_Report.docx",
+            "bytes": 33008,
+            "sha256": "8C8FF306CAC2BF2597C7B70ED9AA492A60F593950BCD6311EC52D923D6A557D7",
+            "source_sha256": "8C8FF306CAC2BF2597C7B70ED9AA492A60F593950BCD6311EC52D923D6A557D7",
+            "valid_docx": true,
+            "structure": {
+                "paragraph_count": 25,
+                "sections": [
+                    {
+                        "left_cm": 2.0,
+                        "right_cm": 2.0,
+                        "top_cm": 2.0,
+                        "bottom_cm": 2.0,
+                        "page_width_cm": 21.001,
+                        "page_height_cm": 29.7,
+                        "orientation": "PORTRAIT (0)"
+                    }
+                ],
+                "primary_content_width_cm": 17.001,
+                "toc": {
+                    "heading": "Table of Contents",
+                    "entry_count": 7,
+                    "entries": [
+                        "Competitive Foundation Report",
+                        "Architecture",
+                        "Financial Overview",
+                        "Projected Growth",
+                        "Page Capped Figure",
+                        "Notes"
+                    ],
+                    "field_instructions": [
+                        "TOC \\o \"1-3\" \\h \\z \\u"
+                    ]
+                },
+                "tables": [
+                    {
+                        "rows": 4,
+                        "columns": 3,
+                        "grid_widths_cm": [
+                            1.7092,
+                            2.2807,
+                            1.1994
+                        ],
+                        "total_width_cm": 5.1893,
+                        "style": "Light Grid"
+                    },
+                    {
+                        "rows": 5,
+                        "columns": 8,
+                        "grid_widths_cm": [
+                            1.9226,
+                            1.9209,
+                            1.9209,
+                            1.9209,
+                            1.9209,
+                            3.0409,
+                            1.9209,
+                            2.4324
+                        ],
+                        "total_width_cm": 17.0004,
+                        "style": "Light Grid"
+                    }
+                ],
+                "figures": {
+                    "inline_shapes": [
+                        {
+                            "width_cm": 12.7,
+                            "height_cm": 3.175,
+                            "ratio": 4.0
+                        },
+                        {
+                            "width_cm": 2.57,
+                            "height_cm": 25.6999,
+                            "ratio": 0.1
+                        }
+                    ],
+                    "drawing_elements": 2
+                }
+            }
+        },
+        {
+            "role": "profile:academic",
+            "name": "Matrix_Academic.docx",
+            "source_path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\collected\\Matrix_Academic.docx",
+            "acceptance_path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\Matrix_Academic.docx",
+            "bytes": 32400,
+            "sha256": "F7CA44E81771369618C4D01A649A1F7108E8C300A13588FA742077B85931EAC1",
+            "source_sha256": "F7CA44E81771369618C4D01A649A1F7108E8C300A13588FA742077B85931EAC1",
+            "valid_docx": true,
+            "structure": {
+                "paragraph_count": 25,
+                "sections": [
+                    {
+                        "left_cm": 3.0,
+                        "right_cm": 3.0,
+                        "top_cm": 2.54,
+                        "bottom_cm": 2.54,
+                        "page_width_cm": 21.001,
+                        "page_height_cm": 29.7,
+                        "orientation": "PORTRAIT (0)"
+                    }
+                ],
+                "primary_content_width_cm": 15.001,
+                "toc": {
+                    "heading": "Table of Contents",
+                    "entry_count": 7,
+                    "entries": [
+                        "Competitive Foundation Report",
+                        "Architecture",
+                        "Financial Overview",
+                        "Projected Growth",
+                        "Page Capped Figure",
+                        "Notes"
+                    ],
+                    "field_instructions": [
+                        "TOC \\o \"1-3\" \\h \\z \\u"
+                    ]
+                },
+                "tables": [
+                    {
+                        "rows": 4,
+                        "columns": 3,
+                        "grid_widths_cm": [
+                            1.7092,
+                            2.2807,
+                            1.1994
+                        ],
+                        "total_width_cm": 5.1893,
+                        "style": "Table Grid"
+                    },
+                    {
+                        "rows": 5,
+                        "columns": 8,
+                        "grid_widths_cm": [
+                            1.6951,
+                            1.6951,
+                            1.6951,
+                            1.6951,
+                            1.6951,
+                            2.6829,
+                            1.6951,
+                            2.1467
+                        ],
+                        "total_width_cm": 15.0002,
+                        "style": "Table Grid"
+                    }
+                ],
+                "figures": {
+                    "inline_shapes": [
+                        {
+                            "width_cm": 12.7,
+                            "height_cm": 3.175,
+                            "ratio": 4.0
+                        },
+                        {
+                            "width_cm": 2.462,
+                            "height_cm": 24.6204,
+                            "ratio": 0.1
+                        }
+                    ],
+                    "drawing_elements": 2
+                }
+            }
+        },
+        {
+            "role": "profile:technical",
+            "name": "Matrix_Technical.docx",
+            "source_path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\collected\\Matrix_Technical.docx",
+            "acceptance_path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\Matrix_Technical.docx",
+            "bytes": 33007,
+            "sha256": "4D95AC76C94D9451565B762253E296E3B621CDDA2BC20D49AAE6A9EE494E456C",
+            "source_sha256": "4D95AC76C94D9451565B762253E296E3B621CDDA2BC20D49AAE6A9EE494E456C",
+            "valid_docx": true,
+            "structure": {
+                "paragraph_count": 25,
+                "sections": [
+                    {
+                        "left_cm": 2.2,
+                        "right_cm": 2.2,
+                        "top_cm": 2.2,
+                        "bottom_cm": 2.2,
+                        "page_width_cm": 21.001,
+                        "page_height_cm": 29.7,
+                        "orientation": "PORTRAIT (0)"
+                    }
+                ],
+                "primary_content_width_cm": 16.601,
+                "toc": {
+                    "heading": "Table of Contents",
+                    "entry_count": 7,
+                    "entries": [
+                        "Competitive Foundation Report",
+                        "Architecture",
+                        "Financial Overview",
+                        "Projected Growth",
+                        "Page Capped Figure",
+                        "Notes"
+                    ],
+                    "field_instructions": [
+                        "TOC \\o \"1-3\" \\h \\z \\u"
+                    ]
+                },
+                "tables": [
+                    {
+                        "rows": 4,
+                        "columns": 3,
+                        "grid_widths_cm": [
+                            1.7092,
+                            2.2807,
+                            1.1994
+                        ],
+                        "total_width_cm": 5.1893,
+                        "style": "Light Grid Accent 1"
+                    },
+                    {
+                        "rows": 5,
+                        "columns": 8,
+                        "grid_widths_cm": [
+                            1.875,
+                            1.875,
+                            1.8768,
+                            1.8768,
+                            1.8768,
+                            2.9686,
+                            1.8768,
+                            2.376
+                        ],
+                        "total_width_cm": 16.6018,
+                        "style": "Light Grid Accent 1"
+                    }
+                ],
+                "figures": {
+                    "inline_shapes": [
+                        {
+                            "width_cm": 12.7,
+                            "height_cm": 3.175,
+                            "ratio": 4.0
+                        },
+                        {
+                            "width_cm": 2.5301,
+                            "height_cm": 25.3012,
+                            "ratio": 0.1
+                        }
+                    ],
+                    "drawing_elements": 2
+                }
+            }
+        },
+        {
+            "role": "profile:clean_minimal",
+            "name": "Matrix_Clean_Minimal.docx",
+            "source_path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\collected\\Matrix_Clean_Minimal.docx",
+            "acceptance_path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\Matrix_Clean_Minimal.docx",
+            "bytes": 33003,
+            "sha256": "E112BD256F70893CC842113810BB49C6B72262AA99D2F90926DB77C2D86EB8DA",
+            "source_sha256": "E112BD256F70893CC842113810BB49C6B72262AA99D2F90926DB77C2D86EB8DA",
+            "valid_docx": true,
+            "structure": {
+                "paragraph_count": 25,
+                "sections": [
+                    {
+                        "left_cm": 2.54,
+                        "right_cm": 2.54,
+                        "top_cm": 2.54,
+                        "bottom_cm": 2.54,
+                        "page_width_cm": 21.001,
+                        "page_height_cm": 29.7,
+                        "orientation": "PORTRAIT (0)"
+                    }
+                ],
+                "primary_content_width_cm": 15.921,
+                "toc": {
+                    "heading": "Table of Contents",
+                    "entry_count": 7,
+                    "entries": [
+                        "Competitive Foundation Report",
+                        "Architecture",
+                        "Financial Overview",
+                        "Projected Growth",
+                        "Page Capped Figure",
+                        "Notes"
+                    ],
+                    "field_instructions": [
+                        "TOC \\o \"1-3\" \\h \\z \\u"
+                    ]
+                },
+                "tables": [
+                    {
+                        "rows": 4,
+                        "columns": 3,
+                        "grid_widths_cm": [
+                            1.7092,
+                            2.2807,
+                            1.1994
+                        ],
+                        "total_width_cm": 5.1893,
+                        "style": "Light Grid"
+                    },
+                    {
+                        "rows": 5,
+                        "columns": 8,
+                        "grid_widths_cm": [
+                            1.7974,
+                            1.7992,
+                            1.7992,
+                            1.7992,
+                            1.7992,
+                            2.8487,
+                            1.7992,
+                            2.2789
+                        ],
+                        "total_width_cm": 15.921,
+                        "style": "Light Grid"
+                    }
+                ],
+                "figures": {
+                    "inline_shapes": [
+                        {
+                            "width_cm": 12.7,
+                            "height_cm": 3.175,
+                            "ratio": 4.0
+                        },
+                        {
+                            "width_cm": 2.462,
+                            "height_cm": 24.6204,
+                            "ratio": 0.1
+                        }
+                    ],
+                    "drawing_elements": 2
+                }
+            }
+        },
+        {
+            "role": "toc:chinese_mixed",
+            "name": "竞争基础集成验证.docx",
+            "source_path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp03_20260930_171108\\collected\\竞争基础集成验证.docx",
+            "acceptance_path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\竞争基础集成验证.docx",
+            "bytes": 31211,
+            "sha256": "2EC1D03D57E12E2BE2452A2C4A38580A90EB25421815916F4288D9D2FB564351",
+            "source_sha256": "2EC1D03D57E12E2BE2452A2C4A38580A90EB25421815916F4288D9D2FB564351",
+            "valid_docx": true,
+            "structure": {
+                "paragraph_count": 18,
+                "sections": [
+                    {
+                        "left_cm": 2.54,
+                        "right_cm": 2.54,
+                        "top_cm": 2.54,
+                        "bottom_cm": 2.54,
+                        "page_width_cm": 21.001,
+                        "page_height_cm": 29.7,
+                        "orientation": "PORTRAIT (0)"
+                    }
+                ],
+                "primary_content_width_cm": 15.921,
+                "toc": {
+                    "heading": "目录",
+                    "entry_count": 5,
+                    "entries": [
+                        "竞争基础集成验证",
+                        "架构",
+                        "图形",
+                        "备注"
+                    ],
+                    "field_instructions": [
+                        "TOC \\o \"1-3\" \\h \\z \\u"
+                    ]
+                },
+                "tables": [
+                    {
+                        "rows": 4,
+                        "columns": 3,
+                        "grid_widths_cm": [
+                            1.1994,
+                            2.2807,
+                            1.1994
+                        ],
+                        "total_width_cm": 4.6795,
+                        "style": "Table Grid"
+                    }
+                ],
+                "figures": {
+                    "inline_shapes": [
+                        {
+                            "width_cm": 12.7,
+                            "height_cm": 3.175,
+                            "ratio": 4.0
+                        }
+                    ],
+                    "drawing_elements": 1
+                }
+            }
+        },
+        {
+            "role": "batch:english_single",
+            "name": "01_english.docx",
+            "source_path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp02_20260930_155602\\collected\\01_english.docx",
+            "acceptance_path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\01_english.docx",
+            "bytes": 29442,
+            "sha256": "8E19BA0ABB45B9E80A491A282989834F459B09E7564A33578EA018A16EA7D7E0",
+            "source_sha256": "8E19BA0ABB45B9E80A491A282989834F459B09E7564A33578EA018A16EA7D7E0",
+            "valid_docx": true,
+            "structure": {
+                "paragraph_count": 10,
+                "sections": [
+                    {
+                        "left_cm": 2.54,
+                        "right_cm": 2.54,
+                        "top_cm": 2.54,
+                        "bottom_cm": 2.54,
+                        "page_width_cm": 21.001,
+                        "page_height_cm": 29.7,
+                        "orientation": "PORTRAIT (0)"
+                    }
+                ],
+                "primary_content_width_cm": 15.921,
+                "toc": {
+                    "heading": "Table of Contents",
+                    "entry_count": 2,
+                    "entries": [
+                        "English Document"
+                    ],
+                    "field_instructions": [
+                        "TOC \\o \"1-3\" \\h \\z \\u"
+                    ]
+                },
+                "tables": [],
+                "figures": {
+                    "inline_shapes": [],
+                    "drawing_elements": 0
+                }
+            }
+        },
+        {
+            "role": "batch:wide_table_figure",
+            "name": "Wide_Table_Report.docx",
+            "source_path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp02_20260930_155602\\collected\\Wide_Table_Report.docx",
+            "acceptance_path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\Wide_Table_Report.docx",
+            "bytes": 31433,
+            "sha256": "D45FC667CA85041DFE7F8505C3743AF2D72BE09FA7E0AC7E5B076BE5B9053BDB",
+            "source_sha256": "D45FC667CA85041DFE7F8505C3743AF2D72BE09FA7E0AC7E5B076BE5B9053BDB",
+            "valid_docx": true,
+            "structure": {
+                "paragraph_count": 14,
+                "sections": [
+                    {
+                        "left_cm": 2.54,
+                        "right_cm": 2.54,
+                        "top_cm": 2.54,
+                        "bottom_cm": 2.54,
+                        "page_width_cm": 21.001,
+                        "page_height_cm": 29.7,
+                        "orientation": "PORTRAIT (0)"
+                    }
+                ],
+                "primary_content_width_cm": 15.921,
+                "toc": {
+                    "heading": "Table of Contents",
+                    "entry_count": 4,
+                    "entries": [
+                        "Wide Table Report",
+                        "Data",
+                        "Figure"
+                    ],
+                    "field_instructions": [
+                        "TOC \\o \"1-3\" \\h \\z \\u"
+                    ]
+                },
+                "tables": [
+                    {
+                        "rows": 5,
+                        "columns": 8,
+                        "grid_widths_cm": [
+                            1.7974,
+                            1.7992,
+                            1.7992,
+                            1.7992,
+                            1.7992,
+                            2.8487,
+                            1.7992,
+                            2.2789
+                        ],
+                        "total_width_cm": 15.921,
+                        "style": "Table Grid"
+                    }
+                ],
+                "figures": {
+                    "inline_shapes": [
+                        {
+                            "width_cm": 12.7,
+                            "height_cm": 3.175,
+                            "ratio": 4.0
+                        }
+                    ],
+                    "drawing_elements": 1
+                }
+            }
+        },
+        {
+            "role": "batch:after_failure",
+            "name": "04_after_failure.docx",
+            "source_path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v02_wp02_20260930_155602\\collected\\04_after_failure.docx",
+            "acceptance_path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\04_after_failure.docx",
+            "bytes": 29352,
+            "sha256": "366331D8605B8CD62AB3DBA4056B44F7F60E789EF12961A525D4F03CEE7EB54C",
+            "source_sha256": "366331D8605B8CD62AB3DBA4056B44F7F60E789EF12961A525D4F03CEE7EB54C",
+            "valid_docx": true,
+            "structure": {
+                "paragraph_count": 8,
+                "sections": [
+                    {
+                        "left_cm": 2.54,
+                        "right_cm": 2.54,
+                        "top_cm": 2.54,
+                        "bottom_cm": 2.54,
+                        "page_width_cm": 21.001,
+                        "page_height_cm": 29.7,
+                        "orientation": "PORTRAIT (0)"
+                    }
+                ],
+                "primary_content_width_cm": 15.921,
+                "toc": {
+                    "heading": "Table of Contents",
+                    "entry_count": 2,
+                    "entries": [
+                        "After Failure"
+                    ],
+                    "field_instructions": [
+                        "TOC \\o \"1-3\" \\h \\z \\u"
+                    ]
+                },
+                "tables": [],
+                "figures": {
+                    "inline_shapes": [],
+                    "drawing_elements": 0
+                }
+            }
+        },
+        {
+            "role": "table:irreducible_wide_program_d",
+            "name": "irreducible_table.docx",
+            "source_path": "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\Doc\\V2\\Implementation\\Program_D_Advanced_Table_Figure_Fitting\\Evidence\\samples\\irreducible_table.docx",
+            "acceptance_path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\irreducible_table.docx",
+            "bytes": 37370,
+            "sha256": "A49EB6FE7DF69A093443BD91722E7806FCFC4A81B91FC48897C2667B94FF1A1B",
+            "source_sha256": "A49EB6FE7DF69A093443BD91722E7806FCFC4A81B91FC48897C2667B94FF1A1B",
+            "valid_docx": true,
+            "structure": {
+                "paragraph_count": 3,
+                "sections": [
+                    {
+                        "left_cm": 2.54,
+                        "right_cm": 2.54,
+                        "top_cm": 2.54,
+                        "bottom_cm": 2.54,
+                        "page_width_cm": 21.001,
+                        "page_height_cm": 29.7,
+                        "orientation": "PORTRAIT (0)"
+                    },
+                    {
+                        "left_cm": 2.54,
+                        "right_cm": 2.54,
+                        "top_cm": 2.54,
+                        "bottom_cm": 2.54,
+                        "page_width_cm": 29.7,
+                        "page_height_cm": 21.001,
+                        "orientation": "LANDSCAPE (1)"
+                    },
+                    {
+                        "left_cm": 2.54,
+                        "right_cm": 2.54,
+                        "top_cm": 2.54,
+                        "bottom_cm": 2.54,
+                        "page_width_cm": 21.001,
+                        "page_height_cm": 29.7,
+                        "orientation": "PORTRAIT (0)"
+                    }
+                ],
+                "primary_content_width_cm": 15.921,
+                "toc": {
+                    "heading": "",
+                    "entry_count": 0,
+                    "entries": [],
+                    "field_instructions": []
+                },
+                "tables": [
+                    {
+                        "rows": 2,
+                        "columns": 25,
+                        "grid_widths_cm": [
+                            1.1994,
+                            1.1994,
+                            1.1994,
+                            1.1994,
+                            1.1994,
+                            1.1994,
+                            1.1994,
+                            1.1994,
+                            1.1994,
+                            1.1994,
+                            1.1994,
+                            1.1994,
+                            1.1994,
+                            1.1994,
+                            1.1994,
+                            1.1994,
+                            1.1994,
+                            1.1994,
+                            1.1994,
+                            1.1994,
+                            1.1994,
+                            1.1994,
+                            1.1994,
+                            1.1994,
+                            1.1994
+                        ],
+                        "total_width_cm": 29.985,
+                        "style": "Table Grid"
+                    }
+                ],
+                "figures": {
+                    "inline_shapes": [],
+                    "drawing_elements": 0
+                }
+            }
+        }
+    ]
+}

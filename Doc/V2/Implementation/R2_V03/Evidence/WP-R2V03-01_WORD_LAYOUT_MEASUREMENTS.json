@@ -1,0 +1,2742 @@
+{
+  "program": "R2-V03",
+  "work_package": "R2V03-01",
+  "method": "Native Microsoft Word COM layout probe (documents opened through Word's normal document-open path, never saved)",
+  "generated_at": "2026-09-30T21:18:51.5531872+08:00",
+  "artifact_count": 10,
+  "artifacts": [
+    {
+      "name": "batch:after_failure",
+      "file": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\04_after_failure.docx",
+      "anchor": "top",
+      "reused_open_document": true,
+      "view": {
+        "view_type": 3,
+        "zoom_percent": 100,
+        "window_state": 1,
+        "caption": "04_after_failure [Compatibility Mode]"
+      },
+      "anchored": {
+        "anchor": "top",
+        "found": true,
+        "label": "top",
+        "page": 1,
+        "vertical_cm": 2.54,
+        "caption": "04_after_failure [Compatibility Mode]"
+      },
+      "measurement": {
+        "measured_at": "2026-09-30T20:57:19+08:00",
+        "word_version": "16.0",
+        "word_build": "16.0.20430",
+        "document": {
+          "name": "04_after_failure.docx",
+          "full_name": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\04_after_failure.docx",
+          "saved": false,
+          "read_only": false,
+          "paragraphs": 8,
+          "words": 19,
+          "pages": 3,
+          "sections": 1,
+          "tables": 0,
+          "inline_shapes": 0,
+          "hyperlinks": 1
+        },
+        "page_setup": [
+          {
+            "index": 1,
+            "left_margin_cm": 2.54,
+            "right_margin_cm": 2.54,
+            "top_margin_cm": 2.54,
+            "bottom_margin_cm": 2.54,
+            "page_width_cm": 21.0009,
+            "page_height_cm": 29.7004,
+            "orientation": "portrait",
+            "text_width_cm": 15.9209,
+            "text_height_cm": 24.6204
+          }
+        ],
+        "tables": [],
+        "figures": [],
+        "toc": {
+          "count": 1,
+          "entries": [
+            "After Failure\t3"
+          ],
+          "entry_count": 1,
+          "use_hyperlinks": true,
+          "heading_text_from_body": "Table of Contents",
+          "heading_style": {
+            "style_name": "TOC Heading",
+            "font": "Microsoft YaHei",
+            "font_ascii": "Microsoft YaHei",
+            "font_far_east": "Microsoft YaHei",
+            "size_pt": 18.0,
+            "bold": -1.0,
+            "page": 2
+          }
+        },
+        "headings": [
+          {
+            "level": 1,
+            "text": "After Failure",
+            "style": "Heading 1",
+            "font_name": "Arial",
+            "font_name_ascii": "Arial",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 20.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          }
+        ],
+        "style_names": {
+          "Normal": 4,
+          "TOC Heading": 1,
+          "TOC 1": 1,
+          "TOC 11": 1,
+          "Heading 1": 1
+        },
+        "styles": {
+          "normal": {
+            "name": "Calibri",
+            "name_far_east": "DengXian",
+            "name_ascii": "Calibri",
+            "size_pt": 10.5,
+            "bold": 0.0,
+            "space_before_pt": 0.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": false
+          },
+          "heading1": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 20.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          },
+          "heading2": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 16.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          },
+          "heading3": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 14.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          }
+        },
+        "body_paragraph_samples": [
+          {
+            "text_prefix": "This document must still convert after the previous file fai",
+            "style": "Normal",
+            "font": "Calibri",
+            "font_far_east": "DengXian",
+            "size_pt": 10.5,
+            "space_before_pt": 0.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863
+          }
+        ]
+      },
+      "pdf": {
+        "path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\pdf\\04_after_failure.pdf",
+        "bytes": 199028,
+        "sha256": "F47C601E6262DDF064144C4DC850E29B627A1BBFE841C5172BAD54B14AA0D3F6",
+        "rendered_pages": 3
+      },
+      "ok": true
+    },
+    {
+      "name": "batch:english_single",
+      "file": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\01_english.docx",
+      "anchor": "top",
+      "reused_open_document": true,
+      "view": {
+        "view_type": 3,
+        "zoom_percent": 100,
+        "window_state": 1,
+        "caption": "01_english [Compatibility Mode]"
+      },
+      "anchored": {
+        "anchor": "top",
+        "found": true,
+        "label": "top",
+        "page": 1,
+        "vertical_cm": 2.54,
+        "caption": "01_english [Compatibility Mode]"
+      },
+      "measurement": {
+        "measured_at": "2026-09-30T20:57:14+08:00",
+        "word_version": "16.0",
+        "word_build": "16.0.20430",
+        "document": {
+          "name": "01_english.docx",
+          "full_name": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\01_english.docx",
+          "saved": false,
+          "read_only": false,
+          "paragraphs": 10,
+          "words": 24,
+          "pages": 3,
+          "sections": 1,
+          "tables": 0,
+          "inline_shapes": 0,
+          "hyperlinks": 1
+        },
+        "page_setup": [
+          {
+            "index": 1,
+            "left_margin_cm": 2.54,
+            "right_margin_cm": 2.54,
+            "top_margin_cm": 2.54,
+            "bottom_margin_cm": 2.54,
+            "page_width_cm": 21.0009,
+            "page_height_cm": 29.7004,
+            "orientation": "portrait",
+            "text_width_cm": 15.9209,
+            "text_height_cm": 24.6204
+          }
+        ],
+        "tables": [],
+        "figures": [],
+        "toc": {
+          "count": 1,
+          "entries": [
+            "English Document\t3"
+          ],
+          "entry_count": 1,
+          "use_hyperlinks": true,
+          "heading_text_from_body": "Table of Contents",
+          "heading_style": {
+            "style_name": "TOC Heading",
+            "font": "Microsoft YaHei",
+            "font_ascii": "Microsoft YaHei",
+            "font_far_east": "Microsoft YaHei",
+            "size_pt": 18.0,
+            "bold": -1.0,
+            "page": 2
+          }
+        },
+        "headings": [
+          {
+            "level": 1,
+            "text": "English Document",
+            "style": "Heading 1",
+            "font_name": "Arial",
+            "font_name_ascii": "Arial",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 20.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          }
+        ],
+        "style_names": {
+          "Normal": 6,
+          "TOC Heading": 1,
+          "TOC 1": 1,
+          "TOC 11": 1,
+          "Heading 1": 1
+        },
+        "styles": {
+          "normal": {
+            "name": "Calibri",
+            "name_far_east": "DengXian",
+            "name_ascii": "Calibri",
+            "size_pt": 10.5,
+            "bold": 0.0,
+            "space_before_pt": 0.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": false
+          },
+          "heading1": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 20.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          },
+          "heading2": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 16.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          },
+          "heading3": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 14.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          }
+        },
+        "body_paragraph_samples": [
+          {
+            "text_prefix": "A valid English document converted in the packaged serial ba",
+            "style": "Normal",
+            "font": "Calibri",
+            "font_far_east": "DengXian",
+            "size_pt": 10.5,
+            "space_before_pt": 0.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863
+          }
+        ]
+      },
+      "pdf": {
+        "path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\pdf\\01_english.pdf",
+        "bytes": 208482,
+        "sha256": "FF25E69A2749FE2299BD6B1FCF8EDA874B3D6D5D72FF4DE61952815610B93F89",
+        "rendered_pages": 3
+      },
+      "ok": true
+    },
+    {
+      "name": "batch:wide_table_figure",
+      "file": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\Wide_Table_Report.docx",
+      "anchor": "table1",
+      "reused_open_document": true,
+      "view": {
+        "view_type": 3,
+        "zoom_percent": 100,
+        "window_state": 1,
+        "caption": "Wide_Table_Report [Compatibility Mode]"
+      },
+      "anchored": {
+        "anchor": "table1",
+        "found": true,
+        "label": "table-1",
+        "page": 3,
+        "vertical_cm": 4.8736,
+        "caption": "Wide_Table_Report [Compatibility Mode]"
+      },
+      "measurement": {
+        "measured_at": "2026-09-30T20:57:17+08:00",
+        "word_version": "16.0",
+        "word_build": "16.0.20430",
+        "document": {
+          "name": "Wide_Table_Report.docx",
+          "full_name": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\Wide_Table_Report.docx",
+          "saved": false,
+          "read_only": false,
+          "paragraphs": 59,
+          "words": 63,
+          "pages": 3,
+          "sections": 1,
+          "tables": 1,
+          "inline_shapes": 1,
+          "hyperlinks": 3
+        },
+        "page_setup": [
+          {
+            "index": 1,
+            "left_margin_cm": 2.54,
+            "right_margin_cm": 2.54,
+            "top_margin_cm": 2.54,
+            "bottom_margin_cm": 2.54,
+            "page_width_cm": 21.0009,
+            "page_height_cm": 29.7004,
+            "orientation": "portrait",
+            "text_width_cm": 15.9209,
+            "text_height_cm": 24.6204
+          }
+        ],
+        "tables": [
+          {
+            "index": 1,
+            "rows": 5,
+            "columns": 8,
+            "rendered_column_widths_cm": [
+              1.7974,
+              1.7992,
+              1.7992,
+              1.7992,
+              1.7992,
+              2.8487,
+              1.7992,
+              2.2789
+            ],
+            "rendered_total_width_cm": 15.921,
+            "rendered_left_cm": 2.5259,
+            "rendered_right_edge_cm": 18.4469,
+            "page": 3,
+            "top_cm": 4.8736,
+            "header_cells": [
+              "Region",
+              "Q1",
+              "Q2",
+              "Q3",
+              "Q4",
+              "Notes",
+              "Owner",
+              "Status"
+            ],
+            "body_font_size_pt": 9.5,
+            "cell_count": 40,
+            "style_name_local": "Table Grid",
+            "style_name": ""
+          }
+        ],
+        "figures": [
+          {
+            "index": 1,
+            "type": 3,
+            "width_cm": 12.7,
+            "height_cm": 3.175,
+            "ratio": 4.0,
+            "scale_width": 120.0,
+            "scale_height": 120.0,
+            "left_cm": 2.54,
+            "top_cm": 10.9097,
+            "right_edge_cm": 15.24,
+            "bottom_edge_cm": 14.0847,
+            "page": 3,
+            "alternative_text": ""
+          }
+        ],
+        "toc": {
+          "count": 1,
+          "entries": [
+            "Wide Table Report\t3",
+            "Data\t3",
+            "Figure\t3"
+          ],
+          "entry_count": 3,
+          "use_hyperlinks": true,
+          "heading_text_from_body": "Table of Contents",
+          "heading_style": {
+            "style_name": "TOC Heading",
+            "font": "Microsoft YaHei",
+            "font_ascii": "Microsoft YaHei",
+            "font_far_east": "Microsoft YaHei",
+            "size_pt": 18.0,
+            "bold": -1.0,
+            "page": 2
+          }
+        },
+        "headings": [
+          {
+            "level": 1,
+            "text": "Wide Table Report",
+            "style": "Heading 1",
+            "font_name": "Arial",
+            "font_name_ascii": "Arial",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 20.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          },
+          {
+            "level": 2,
+            "text": "Data",
+            "style": "Heading 2",
+            "font_name": "Arial",
+            "font_name_ascii": "Arial",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 16.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          },
+          {
+            "level": 2,
+            "text": "Figure",
+            "style": "Heading 2",
+            "font_name": "Arial",
+            "font_name_ascii": "Arial",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 16.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          }
+        ],
+        "style_names": {
+          "Normal": 51,
+          "TOC Heading": 1,
+          "TOC 1": 1,
+          "TOC 2": 2,
+          "TOC 21": 1,
+          "Heading 1": 1,
+          "Heading 2": 2
+        },
+        "styles": {
+          "normal": {
+            "name": "Calibri",
+            "name_far_east": "DengXian",
+            "name_ascii": "Calibri",
+            "size_pt": 10.5,
+            "bold": 0.0,
+            "space_before_pt": 0.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": false
+          },
+          "heading1": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 20.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          },
+          "heading2": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 16.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          },
+          "heading3": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 14.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          }
+        },
+        "body_paragraph_samples": []
+      },
+      "pdf": {
+        "path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\pdf\\Wide_Table_Report.pdf",
+        "bytes": 247593,
+        "sha256": "40B126648D63CB117330E5E7CDEE1F6ED203F6A614DF6E06569BBFE935A214BA",
+        "rendered_pages": 3
+      },
+      "ok": true
+    },
+    {
+      "name": "profile:academic",
+      "file": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\Matrix_Academic.docx",
+      "anchor": "toc",
+      "reused_open_document": true,
+      "view": {
+        "view_type": 3,
+        "zoom_percent": 100,
+        "window_state": 1,
+        "caption": "Matrix_Academic [Compatibility Mode]"
+      },
+      "anchored": {
+        "anchor": "toc",
+        "found": true,
+        "label": "toc",
+        "page": 2,
+        "vertical_cm": 4.3903,
+        "caption": "Matrix_Academic [Compatibility Mode]"
+      },
+      "measurement": {
+        "measured_at": "2026-09-30T20:56:53+08:00",
+        "word_version": "16.0",
+        "word_build": "16.0.20430",
+        "document": {
+          "name": "Matrix_Academic.docx",
+          "full_name": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\Matrix_Academic.docx",
+          "saved": false,
+          "read_only": false,
+          "paragraphs": 86,
+          "words": 99,
+          "pages": 5,
+          "sections": 1,
+          "tables": 2,
+          "inline_shapes": 2,
+          "hyperlinks": 6
+        },
+        "page_setup": [
+          {
+            "index": 1,
+            "left_margin_cm": 3.0004,
+            "right_margin_cm": 3.0004,
+            "top_margin_cm": 2.54,
+            "bottom_margin_cm": 2.54,
+            "page_width_cm": 21.0009,
+            "page_height_cm": 29.7004,
+            "orientation": "portrait",
+            "text_width_cm": 15.0001,
+            "text_height_cm": 24.6204
+          }
+        ],
+        "tables": [
+          {
+            "index": 1,
+            "rows": 4,
+            "columns": 3,
+            "rendered_column_widths_cm": [
+              1.7092,
+              2.2807,
+              1.1994
+            ],
+            "rendered_total_width_cm": 5.1893,
+            "rendered_left_cm": 2.981,
+            "rendered_right_edge_cm": 8.1703,
+            "page": 3,
+            "top_cm": 5.932,
+            "header_cells": [
+              "Component",
+              "Authority",
+              "Status"
+            ],
+            "body_font_size_pt": 9.0,
+            "cell_count": 12,
+            "style_name_local": "Table Grid",
+            "style_name": ""
+          },
+          {
+            "index": 2,
+            "rows": 5,
+            "columns": 8,
+            "rendered_column_widths_cm": [
+              1.6951,
+              1.6951,
+              1.6951,
+              1.6951,
+              1.6951,
+              2.6829,
+              1.6951,
+              2.1467
+            ],
+            "rendered_total_width_cm": 15.0002,
+            "rendered_left_cm": 2.981,
+            "rendered_right_edge_cm": 17.9812,
+            "page": 3,
+            "top_cm": 10.2341,
+            "header_cells": [
+              "Region",
+              "Q1",
+              "Q2",
+              "Q3",
+              "Q4",
+              "Notes",
+              "Owner",
+              "Status"
+            ],
+            "body_font_size_pt": 9.0,
+            "cell_count": 40,
+            "style_name_local": "Table Grid",
+            "style_name": ""
+          }
+        ],
+        "figures": [
+          {
+            "index": 1,
+            "type": 3,
+            "width_cm": 12.7,
+            "height_cm": 3.175,
+            "ratio": 4.0,
+            "scale_width": 120.0,
+            "scale_height": 120.0,
+            "left_cm": 2.9951,
+            "top_cm": 15.9597,
+            "right_edge_cm": 15.6951,
+            "bottom_edge_cm": 19.1347,
+            "page": 3,
+            "alternative_text": ""
+          },
+          {
+            "index": 2,
+            "type": 3,
+            "width_cm": 2.4606,
+            "height_cm": 24.6204,
+            "ratio": 0.0999,
+            "scale_width": 465.0,
+            "scale_height": 465.0,
+            "left_cm": 2.9951,
+            "top_cm": 2.54,
+            "right_edge_cm": 5.4557,
+            "bottom_edge_cm": 27.1604,
+            "page": 4,
+            "alternative_text": ""
+          }
+        ],
+        "toc": {
+          "count": 1,
+          "entries": [
+            "Competitive Foundation Report\t3",
+            "Architecture\t3",
+            "Financial Overview\t3",
+            "Projected Growth\t3",
+            "Page Capped Figure\t3",
+            "Notes\t5"
+          ],
+          "entry_count": 6,
+          "use_hyperlinks": true,
+          "heading_text_from_body": "Table of Contents",
+          "heading_style": {
+            "style_name": "TOC Heading",
+            "font": "Microsoft YaHei",
+            "font_ascii": "Microsoft YaHei",
+            "font_far_east": "Microsoft YaHei",
+            "size_pt": 18.0,
+            "bold": -1.0,
+            "page": 2
+          }
+        },
+        "headings": [
+          {
+            "level": 1,
+            "text": "Competitive Foundation Report",
+            "style": "Heading 1",
+            "font_name": "Times New Roman",
+            "font_name_ascii": "Times New Roman",
+            "font_name_far_east": "SimSun",
+            "size_pt": 16.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          },
+          {
+            "level": 2,
+            "text": "Architecture",
+            "style": "Heading 2",
+            "font_name": "Times New Roman",
+            "font_name_ascii": "Times New Roman",
+            "font_name_far_east": "SimSun",
+            "size_pt": 14.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          },
+          {
+            "level": 2,
+            "text": "Financial Overview",
+            "style": "Heading 2",
+            "font_name": "Times New Roman",
+            "font_name_ascii": "Times New Roman",
+            "font_name_far_east": "SimSun",
+            "size_pt": 14.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          },
+          {
+            "level": 2,
+            "text": "Projected Growth",
+            "style": "Heading 2",
+            "font_name": "Times New Roman",
+            "font_name_ascii": "Times New Roman",
+            "font_name_far_east": "SimSun",
+            "size_pt": 14.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          },
+          {
+            "level": 2,
+            "text": "Page Capped Figure",
+            "style": "Heading 2",
+            "font_name": "Times New Roman",
+            "font_name_ascii": "Times New Roman",
+            "font_name_far_east": "SimSun",
+            "size_pt": 14.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          },
+          {
+            "level": 3,
+            "text": "Notes",
+            "style": "Heading 3",
+            "font_name": "Times New Roman",
+            "font_name_ascii": "Times New Roman",
+            "font_name_far_east": "SimSun",
+            "size_pt": 12.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "page": 5
+          }
+        ],
+        "style_names": {
+          "Normal": 72,
+          "TOC Heading": 1,
+          "TOC 1": 1,
+          "TOC 2": 4,
+          "TOC 3": 1,
+          "TOC 31": 1,
+          "Heading 1": 1,
+          "Heading 2": 4,
+          "Heading 3": 1
+        },
+        "styles": {
+          "normal": {
+            "name": "Times New Roman",
+            "name_far_east": "SimSun",
+            "name_ascii": "Times New Roman",
+            "size_pt": 11.5,
+            "bold": 0.0,
+            "space_before_pt": 0.0,
+            "space_after_pt": 0.0,
+            "line_spacing": 18.0,
+            "line_spacing_rule": 1,
+            "alignment": 0,
+            "keep_with_next": false
+          },
+          "heading1": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 16.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 18.0,
+            "line_spacing_rule": 1,
+            "alignment": 0,
+            "keep_with_next": true
+          },
+          "heading2": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 14.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 18.0,
+            "line_spacing_rule": 1,
+            "alignment": 0,
+            "keep_with_next": true
+          },
+          "heading3": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 12.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 18.0,
+            "line_spacing_rule": 1,
+            "alignment": 0,
+            "keep_with_next": true
+          }
+        },
+        "body_paragraph_samples": [
+          {
+            "text_prefix": "Integrated packaged-runtime verification document.",
+            "style": "Normal",
+            "font": "Times New Roman",
+            "font_far_east": "SimSun",
+            "size_pt": 11.5,
+            "space_before_pt": 0.0,
+            "space_after_pt": 0.0,
+            "line_spacing": 18.0
+          },
+          {
+            "text_prefix": "Deterministic packaged verification only.",
+            "style": "Normal",
+            "font": "Times New Roman",
+            "font_far_east": "SimSun",
+            "size_pt": 11.5,
+            "space_before_pt": 0.0,
+            "space_after_pt": 0.0,
+            "line_spacing": 18.0
+          }
+        ]
+      },
+      "pdf": {
+        "path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\pdf\\Matrix_Academic.pdf",
+        "bytes": 177443,
+        "sha256": "14038BF9F559D8A42681D8B7D97E30851C0E7E8D32A6F45A0D11B14A463AC57E",
+        "rendered_pages": 5
+      },
+      "ok": true
+    },
+    {
+      "name": "profile:business_report",
+      "file": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\Matrix_Business_Report.docx",
+      "anchor": "toc",
+      "reused_open_document": true,
+      "view": {
+        "view_type": 3,
+        "zoom_percent": 100,
+        "window_state": 1,
+        "caption": "Matrix_Business_Report [Compatibility Mode]"
+      },
+      "anchored": {
+        "anchor": "toc",
+        "found": true,
+        "label": "toc",
+        "page": 2,
+        "vertical_cm": 3.3179,
+        "caption": "Matrix_Business_Report [Compatibility Mode]"
+      },
+      "measurement": {
+        "measured_at": "2026-09-30T20:56:45+08:00",
+        "word_version": "16.0",
+        "word_build": "16.0.20430",
+        "document": {
+          "name": "Matrix_Business_Report.docx",
+          "full_name": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\Matrix_Business_Report.docx",
+          "saved": false,
+          "read_only": false,
+          "paragraphs": 86,
+          "words": 100,
+          "pages": 5,
+          "sections": 1,
+          "tables": 2,
+          "inline_shapes": 2,
+          "hyperlinks": 6
+        },
+        "page_setup": [
+          {
+            "index": 1,
+            "left_margin_cm": 2.0003,
+            "right_margin_cm": 2.0003,
+            "top_margin_cm": 2.0003,
+            "bottom_margin_cm": 2.0003,
+            "page_width_cm": 21.0009,
+            "page_height_cm": 29.7004,
+            "orientation": "portrait",
+            "text_width_cm": 17.0004,
+            "text_height_cm": 25.6999
+          }
+        ],
+        "tables": [
+          {
+            "index": 1,
+            "rows": 4,
+            "columns": 3,
+            "rendered_column_widths_cm": [
+              1.7092,
+              2.2807,
+              1.1994
+            ],
+            "rendered_total_width_cm": 5.1893,
+            "rendered_left_cm": 1.9967,
+            "rendered_right_edge_cm": 7.186,
+            "page": 3,
+            "top_cm": 4.5226,
+            "header_cells": [
+              "Component",
+              "Authority",
+              "Status"
+            ],
+            "body_font_size_pt": 9.0,
+            "cell_count": 12,
+            "style_name_local": "Light Grid",
+            "style_name": ""
+          },
+          {
+            "index": 2,
+            "rows": 5,
+            "columns": 8,
+            "rendered_column_widths_cm": [
+              1.9226,
+              1.9209,
+              1.9209,
+              1.9209,
+              1.9209,
+              3.0409,
+              1.9209,
+              2.4324
+            ],
+            "rendered_total_width_cm": 17.0004,
+            "rendered_left_cm": 1.9967,
+            "rendered_right_edge_cm": 18.9971,
+            "page": 3,
+            "top_cm": 9.7931,
+            "header_cells": [
+              "Region",
+              "Q1",
+              "Q2",
+              "Q3",
+              "Q4",
+              "Notes",
+              "Owner",
+              "Status"
+            ],
+            "body_font_size_pt": 9.0,
+            "cell_count": 40,
+            "style_name_local": "Light Grid",
+            "style_name": ""
+          }
+        ],
+        "figures": [
+          {
+            "index": 1,
+            "type": 3,
+            "width_cm": 12.7,
+            "height_cm": 3.175,
+            "ratio": 4.0,
+            "scale_width": 120.0,
+            "scale_height": 120.0,
+            "left_cm": 1.9967,
+            "top_cm": 15.1818,
+            "right_edge_cm": 14.6967,
+            "bottom_edge_cm": 18.3568,
+            "page": 3,
+            "alternative_text": ""
+          },
+          {
+            "index": 2,
+            "type": 3,
+            "width_cm": 2.57,
+            "height_cm": 25.6981,
+            "ratio": 0.1,
+            "scale_width": 486.0,
+            "scale_height": 486.0,
+            "left_cm": 1.9967,
+            "top_cm": 1.9967,
+            "right_edge_cm": 4.5667,
+            "bottom_edge_cm": 27.6948,
+            "page": 4,
+            "alternative_text": ""
+          }
+        ],
+        "toc": {
+          "count": 1,
+          "entries": [
+            "Competitive Foundation Report\t3",
+            "Architecture\t3",
+            "Financial Overview\t3",
+            "Projected Growth\t3",
+            "Page Capped Figure\t3",
+            "Notes\t5"
+          ],
+          "entry_count": 6,
+          "use_hyperlinks": true,
+          "heading_text_from_body": "Table of Contents",
+          "heading_style": {
+            "style_name": "TOC Heading",
+            "font": "Microsoft YaHei",
+            "font_ascii": "Microsoft YaHei",
+            "font_far_east": "Microsoft YaHei",
+            "size_pt": 18.0,
+            "bold": -1.0,
+            "page": 2
+          }
+        },
+        "headings": [
+          {
+            "level": 1,
+            "text": "Competitive Foundation Report",
+            "style": "Heading 1",
+            "font_name": "Calibri",
+            "font_name_ascii": "Calibri",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 16.0,
+            "bold": -1.0,
+            "space_before_pt": 10.0,
+            "space_after_pt": 4.0,
+            "page": 3
+          },
+          {
+            "level": 2,
+            "text": "Architecture",
+            "style": "Heading 2",
+            "font_name": "Calibri",
+            "font_name_ascii": "Calibri",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 14.0,
+            "bold": -1.0,
+            "space_before_pt": 10.0,
+            "space_after_pt": 4.0,
+            "page": 3
+          },
+          {
+            "level": 2,
+            "text": "Financial Overview",
+            "style": "Heading 2",
+            "font_name": "Calibri",
+            "font_name_ascii": "Calibri",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 14.0,
+            "bold": -1.0,
+            "space_before_pt": 10.0,
+            "space_after_pt": 4.0,
+            "page": 3
+          },
+          {
+            "level": 2,
+            "text": "Projected Growth",
+            "style": "Heading 2",
+            "font_name": "Calibri",
+            "font_name_ascii": "Calibri",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 14.0,
+            "bold": -1.0,
+            "space_before_pt": 10.0,
+            "space_after_pt": 4.0,
+            "page": 3
+          },
+          {
+            "level": 2,
+            "text": "Page Capped Figure",
+            "style": "Heading 2",
+            "font_name": "Calibri",
+            "font_name_ascii": "Calibri",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 14.0,
+            "bold": -1.0,
+            "space_before_pt": 10.0,
+            "space_after_pt": 4.0,
+            "page": 3
+          },
+          {
+            "level": 3,
+            "text": "Notes",
+            "style": "Heading 3",
+            "font_name": "Calibri",
+            "font_name_ascii": "Calibri",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 12.5,
+            "bold": -1.0,
+            "space_before_pt": 10.0,
+            "space_after_pt": 4.0,
+            "page": 5
+          }
+        ],
+        "style_names": {
+          "Normal": 72,
+          "TOC Heading": 1,
+          "TOC 1": 1,
+          "TOC 2": 4,
+          "TOC 3": 1,
+          "TOC 31": 1,
+          "Heading 1": 1,
+          "Heading 2": 4,
+          "Heading 3": 1
+        },
+        "styles": {
+          "normal": {
+            "name": "Calibri",
+            "name_far_east": "DengXian",
+            "name_ascii": "Calibri",
+            "size_pt": 10.0,
+            "bold": 0.0,
+            "space_before_pt": 0.0,
+            "space_after_pt": 4.0,
+            "line_spacing": 12.949999809265137,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": false
+          },
+          "heading1": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 16.0,
+            "bold": -1.0,
+            "space_before_pt": 10.0,
+            "space_after_pt": 4.0,
+            "line_spacing": 12.949999809265137,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          },
+          "heading2": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 14.0,
+            "bold": -1.0,
+            "space_before_pt": 10.0,
+            "space_after_pt": 4.0,
+            "line_spacing": 12.949999809265137,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          },
+          "heading3": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 12.5,
+            "bold": -1.0,
+            "space_before_pt": 10.0,
+            "space_after_pt": 4.0,
+            "line_spacing": 12.949999809265137,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          }
+        },
+        "body_paragraph_samples": [
+          {
+            "text_prefix": "Integrated packaged-runtime verification document.",
+            "style": "Normal",
+            "font": "Calibri",
+            "font_far_east": "DengXian",
+            "size_pt": 10.0,
+            "space_before_pt": 0.0,
+            "space_after_pt": 4.0,
+            "line_spacing": 12.949999809265137
+          },
+          {
+            "text_prefix": "Deterministic packaged verification only.",
+            "style": "Normal",
+            "font": "Calibri",
+            "font_far_east": "DengXian",
+            "size_pt": 10.0,
+            "space_before_pt": 0.0,
+            "space_after_pt": 4.0,
+            "line_spacing": 12.949999809265137
+          }
+        ]
+      },
+      "pdf": {
+        "path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\pdf\\Matrix_Business_Report.pdf",
+        "bytes": 224837,
+        "sha256": "9ACA484D9AEAD9B662B6D1AAE59BE224017DEAD9694A0A58A95FC4CEA7D95B36",
+        "rendered_pages": 5
+      },
+      "ok": true
+    },
+    {
+      "name": "profile:clean_minimal",
+      "file": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\Matrix_Clean_Minimal.docx",
+      "anchor": "toc",
+      "reused_open_document": true,
+      "view": {
+        "view_type": 3,
+        "zoom_percent": 100,
+        "window_state": 1,
+        "caption": "Matrix_Clean_Minimal [Compatibility Mode]"
+      },
+      "anchored": {
+        "anchor": "toc",
+        "found": true,
+        "label": "toc",
+        "page": 2,
+        "vertical_cm": 4.1116,
+        "caption": "Matrix_Clean_Minimal [Compatibility Mode]"
+      },
+      "measurement": {
+        "measured_at": "2026-09-30T20:57:08+08:00",
+        "word_version": "16.0",
+        "word_build": "16.0.20430",
+        "document": {
+          "name": "Matrix_Clean_Minimal.docx",
+          "full_name": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\Matrix_Clean_Minimal.docx",
+          "saved": false,
+          "read_only": false,
+          "paragraphs": 86,
+          "words": 100,
+          "pages": 5,
+          "sections": 1,
+          "tables": 2,
+          "inline_shapes": 2,
+          "hyperlinks": 6
+        },
+        "page_setup": [
+          {
+            "index": 1,
+            "left_margin_cm": 2.54,
+            "right_margin_cm": 2.54,
+            "top_margin_cm": 2.54,
+            "bottom_margin_cm": 2.54,
+            "page_width_cm": 21.0009,
+            "page_height_cm": 29.7004,
+            "orientation": "portrait",
+            "text_width_cm": 15.9209,
+            "text_height_cm": 24.6204
+          }
+        ],
+        "tables": [
+          {
+            "index": 1,
+            "rows": 4,
+            "columns": 3,
+            "rendered_column_widths_cm": [
+              1.7092,
+              2.2807,
+              1.1994
+            ],
+            "rendered_total_width_cm": 5.1893,
+            "rendered_left_cm": 2.54,
+            "rendered_right_edge_cm": 7.7293,
+            "page": 3,
+            "top_cm": 5.4169,
+            "header_cells": [
+              "Component",
+              "Authority",
+              "Status"
+            ],
+            "body_font_size_pt": 9.5,
+            "cell_count": 12,
+            "style_name_local": "Light Grid",
+            "style_name": ""
+          },
+          {
+            "index": 2,
+            "rows": 5,
+            "columns": 8,
+            "rendered_column_widths_cm": [
+              1.7974,
+              1.7992,
+              1.7992,
+              1.7992,
+              1.7992,
+              2.8487,
+              1.7992,
+              2.2789
+            ],
+            "rendered_total_width_cm": 15.921,
+            "rendered_left_cm": 2.54,
+            "rendered_right_edge_cm": 18.461,
+            "page": 3,
+            "top_cm": 12.1267,
+            "header_cells": [
+              "Region",
+              "Q1",
+              "Q2",
+              "Q3",
+              "Q4",
+              "Notes",
+              "Owner",
+              "Status"
+            ],
+            "body_font_size_pt": 9.5,
+            "cell_count": 40,
+            "style_name_local": "Light Grid",
+            "style_name": ""
+          }
+        ],
+        "figures": [
+          {
+            "index": 1,
+            "type": 3,
+            "width_cm": 12.7,
+            "height_cm": 3.175,
+            "ratio": 4.0,
+            "scale_width": 120.0,
+            "scale_height": 120.0,
+            "left_cm": 2.54,
+            "top_cm": 19.2775,
+            "right_edge_cm": 15.24,
+            "bottom_edge_cm": 22.4525,
+            "page": 3,
+            "alternative_text": ""
+          },
+          {
+            "index": 2,
+            "type": 3,
+            "width_cm": 2.4606,
+            "height_cm": 24.6204,
+            "ratio": 0.0999,
+            "scale_width": 465.0,
+            "scale_height": 465.0,
+            "left_cm": 2.54,
+            "top_cm": 2.54,
+            "right_edge_cm": 5.0006,
+            "bottom_edge_cm": 27.1604,
+            "page": 4,
+            "alternative_text": ""
+          }
+        ],
+        "toc": {
+          "count": 1,
+          "entries": [
+            "Competitive Foundation Report\t3",
+            "Architecture\t3",
+            "Financial Overview\t3",
+            "Projected Growth\t3",
+            "Page Capped Figure\t3",
+            "Notes\t5"
+          ],
+          "entry_count": 6,
+          "use_hyperlinks": true,
+          "heading_text_from_body": "Table of Contents",
+          "heading_style": {
+            "style_name": "TOC Heading",
+            "font": "Microsoft YaHei",
+            "font_ascii": "Microsoft YaHei",
+            "font_far_east": "Microsoft YaHei",
+            "size_pt": 18.0,
+            "bold": -1.0,
+            "page": 2
+          }
+        },
+        "headings": [
+          {
+            "level": 1,
+            "text": "Competitive Foundation Report",
+            "style": "Heading 1",
+            "font_name": "Calibri",
+            "font_name_ascii": "Calibri",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 15.0,
+            "bold": -1.0,
+            "space_before_pt": 10.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          },
+          {
+            "level": 2,
+            "text": "Architecture",
+            "style": "Heading 2",
+            "font_name": "Calibri",
+            "font_name_ascii": "Calibri",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 13.0,
+            "bold": -1.0,
+            "space_before_pt": 10.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          },
+          {
+            "level": 2,
+            "text": "Financial Overview",
+            "style": "Heading 2",
+            "font_name": "Calibri",
+            "font_name_ascii": "Calibri",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 13.0,
+            "bold": -1.0,
+            "space_before_pt": 10.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          },
+          {
+            "level": 2,
+            "text": "Projected Growth",
+            "style": "Heading 2",
+            "font_name": "Calibri",
+            "font_name_ascii": "Calibri",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 13.0,
+            "bold": -1.0,
+            "space_before_pt": 10.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          },
+          {
+            "level": 2,
+            "text": "Page Capped Figure",
+            "style": "Heading 2",
+            "font_name": "Calibri",
+            "font_name_ascii": "Calibri",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 13.0,
+            "bold": -1.0,
+            "space_before_pt": 10.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          },
+          {
+            "level": 3,
+            "text": "Notes",
+            "style": "Heading 3",
+            "font_name": "Calibri",
+            "font_name_ascii": "Calibri",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 11.5,
+            "bold": -1.0,
+            "space_before_pt": 10.0,
+            "space_after_pt": 6.0,
+            "page": 5
+          }
+        ],
+        "style_names": {
+          "Normal": 72,
+          "TOC Heading": 1,
+          "TOC 1": 1,
+          "TOC 2": 4,
+          "TOC 3": 1,
+          "TOC 31": 1,
+          "Heading 1": 1,
+          "Heading 2": 4,
+          "Heading 3": 1
+        },
+        "styles": {
+          "normal": {
+            "name": "Calibri",
+            "name_far_east": "DengXian",
+            "name_ascii": "Calibri",
+            "size_pt": 10.5,
+            "bold": 0.0,
+            "space_before_pt": 0.0,
+            "space_after_pt": 8.0,
+            "line_spacing": 15.0,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": false
+          },
+          "heading1": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 15.0,
+            "bold": -1.0,
+            "space_before_pt": 10.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 15.0,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          },
+          "heading2": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 13.0,
+            "bold": -1.0,
+            "space_before_pt": 10.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 15.0,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          },
+          "heading3": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 11.5,
+            "bold": -1.0,
+            "space_before_pt": 10.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 15.0,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          }
+        },
+        "body_paragraph_samples": [
+          {
+            "text_prefix": "Integrated packaged-runtime verification document.",
+            "style": "Normal",
+            "font": "Calibri",
+            "font_far_east": "DengXian",
+            "size_pt": 10.5,
+            "space_before_pt": 0.0,
+            "space_after_pt": 8.0,
+            "line_spacing": 15.0
+          },
+          {
+            "text_prefix": "Deterministic packaged verification only.",
+            "style": "Normal",
+            "font": "Calibri",
+            "font_far_east": "DengXian",
+            "size_pt": 10.5,
+            "space_before_pt": 0.0,
+            "space_after_pt": 8.0,
+            "line_spacing": 15.0
+          }
+        ]
+      },
+      "pdf": {
+        "path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\pdf\\Matrix_Clean_Minimal.pdf",
+        "bytes": 224402,
+        "sha256": "223108620A49E741D2827CD2BEAC61818DD5FEAA10150C85ADD5A3E32C140A42",
+        "rendered_pages": 5
+      },
+      "ok": true
+    },
+    {
+      "name": "profile:professional_report",
+      "file": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\Matrix_Professional_Report.docx",
+      "anchor": "toc",
+      "reused_open_document": true,
+      "view": {
+        "view_type": 3,
+        "zoom_percent": 100,
+        "window_state": 1,
+        "caption": "Matrix_Professional_Report [Compatibility Mode]"
+      },
+      "anchored": {
+        "anchor": "toc",
+        "found": true,
+        "label": "toc",
+        "page": 2,
+        "vertical_cm": 4.0076,
+        "caption": "Matrix_Professional_Report [Compatibility Mode]"
+      },
+      "measurement": {
+        "measured_at": "2026-09-30T20:56:37+08:00",
+        "word_version": "16.0",
+        "word_build": "16.0.20430",
+        "document": {
+          "name": "Matrix_Professional_Report.docx",
+          "full_name": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\Matrix_Professional_Report.docx",
+          "saved": false,
+          "read_only": false,
+          "paragraphs": 86,
+          "words": 100,
+          "pages": 5,
+          "sections": 1,
+          "tables": 2,
+          "inline_shapes": 2,
+          "hyperlinks": 6
+        },
+        "page_setup": [
+          {
+            "index": 1,
+            "left_margin_cm": 2.54,
+            "right_margin_cm": 2.54,
+            "top_margin_cm": 2.54,
+            "bottom_margin_cm": 2.54,
+            "page_width_cm": 21.0009,
+            "page_height_cm": 29.7004,
+            "orientation": "portrait",
+            "text_width_cm": 15.9209,
+            "text_height_cm": 24.6204
+          }
+        ],
+        "tables": [
+          {
+            "index": 1,
+            "rows": 4,
+            "columns": 3,
+            "rendered_column_widths_cm": [
+              1.7092,
+              2.2807,
+              1.1994
+            ],
+            "rendered_total_width_cm": 5.1893,
+            "rendered_left_cm": 2.5259,
+            "rendered_right_edge_cm": 7.7152,
+            "page": 3,
+            "top_cm": 5.5933,
+            "header_cells": [
+              "Component",
+              "Authority",
+              "Status"
+            ],
+            "body_font_size_pt": 9.5,
+            "cell_count": 12,
+            "style_name_local": "Table Grid",
+            "style_name": ""
+          },
+          {
+            "index": 2,
+            "rows": 5,
+            "columns": 8,
+            "rendered_column_widths_cm": [
+              1.7974,
+              1.7992,
+              1.7992,
+              1.7992,
+              1.7992,
+              2.8487,
+              1.7992,
+              2.2789
+            ],
+            "rendered_total_width_cm": 15.921,
+            "rendered_left_cm": 2.5259,
+            "rendered_right_edge_cm": 18.4469,
+            "page": 3,
+            "top_cm": 11.1883,
+            "header_cells": [
+              "Region",
+              "Q1",
+              "Q2",
+              "Q3",
+              "Q4",
+              "Notes",
+              "Owner",
+              "Status"
+            ],
+            "body_font_size_pt": 9.5,
+            "cell_count": 40,
+            "style_name_local": "Table Grid",
+            "style_name": ""
+          }
+        ],
+        "figures": [
+          {
+            "index": 1,
+            "type": 3,
+            "width_cm": 12.7,
+            "height_cm": 3.175,
+            "ratio": 4.0,
+            "scale_width": 120.0,
+            "scale_height": 120.0,
+            "left_cm": 2.54,
+            "top_cm": 17.2367,
+            "right_edge_cm": 15.24,
+            "bottom_edge_cm": 20.4117,
+            "page": 3,
+            "alternative_text": ""
+          },
+          {
+            "index": 2,
+            "type": 3,
+            "width_cm": 2.4606,
+            "height_cm": 24.6204,
+            "ratio": 0.0999,
+            "scale_width": 465.0,
+            "scale_height": 465.0,
+            "left_cm": 2.54,
+            "top_cm": 2.54,
+            "right_edge_cm": 5.0006,
+            "bottom_edge_cm": 27.1604,
+            "page": 4,
+            "alternative_text": ""
+          }
+        ],
+        "toc": {
+          "count": 1,
+          "entries": [
+            "Competitive Foundation Report\t3",
+            "Architecture\t3",
+            "Financial Overview\t3",
+            "Projected Growth\t3",
+            "Page Capped Figure\t3",
+            "Notes\t5"
+          ],
+          "entry_count": 6,
+          "use_hyperlinks": true,
+          "heading_text_from_body": "Table of Contents",
+          "heading_style": {
+            "style_name": "TOC Heading",
+            "font": "Microsoft YaHei",
+            "font_ascii": "Microsoft YaHei",
+            "font_far_east": "Microsoft YaHei",
+            "size_pt": 18.0,
+            "bold": -1.0,
+            "page": 2
+          }
+        },
+        "headings": [
+          {
+            "level": 1,
+            "text": "Competitive Foundation Report",
+            "style": "Heading 1",
+            "font_name": "Arial",
+            "font_name_ascii": "Arial",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 20.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          },
+          {
+            "level": 2,
+            "text": "Architecture",
+            "style": "Heading 2",
+            "font_name": "Arial",
+            "font_name_ascii": "Arial",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 16.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          },
+          {
+            "level": 2,
+            "text": "Financial Overview",
+            "style": "Heading 2",
+            "font_name": "Arial",
+            "font_name_ascii": "Arial",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 16.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          },
+          {
+            "level": 2,
+            "text": "Projected Growth",
+            "style": "Heading 2",
+            "font_name": "Arial",
+            "font_name_ascii": "Arial",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 16.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          },
+          {
+            "level": 2,
+            "text": "Page Capped Figure",
+            "style": "Heading 2",
+            "font_name": "Arial",
+            "font_name_ascii": "Arial",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 16.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          },
+          {
+            "level": 3,
+            "text": "Notes",
+            "style": "Heading 3",
+            "font_name": "Arial",
+            "font_name_ascii": "Arial",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 14.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "page": 5
+          }
+        ],
+        "style_names": {
+          "Normal": 72,
+          "TOC Heading": 1,
+          "TOC 1": 1,
+          "TOC 2": 4,
+          "TOC 3": 1,
+          "TOC 31": 1,
+          "Heading 1": 1,
+          "Heading 2": 4,
+          "Heading 3": 1
+        },
+        "styles": {
+          "normal": {
+            "name": "Calibri",
+            "name_far_east": "DengXian",
+            "name_ascii": "Calibri",
+            "size_pt": 10.5,
+            "bold": 0.0,
+            "space_before_pt": 0.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": false
+          },
+          "heading1": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 20.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          },
+          "heading2": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 16.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          },
+          "heading3": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 14.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          }
+        },
+        "body_paragraph_samples": [
+          {
+            "text_prefix": "Integrated packaged-runtime verification document.",
+            "style": "Normal",
+            "font": "Calibri",
+            "font_far_east": "DengXian",
+            "size_pt": 10.5,
+            "space_before_pt": 0.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863
+          },
+          {
+            "text_prefix": "Deterministic packaged verification only.",
+            "style": "Normal",
+            "font": "Calibri",
+            "font_far_east": "DengXian",
+            "size_pt": 10.5,
+            "space_before_pt": 0.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863
+          }
+        ]
+      },
+      "pdf": {
+        "path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\pdf\\Matrix_Professional_Report.pdf",
+        "bytes": 274353,
+        "sha256": "B03161CA6661C3E795A2D7EFF9B76E0ECB8DC87258555C4111D7C6607BC701A1",
+        "rendered_pages": 5
+      },
+      "ok": true
+    },
+    {
+      "name": "profile:technical",
+      "file": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\Matrix_Technical.docx",
+      "anchor": "toc",
+      "reused_open_document": true,
+      "view": {
+        "view_type": 3,
+        "zoom_percent": 100,
+        "window_state": 1,
+        "caption": "Matrix_Technical [Compatibility Mode]"
+      },
+      "anchored": {
+        "anchor": "toc",
+        "found": true,
+        "label": "toc",
+        "page": 2,
+        "vertical_cm": 3.7148,
+        "caption": "Matrix_Technical [Compatibility Mode]"
+      },
+      "measurement": {
+        "measured_at": "2026-09-30T20:57:00+08:00",
+        "word_version": "16.0",
+        "word_build": "16.0.20430",
+        "document": {
+          "name": "Matrix_Technical.docx",
+          "full_name": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\Matrix_Technical.docx",
+          "saved": false,
+          "read_only": false,
+          "paragraphs": 86,
+          "words": 99,
+          "pages": 5,
+          "sections": 1,
+          "tables": 2,
+          "inline_shapes": 2,
+          "hyperlinks": 6
+        },
+        "page_setup": [
+          {
+            "index": 1,
+            "left_margin_cm": 2.1996,
+            "right_margin_cm": 2.1996,
+            "top_margin_cm": 2.1996,
+            "bottom_margin_cm": 2.1996,
+            "page_width_cm": 21.0009,
+            "page_height_cm": 29.7004,
+            "orientation": "portrait",
+            "text_width_cm": 16.6017,
+            "text_height_cm": 25.3012
+          }
+        ],
+        "tables": [
+          {
+            "index": 1,
+            "rows": 4,
+            "columns": 3,
+            "rendered_column_widths_cm": [
+              1.7092,
+              2.2807,
+              1.1994
+            ],
+            "rendered_total_width_cm": 5.1893,
+            "rendered_left_cm": 2.2031,
+            "rendered_right_edge_cm": 7.3924,
+            "page": 3,
+            "top_cm": 5.3005,
+            "header_cells": [
+              "Component",
+              "Authority",
+              "Status"
+            ],
+            "body_font_size_pt": 9.0,
+            "cell_count": 12,
+            "style_name_local": "Light Grid - Accent 1",
+            "style_name": ""
+          },
+          {
+            "index": 2,
+            "rows": 5,
+            "columns": 8,
+            "rendered_column_widths_cm": [
+              1.875,
+              1.875,
+              1.8768,
+              1.8768,
+              1.8768,
+              2.9686,
+              1.8768,
+              2.376
+            ],
+            "rendered_total_width_cm": 16.6018,
+            "rendered_left_cm": 2.2031,
+            "rendered_right_edge_cm": 18.8049,
+            "page": 3,
+            "top_cm": 11.5253,
+            "header_cells": [
+              "Region",
+              "Q1",
+              "Q2",
+              "Q3",
+              "Q4",
+              "Notes",
+              "Owner",
+              "Status"
+            ],
+            "body_font_size_pt": 9.0,
+            "cell_count": 40,
+            "style_name_local": "Light Grid - Accent 1",
+            "style_name": ""
+          }
+        ],
+        "figures": [
+          {
+            "index": 1,
+            "type": 3,
+            "width_cm": 12.7,
+            "height_cm": 3.175,
+            "ratio": 4.0,
+            "scale_width": 120.0,
+            "scale_height": 120.0,
+            "left_cm": 2.2031,
+            "top_cm": 18.0728,
+            "right_edge_cm": 14.9031,
+            "bottom_edge_cm": 21.2478,
+            "page": 3,
+            "alternative_text": ""
+          },
+          {
+            "index": 2,
+            "type": 3,
+            "width_cm": 2.5294,
+            "height_cm": 25.3012,
+            "ratio": 0.1,
+            "scale_width": 478.0,
+            "scale_height": 478.0,
+            "left_cm": 2.2031,
+            "top_cm": 2.2031,
+            "right_edge_cm": 4.7325,
+            "bottom_edge_cm": 27.5043,
+            "page": 4,
+            "alternative_text": ""
+          }
+        ],
+        "toc": {
+          "count": 1,
+          "entries": [
+            "Competitive Foundation Report\t3",
+            "Architecture\t3",
+            "Financial Overview\t3",
+            "Projected Growth\t3",
+            "Page Capped Figure\t3",
+            "Notes\t5"
+          ],
+          "entry_count": 6,
+          "use_hyperlinks": true,
+          "heading_text_from_body": "Table of Contents",
+          "heading_style": {
+            "style_name": "TOC Heading",
+            "font": "Microsoft YaHei",
+            "font_ascii": "Microsoft YaHei",
+            "font_far_east": "Microsoft YaHei",
+            "size_pt": 18.0,
+            "bold": -1.0,
+            "page": 2
+          }
+        },
+        "headings": [
+          {
+            "level": 1,
+            "text": "Competitive Foundation Report",
+            "style": "Heading 1",
+            "font_name": "Arial",
+            "font_name_ascii": "Arial",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 18.0,
+            "bold": -1.0,
+            "space_before_pt": 14.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          },
+          {
+            "level": 2,
+            "text": "Architecture",
+            "style": "Heading 2",
+            "font_name": "Arial",
+            "font_name_ascii": "Arial",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 15.0,
+            "bold": -1.0,
+            "space_before_pt": 14.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          },
+          {
+            "level": 2,
+            "text": "Financial Overview",
+            "style": "Heading 2",
+            "font_name": "Arial",
+            "font_name_ascii": "Arial",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 15.0,
+            "bold": -1.0,
+            "space_before_pt": 14.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          },
+          {
+            "level": 2,
+            "text": "Projected Growth",
+            "style": "Heading 2",
+            "font_name": "Arial",
+            "font_name_ascii": "Arial",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 15.0,
+            "bold": -1.0,
+            "space_before_pt": 14.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          },
+          {
+            "level": 2,
+            "text": "Page Capped Figure",
+            "style": "Heading 2",
+            "font_name": "Arial",
+            "font_name_ascii": "Arial",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 15.0,
+            "bold": -1.0,
+            "space_before_pt": 14.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          },
+          {
+            "level": 3,
+            "text": "Notes",
+            "style": "Heading 3",
+            "font_name": "Arial",
+            "font_name_ascii": "Arial",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 13.0,
+            "bold": -1.0,
+            "space_before_pt": 14.0,
+            "space_after_pt": 6.0,
+            "page": 5
+          }
+        ],
+        "style_names": {
+          "Normal": 72,
+          "TOC Heading": 1,
+          "TOC 1": 1,
+          "TOC 2": 4,
+          "TOC 3": 1,
+          "TOC 31": 1,
+          "Heading 1": 1,
+          "Heading 2": 4,
+          "Heading 3": 1
+        },
+        "styles": {
+          "normal": {
+            "name": "Calibri",
+            "name_far_east": "DengXian",
+            "name_ascii": "Calibri",
+            "size_pt": 10.5,
+            "bold": 0.0,
+            "space_before_pt": 0.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 14.399999618530273,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": false
+          },
+          "heading1": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 18.0,
+            "bold": -1.0,
+            "space_before_pt": 14.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 14.399999618530273,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          },
+          "heading2": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 15.0,
+            "bold": -1.0,
+            "space_before_pt": 14.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 14.399999618530273,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          },
+          "heading3": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 13.0,
+            "bold": -1.0,
+            "space_before_pt": 14.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 14.399999618530273,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          }
+        },
+        "body_paragraph_samples": [
+          {
+            "text_prefix": "Integrated packaged-runtime verification document.",
+            "style": "Normal",
+            "font": "Calibri",
+            "font_far_east": "DengXian",
+            "size_pt": 10.5,
+            "space_before_pt": 0.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 14.399999618530273
+          },
+          {
+            "text_prefix": "Deterministic packaged verification only.",
+            "style": "Normal",
+            "font": "Calibri",
+            "font_far_east": "DengXian",
+            "size_pt": 10.5,
+            "space_before_pt": 0.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 14.399999618530273
+          }
+        ]
+      },
+      "pdf": {
+        "path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\pdf\\Matrix_Technical.pdf",
+        "bytes": 274800,
+        "sha256": "2B851F747B38C485B429ED56EF2C4FF400720F13858B05F7AC4B2A13F351809B",
+        "rendered_pages": 5
+      },
+      "ok": true
+    },
+    {
+      "name": "table:irreducible_wide_program_d",
+      "file": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\irreducible_table.docx",
+      "anchor": "table1",
+      "reused_open_document": true,
+      "view": {
+        "view_type": 3,
+        "zoom_percent": 100,
+        "window_state": 1,
+        "caption": "irreducible_table [Compatibility Mode]"
+      },
+      "anchored": {
+        "anchor": "table1",
+        "found": true,
+        "label": "table-1",
+        "page": 2,
+        "vertical_cm": 2.5541,
+        "caption": "irreducible_table [Compatibility Mode]"
+      },
+      "measurement": {
+        "measured_at": "2026-09-30T20:57:23+08:00",
+        "word_version": "16.0",
+        "word_build": "16.0.20430",
+        "document": {
+          "name": "irreducible_table.docx",
+          "full_name": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\irreducible_table.docx",
+          "saved": false,
+          "read_only": false,
+          "paragraphs": 56,
+          "words": 51,
+          "pages": 3,
+          "sections": 3,
+          "tables": 1,
+          "inline_shapes": 0,
+          "hyperlinks": 0
+        },
+        "page_setup": [
+          {
+            "index": 1,
+            "left_margin_cm": 2.54,
+            "right_margin_cm": 2.54,
+            "top_margin_cm": 2.54,
+            "bottom_margin_cm": 2.54,
+            "page_width_cm": 21.0009,
+            "page_height_cm": 29.7004,
+            "orientation": "portrait",
+            "text_width_cm": 15.9209,
+            "text_height_cm": 24.6204
+          },
+          {
+            "index": 2,
+            "left_margin_cm": 2.54,
+            "right_margin_cm": 2.54,
+            "top_margin_cm": 2.54,
+            "bottom_margin_cm": 2.54,
+            "page_width_cm": 29.7004,
+            "page_height_cm": 21.0009,
+            "orientation": "landscape",
+            "text_width_cm": 24.6204,
+            "text_height_cm": 15.9209
+          },
+          {
+            "index": 3,
+            "left_margin_cm": 2.54,
+            "right_margin_cm": 2.54,
+            "top_margin_cm": 2.54,
+            "bottom_margin_cm": 2.54,
+            "page_width_cm": 21.0009,
+            "page_height_cm": 29.7004,
+            "orientation": "portrait",
+            "text_width_cm": 15.9209,
+            "text_height_cm": 24.6204
+          }
+        ],
+        "tables": [
+          {
+            "index": 1,
+            "rows": 2,
+            "columns": 25,
+            "rendered_column_widths_cm": [
+              1.2012,
+              1.2012,
+              1.2012,
+              1.2012,
+              1.2012,
+              1.2012,
+              1.2012,
+              1.2012,
+              1.1994,
+              1.1994,
+              1.1994,
+              1.1994,
+              1.1994,
+              1.1994,
+              1.1994,
+              1.1994,
+              1.1994,
+              1.1994,
+              1.1994,
+              1.1994,
+              1.1994,
+              1.1994,
+              1.1994,
+              1.1994,
+              1.1994
+            ],
+            "rendered_total_width_cm": 29.9994,
+            "rendered_left_cm": 2.5259,
+            "rendered_right_edge_cm": 32.5253,
+            "page": 2,
+            "top_cm": 2.5541,
+            "header_cells": [
+              "H0",
+              "H1",
+              "H2",
+              "H3",
+              "H4",
+              "H5",
+              "H6",
+              "H7"
+            ],
+            "body_font_size_pt": 9999999.0,
+            "cell_count": 50,
+            "style_name_local": "Table Grid",
+            "style_name": ""
+          }
+        ],
+        "figures": [],
+        "toc": {
+          "count": 0
+        },
+        "headings": [
+          {
+            "level": 1,
+            "text": "Wide",
+            "style": "Heading 1",
+            "font_name": "Arial",
+            "font_name_ascii": "Arial",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 20.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "page": 1
+          }
+        ],
+        "style_names": {
+          "Heading 1": 1,
+          "Normal": 55
+        },
+        "styles": {
+          "normal": {
+            "name": "Calibri",
+            "name_far_east": "DengXian",
+            "name_ascii": "Calibri",
+            "size_pt": 10.5,
+            "bold": 0.0,
+            "space_before_pt": 0.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": false
+          },
+          "heading1": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 20.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          },
+          "heading2": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 16.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          },
+          "heading3": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 14.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          }
+        },
+        "body_paragraph_samples": []
+      },
+      "pdf": {
+        "path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\pdf\\irreducible_table.pdf",
+        "bytes": 170203,
+        "sha256": "591A4510D0A819BF4591D7A0CC251FFE021B4950F2A22BB96856E17A561A01B9",
+        "rendered_pages": 3
+      },
+      "ok": true
+    },
+    {
+      "name": "toc:chinese_mixed",
+      "file": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\竞争基础集成验证.docx",
+      "anchor": "toc",
+      "reused_open_document": true,
+      "view": {
+        "view_type": 3,
+        "zoom_percent": 100,
+        "window_state": 1,
+        "caption": "竞争基础集成验证 [Compatibility Mode]"
+      },
+      "anchored": {
+        "anchor": "toc",
+        "found": true,
+        "label": "toc",
+        "page": 2,
+        "vertical_cm": 4.0076,
+        "caption": "竞争基础集成验证 [Compatibility Mode]"
+      },
+      "measurement": {
+        "measured_at": "2026-09-30T20:57:11+08:00",
+        "word_version": "16.0",
+        "word_build": "16.0.20430",
+        "document": {
+          "name": "竞争基础集成验证.docx",
+          "full_name": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\acceptance_set\\竞争基础集成验证.docx",
+          "saved": false,
+          "read_only": false,
+          "paragraphs": 34,
+          "words": 94,
+          "pages": 3,
+          "sections": 1,
+          "tables": 1,
+          "inline_shapes": 1,
+          "hyperlinks": 4
+        },
+        "page_setup": [
+          {
+            "index": 1,
+            "left_margin_cm": 2.54,
+            "right_margin_cm": 2.54,
+            "top_margin_cm": 2.54,
+            "bottom_margin_cm": 2.54,
+            "page_width_cm": 21.0009,
+            "page_height_cm": 29.7004,
+            "orientation": "portrait",
+            "text_width_cm": 15.9209,
+            "text_height_cm": 24.6204
+          }
+        ],
+        "tables": [
+          {
+            "index": 1,
+            "rows": 4,
+            "columns": 3,
+            "rendered_column_widths_cm": [
+              1.1994,
+              2.2807,
+              1.1994
+            ],
+            "rendered_total_width_cm": 4.6795,
+            "rendered_left_cm": 2.5259,
+            "rendered_right_edge_cm": 7.2054,
+            "page": 3,
+            "top_cm": 6.4893,
+            "header_cells": [
+              "组件",
+              "权威",
+              "状态"
+            ],
+            "body_font_size_pt": 9.5,
+            "cell_count": 12,
+            "style_name_local": "Table Grid",
+            "style_name": ""
+          }
+        ],
+        "figures": [
+          {
+            "index": 1,
+            "type": 3,
+            "width_cm": 12.7,
+            "height_cm": 3.175,
+            "ratio": 4.0,
+            "scale_width": 120.0,
+            "scale_height": 120.0,
+            "left_cm": 2.54,
+            "top_cm": 13.7866,
+            "right_edge_cm": 15.24,
+            "bottom_edge_cm": 16.9616,
+            "page": 3,
+            "alternative_text": ""
+          }
+        ],
+        "toc": {
+          "count": 1,
+          "entries": [
+            "竞争基础集成验证\t3",
+            "架构\t3",
+            "图形\t3",
+            "备注\t3"
+          ],
+          "entry_count": 4,
+          "use_hyperlinks": true,
+          "heading_text_from_body": "目录",
+          "heading_style": {
+            "style_name": "TOC Heading",
+            "font": "Microsoft YaHei",
+            "font_ascii": "Microsoft YaHei",
+            "font_far_east": "Microsoft YaHei",
+            "size_pt": 18.0,
+            "bold": -1.0,
+            "page": 2
+          }
+        },
+        "headings": [
+          {
+            "level": 1,
+            "text": "竞争基础集成验证",
+            "style": "Heading 1",
+            "font_name": "Microsoft YaHei",
+            "font_name_ascii": "Arial",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 20.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          },
+          {
+            "level": 2,
+            "text": "架构",
+            "style": "Heading 2",
+            "font_name": "Microsoft YaHei",
+            "font_name_ascii": "Arial",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 16.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          },
+          {
+            "level": 2,
+            "text": "图形",
+            "style": "Heading 2",
+            "font_name": "Microsoft YaHei",
+            "font_name_ascii": "Arial",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 16.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          },
+          {
+            "level": 3,
+            "text": "备注",
+            "style": "Heading 3",
+            "font_name": "Microsoft YaHei",
+            "font_name_ascii": "Arial",
+            "font_name_far_east": "Microsoft YaHei",
+            "size_pt": 14.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "page": 3
+          }
+        ],
+        "style_names": {
+          "Normal": 24,
+          "TOC Heading": 1,
+          "TOC 1": 1,
+          "TOC 2": 2,
+          "TOC 3": 1,
+          "TOC 31": 1,
+          "Heading 1": 1,
+          "Heading 2": 2,
+          "Heading 3": 1
+        },
+        "styles": {
+          "normal": {
+            "name": "Calibri",
+            "name_far_east": "DengXian",
+            "name_ascii": "Calibri",
+            "size_pt": 10.5,
+            "bold": 0.0,
+            "space_before_pt": 0.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": false
+          },
+          "heading1": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 20.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          },
+          "heading2": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 16.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          },
+          "heading3": {
+            "name": "Calibri",
+            "name_far_east": "+Headings Asian",
+            "name_ascii": "+Headings",
+            "size_pt": 14.0,
+            "bold": -1.0,
+            "space_before_pt": 12.0,
+            "space_after_pt": 6.0,
+            "line_spacing": 13.800000190734863,
+            "line_spacing_rule": 5,
+            "alignment": 0,
+            "keep_with_next": true
+          }
+        },
+        "body_paragraph_samples": []
+      },
+      "pdf": {
+        "path": "C:\\Users\\QUANSH~1\\AppData\\Local\\Temp\\mdc_r2v03_wp01_20260930_201727\\pdf\\竞争基础集成验证.pdf",
+        "bytes": 218077,
+        "sha256": "14E4C2E20CF555CF53D5837E5AE7CC2EF73330437A8E355B8AEA232329A5DECA",
+        "rendered_pages": 3
+      },
+      "ok": true
+    }
+  ]
+}
