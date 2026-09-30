@@ -1,0 +1,29 @@
+﻿{
+    "phase":  "WP-R2PRERC01-01",
+    "captured_at":  "2026-09-30T23:22:18+08:00",
+    "repository_root":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter",
+    "payload_directory":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\dist\\MD_Converter_Lite",
+    "payload_manifest_file":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\dist\\MD_Converter_Lite\\MD_Converter_Lite.exe",
+    "payload_file_count":  268,
+    "payload_total_bytes":  166231301,
+    "payload_tree_digest_sha256":  "ecb6a4453f342af51cbc2b26b175489cb4ad963bc987a7407ff10ff0f8efa96c",
+    "payload_exe_bytes":  6926650,
+    "payload_exe_sha256":  "68524527CDC5718CE31A1F0454EAFB0FF64C52D5C838716AC1277445DE0E3021",
+    "exe_version_info":  {
+                             "file_version":  "1.1.0",
+                             "product_version":  "1.1.0",
+                             "product_name":  "MD Converter",
+                             "company_name":  "Quansheng2022",
+                             "original_name":  "MD_Converter_Lite.exe"
+                         },
+    "authoritative_version":  {
+                                  "source":  "pyproject.toml [project].version",
+                                  "version":  "1.1.0",
+                                  "iss_app_id":  "MDConverter.Quansheng2022",
+                                  "iss_app_name":  "MD Converter",
+                                  "iss_app_version":  "1.1.0",
+                                  "iss_app_publisher":  "Quansheng2022"
+                              },
+    "installer_script":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\packaging\\windows\\MD_Converter.iss",
+    "installer_script_sha256":  "EBB0979972348ECA2926BC3095049BDB047B36F206E9D66E2A1C7E468B91CE03"
+}
