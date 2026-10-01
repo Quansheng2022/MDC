@@ -1,0 +1,59 @@
+{
+  "product": "MD Converter",
+  "version": "1.1.0",
+  "production_status": "PRODUCTION_RELEASE",
+  "release_train": "R2",
+  "r2_rc_02_freeze_commit": "ec06977debdbd2dd747e14ad2f27a9a4f9b74c3a",
+  "human_acceptance_commit": "a8533a6e416c004b9a51a0a43d0ec50df3b77982",
+  "r2_prr01_commit": "d12ba44aa7c64976d015e39b50d93e6898e11abe",
+  "human_decision_commit": "140b1ab599a66c91075214fc29b657375b9c4935",
+  "artifacts": {
+    "installer": {
+      "source_path": "dist_installer/MD_Converter_v1.1.0_Setup.exe",
+      "archive_file": "MD_Converter_v1.1.0_Setup.exe",
+      "bytes": 77296967,
+      "sha256": "C54ADF6225689F06886B6C326E897BEB294EBA13EFD7897328DD738F6CF3CA42"
+    },
+    "packaged_exe": {
+      "source_path": "dist/MD_Converter_Lite/MD_Converter_Lite.exe",
+      "archive_file": "MD_Converter_Lite.exe",
+      "bytes": 7671725,
+      "sha256": "C368DFEBBC3660020CB20119E4952D83E2791B5D231D6BE62A6D0E552C871270"
+    },
+    "payload": {
+      "source_path": "dist/MD_Converter_Lite",
+      "file_count": 461,
+      "total_bytes": 279011814,
+      "tree_digest_sha256": "92daa5ea8c7031e0046ccd2d875990cfebbca9ba8767f9d4c00e9d1a316cf370",
+      "archived": false
+    },
+    "third_party_notices": {
+      "source_path": "THIRD_PARTY_NOTICES.txt",
+      "archive_file": "THIRD_PARTY_NOTICES.txt",
+      "bytes": 11890,
+      "sha256": "E4B8D7223F085357DF923226FECD5AA189206B65448C26D1AD772C7116229696"
+    }
+  },
+  "canonical_evidence_pointer": {
+    "markdown": "RC_EVIDENCE/CURRENT_RELEASE_EVIDENCE_POINTER.md",
+    "json": "RC_EVIDENCE/current_release_evidence_pointer.json",
+    "status": "CURRENT_CANONICAL_RELEASE_EVIDENCE",
+    "spec_mapping": [
+      "SPEC-INV-010",
+      "SPEC-FUNC-021"
+    ]
+  },
+  "archive_path": "release/R2_PRODUCTION_RELEASE",
+  "tag_name": "r2-prod-1.1.0",
+  "tag_target": "ec06977debdbd2dd747e14ad2f27a9a4f9b74c3a",
+  "tag_type": "annotated",
+  "publication": "LOCAL_ARCHIVE_ONLY",
+  "preserved_superseded_rc_path": "release/R2RC_pre_HA02_preserved",
+  "historical_tag_preserved": {
+    "name": "v1.1.0",
+    "tag_object": "9f32090d2b756b16b43f7f556116cdec918cdadd",
+    "peeled_commit": "e025a36c645039acb1bb38208db73e8550a76156",
+    "unchanged": true
+  },
+  "rollback_rule": "Local-only release. Before any remote publication (none authorized): revert the R2-PR-01 task commits and remove the newly created release/R2_PRODUCTION_RELEASE archive only under explicit Human cancellation authority; deleting the new unpublished tag r2-prod-1.1.0 requires explicit Human cancellation authority. Historical tags (v1.0.0, v1.0.1, v1.1.0) and superseded RC evidence are never moved, deleted or force-updated."
+}
