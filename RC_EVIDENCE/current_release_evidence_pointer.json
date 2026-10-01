@@ -1,0 +1,109 @@
+{
+  "pointer_schema": "md-converter/release-evidence-pointer",
+  "pointer_version": "1.0",
+  "generated_at": "2026-10-01T16:30:00+08:00",
+  "purpose": "Canonical supersession pointer that identifies the authoritative release evidence for the accepted post-HA02 MD Converter v1.1.0 release candidate, without rewriting or regenerating any historical generated release evidence.",
+  "status": "CURRENT_CANONICAL_RELEASE_EVIDENCE",
+  "canonical_spec_mapping": [
+    "SPEC-INV-010",
+    "SPEC-FUNC-021"
+  ],
+  "product": {
+    "name": "MD Converter",
+    "version": "1.1.0",
+    "publisher": "Quansheng2022"
+  },
+  "release_chain": {
+    "r2_rc_02_freeze_commit": "ec06977debdbd2dd747e14ad2f27a9a4f9b74c3a",
+    "targeted_human_acceptance_commit": "a8533a6e416c004b9a51a0a43d0ec50df3b77982",
+    "ha02_closure_commit": "f851b64c3b65afe4c4d960346a9b19a9e2f3afd5",
+    "r2_prerc02_closure_commit": "196079ef2efa7ca5e86b5e8c2b744a710e4ae530"
+  },
+  "artifacts": {
+    "packaged_exe": {
+      "repo_relative_path": "dist/MD_Converter_Lite/MD_Converter_Lite.exe",
+      "absolute_path": "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\dist\\MD_Converter_Lite\\MD_Converter_Lite.exe",
+      "bytes": 7671725,
+      "sha256": "C368DFEBBC3660020CB20119E4952D83E2791B5D231D6BE62A6D0E552C871270"
+    },
+    "payload": {
+      "repo_relative_path": "dist/MD_Converter_Lite",
+      "absolute_path": "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\dist\\MD_Converter_Lite",
+      "file_count": 461,
+      "total_bytes": 279011814,
+      "tree_digest_sha256": "92daa5ea8c7031e0046ccd2d875990cfebbca9ba8767f9d4c00e9d1a316cf370"
+    },
+    "installer": {
+      "repo_relative_path": "dist_installer/MD_Converter_v1.1.0_Setup.exe",
+      "absolute_path": "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\dist_installer\\MD_Converter_v1.1.0_Setup.exe",
+      "bytes": 77296967,
+      "sha256": "C54ADF6225689F06886B6C326E897BEB294EBA13EFD7897328DD738F6CF3CA42"
+    },
+    "third_party_notices": {
+      "repo_relative_path": "THIRD_PARTY_NOTICES.txt",
+      "absolute_path": "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\THIRD_PARTY_NOTICES.txt",
+      "bytes": 11890,
+      "sha256": "E4B8D7223F085357DF923226FECD5AA189206B65448C26D1AD772C7116229696"
+    }
+  },
+  "current_authority_evidence": [
+    {
+      "path": "Doc/V2/Implementation/R2_RC_02/R2_RC_02_MANIFEST.md",
+      "role": "canonical RC-02 manifest"
+    },
+    {
+      "path": "Doc/V2/Implementation/R2_RC_02/R2_RC_02_CLOSURE_EVIDENCE.md",
+      "role": "RC-02 freeze closure"
+    },
+    {
+      "path": "Doc/V2/Implementation/R2_RC_02/Evidence/R2RC02-01_IDENTITY_RECHECK.json",
+      "role": "RC-02 identity recomputation"
+    },
+    {
+      "path": "Doc/V2/Implementation/R2_HUMAN_ACCEPTANCE_02/R2_TARGETED_HUMAN_ACCEPTANCE.md",
+      "role": "targeted Human Re-Acceptance record (ACCEPT)"
+    },
+    {
+      "path": "Doc/V2/Implementation/R2_PRE_RC_02/R2_PRE_RC_02_CLOSURE_EVIDENCE.md",
+      "role": "post-HA02 delta installer verification"
+    },
+    {
+      "path": "Doc/V2/Implementation/HA_02/HA_02_CLOSURE_EVIDENCE.md",
+      "role": "Mermaid rendering remediation closure"
+    }
+  ],
+  "historical_evidence": [
+    {
+      "path": "RC_EVIDENCE/RELEASE_EVIDENCE.md",
+      "classification": "HISTORICAL / SUPERSEDED FOR CURRENT P12 RELEASE",
+      "reason": "Rule-generated release evidence for the earlier 1.0.0 candidate (build_id 8dfe51eb8df2, checked 2026-09-01); not the current post-HA02 v1.1.0 candidate."
+    },
+    {
+      "path": "RC_EVIDENCE/release_evidence.json",
+      "classification": "HISTORICAL / SUPERSEDED FOR CURRENT P12 RELEASE",
+      "reason": "Machine counterpart of the same earlier 1.0.0 release evidence (software_version 1.0.0, build_id 8dfe51eb8df2)."
+    },
+    {
+      "path": "RC_EVIDENCE/P12_v1.1.0/RELEASE_CANDIDATE_EVIDENCE.md",
+      "classification": "HISTORICAL / SUPPLEMENTARY / PRE-HA02",
+      "reason": "P12-era v1.1.0 release-candidate evidence produced before the R2 train and before the HA-02 Mermaid remediation changed the product and installer."
+    },
+    {
+      "path": "Doc/V2/Implementation/R2_RC/R2_RC_MANIFEST.md",
+      "classification": "SUPERSEDED / AUDIT-ONLY",
+      "reason": "First R2 release candidate (closure cd70d86); superseded because HA-02 changed protected inputs. Preserved artifacts remain in release/R2RC_pre_ha02_preserved/."
+    }
+  ],
+  "statements": {
+    "legacy_generated_evidence_rewritten": false,
+    "frozen_rc_evidence_modified": false,
+    "synthesized_release_eligible_result": false,
+    "synthesized_rule_generated_fields": false,
+    "note": "This pointer records authority only. It does not synthesize a rule-generated RELEASE_ELIGIBLE result and does not supply test, QA, governance, regression or repair fields; those remain owned by the canonical release-evidence generator under separate authority."
+  },
+  "spec_id_history_note": {
+    "historical_label": "SPEC-INV-012",
+    "canonical_mapping": "SPEC-INV-010 / SPEC-FUNC-021",
+    "note": "Earlier records (R2-RC-02 task documents and the R2-RC-02 manifest S12) referred to the release-evidence requirement as SPEC-INV-012. In CANONICAL_SPEC.md the release-evidence invariant is SPEC-INV-010 with SPEC-FUNC-021; SPEC-INV-012 is the 'report extra problems, do not modify' invariant. The historical label is retained only as a pointer for old records."
+  }
+}
