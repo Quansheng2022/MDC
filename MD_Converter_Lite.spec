@@ -2,6 +2,7 @@
 import os
 import sys
 
+from PyInstaller.utils.hooks import collect_all
 from PyInstaller.utils.hooks import collect_data_files
 from PyInstaller.utils.hooks import copy_metadata
 
@@ -20,17 +21,31 @@ datas = []
 datas += collect_data_files('md_converter')
 datas += copy_metadata('md_converter')
 
+# Mermaid rendering backend (HA-02): the packaged desktop product must render
+# ```mermaid blocks instead of degrading to a raw-source fallback image, so the
+# Playwright runtime that the source environment already uses ships with the
+# payload.  Browser binaries are deliberately NOT bundled: DiagramPass
+# discovers the Playwright-managed browser when it exists and otherwise uses the
+# operating-system Chromium (Microsoft Edge) on supported Windows.
+_playwright_datas, _playwright_binaries, _playwright_hidden = collect_all('playwright')
+datas += _playwright_datas
+binaries = list(_playwright_binaries)
+hiddenimports = list(_playwright_hidden)
+
 
 a = Analysis(
     ['packaging/windows/launcher_main.py'],
     pathex=[],
-    binaries=[],
+    binaries=binaries,
     datas=datas,
-    hiddenimports=[],
+    hiddenimports=hiddenimports,
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
-    excludes=['playwright'],
+    # HA-02: the previous `excludes=['playwright']` removed the only Mermaid
+    # rendering backend from the shipped product, which made every Mermaid block
+    # fall back to raw source.  The exclusion is intentionally gone.
+    excludes=[],
     noarchive=False,
     optimize=0,
 )

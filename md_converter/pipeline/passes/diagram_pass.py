@@ -6,7 +6,9 @@ Diagram Pass - 图表转换 Pass
 """
 
 import base64
+import os
 import subprocess
+import sys
 import tempfile
 from pathlib import Path
 from typing import Any, Dict, Optional
@@ -15,6 +17,35 @@ from ...ast.nodes import CodeBlock, Diagram, Image, Node
 from ...diagnostics.collector import DiagnosticCollector
 from ...services.diagram_service import DiagramService
 from .base import PassResult, TransformPass
+
+#: Vendored Mermaid 10 runtime shipped with the product.  Rendering must not
+#: depend on outbound access to a CDN at conversion time, and the packaged
+#: desktop build must render exactly what the source environment renders.
+_MERMAID_RUNTIME_ASSET = (
+    Path(__file__).resolve().parents[2] / "renderer" / "assets" / "mermaid.min.js"
+)
+
+#: Mermaid runtime used only when the vendored asset is unavailable.
+_MERMAID_RUNTIME_CDN = "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"
+
+#: Explicit Chromium executable override (deployment/verification hook).
+_BROWSER_PATH_ENV = "MDC_MERMAID_BROWSER_PATH"
+
+#: Page shell used for Mermaid rendering.  The Mermaid runtime itself is
+#: injected separately (vendored asset, or the CDN as a last resort).
+_MERMAID_PAGE_TEMPLATE = """<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {{ margin: 0; padding: 20px; background: white; }}
+        .mermaid {{ text-align: center; }}
+    </style>
+</head>
+<body>
+    <pre class="mermaid">{content}</pre>
+</body>
+</html>
+"""
 
 
 class DiagramPass(TransformPass):
@@ -45,6 +76,8 @@ class DiagramPass(TransformPass):
         self._generated_files = []
         self._has_mmdc = self._check_mmdc()
         self._has_playwright = self._check_playwright()
+        self._last_render_error = ""
+        self._browser_source = ""
 
     def _check_mmdc(self) -> bool:
         try:
@@ -155,17 +188,25 @@ class DiagramPass(TransformPass):
     def _render_mermaid(self, node: Diagram, diag: DiagnosticCollector) -> Image:
         print("[DiagramPass] Rendering Mermaid diagram...")
         src = None
+        self._last_render_error = ""
+        self._browser_source = ""
         if self._has_mmdc:
             src = self._render_with_mmdc(node.content, diag)
         if not src and self._has_playwright:
             src = self._render_with_playwright(node.content, diag)
         if src:
-            print("[DiagramPass] Mermaid rendered successfully")
+            print(f"[DiagramPass] Mermaid rendered successfully ({self._browser_source})")
             return Image(alt=f"Mermaid Diagram {self._counter}", src=src, span=node.span)
 
-        print("[DiagramPass] Mermaid rendering failed, using fallback")
+        print(f"[DiagramPass] Mermaid rendering failed, using fallback: {self._last_render_error}")
+        message = (
+            "Mermaid rendering failed, using text fallback. "
+            "Install mmdc: npm install -g @mermaid-js/mermaid-cli"
+        )
+        if self._last_render_error:
+            message = f"{message} (reason: {self._last_render_error})"
         diag.warning(
-            "Mermaid rendering failed, using text fallback. Install mmdc: npm install -g @mermaid-js/mermaid-cli",
+            message,
             code="DIAG002",
             location=node.span
         )
@@ -201,59 +242,149 @@ class DiagramPass(TransformPass):
                     return str(output_file)
             else:
                 print(f"[DiagramPass] mmdc failed: {result.stderr}")
+                self._last_render_error = f"mmdc exit {result.returncode}: {result.stderr}"
         except subprocess.TimeoutExpired:
             print("[DiagramPass] mmdc timeout")
+            self._last_render_error = "mmdc timeout"
         except Exception as e:
             print(f"[DiagramPass] mmdc error: {e}")
+            self._last_render_error = f"mmdc error: {e}"
         return ""
 
     def _render_with_playwright(self, content: str, diag: DiagnosticCollector) -> str:
         try:
             from playwright.sync_api import sync_playwright
-            with sync_playwright() as p:
-                browser = p.chromium.launch(headless=True)
-                page = browser.new_page(viewport={'width': 1200, 'height': 800})
-                html = f"""
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-                    <style>
-                        body {{ margin: 0; padding: 20px; background: white; }}
-                        .mermaid {{ text-align: center; }}
-                    </style>
-                </head>
-                <body>
-                    <pre class="mermaid">{content}</pre>
-                    <script>
-                        mermaid.initialize({{
-                            startOnLoad: true,
-                            theme: 'default',
-                            themeVariables: {{
-                                primaryColor: '#E8F0FE',
-                                primaryTextColor: '#333',
-                                primaryBorderColor: '#4A7FB5',
-                                lineColor: '#555',
-                            }}
-                        }});
-                    </script>
-                </body>
-                </html>
-                """
-                page.set_content(html)
-                page.wait_for_timeout(3000)
-                element = page.query_selector(".mermaid")
-                if element:
-                    screenshot = element.screenshot(type='png')
-                    browser.close()
-                    b64 = base64.b64encode(screenshot).decode('ascii')
-                    return f"data:image/png;base64,{b64}"
-                browser.close()
         except ImportError:
             print("[DiagramPass] Playwright not installed")
+            self._last_render_error = "Playwright is not installed"
+            return ""
+
+        bundled_browsers = self._bundled_browsers_dir()
+        if bundled_browsers is not None:
+            os.environ.setdefault("PLAYWRIGHT_BROWSERS_PATH", str(bundled_browsers))
+
+        try:
+            with sync_playwright() as p:
+                browser, source = self._launch_chromium(p)
+                if browser is None:
+                    self._last_render_error = f"no usable Chromium ({source})"
+                    print(f"[DiagramPass] Playwright error: {self._last_render_error}")
+                    return ""
+                self._browser_source = source
+                page = browser.new_page(viewport={'width': 1200, 'height': 800})
+                try:
+                    page.set_content(_MERMAID_PAGE_TEMPLATE.format(content=content))
+                    runtime_script = self._mermaid_runtime_script()
+                    if runtime_script:
+                        page.add_script_tag(content=runtime_script)
+                    else:
+                        page.add_script_tag(url=_MERMAID_RUNTIME_CDN)
+                    page.evaluate(
+                        """async () => {
+                            mermaid.initialize({
+                                startOnLoad: false,
+                                theme: 'default',
+                                themeVariables: {
+                                    primaryColor: '#E8F0FE',
+                                    primaryTextColor: '#333',
+                                    primaryBorderColor: '#4A7FB5',
+                                    lineColor: '#555',
+                                }
+                            });
+                            try {
+                                await mermaid.run({ querySelector: '.mermaid' });
+                            } catch (error) {
+                                window.__mermaidRunError = String(error);
+                            }
+                        }"""
+                    )
+                    # Rendering guard: only a real <svg> counts as rendered, so a
+                    # page that never ran Mermaid can never be screenshotted as
+                    # "raw Mermaid source" and silently written into the DOCX.
+                    page.wait_for_selector(".mermaid svg", timeout=15000)
+                    element = page.query_selector(".mermaid")
+                    if element is None:
+                        self._last_render_error = "mermaid container missing after render"
+                        return ""
+                    screenshot = element.screenshot(type='png')
+                    b64 = base64.b64encode(screenshot).decode('ascii')
+                    return f"data:image/png;base64,{b64}"
+                finally:
+                    browser.close()
         except Exception as e:
             print(f"[DiagramPass] Playwright error: {e}")
+            self._last_render_error = f"playwright error: {e}"
         return ""
+
+    def _bundled_browsers_dir(self) -> Optional[Path]:
+        """
+        返回随包分发的 Playwright 浏览器目录（仅冻结构建存在）。
+
+        Returns:
+            Optional[Path]: 打包内置的浏览器根目录；源码运行时为 None。
+        """
+        bundle_root = getattr(sys, "_MEIPASS", None)
+        if not bundle_root:
+            return None
+        candidate = Path(bundle_root) / "ms-playwright"
+        return candidate if candidate.is_dir() else None
+
+    def _browser_candidates(self) -> list:
+        """
+        返回按优先级排列的 Chromium 启动参数。
+
+        顺序为：显式配置的浏览器可执行文件 → Playwright 自带浏览器 →
+        操作系统自带的 Chromium/Edge。这样打包发布既可以使用随包浏览器，
+        也可以使用目标机器已有的浏览器，而不是静默退化为原始源码图片。
+
+        Returns:
+            list: playwright ``chromium.launch`` 关键字参数列表（含 source 标签）。
+        """
+        candidates = []
+        explicit = os.environ.get(_BROWSER_PATH_ENV, "").strip()
+        if explicit and Path(explicit).is_file():
+            candidates.append({"executable_path": explicit, "source": f"explicit:{explicit}"})
+        candidates.append({"source": "playwright-chromium"})
+        candidates.append({"channel": "msedge", "source": "system-microsoft-edge"})
+        return candidates
+
+    def _launch_chromium(self, playwright_obj: Any) -> tuple:
+        """
+        启动一个可用的 Chromium。
+
+        Args:
+            playwright_obj: ``sync_playwright()`` 上下文对象。
+
+        Returns:
+            tuple: ``(browser, source)``；全部候选失败时为 ``(None, reason)``。
+        """
+        reason = ""
+        for candidate in self._browser_candidates():
+            source = candidate.get("source", "unknown")
+            options = {key: value for key, value in candidate.items() if key != "source"}
+            try:
+                browser = playwright_obj.chromium.launch(headless=True, **options)
+                return browser, source
+            except Exception as exc:
+                reason = f"{source}: {exc}"
+                print(f"[DiagramPass] Chromium launch failed via {source}: {exc}")
+        return None, reason
+
+    def _mermaid_runtime_script(self) -> str:
+        """
+        返回要注入页面的 Mermaid 运行时代码。
+
+        Returns:
+            str: 随包分发的 Mermaid 运行时；缺失时返回空串（调用方回退到 CDN）。
+        """
+        cached = getattr(self, "_mermaid_runtime_cache", None)
+        if cached is not None:
+            return cached
+        script = ""
+        if _MERMAID_RUNTIME_ASSET.is_file():
+            script = _MERMAID_RUNTIME_ASSET.read_text(encoding="utf-8")
+        self._mermaid_runtime_cache = script
+        return script
 
     def _save_svg_to_file(self, svg_content: str, diagram_type: str, diag: DiagnosticCollector) -> str:
         output_dir = Path(self.output_dir)

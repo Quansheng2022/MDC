@@ -1,0 +1,47 @@
+{
+  "blocks": 3,
+  "runtime": "md_converter\\renderer\\assets\\mermaid.min.js",
+  "results": [
+    {
+      "mermaidLoaded": true,
+      "runError": null,
+      "elementFound": true,
+      "svgCount": 1,
+      "svgGlobalCount": 1,
+      "textLength": 34,
+      "textHead": "Specification\nDeepSeek\nTest System",
+      "block_lines": 9,
+      "screenshot_bytes": 7906,
+      "screenshot": "build\\ha02_probe_local\\case_01.png",
+      "rendered": true
+    },
+    {
+      "mermaidLoaded": true,
+      "runError": null,
+      "elementFound": true,
+      "svgCount": 1,
+      "svgGlobalCount": 1,
+      "textLength": 34,
+      "textHead": "DeepSeek\nTest System\nSpecification",
+      "block_lines": 21,
+      "screenshot_bytes": 9145,
+      "screenshot": "build\\ha02_probe_local\\case_02.png",
+      "rendered": true
+    },
+    {
+      "mermaidLoaded": true,
+      "runError": null,
+      "elementFound": true,
+      "svgCount": 1,
+      "svgGlobalCount": 1,
+      "textLength": 55,
+      "textHead": "DeepSeek\nTest System\nSpecification\nChatGPT Reviewer Hub",
+      "block_lines": 28,
+      "screenshot_bytes": 11098,
+      "screenshot": "build\\ha02_probe_local\\case_03.png",
+      "rendered": true
+    }
+  ],
+  "fixture": "input_test\\mermaid_triangle\\test_mermaid_triangle_v2.md",
+  "offline": true
+}

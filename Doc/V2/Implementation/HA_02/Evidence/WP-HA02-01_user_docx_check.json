@@ -1,0 +1,67 @@
+{
+  "docx": "C:\\Users\\Quansheng\\Documents\\MD_Converter\\output\\test_mermaid_triangle_v2.docx",
+  "paragraphs": 128,
+  "inline_images": 3,
+  "image_sizes_cm": [
+    {
+      "width_cm": 12.7,
+      "height_cm": 3.852
+    },
+    {
+      "width_cm": 12.7,
+      "height_cm": 8.424
+    },
+    {
+      "width_cm": 12.7,
+      "height_cm": 11.091
+    }
+  ],
+  "media_files": [
+    "word/media/image1.png",
+    "word/media/image2.png",
+    "word/media/image3.png"
+  ],
+  "media_stats": [
+    {
+      "file": "image1.png",
+      "pixels": "600x182",
+      "distinct_colours": 79,
+      "non_white_ratio": 0.0359,
+      "background": "#f8f9fa",
+      "fallback_background": true
+    },
+    {
+      "file": "image2.png",
+      "pixels": "600x398",
+      "distinct_colours": 85,
+      "non_white_ratio": 0.0183,
+      "background": "#f8f9fa",
+      "fallback_background": true
+    },
+    {
+      "file": "image3.png",
+      "pixels": "600x524",
+      "distinct_colours": 88,
+      "non_white_ratio": 0.0143,
+      "background": "#f8f9fa",
+      "fallback_background": true
+    }
+  ],
+  "raw_source_marker_counts": {
+    "flowchart TB": 0,
+    "flowchart TD": 0,
+    "flowchart LR": 0,
+    "-->": 0,
+    "~~~": 0
+  },
+  "fallback_text_marker_counts": {
+    "rendering failed": 0,
+    "showing raw text": 0
+  },
+  "fallback_images": [
+    "image1.png",
+    "image2.png",
+    "image3.png"
+  ],
+  "rendered_mermaid": false
+}

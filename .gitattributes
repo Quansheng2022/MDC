@@ -1,0 +1,3 @@
+# Vendored third-party runtime assets must stay byte-exact so their recorded
+# SHA-256 identities remain reproducible (no end-of-line conversion).
+md_converter/renderer/assets/* -text
