@@ -1,0 +1,146 @@
+﻿{
+    "phase":  "WP-R2PRERC02-01",
+    "captured_at":  "2026-10-01T14:59:52+08:00",
+    "install_root":  "C:\\Users\\Quansheng\\AppData\\Local\\Programs\\MD_Converter",
+    "workspace":  "C:\\Users\\Quansheng\\Documents\\MD_Converter",
+    "identities":  {
+                       "installer_path":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\dist_installer\\MD_Converter_v1.1.0_Setup.exe",
+                       "installer_bytes":  77296967,
+                       "installer_sha256":  "C54ADF6225689F06886B6C326E897BEB294EBA13EFD7897328DD738F6CF3CA42",
+                       "packaged_exe_path":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\dist\\MD_Converter_Lite\\MD_Converter_Lite.exe",
+                       "packaged_exe_bytes":  7671725,
+                       "packaged_exe_sha256":  "C368DFEBBC3660020CB20119E4952D83E2791B5D231D6BE62A6D0E552C871270",
+                       "notice_path":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\THIRD_PARTY_NOTICES.txt",
+                       "notice_bytes":  11890,
+                       "notice_sha256":  "E4B8D7223F085357DF923226FECD5AA189206B65448C26D1AD772C7116229696",
+                       "fixture_sha256":  "D6F512CE05082FFC2B826A5E742FFC9D33537338BAED78798626DB5FE41CA02F",
+                       "smoke_fixture_sha256":  "59F43B4016AF0B0498A5B13BEC858ECEF00B0CC874A1667DF23BB47A268D4BA3"
+                   },
+    "workspace_before":  {
+                             "input_exists":  true,
+                             "output_exists":  true,
+                             "file_count":  6
+                         },
+    "uninstall_1":  {
+                        "uninstaller_path":  "C:\\Users\\Quansheng\\AppData\\Local\\Programs\\MD_Converter\\unins000.exe",
+                        "uninstaller_exists":  true,
+                        "exit_code":  0,
+                        "installed_exe_removed":  true,
+                        "internal_removed":  true,
+                        "notice_removed":  true,
+                        "workspace":  {
+                                          "missing":  [
+
+                                                      ],
+                                          "changed":  [
+
+                                                      ],
+                                          "added":  [
+
+                                                    ],
+                                          "intact":  true
+                                      }
+                    },
+    "install_1":  {
+                      "exit_code":  0,
+                      "install_dir_exists":  true,
+                      "installed_exe_exists":  true,
+                      "installed_exe_sha256":  "C368DFEBBC3660020CB20119E4952D83E2791B5D231D6BE62A6D0E552C871270",
+                      "installed_exe_matches_payload":  true,
+                      "playwright_node_present":  true,
+                      "mermaid_asset_present":  true,
+                      "mermaid_asset_sha256":  "8D607D7EF1D077A8AA202E18E62212BFA992C68BFEABC5CF45D51A128FE6675D",
+                      "notice_present":  true,
+                      "notice_bytes":  11890,
+                      "notice_sha256":  "E4B8D7223F085357DF923226FECD5AA189206B65448C26D1AD772C7116229696",
+                      "notice_matches_authoritative":  true,
+                      "eula_present":  true
+                  },
+    "fixture_conversion":  {
+                               "name":  "fixture",
+                               "markdown":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\input_test\\mermaid_triangle\\test_mermaid_triangle_v2.md",
+                               "smoke_exit_code":  0,
+                               "smoke_evidence":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\build\\r2prerc02\\evidence\\gui_smoke_fixture.json",
+                               "docx_path":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\build\\r2prerc02\\gui_fixture\\output\\test_mermaid_triangle_v2.docx",
+                               "docx_exists":  true,
+                               "docx_bytes":  63641,
+                               "docx_sha256":  "1114DDCE676BBCD473EEDDA7E364AA25985E73DE0250786CCD929480BF5BC68D",
+                               "inline_images":  3,
+                               "media_backgrounds":  [
+                                                         "#ffffff",
+                                                         "#ffffff",
+                                                         "#ffffff"
+                                                     ],
+                               "fallback_images":  [
+
+                                                   ],
+                               "rendered_mermaid":  true,
+                               "paragraphs":  128
+                           },
+    "control_conversion":  {
+                               "name":  "control",
+                               "markdown":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\md_converter\\tests\\acceptance\\AC001_simple.md",
+                               "smoke_exit_code":  0,
+                               "smoke_evidence":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\build\\r2prerc02\\evidence\\gui_smoke_control.json",
+                               "docx_path":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\build\\r2prerc02\\gui_control\\output\\AC001_simple.docx",
+                               "docx_exists":  true,
+                               "docx_bytes":  29553,
+                               "docx_sha256":  "BB6DC74FCF8D08EA42FF4569F6944A2B330121A07CDB4D947E645149389F6170",
+                               "inline_images":  0,
+                               "media_backgrounds":  [
+
+                                                     ],
+                               "fallback_images":  [
+
+                                                   ],
+                               "rendered_mermaid":  false,
+                               "paragraphs":  13
+                           },
+    "uninstall_2":  {
+                        "uninstaller_exists":  true,
+                        "exit_code":  0,
+                        "installed_exe_removed":  true,
+                        "workspace":  {
+                                          "missing":  [
+
+                                                      ],
+                                          "changed":  [
+
+                                                      ],
+                                          "added":  [
+
+                                                    ],
+                                          "intact":  true
+                                      }
+                    },
+    "reinstall":  {
+                      "exit_code":  0,
+                      "installed_exe_exists":  true,
+                      "installed_exe_sha256":  "C368DFEBBC3660020CB20119E4952D83E2791B5D231D6BE62A6D0E552C871270",
+                      "installed_exe_matches_payload":  true
+                  },
+    "reinstall_smoke":  {
+                            "name":  "reinstall_smoke",
+                            "markdown":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\Doc\\V2\\Implementation\\R2_PRE_RC_02\\Verification\\fixtures\\case_a_smoke.md",
+                            "smoke_exit_code":  0,
+                            "smoke_evidence":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\build\\r2prerc02\\evidence\\gui_smoke_reinstall_smoke.json",
+                            "docx_path":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\build\\r2prerc02\\gui_reinstall_smoke\\output\\case_a_smoke.docx",
+                            "docx_exists":  true,
+                            "docx_bytes":  37804,
+                            "docx_sha256":  "F0741F6F4982B5EFA06D0D06CFE640C663ED743743FAE3BB743B637BFD6E7FB6",
+                            "inline_images":  1,
+                            "media_backgrounds":  [
+                                                      "#ffffff"
+                                                  ],
+                            "fallback_images":  [
+
+                                                ],
+                            "rendered_mermaid":  true,
+                            "paragraphs":  11
+                        },
+    "workspace_after":  {
+                            "file_count":  6,
+                            "input_exists":  true,
+                            "output_exists":  true
+                        }
+}

@@ -1,0 +1,118 @@
+﻿{
+    "executable":  "C:\\Users\\Quansheng\\AppData\\Local\\Programs\\MD_Converter\\MD_Converter.exe",
+    "executable_size_bytes":  7671725,
+    "executable_sha256":  "C368DFEBBC3660020CB20119E4952D83E2791B5D231D6BE62A6D0E552C871270",
+    "input_markdown":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\Doc\\V2\\Implementation\\R2_PRE_RC_02\\Verification\\fixtures\\case_a_smoke.md",
+    "work_dir":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\build\\r2prerc02\\gui_reinstall_smoke",
+    "started_at":  "2026-10-01T15:03:39.0926907+08:00",
+    "process_id":  5052,
+    "gui-startup":  {
+                        "passed":  true,
+                        "detail":  "window \u0027MD Converter\u0027 is visible"
+                    },
+    "main_window_elements":  [
+                                 "ControlType.Group|",
+                                 "ControlType.Custom|Markdown file drop area",
+                                 "ControlType.Text|Markdown file drop area",
+                                 "ControlType.Text|Markdown files (.md) are converted on this computer.",
+                                 "ControlType.Button|Select File",
+                                 "ControlType.Text|Output folder:",
+                                 "ControlType.Text|Output folder",
+                                 "ControlType.Button|Change output folder",
+                                 "ControlType.Text|Output Profile:",
+                                 "ControlType.ComboBox|Output profile",
+                                 "ControlType.Button|Convert",
+                                 "ControlType.Text|Status",
+                                 "ControlType.Group|",
+                                 "ControlType.Button|Settings",
+                                 "ControlType.Button|About"
+                             ],
+    "settings_dialog_title":  "Settings - MD Converter",
+    "settings_text":  [
+                          "Folders",
+                          "Remember the last folders I used",
+                          "When this is on, the file and folder dialogs open where you last worked. The folders are remembered on this computer only.",
+                          "Last source folder:",
+                          "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\md_converter\\tests\\acceptance",
+                          "Last output folder:",
+                          "Not remembered",
+                          "Reset to Defaults",
+                          "Cancel",
+                          "Save"
+                      ],
+    "settings-opens":  {
+                           "passed":  true,
+                           "detail":  "dialog \u0027\u0027 opened with 10 element(s)"
+                       },
+    "settings-closes":  {
+                            "passed":  true,
+                            "detail":  "dialog closed cleanly: True"
+                        },
+    "about_text":  [
+                       "MD Converter",
+                       "Version 1.1.0",
+                       "Turn Markdown into polished Word documents — locally, privately, and without a subscription.",
+                       "Processing: Local, on this computer",
+                       "Account required: No",
+                       "Document upload: Not required for normal conversion",
+                       "Copyright © 2026 Quansheng2022. All rights reserved.",
+                       "Licensed under the Proprietary Single-User License (see EULA.txt).",
+                       "Close"
+                   ],
+    "about-opens":  {
+                        "passed":  true,
+                        "detail":  "dialog \u0027About MD Converter\u0027 opened"
+                    },
+    "about-version":  {
+                          "passed":  true,
+                          "detail":  "version text: Version 1.1.0"
+                      },
+    "about-closes":  {
+                         "passed":  true,
+                         "detail":  "dialog closed cleanly: True"
+                     },
+    "select-file":  {
+                        "passed":  true,
+                        "detail":  "file dialog accepted \u0027case_a_smoke.md\u0027"
+                    },
+    "convert-enabled":  {
+                            "passed":  true,
+                            "detail":  "Convert button enabled after selecting a file"
+                        },
+    "conversion_outcome":  {
+                               "outcome":  "SUCCESS",
+                               "seconds":  14.3,
+                               "detail":  "Open Document / Open Folder enabled"
+                           },
+    "conversion":  {
+                       "passed":  true,
+                       "detail":  "outcome=SUCCESS after 14.3s (Open Document / Open Folder enabled)"
+                   },
+    "docx_artifacts":  [
+                           "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\build\\r2prerc02\\gui_reinstall_smoke\\output\\case_a_smoke.docx"
+                       ],
+    "docx-artifact":  {
+                          "passed":  true,
+                          "detail":  "1 DOCX artifact(s) created"
+                      },
+    "valid_docx_artifacts":  [
+                                 "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\build\\r2prerc02\\gui_reinstall_smoke\\output\\case_a_smoke.docx"
+                             ],
+    "docx-valid":  {
+                       "passed":  true,
+                       "detail":  "1 of 1 artifact(s) contain word/document.xml"
+                   },
+    "details-report":  {
+                           "passed":  true,
+                           "detail":  "not applicable: successful conversion exposes no report button"
+                       },
+    "clean-close":  {
+                        "passed":  true,
+                        "detail":  "process exited: True"
+                    },
+    "finished_at":  "2026-10-01T15:05:04.0515104+08:00",
+    "failed_checks":  [
+
+                      ],
+    "status":  "PASS"
+}
