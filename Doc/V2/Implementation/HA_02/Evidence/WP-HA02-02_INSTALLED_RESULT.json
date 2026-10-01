@@ -1,0 +1,56 @@
+﻿{
+    "phase":  "WP-HA02-02",
+    "captured_at":  "2026-10-01T13:37:41+08:00",
+    "installer_path":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\dist_installer\\MD_Converter_v1.1.0_Setup.exe",
+    "installer_bytes":  77296967,
+    "installer_sha256":  "C54ADF6225689F06886B6C326E897BEB294EBA13EFD7897328DD738F6CF3CA42",
+    "install_root":  "C:\\Users\\Quansheng\\AppData\\Local\\Programs\\MD_Converter",
+    "cases":  [
+                  {
+                      "case":  "fixture",
+                      "markdown":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\input_test\\mermaid_triangle\\test_mermaid_triangle_v2.md",
+                      "markdown_sha256":  "D6F512CE05082FFC2B826A5E742FFC9D33537338BAED78798626DB5FE41CA02F",
+                      "work_dir":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\build\\ha02_installed\\gui_fixture",
+                      "smoke_exit_code":  0,
+                      "smoke_evidence":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\build\\ha02_installed\\evidence\\gui_smoke_fixture.json",
+                      "docx_path":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\build\\ha02_installed\\gui_fixture\\output\\test_mermaid_triangle_v2.docx",
+                      "docx_exists":  true,
+                      "docx_bytes":  63685,
+                      "docx_sha256":  "944FACC42BE7033E7ED25E340D7801F7445FA4D1D73F39B1784A086742408287",
+                      "inline_images":  3,
+                      "media_backgrounds":  [
+
+                                            ],
+                      "fallback_images":  [
+
+                                          ],
+                      "rendered_mermaid":  true
+                  },
+                  {
+                      "case":  "control",
+                      "markdown":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\md_converter\\tests\\acceptance\\AC001_simple.md",
+                      "markdown_sha256":  "EF7DA5CC2BB051D1ACB399A5FBAAF1F27510F24D0C90DFCF184DBF6C2AC7D39E",
+                      "work_dir":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\build\\ha02_installed\\gui_control",
+                      "smoke_exit_code":  0,
+                      "smoke_evidence":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\build\\ha02_installed\\evidence\\gui_smoke_control.json",
+                      "docx_path":  "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter\\build\\ha02_installed\\gui_control\\output\\AC001_simple.docx",
+                      "docx_exists":  true,
+                      "docx_bytes":  29548,
+                      "docx_sha256":  "882FD43C00698DD6EA689E73C0A7C68C7C198C12A2C96471A96EB32FADC12719",
+                      "inline_images":  0,
+                      "media_backgrounds":  [
+
+                                            ],
+                      "fallback_images":  [
+
+                                          ],
+                      "rendered_mermaid":  false
+                  }
+              ],
+    "install_exit_code":  0,
+    "installed_exe_path":  "C:\\Users\\Quansheng\\AppData\\Local\\Programs\\MD_Converter\\MD_Converter.exe",
+    "installed_exe_bytes":  7671725,
+    "installed_exe_sha256":  "C368DFEBBC3660020CB20119E4952D83E2791B5D231D6BE62A6D0E552C871270",
+    "playwright_in_install":  true,
+    "mermaid_asset_in_install":  true
+}

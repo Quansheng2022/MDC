@@ -1,0 +1,60 @@
+{
+  "docx": "build\\ha02_installed\\gui_fixture\\output\\test_mermaid_triangle_v2.docx",
+  "paragraphs": 128,
+  "inline_images": 3,
+  "image_sizes_cm": [
+    {
+      "width_cm": 12.7,
+      "height_cm": 2.42
+    },
+    {
+      "width_cm": 12.7,
+      "height_cm": 3.679
+    },
+    {
+      "width_cm": 12.7,
+      "height_cm": 3.679
+    }
+  ],
+  "media_files": [
+    "word/media/image1.png",
+    "word/media/image2.png",
+    "word/media/image3.png"
+  ],
+  "media_stats": [
+    {
+      "file": "image1.png",
+      "pixels": "1160x221",
+      "distinct_colours": 135,
+      "non_white_ratio": 0.0454,
+      "background": "#ffffff",
+      "fallback_background": false
+    },
+    {
+      "file": "image2.png",
+      "pixels": "1160x336",
+      "distinct_colours": 128,
+      "non_white_ratio": 0.031,
+      "background": "#ffffff",
+      "fallback_background": false
+    },
+    {
+      "file": "image3.png",
+      "pixels": "1160x336",
+      "distinct_colours": 149,
+      "non_white_ratio": 0.0485,
+      "background": "#ffffff",
+      "fallback_background": false
+    }
+  ],
+  "raw_source_marker_counts": {
+    "flowchart TB": 0,
+    "flowchart TD": 0,
+    "flowchart LR": 0,
+    "-->": 0,
+    "~~~": 0
+  },
+  "fallback_text_marker_counts": {
+    "rendering failed": 0,
+    "showing raw text": 0
+  },
