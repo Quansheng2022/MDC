@@ -1,0 +1,75 @@
+{
+  "phase": "WP-R2RC02-01",
+  "captured_at": "2026-10-01T15:22:03+08:00",
+  "repository_root": "C:\\Users\\Quansheng\\Documents\\projects\\MD_Converter",
+  "branch": "master",
+  "head": "196079ef2efa7ca5e86b5e8c2b744a710e4ae530",
+  "freeze_anchors": {
+    "ha02_closure": "f851b64",
+    "r2_prerc02_closure": "196079e"
+  },
+  "packaged_exe": {
+    "path": "dist\\MD_Converter_Lite\\MD_Converter_Lite.exe",
+    "bytes": 7671725,
+    "sha256": "C368DFEBBC3660020CB20119E4952D83E2791B5D231D6BE62A6D0E552C871270"
+  },
+  "payload": {
+    "directory": "dist\\MD_Converter_Lite",
+    "file_count": 461,
+    "total_bytes": 279011814,
+    "tree_digest_sha256": "92daa5ea8c7031e0046ccd2d875990cfebbca9ba8767f9d4c00e9d1a316cf370"
+  },
+  "installer": {
+    "path": "dist_installer\\MD_Converter_v1.1.0_Setup.exe",
+    "bytes": 77296967,
+    "sha256": "C54ADF6225689F06886B6C326E897BEB294EBA13EFD7897328DD738F6CF3CA42",
+    "installer_script_sha256": "EBB0979972348ECA2926BC3095049BDB047B36F206E9D66E2A1C7E468B91CE03"
+  },
+  "third_party_notices": {
+    "path": "THIRD_PARTY_NOTICES.txt",
+    "bytes": 11890,
+    "sha256": "E4B8D7223F085357DF923226FECD5AA189206B65448C26D1AD772C7116229696"
+  },
+  "version_authority": {
+    "source": "pyproject.toml [project].version",
+    "version": "1.1.0",
+    "iss_app_id": "MDConverter.Quansheng2022",
+    "iss_app_name": "MD Converter",
+    "iss_app_version": "1.1.0",
+    "iss_app_publisher": "Quansheng2022"
+  },
+  "packaged_exe_version_info": {
+    "file_version": "1.1.0",
+    "product_version": "1.1.0",
+    "product_name": "MD Converter",
+    "company_name": "Quansheng2022",
+    "original_name": "MD_Converter_Lite.exe"
+  },
+  "preserved_old_rc": {
+    "directory": "release\\R2RC_pre_HA02_preserved",
+    "files": [
+      {
+        "name": "MD_Converter_Lite.exe",
+        "bytes": 6926650,
+        "sha256": "68524527CDC5718CE31A1F0454EAFB0FF64C52D5C838716AC1277445DE0E3021"
+      },
+      {
+        "name": "MD_Converter_v1.1.0_Setup.exe",
+        "bytes": 51186717,
+        "sha256": "4B56FC989BAB7FF7E648CC29DFE5A6D944B2B8EFC420F11DE8D0ECF8294FFDE9"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "bytes": 217,
+        "sha256": "BAE028D5EA1412CDCE2028E81375EDDB22180D4A1BC43D42BE61EB39B4C59139"
+      }
+    ]
+  },
+  "release_tags": [
+    "v1.0.0",
+    "v1.0.1",
+    "v1.1.0"
+  ],
+  "v110_tag_target": "9f32090d2b756b16b43f7f556116cdec918cdadd",
+  "git_tag_created": "NO"
+}
